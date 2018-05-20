@@ -1,15 +1,43 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import App from './App'
+import WeVue from 'we-vue'
+import 'we-vue/lib/style.css'
+import App from './app.vue'
+import './assets/style/demo.scss'
+import './assets/iconfont/iconfont.css'
 import router from './router'
 
 Vue.config.productionTip = false
+Vue.config.devtools = true
+
+Vue.use(WeVue)
+
+router.afterEach((to) => {
+  document.title = to.meta.title
+})
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+
+  render: h => h(App),
+
   router,
-  components: { App },
-  template: '<App/>'
+
+  data () {
+    return {
+      transitionName: 'slide-right'
+    }
+  },
+
+  methods: {
+    message (msg) {
+      this.$toast.text(msg)
+    }
+  },
+
+  watch: {
+    '$route' (to, from) {
+      this.transitionName = from.name === 'index' ? 'slide-left' : 'slide-right'
+    }
+  }
 })
