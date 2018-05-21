@@ -36,8 +36,8 @@ routes.push({
   component: resolve => require(['../pages/index.vue'], resolve),
   name: 'index',
   meta: {
-    title: 'WE-VUE',
-    description: 'weui1.x + vue2.x + webpack2.x = we-vue'
+    title: '数赟',
+    description: '数赟 云呼叫'
   }
 })
 
