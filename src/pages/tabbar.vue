@@ -1,24 +1,21 @@
 <template>
   <wv-tabbar>
-    <wv-tabbar-item to="/" is-on>
+    <wv-tabbar-item to="/home" >
       <span slot="icon" style="display: inline-block; position: relative;">
         <img class="weui-tabbar__icon" :src="thumbSmall" slot="icon">
-        <wv-badge style="position: absolute;top: -2px;right: -13px;">8</wv-badge>
+        <wv-badge is-dot style="position: absolute;top: -2px;right: -13px;">8</wv-badge>
       </span>
-      微信
-    </wv-tabbar-item>
-    <wv-tabbar-item to="/tabbar">
-      <img class="weui-tabbar__icon" :src="thumbSmall" slot="icon"> 通讯录
+      首页
     </wv-tabbar-item>
     <wv-tabbar-item to="/">
       <span slot="icon" style="display: inline-block; position: relative;">
         <img class="weui-tabbar__icon" :src="thumbSmall" slot="icon">
-        <wv-badge is-dot style="position: absolute;top: 0;right: -6px;">8</wv-badge>
+        <wv-badge style="position: absolute;top: 0;right: -6px;">8</wv-badge>
       </span>
-      发现
+      外呼
     </wv-tabbar-item>
     <wv-tabbar-item to="/profile">
-      <img class="weui-tabbar__icon" :src="thumbSmall" slot="icon"> 我
+      <img class="weui-tabbar__icon" :src="thumbSmall" slot="icon"> 我的
     </wv-tabbar-item>
   </wv-tabbar>
 </template>

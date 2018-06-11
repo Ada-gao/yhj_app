@@ -1,0 +1,44 @@
+<template>
+  <div class="page">
+    <wv-panel title="图文组合列表">
+      <wv-media-box :thumb="thumb" title="标题一" :description="descriptionRouterLink" to="/"/>
+      <wv-media-box :thumb="thumb" title="标题二" :description="descriptionUrl" url="/"/>
+
+      <wv-cell title="查看更多" is-link slot="ft"/>
+    </wv-panel>
+
+    <wv-panel title="文字组合列表">
+      <wv-media-box :thumb="thumb" title="标题一" :description="descriptionRouterLink" to="/" type="text"/>
+      <wv-media-box :thumb="thumb" title="标题二" :description="descriptionUrl" url="/" type="text"/>
+
+      <wv-cell title="查看更多" is-link slot="ft"/>
+    </wv-panel>
+
+  </div>
+</template>
+
+<script>
+import thumb from '../assets/images/wevue_placeholder.png'
+import thumbSmall from '../assets/images/icon_tabbar.png'
+const descriptionRouterLink = '这里是一些描述文字。本例使用 vue-router 进行跳转'
+const descriptionUrl = '这里是一些描述文字。本例使用 url 进行跳转'
+
+export default {
+  data () {
+    return {
+      thumb,
+      thumbSmall,
+      descriptionRouterLink,
+      descriptionUrl
+    }
+  }
+}
+</script>
+
+<style scoped lang="scss">
+  .cell-icon {
+    display: block;
+    width: 20px;
+    margin-right: 5px;
+  }
+</style>

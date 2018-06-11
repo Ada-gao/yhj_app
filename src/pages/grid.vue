@@ -1,5 +1,7 @@
 <template>
   <div class="page">
+    <wv-header title="首页" :fixed="false" background-color="#2196f3">
+    </wv-header>
     <wv-grid>
       <wv-grid-item class="demo-grid-item" to="/">
         <img :src="thumbSmall" slot="icon">

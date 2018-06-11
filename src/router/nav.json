@@ -1,5 +1,28 @@
 [
   {
+    "groupTitle": "yhj",
+    "navItems": [
+      {
+        "path": "/home",
+        "name": "首页",
+        "description": "首页",
+        "icon": "badge_new"
+      },
+      {
+        "path": "/profile",
+        "name": "我",
+        "description": "我",
+        "icon": "badge_new"
+      },
+      {
+        "path": "/call",
+        "name": "外呼",
+        "description": "外呼",
+        "icon": "badge_new"
+      }
+    ]
+  },
+  {
     "groupTitle": "基础组件",
     "navItems": [
       {
