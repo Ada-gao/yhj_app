@@ -3,7 +3,7 @@
     <wv-header :title="title" :fixed="false" background-color="#09bb07">
     </wv-header>
     <wv-grid>
-      <wv-grid-item class="demo-grid-item" to="/">
+      <wv-grid-item class="demo-grid-item" to="/land">
         <img :src="thumbSmall" slot="icon">
         <span slot="label">今日任务数</span>
       </wv-grid-item>
@@ -17,7 +17,7 @@
         <span slot="label">今日通话时长</span>
       </wv-grid-item>
     </wv-grid>
-    <div class="tips">任务完成进度条</div>
+    <div class="tips" to="/land">任务完成进度条</div>
     <wv-slider v-model="percent" disabled/>
   </div>
 </template>

@@ -19,6 +19,11 @@
         "name": "外呼",
         "description": "外呼",
         "icon": "badge_new"
+      },
+      {
+        "path": "/land",
+        "name": "登陆",
+        "description": "登陆"
       }
     ]
   },

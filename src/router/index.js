@@ -7,7 +7,7 @@ Vue.use(VueRouter)
 
 const registerRoute = (groups) => {
   let routes = []
-
+  console.log(routes)
   groups.map(group => {
     group.navItems.map(nav => {
       try {
