@@ -32,7 +32,7 @@ export default{
       let loginParams = {username: this.account, password: this.password}
       requestLogin(loginParams).then(res => {
         console.log(res.data.token)
-        sessionStorage.setItem('token', res.data.token)
+        localStorage.setItem('token', res.data.token)
         this.$router.push({path: '/home'})
       }).catch(error => {
         console.log(error)
