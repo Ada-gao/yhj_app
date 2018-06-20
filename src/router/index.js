@@ -7,21 +7,51 @@ Vue.use(VueRouter)
 
 const registerRoute = (groups) => {
   let routes = []
-  console.log(routes)
   groups.map(group => {
     group.navItems.map(nav => {
-      try {
-        routes.push({
-          path: `${nav.path}`,
-          component: resolve => require([`../pages${nav.path}.vue`], resolve),
-          name: nav.title || nav.name,
-          meta: {
-            title: nav.title || nav.name,
-            description: nav.description
-          }
-        })
-      } catch (e) {
-        nav.disabled = true
+      if (nav.children) {
+        try {
+          routes.push({
+            path: `${nav.path}`,
+            component: resolve => require([`../pages${nav.path}.vue`], resolve),
+            name: nav.title || nav.name,
+            meta: {
+              title: nav.title || nav.name,
+              description: nav.description
+            }
+          })
+        } catch (e) {
+          nav.disabled = true
+        }
+        /* nav.children.map(child => {
+          //console.log(routes)
+          routes.map(rout => {
+            rout.children = {
+              path: `${child.path}`,
+              component: resolve => require([`../pages${child.path}.vue`], resolve),
+              name: child.title || child.name,
+              meta: {
+                title: child.title || child.name,
+                description: child.description
+              }
+            }
+            console.log(rout.children)
+          })
+        }) */
+      } else {
+        try {
+          routes.push({
+            path: `${nav.path}`,
+            component: resolve => require([`../pages${nav.path}.vue`], resolve),
+            name: nav.title || nav.name,
+            meta: {
+              title: nav.title || nav.name,
+              description: nav.description
+            }
+          })
+        } catch (e) {
+          nav.disabled = true
+        }
       }
     })
   })
@@ -33,7 +63,7 @@ const routes = registerRoute(Navs)
 
 routes.push({
   path: '/',
-  component: resolve => require(['../pages/index.vue'], resolve),
+  component: resolve => require(['../pages/home.vue'], resolve),
   name: 'index',
   meta: {
     title: '数赟',

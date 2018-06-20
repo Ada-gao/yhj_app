@@ -21,7 +21,7 @@
         "icon": "badge_new"
       },
       {
-        "path": "/land",
+        "path": "/login",
         "name": "登陆",
         "description": "登陆"
       }

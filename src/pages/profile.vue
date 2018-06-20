@@ -1,120 +1,153 @@
 <template>
   <div class="page">
-    <wv-header title="我的" :fixed="false" background-color="#1ab310">
+    <wv-header title="我的" :fixed="false" background-color="#32CCBC">
       <div class="btn-back" slot="left">
-        <i class="iconfont icon-back" @click="$router.push('/')"></i>
+        <i class="iconfont icon-fanhui" @click="$router.push('/')"></i>
       </div>
     </wv-header>
     <div class="profile_content">
-      <div class="top">
-        <wv-flex :gutter="10">
-          <wv-flex-item flex="3">
-            <div class="placeholder" style="padding: 1rem">
-              <p style="font-size: 1.2rem">销售ABC <small style="font-size:0.8rem">销售总监</small> </p>
-              <p style="font-size: 0.8rem">上海甦翔投资咨询有限公司</p>
-            </div>
-          </wv-flex-item>
-          <wv-flex-item>
-            <div class="placeholder profile_head">头像</div>
-          </wv-flex-item>
-        </wv-flex>
+      <div class="head">
       </div>
-      <div class="center">
-        <wv-flex :gutter="10" style="margin-top: 6%">
-        <wv-flex-item>
-          <div class="placeholder content_list">总通话时长</div>
-          <div class="placeholder content_time">1200分钟</div>
-        </wv-flex-item>
-        <wv-flex-item>
-          <div class="placeholder content_list">总任务完成数</div>
-          <div class="placeholder content_time">80分钟</div>
-        </wv-flex-item>
-        <wv-flex-item>
-          <div class="placeholder content_list">平均通话时长</div>
-          <div class="placeholder content_time">1000秒</div>
-        </wv-flex-item>
-      </wv-flex>
-      </div>
-      <div class="bot">
-        <wv-flex :gutter="10" style="margin-top: 6%">
-          <wv-flex-item>
-            <div class="placeholder bot_list">外呼完成率</div>
-            <div class="placeholder bot_list">90%</div>
-          </wv-flex-item>
-          <wv-flex-item>
-            <div class="placeholder bot_list">今日团队排名</div>
-            <div class="placeholder bot_list">1</div>
-          </wv-flex-item>
-        </wv-flex>
-      </div>
+      <p class="profile_name">销售ABC</p>
+      <p class="profile_company">上海甦翔投资咨询有限公司</p>
     </div>
-    <router-link to="/land">
-      <wv-button type="primary">退出登陆</wv-button>
-    </router-link>
+    <wv-flex :gutter="10" style="margin-top: 1.02rem;width: 90%;margin: 1.06rem auto 0;border-bottom: 1px solid #D2D2D2">
+      <wv-flex-item>
+        <div class="placeholder task_number">1200分</div>
+        <div class="placeholder task_text">总通话时长</div>
+      </wv-flex-item>
+      <wv-flex-item>
+        <div class="placeholder task_number">699个</div>
+        <div class="placeholder task_text">总任务完成数</div>
+      </wv-flex-item>
+      <wv-flex-item>
+        <div class="placeholder task_number">50秒</div>
+        <div class="placeholder task_text">平均通话时长</div>
+      </wv-flex-item>
+    </wv-flex>
+    <wv-flex :gutter="10">
+      <wv-flex-item style="border-left: 1px solid grey">
+        <div class="placeholder" style="border-right: 1px solid #979797">
+          <div class="placeholder progress_number">98%</div>
+          <div class="placeholder progress_text">外呼完成率</div>
+        </div>
+      </wv-flex-item>
+      <wv-flex-item>
+        <div class="placeholder">
+          <div class="placeholder progress_number">第一名</div>
+          <div class="placeholder progress_text">今日团队排名</div>
+        </div>
+      </wv-flex-item>
+    </wv-flex>
+    <wv-group>
+      <wv-cell title="问题反馈" value="" is-link to="/" style="font-size: 0.56rem"></wv-cell>
+      <wv-cell title="关于闪电呼" value="" is-link to="/" style="font-size: 0.56rem"></wv-cell>
+    </wv-group>
+    <!--<router-link to="/login">-->
+      <div class="button_return" @click="showDialog('ios')">退出登陆</div>
+    <!--</router-link>-->
   </div>
 </template>
 
 <script>
-import thumb from '../assets/images/wevue_placeholder.png'
-import thumbSmall from '../assets/images/icon_tabbar.png'
+import { getUser } from '../api/api'
+import { Dialog } from 'we-vue'
 
 export default {
   data () {
     return {
-      thumb,
-      thumbSmall
+    }
+  },
+  mounted () {
+    let user = sessionStorage.getItem('token')
+    if (user) {
+      getUser().then((res) => {
+        this.sysUserName = res.data.username
+      })
+    }
+  },
+  methods: {
+    showDialog (skin, title) {
+      Dialog({
+        title: title,
+        message: '您确定要退出闪电呼吗？',
+        skin,
+        showCancelButton: true
+      }).then(() => {
+        this.$router.push({path: '/login'})
+        sessionStorage.removeItem('token')
+      }).catch(() => {
+      })
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
-  .cell-icon {
-    display: block;
-    width: 20px;
-    margin-right: 5px;
-  }
-  .return_land{
-  width:90%;
+  .wv-header .wv-header-title[data-v-a5b8d5b6]{
+    font-size: 0.72rem;
   }
   .profile_content{
-    width: 93%;
-    height:17rem;
-    margin: 4% auto 0;
-    border-radius: 10px;
-    background-color: #efeded;
+    width: 100%;
+    height: 7.28rem;
+    background-color: #32CCBC;
+    padding: 2%;
   }
-  .top{
-    height: 33%;
-
-  }
-  .center{
-    height: 33%;
-    border-bottom: 1.5px solid gainsboro;
-    border-top: 1.5px solid gainsboro;
-  }
-  .bot{
-    height: 33%;
-  }
-  .profile_head{
+  .head{
+    width: 3rem;
+    height: 3rem;
+    background: rebeccapurple;
+    margin: 0 auto;
     border-radius: 50%;
-    border: 1px solid grey;
-    width: 77%;
-    height: 3.9rem;
-    line-height: 3.9rem;
-    text-align: center;
-    margin-top: 14%;
+    box-shadow:rgba(238, 233, 233, 0.34) 0px 0px 0px 5px;
   }
-  .content_list{
+  .profile_name{
+    width: 100%;
+    height: 1rem;
+    font-size: 0.72rem;
+    color: #FFFFFF;
     text-align: center;
-    font-size: 0.8rem;
+    margin-top: 0.48rem;
   }
-  .content_time{
+  .profile_company{
+    width: 100%;
+    height: 0.74rem;
+    font-size: 0.52rem;
+    color: #FFFFFF;
     text-align: center;
-    font-size: 1rem;
+    margin-top: 0.48rem;
   }
-  .bot_list{
+  .placeholder{
     text-align: center;
-    font-size: 0.8rem;
+  }
+  .task_number{
+    font-size: 0.64rem;
+    color: #02A2D1;
+  }
+  .task_text{
+    font-size: 0.52rem;
+    margin-top: 0.66rem;
+    margin-bottom: 0.83rem;
+  }
+  .progress_number{
+    font-size: 0.6rem;
+    color: #32CCBC;
+    margin-top: 1.07rem;
+  }
+  .progress_text{
+    font-size: 0.52rem;
+
+    /*margin-bottom: 1.12rem;*/
+  }
+  .button_return{
+    width: 90%;
+    height: 1.6rem;
+    font-size: 0.64rem;
+    color: #FFFFFF;
+    background: #32CCBC;
+    margin: 1.64rem auto 0;
+    border-radius: 0.2rem;
+    text-align: center;
+    line-height: 1.6rem;
   }
 </style>

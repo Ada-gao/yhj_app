@@ -9,8 +9,19 @@
     <meta name="format-detection" content="telephone=no" />
     <link rel="shortcut icon" type="image/ico" href="static/favicon.ico" />
     <title>yunhj</title>
+    <script>
+      (function () {
+        window.addEventListener("orientation" in window ? "deviceorientation" : "resize", setSize);
+        setSize();
+        function setSize() {
+          var html = document.documentElement;
+          var hWidth = html.getBoundingClientRect().width;
+          html.style.fontSize = hWidth / 15 + "px"
+        }
+      })()
+    </script>
   </head>
-  <body style="height: 100%;">
+  <body style="height: 100%;background: #FFFFFF;">
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
