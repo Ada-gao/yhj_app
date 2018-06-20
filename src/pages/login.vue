@@ -24,7 +24,7 @@
     <div class="land" @click="login">
         登陆
       </div>
-    <div class="login_Application">申请体验</div>
+    <div class="login_Application" @click="$router.push('/trial')">申请体验</div>
   </div>
 </template>
 <script>
@@ -45,7 +45,7 @@ export default{
     login: function () {
       let loginParams = {username: this.account, password: this.password}
       requestLogin(loginParams).then(res => {
-        sessionStorage.setItem('token', res.data.token)
+        localStorage.setItem('token', res.data.token)
         this.$router.push({path: '/home'})
       }).catch(() => {
         Dialog({message: '请检查账号或密码是否真确'})

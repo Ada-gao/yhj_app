@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import vcodeImage from '../assets/images/vcode.jpg'
+import vcodeImage from '../../assets/images/vcode.jpg'
 
 export default {
   data () {

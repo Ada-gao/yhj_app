@@ -36,8 +36,8 @@
 </template>
 
 <script>
-import thumb from '../assets/images/wevue_placeholder.png'
-import thumbSmall from '../assets/images/icon_tabbar.png'
+import thumb from '../../assets/images/wevue_placeholder.png'
+import thumbSmall from '../../assets/images/icon_tabbar.png'
 const descriptionRouterLink = '这里是一些描述文字。本例使用 vue-router 进行跳转'
 const descriptionUrl = '这里是一些描述文字。本例使用 url 进行跳转'
 

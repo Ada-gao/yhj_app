@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-  <!--  <wv-tabbar>
+    <wv-tabbar>
       <wv-tabbar-item to="/home" :isOn="selected('/home')">
       <span slot="icon" style="display: inline-block; position: relative;">
         <img class="weui-tabbar__icon" :src="thumbSmall" slot="icon">
@@ -18,7 +18,7 @@
       <wv-tabbar-item to="/profile" :isOn="selected('/profile')">
         <img class="weui-tabbar__icon" :src="thumbSmall" slot="icon"> 我的
       </wv-tabbar-item>
-    </wv-tabbar>-->
+    </wv-tabbar>
     <transition :name="$root.transitionName">
       <router-view/>
     </transition>

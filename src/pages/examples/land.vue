@@ -17,8 +17,8 @@
   </div>
 </template>
 <script>
-import { requestLogin } from '../api/api'
-import thumbSmall from '../assets/images/icon_tabbar.png'
+import { requestLogin } from '../../api/api'
+import thumbSmall from '../../assets/images/icon_tabbar.png'
 export default{
   data () {
     return {

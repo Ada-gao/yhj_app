@@ -41,3 +41,17 @@ new Vue({
     }
   }
 })
+
+router.beforeEach((to, from, next) => {
+  // 未显示申明，默认必须登录
+  const requiresAuth = to.meta.requiresAuth === undefined ? true : to.meta.requiresAuth
+  if (to.path === '/login') {
+    sessionStorage.removeItem('token')
+  }
+  let user = localStorage.getItem('token')
+  if (!user && requiresAuth && to.path !== '/login') {
+    next({ path: '/login' })
+  } else {
+    next()
+  }
+})

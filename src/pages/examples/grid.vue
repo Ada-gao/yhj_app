@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import thumbSmall from '../assets/images/icon_tabbar.png'
+import thumbSmall from '../../assets/images/icon_tabbar.png'
 
 export default {
   data () {

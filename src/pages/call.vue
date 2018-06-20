@@ -39,7 +39,7 @@
 
 <script>
 import logoImg from '../assets/images/logo.png'
-import axios from 'axios'
+// import axios from 'axios'
 import thumb from '../assets/images/eythumb.png'
 import callEnd from '../assets/images/ic_call_end.png'
 
@@ -58,15 +58,15 @@ export default {
     triggerCall: function (callFrom, callTo) {
       console.log('Call customer:')
       console.log(callTo)
-      let vm = this
-      vm.popupVisible = true
-      axios.get('/api/call/' + callFrom.mobile + '/' + callTo.mobile)
-        .then(function (response) {
-          console.log(response)
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
+      // let vm = this
+      // vm.popupVisible = true
+      // axios.get('/api/call/' + callFrom.mobile + '/' + callTo.mobile)
+      //   .then(function (response) {
+      //     console.log(response)
+      //   })
+      //   .catch(function (error) {
+      //     console.log(error)
+      //   })
     },
     title: function (name, mobile) {
       return name + '(' + this.mobileTail(mobile) + ')'
@@ -79,14 +79,14 @@ export default {
     }
   },
   created: function () {
-    var vm = this
-    axios.get('/api/users')
-      .then(function (response) {
-        vm.users = response.data
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
+    // var vm = this
+    // axios.get('/api/users')
+    //   .then(function (response) {
+    //     vm.users = response.data
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error)
+    //   })
   },
   mounted () {
   },

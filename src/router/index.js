@@ -1,73 +1,62 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Navs from './nav.json'
-export const navs = Navs
-
 Vue.use(VueRouter)
 
-const registerRoute = (groups) => {
-  let routes = []
-  groups.map(group => {
-    group.navItems.map(nav => {
-      if (nav.children) {
-        try {
-          routes.push({
-            path: `${nav.path}`,
-            component: resolve => require([`../pages${nav.path}.vue`], resolve),
-            name: nav.title || nav.name,
-            meta: {
-              title: nav.title || nav.name,
-              description: nav.description
-            }
-          })
-        } catch (e) {
-          nav.disabled = true
-        }
-        /* nav.children.map(child => {
-          //console.log(routes)
-          routes.map(rout => {
-            rout.children = {
-              path: `${child.path}`,
-              component: resolve => require([`../pages${child.path}.vue`], resolve),
-              name: child.title || child.name,
-              meta: {
-                title: child.title || child.name,
-                description: child.description
-              }
-            }
-            console.log(rout.children)
-          })
-        }) */
-      } else {
-        try {
-          routes.push({
-            path: `${nav.path}`,
-            component: resolve => require([`../pages${nav.path}.vue`], resolve),
-            name: nav.title || nav.name,
-            meta: {
-              title: nav.title || nav.name,
-              description: nav.description
-            }
-          })
-        } catch (e) {
-          nav.disabled = true
-        }
-      }
-    })
-  })
-
-  return routes
-}
-
-const routes = registerRoute(Navs)
+let routes = []
 
 routes.push({
   path: '/',
+  redirect: { path: '/home' }
+})
+
+routes.push({
+  path: '/home',
   component: resolve => require(['../pages/home.vue'], resolve),
-  name: 'index',
+  name: 'home',
+  meta: {
+    title: '首页',
+    description: '首页'
+  }
+})
+
+routes.push({
+  path: '/profile',
+  component: resolve => require(['../pages/profile.vue'], resolve),
+  name: 'profile',
+  meta: {
+    title: '我的',
+    description: '我的'
+  }
+})
+
+routes.push({
+  path: '/call',
+  component: resolve => require(['../pages/call.vue'], resolve),
+  name: 'call',
   meta: {
     title: '数赟',
     description: '数赟 云呼叫'
+  }
+})
+
+routes.push({
+  path: '/login',
+  component: resolve => require(['../pages/login.vue'], resolve),
+  name: 'login',
+  meta: {
+    title: '登录',
+    description: '登录'
+  }
+})
+
+routes.push({
+  path: '/trial',
+  component: resolve => require(['../pages/trial.vue'], resolve),
+  name: 'trial',
+  meta: {
+    title: '申请试用',
+    description: '试用',
+    requiresAuth: false
   }
 })
 

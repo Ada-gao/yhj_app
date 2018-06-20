@@ -1,9 +1,6 @@
 <template>
   <div class="page">
     <wv-header title="我的" :fixed="false" background-color="#32CCBC">
-      <div class="btn-back" slot="left">
-        <i class="iconfont icon-fanhui" @click="$router.push('/')"></i>
-      </div>
     </wv-header>
     <div class="profile_content">
       <div class="head">
@@ -74,7 +71,7 @@ export default {
         skin,
         showCancelButton: true
       }).then(() => {
-        this.$router.push({path: '/login'})
+        this.$router.replace({path: '/login'})
         sessionStorage.removeItem('token')
       }).catch(() => {
       })
