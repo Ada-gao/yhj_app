@@ -4,7 +4,7 @@ axios.defaults.baseURL = process.env.BASE_API
 axios.defaults.timeout = 15000
 
 axios.interceptors.request.use(config => {
-  config.headers['Authorization'] = sessionStorage.getItem('token')
+  config.headers['Authorization'] = localStorage.getItem('token')
   return config
 }, error => {
   return Promise.reject(error)

@@ -45,7 +45,8 @@ routes.push({
   name: 'login',
   meta: {
     title: '登录',
-    description: '登录'
+    description: '登录',
+    tabShow: false
   }
 })
 
@@ -56,7 +57,8 @@ routes.push({
   meta: {
     title: '申请试用',
     description: '试用',
-    requiresAuth: false
+    requiresAuth: false,
+    tabShow: false
   }
 })
 

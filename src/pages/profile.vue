@@ -56,7 +56,7 @@ export default {
     }
   },
   mounted () {
-    let user = sessionStorage.getItem('token')
+    let user = localStorage.getItem('token')
     if (user) {
       getUser().then((res) => {
         this.sysUserName = res.data.username
@@ -72,7 +72,7 @@ export default {
         showCancelButton: true
       }).then(() => {
         this.$router.replace({path: '/login'})
-        sessionStorage.removeItem('token')
+        localStorage.removeItem('token')
       }).catch(() => {
       })
     }

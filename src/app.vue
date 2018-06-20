@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <wv-tabbar>
+    <wv-tabbar v-show="tabShow">
       <wv-tabbar-item to="/home" :isOn="selected('/home')">
       <span slot="icon" style="display: inline-block; position: relative;">
         <img class="weui-tabbar__icon" :src="thumbSmall" slot="icon">
@@ -31,13 +31,19 @@ import thumbSmall from './assets/images/icon_tabbar.png'
 export default {
   data () {
     return {
-      thumbSmall
+      thumbSmall,
+      tabShow: true
     }
   },
   methods: {
     selected (route) {
       console.log(route)
       return this.$router.currentRoute.path === route
+    }
+  },
+  watch: {
+    $route (to, from) {
+      this.tabShow = to.meta.tabShow === undefined ? true : to.meta.tabShow
     }
   }
 }

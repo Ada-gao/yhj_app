@@ -2,7 +2,7 @@ import Vue from 'vue'
 import WeVue from 'we-vue'
 import 'we-vue/lib/style.css'
 import App from './app.vue'
-import './assets/style/demo.scss'
+import './assets/style/ywh.scss'
 import './assets/iconfont/iconfont.css'
 import router from './router'
 
