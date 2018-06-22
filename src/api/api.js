@@ -12,3 +12,5 @@ axios.interceptors.request.use(config => {
 
 export const requestLogin = params => axios.post('/auth/login', params)
 export const getUser = () => axios.get('/auth/user')
+export const postTrial = params => axios.post('/api/trial',params)
+export const postVerification = params => axios.post('/api/sms/send',params)

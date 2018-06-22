@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <div class="page" style="background: #FFFFFF;position: absolute;">
     <div class="LOGO">
       <div class="logo_img">
         <i class="iconfont icon-tonghuashijian"></i>

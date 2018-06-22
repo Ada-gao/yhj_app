@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <wv-header title="我的" :fixed="false" background-color="#32CCBC">
+    <wv-header title="我的" :fixed="true" background-color="#32CCBC">
     </wv-header>
     <div class="profile_content">
       <div class="head">
@@ -8,7 +8,8 @@
       <p class="profile_name">销售ABC</p>
       <p class="profile_company">上海甦翔投资咨询有限公司</p>
     </div>
-    <wv-flex :gutter="10" style="margin-top: 1.02rem;width: 90%;margin: 1.06rem auto 0;border-bottom: 1px solid #D2D2D2">
+    <div style="background: #FFFFFF;margin-top: 0.4rem;height: 8.16rem">
+    <wv-flex :gutter="10" style="width: 90%;margin:auto;border-bottom: 1px solid #D2D2D2">
       <wv-flex-item>
         <div class="placeholder task_number">1200分</div>
         <div class="placeholder task_text">总通话时长</div>
@@ -36,10 +37,11 @@
         </div>
       </wv-flex-item>
     </wv-flex>
-    <wv-group>
+    </div>
+    <div style="margin-top: 0.4rem;background: #FFFFFF">
       <wv-cell title="问题反馈" value="" is-link to="/" style="font-size: 0.56rem"></wv-cell>
-      <wv-cell title="关于闪电呼" value="" is-link to="/" style="font-size: 0.56rem"></wv-cell>
-    </wv-group>
+      <wv-cell title="关于闪电呼" value="" is-link to="/relevant" style="font-size: 0.56rem"></wv-cell>
+    </div>
     <!--<router-link to="/login">-->
       <div class="button_return" @click="showDialog('ios')">退出登陆</div>
     <!--</router-link>-->
@@ -86,9 +88,10 @@ export default {
   }
   .profile_content{
     width: 100%;
-    height: 7.28rem;
+    height: 6.28rem;
     background-color: #32CCBC;
-    padding: 2%;
+    padding-top: 2%;
+    margin-top: 1.8rem;
   }
   .head{
     width: 3rem;
@@ -120,6 +123,7 @@ export default {
   .task_number{
     font-size: 0.64rem;
     color: #02A2D1;
+    margin-top: 1.02rem;
   }
   .task_text{
     font-size: 0.52rem;
@@ -133,7 +137,7 @@ export default {
   }
   .progress_text{
     font-size: 0.52rem;
-
+    margin-bottom: 1.12rem;
     /*margin-bottom: 1.12rem;*/
   }
   .button_return{
@@ -142,7 +146,7 @@ export default {
     font-size: 0.64rem;
     color: #FFFFFF;
     background: #32CCBC;
-    margin: 1.64rem auto 0;
+    margin: 1rem auto 0;
     border-radius: 0.2rem;
     text-align: center;
     line-height: 1.6rem;

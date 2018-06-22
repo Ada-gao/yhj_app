@@ -1,61 +1,59 @@
 <template>
   <div class="page">
-    <div class="page__hd">
-      <h1 class="page__title">云呼叫</h1>
+    <wv-header title="任务列表" :fixed="true" background-color="#32CCBC">
+      <div class="btn-back" slot="left">
+        <i class="iconfont icon-fanhui" @click="$router.push('/')"></i>
+      </div>
+    </wv-header>
+    <div class="call_content">
+      <div class="call_time">
+        <wv-flex :gutter="10">
+          <wv-flex-item flex="3">
+            <div class="placeholder iconfont icon-fanhui place"></div>
+          </wv-flex-item>
+          <wv-flex-item flex="5">
+            <div class="placeholder call_year">2018年6月20日</div>
+          </wv-flex-item>
+          <wv-flex-item flex="3">
+            <div class="placeholder iconfont icon-fanhui icon_jian place"></div>
+          </wv-flex-item>
+        </wv-flex>
+        <div class="call_nav">
+          <p style="background: #32CCBC;border-radius: 3px;color: white">未完成 (29)</p>
+          <p>已完成 (30)</p>
+        </div>
+      </div>
     </div>
 
-    <wv-search-bar placeholder="搜索客户" v-model="keyword" :result="filterResult">
-      <wv-group v-show="keyword">
-        <wv-cell v-for="customer in filterResult" :key="customer.name" :title="title(customer.name, customer.mobile)" >
-          <i class="icon-scrollvertical iconfont"  slot="icon"/>
-        </wv-cell>
+    <div class="page-infinite-wrapper" ref="wrapper">
+      <wv-group title="" infinite-scroll-distance="50">
+        <wv-cell-swipe title="小阿西" is-link to="/details-y"></wv-cell-swipe>
+        <wv-cell-swipe title="小阿西" is-link to="/details-y"></wv-cell-swipe>
+        <wv-cell-swipe title="小阿西" is-link to="/details-y"></wv-cell-swipe>
+        <wv-cell-swipe title="小阿西" is-link to="/details-y"></wv-cell-swipe>
+        <wv-cell-swipe title="小阿西" is-link to="/details-y"></wv-cell-swipe>
+        <wv-cell-swipe title="小阿西" is-link to="/details-y"></wv-cell-swipe>
+        <wv-cell-swipe title="小阿西" is-link to="/details-y"></wv-cell-swipe>
+        <wv-cell-swipe title="小阿西" is-link to="/details-y"></wv-cell-swipe>
+        <wv-cell-swipe title="小阿西" is-link to="/details-y"></wv-cell-swipe>
+        <wv-cell-swipe title="小阿西" is-link to="/details-y"></wv-cell-swipe>
+        <wv-cell-swipe title="小阿西" is-link to="/details-y"></wv-cell-swipe>
       </wv-group>
-    </wv-search-bar>
-
-    <wv-group :title="title(user.name, user.mobile)" v-for="user in users" :key="user.id">
-      <wv-cell v-for="customer in user.customers" :key="customer.name" v-on:click='triggerCall(user, customer)' class="cell-big-thumb">
-        <div slot="icon" style="position: relative;margin-right: 10px;">
-          <img :src="thumb" style="width: 50px; height: 50px;display: block">
-        </div>
-        <template slot="bd">
-          <p>{{ customer.name }}</p>
-          <p style="font-size: 13px;color: #888888;">VIP客户({{ mobileTail(customer.mobile) }})</p>
-        </template>
-      </wv-cell>
-    </wv-group>
-
-    <wv-popup :visible.sync="popupVisible" height="100%">
-      <div class="container">
-       <img :src="thumb" class="round">
-       <div class="text-gradient">请先接听来电，随后将自动呼叫对方</div>
-       <div class="callend">
-         <img :src="callEnd"  class="callimg" v-on:click='popupVisible = false'>
-       </div>
-      </div>
-    </wv-popup>
-    <wv-footer class="footer-copyright" text="Copyright © 2018 上海甦翔投资咨询有限公司"/>
+      <p class="loading-tips">
+        <wv-spinner type="snake" color="#444" :size="24"></wv-spinner>
+      </p>
+    </div>
   </div>
 </template>
 
 <script>
-import logoImg from '../assets/images/logo.png'
-// import axios from 'axios'
-import thumb from '../assets/images/eythumb.png'
-import callEnd from '../assets/images/ic_call_end.png'
-
 export default {
   data () {
     return {
-      logoImg,
-      users: [],
-      keyword: '',
-      popupVisible: false,
-      thumb,
-      callEnd
     }
   },
   methods: {
-    triggerCall: function (callFrom, callTo) {
+  /*  triggerCall: function (callFrom, callTo) {
       console.log('Call customer:')
       console.log(callTo)
       // let vm = this
@@ -76,7 +74,7 @@ export default {
         mobile = mobile.substring(mobile.length - 4, mobile.length)
       }
       return mobile
-    }
+    } */
   },
   created: function () {
     // var vm = this
@@ -91,100 +89,58 @@ export default {
   mounted () {
   },
   computed: {
-    filterResult () {
+  /*  filterResult () {
       var allCustomers = []
       this.users.map(user => {
         allCustomers = allCustomers.concat(user.customers)
       })
       return allCustomers.filter(value => new RegExp(this.keyword, 'i').test(value.name))
-    }
+    } */
   }
 }
 </script>
 
 <style scoped lang="scss">
-  .logo {
-    display: block;
+  .call_content{
+    margin-top: 2rem;
+  }
+  .call_time{
+    height: 4.24rem;
+    width: 100%;
+    background: #FFFFFF;
+    /*position: absolute;*/
+    /*top: 1.8rem;*/
+    padding-top: 0.8rem;
+  }
+  .icon_jian{
+    color:#32CCBC;
+    transform:rotate(180deg);
+    -ms-transform:rotate(180deg);
+    -moz-transform:rotate(180deg);
+    -webkit-transform:rotate(180deg);
+    -o-transform:rotate(180deg);
+  }
+  .call_year{
+    font-size: 0.56rem;
+    text-align: center;
+  }
+  .place{
+    width: 22%;
     margin: 0 auto;
-    width: 75px;
   }
-
-  .page__hd {
-    padding: 25px;
-
-    .page__title {
-      text-align: center;
-      font-size: 20px;
-      font-weight: 400;
-    }
+  .call_nav{
+    width: 66%;
+    height: 1.064rem;
+    margin: 1.16rem auto 0;
+    line-height: 1.064rem;
+    border: 1px solid gainsboro;
+    border-radius: 4px;
+    color: gray;
   }
-
-  .page {
-    margin-bottom: 0;
-  }
-
-  .cell-icon {
-    display: block;
-    margin-right: 5px;
-    color: #2196f3;
-    overflow: hidden;
-    font-size: 20px;
-    width: 25px;
+  .call_nav>p{
+    width: 50%;
     text-align: center;
-  }
-
-  .container {
-    text-align: center;
-  }
-  .callend {
-    display: block;
-    position: absolute;
-    bottom: 20px;
-    margin: 0;
-    padding: 0;
-    width: 100%
-  }
-  .round {
-    border-radius: 50%;
-    border: 2px solid #73AD21;
-    width: 150px;
-    height: 150px;
-    margin-top: 40px;
-  }
-  .callimg {
-    border-radius: 50%;
-    border: 2px solid #d81e06;
-    padding:20px;
-    width:50px;
-  }
-  .fixed {
-    display: block;
-    width: 50px;
-    height: 50px;
-    margin-left: auto;
-    margin-right:auto;
-  }
-
-  .text-gradient {
-    position: relative;
-    z-index:2;
-    display: inline-block;
-    color: black;
-    font-size: 20px;
-    background-image: -webkit-linear-gradient(left, #147B96, #E6D205 25%, #147B96 50%, #E6D205 75%, #147B96);
-    -webkit-text-fill-color: transparent;
-    -webkit-background-clip: text;
-    -webkit-background-size: 200% 100%;
-    -webkit-animation: masked-animation 2s infinite linear;
-  }
-  @-webkit-keyframes masked-animation {
-    0% { background-position: 0 0;}
-    100% { background-position: -100% 0;}
-  }
-
-  img {
-    margin-left: auto;
-    margin-right:auto;
-    display:block;
+    font-size: 0.48rem;
+    float: left;
   }
 </style>

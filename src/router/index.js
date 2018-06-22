@@ -15,7 +15,8 @@ routes.push({
   name: 'home',
   meta: {
     title: '首页',
-    description: '首页'
+    description: '首页',
+    requiresAuth: true
   }
 })
 
@@ -57,6 +58,30 @@ routes.push({
   meta: {
     title: '申请试用',
     description: '试用',
+    requiresAuth: false,
+    tabShow: false
+  }
+})
+
+routes.push({
+  path: '/relevant',
+  component: resolve => require(['../pages/examples/relevant.vue'], resolve),
+  name: 'relevant',
+  meta: {
+    title: '关于闪电呼',
+    description: '关于',
+    requiresAuth: false,
+    tabShow: false
+  }
+})
+
+routes.push({
+  path: '/details-y',
+  component: resolve => require(['../pages/examples/customer-details.vue'], resolve),
+  name: 'details-y',
+  meta: {
+    title: 'details-y',
+    description: '已呼客户',
     requiresAuth: false,
     tabShow: false
   }

@@ -16,6 +16,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "china-area-data": "^4.0.0",
+    "v-distpicker": "^1.0.17",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "we-vue": "^2.1.2"

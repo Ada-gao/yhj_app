@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import WeVue from 'we-vue'
+import VDistpicker from 'v-distpicker'
 import 'we-vue/lib/style.css'
 import App from './app.vue'
 import './assets/style/ywh.scss'
@@ -10,7 +11,7 @@ Vue.config.productionTip = false
 Vue.config.devtools = true
 
 Vue.use(WeVue)
-
+Vue.component('v-distpicker', VDistpicker)
 router.afterEach((to) => {
   document.title = to.meta.title
 })
