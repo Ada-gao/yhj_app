@@ -88,6 +88,18 @@ routes.push({
 })
 
 routes.push({
+  path: '/feedback',
+  component: resolve => require(['../pages/examples/feedback.vue'], resolve),
+  name: 'feedback',
+  meta: {
+    title: 'feedback',
+    description: '问题反馈',
+    requiresAuth: false,
+    tabShow: false
+  }
+})
+
+routes.push({
   path: '*',
   component: resolve => require(['../pages/404.vue'], resolve),
   name: '404',

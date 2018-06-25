@@ -41,72 +41,72 @@
     <wv-flex :gutter="10" style="width: 96%;margin: 0 auto;">
       <wv-flex-item @click.native="industryPickerShow = true">
         <div class="placeholder task_number">
-          <input class="trial_company weui-input" placeholder="所属行业" :value="industry | pickerValueFilter" />
+          <input class="trial_company weui-input" placeholder="所属行业" :value="industryType | pickerValueFilter" />
           <!--<input type="text" placeholder="所在地" class="trial_company" >-->
         </div>
       </wv-flex-item>
       <wv-flex-item @click.native="scalePickerShow = true">
         <div class="placeholder task_number"></div>
-        <input class="trial_company weui-input" placeholder="公司规模" :value="scale | pickerValueFilter" />
+        <input class="trial_company weui-input" placeholder="公司规模" :value="scales | pickerValueFilter" />
       </wv-flex-item>
     </wv-flex>
     <p style="font-size: 0.6rem;margin: 1.18rem auto 0;width: 87%">联系人信息</p>
     <input type="text" placeholder="联系人姓名" class="trial_company" v-model="contact">
     <wv-input placeholder="请输入手机号" class="verification" v-model="mobile">
-      <button class="weui-vcode-btn" slot="ft" @click="trialVerification">获取验证码</button>
+      <button v-show="show" class="weui-vcode-btn" slot="ft" @click="trialVerification">获取验证码</button>
+      <button v-show="!show" class="weui-vcode-btn" slot="ft">{{count}}s</button>
     </wv-input>
     <input type="tel" placeholder="请输入验证码" class="trial_company" v-model="verification">
     <p class="trial_footer">请如实填写申请信息，我们将于1个工作日内与您取得联系</p>
-    <div class="trial_button">申请体验</div>
+    <div class="trial_button" @click="trialApply">申请体验</div>
     <wv-picker
       :visible.sync="industryPickerShow"
-      v-model="industry"
+      v-model="industryType"
       :columns="industryColumns"
       @confirm="confirmIndustry"
     />
     <wv-picker
       :visible.sync="scalePickerShow"
-      v-model="scale"
+      v-model="scales"
       :columns="scaleColumns"
       @confirm="confirmScale"
     />
   </div>
 </template>
-<script>
+<script type="es6">
 import VDistpicker from 'v-distpicker'
+import { Toast } from 'we-vue'
 import { postTrial } from '../api/api'
 import { postVerification } from '../api/api'
+import { getIndustry } from '../api/api'
+import { getOrg } from '../api/api'
+import { postVerify } from '../api/api'
 export default {
   components: { VDistpicker },
   data () {
     return {
+      show: true,
+      count: '',
+      timer: null,
       companyName: '',
       companyProvince: '',
       companyCity: '',
       contact: '',
+      industry: '',
       orgZize: '',
       mobile: '',
       verification: '',
       industryValue: [],
       scaleValue: [],
-      ticketPickerShow: false,
-      regionPickerShow: false,
       industryPickerShow: false,
       scalePickerShow: false,
-      ticket: [''],
-      region: [''],
-      industry: [''],
-      scale: [''],
+      industryType: [''],
+      scales: [''],
       fruit: [{name: 'Apple', age: 1}],
       industryColumns: [
         {
           values: [
-            '',
-            '销售',
-            '餐饮',
-            '保洁',
-            '房地产',
-            '自由职业'
+            ''
           ],
           defaultIndex: 2
         }
@@ -114,28 +114,25 @@ export default {
       scaleColumns: [
         {
           values: [
-            '',
-            '10-15',
-            '15-20',
-            '20-50',
-            '50-100',
-            '100-1000',
-            '1000-1500',
-            '1500-2000',
-            '2000-5000'
+            ''
           ],
           defaultIndex: 2
         }
       ]
     }
   },
+  mounted () {
+    this.Industry()
+    this.Scale()
+  },
   methods: {
     onChangeProvince (province) {
-      this.province = province.value
+      this.companyProvince = province.value
     },
     onChangeCity (city) {
-      this.city = city.value
+      this.companyCity = city.value
     },
+    // 提交申请体验
     trialApply () {
       let params = {
         companyName: this.companyName,
@@ -143,27 +140,83 @@ export default {
         companyCity: this.companyCity,
         contact: this.contact,
         mobile: this.mobile,
+        industry: this.industry,
+        industryType: null,
         orgZize: this.orgZize,
         status: 0
       }
-   /* postTrial(params).then(res => {
-
-      }) */
+      if (this.mobile === '' || this.mobile.length < 11) {
+        Toast({
+          duration: 1000,
+          message: '请检查手机号是否有误',
+          type: 'text'
+        })
+      } else {
+        postVerify(this.mobile, this.verification).then((res) => {
+          if (res.status === 200) {
+            postTrial(params).then(res => {
+              if (res.status === 200) {
+                Toast.success('提交成功')
+                this.$router.push({path: '/login'})
+              }
+            })
+          }
+        })
+      }
     },
-    trialVerification () {
-      let mobilePhone = {mobile:this.mobile}
-      postVerification(mobilePhone).then(res => {
-        console.log(res)
-      })
+    // 发送验证码
+    trialVerification: function () {
+      let mobilePhone = this.mobile
+      const TIME_COUNT = 60
+      if (this.mobile === '' || this.mobile.length < 11) {
+        Toast({
+          duration: 1000,
+          message: '请检查手机号是否有误',
+          type: 'text'
+        })
+      } else {
+        if (!this.timer) {
+          this.count = TIME_COUNT
+          this.show = false
+          this.timer = setInterval(() => {
+            if (this.count > 0 && this.count <= TIME_COUNT) {
+              this.count--
+            } else {
+              this.show = true
+              clearInterval(this.timer)
+              this.timer = null
+            }
+          }, 1000)
+        }
+        postVerification(mobilePhone).then(res => {
+        })
+      }
     },
     confirmIndustry (picker) {
-      this.industry = picker.getValues()
+      this.industryType = picker.getValues()
+      this.industry = this.industryType[0]
     },
     confirmScale (picker) {
-      this.industry = picker.getValues()
+      this.scales = picker.getValues()
+      this.orgZize = this.scales[0]
+    },
+    // 获取行业
+    Industry () {
+      getIndustry().then((res) => {
+        res.data.map((item) => {
+          this.industryColumns[0].values.push(item.name)
+        })
+      })
+    },
+    // 获取行业规模
+    Scale () {
+      getOrg().then((res) => {
+        res.data.map((item) => {
+          this.scaleColumns[0].values.push(item.label)
+        })
+      })
     }
   },
-
   filters: {
     pickerValueFilter (val) {
       if (Array.isArray(val)) {
@@ -237,5 +290,8 @@ export default {
   .distpicker-address-wrapper{
     width: 100%;
     margin: 0 auto;
+  }
+  .trial_Prompt{
+    font-size: 0.8rem;
   }
 </style>

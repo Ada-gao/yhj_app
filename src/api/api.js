@@ -10,7 +10,17 @@ axios.interceptors.request.use(config => {
   return Promise.reject(error)
 })
 
+// 登陆验证
 export const requestLogin = params => axios.post('/auth/login', params)
+// 获取用户信息
 export const getUser = () => axios.get('/auth/user')
-export const postTrial = params => axios.post('/api/trial',params)
-export const postVerification = params => axios.post('/api/sms/send',params)
+// 提交申请体验
+export const postTrial = params => axios.post('/trial', params)
+// 发送验证码
+export const postVerification = (mobilePhone) => axios.post('/sms/send?phoneNum=' + mobilePhone)
+// 检验验证码
+export const postVerify = (phoneNum, verifyCode) => axios.post('/sms/verify?phoneNum=' + phoneNum + '&verifyCode=' + verifyCode)
+// 获取行业分类
+export const getIndustry = () => axios.get('/industry/auth/getAllTypes')
+// 获取公司规模
+export const getOrg = () => axios.get('/dict/TypeorgSize')

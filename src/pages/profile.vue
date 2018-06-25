@@ -39,7 +39,7 @@
     </wv-flex>
     </div>
     <div style="margin-top: 0.4rem;background: #FFFFFF">
-      <wv-cell title="问题反馈" value="" is-link to="/" style="font-size: 0.56rem"></wv-cell>
+      <wv-cell title="问题反馈" value="" is-link to="/feedback" style="font-size: 0.56rem"></wv-cell>
       <wv-cell title="关于闪电呼" value="" is-link to="/relevant" style="font-size: 0.56rem"></wv-cell>
     </div>
     <!--<router-link to="/login">-->
@@ -48,7 +48,7 @@
   </div>
 </template>
 
-<script>
+<script type="es6">
 import { getUser } from '../api/api'
 import { Dialog } from 'we-vue'
 
