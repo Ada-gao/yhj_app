@@ -76,11 +76,7 @@
 <script type="es6">
   import VDistpicker from 'v-distpicker'
   import { Toast } from 'we-vue'
-  import { postTrial } from '../../api/api'
-  import { postVerification } from '../../api/api'
-  import { getIndustry } from '../../api/api'
-  import { getOrg } from '../../api/api'
-  import { postVerify } from '../../api/api'
+  import { postTrial, postVerification, getIndustry, getOrg, postVerify } from '../../api/api'
   export default {
     components: {VDistpicker},
     data () {
@@ -133,7 +129,7 @@
         this.companyCity = city.value
       },
       // 提交申请体验
-      trialApply () {
+      trialApply: function () {
         let params = {
           companyName: this.companyName,
           companyProvince: this.companyProvince,
@@ -145,7 +141,12 @@
           orgZize: this.orgZize,
           status: 0
         }
-        if (this.mobile === '' || this.mobile.length </script>
+        if (this.mobile === '' || this.mobile.length) {
+        }
+      }
+    }
+  }
+</script>
 <style scoped>
   .trial_title{
     width: 80%;

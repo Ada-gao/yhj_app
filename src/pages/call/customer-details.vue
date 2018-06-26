@@ -152,7 +152,7 @@ export default {
         {text: '无意向拒绝', value: '4'},
         {text: '有意向进一步跟进', value: '5'}
       ],
-      selected:'',
+      selected: '',
       message: '<p style="margin: 5px">客户：外呼</p>'
     }
   },
