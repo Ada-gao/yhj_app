@@ -39,8 +39,8 @@
     </wv-flex>
     </div>
     <div style="margin-top: 0.4rem;background: #FFFFFF">
-      <wv-cell title="问题反馈" value="" is-link to="/feedback" style="font-size: 0.56rem"></wv-cell>
-      <wv-cell title="关于闪电呼" value="" is-link to="/relevant" style="font-size: 0.56rem"></wv-cell>
+      <wv-cell title="问题反馈" value="" is-link to="/my/feedback" style="font-size: 0.56rem"></wv-cell>
+      <wv-cell title="关于闪电呼" value="" is-link to="/my/relevant" style="font-size: 0.56rem"></wv-cell>
     </div>
     <!--<router-link to="/login">-->
       <div class="button_return" @click="showDialog('ios')">退出登陆</div>
@@ -49,37 +49,36 @@
 </template>
 
 <script type="es6">
-import { getUser } from '../api/api'
-import { Dialog } from 'we-vue'
+  import { getUser } from '../../api/api'
+  import { Dialog } from 'we-vue'
 
-export default {
-  data () {
-    return {
-    }
-  },
-  mounted () {
-    let user = localStorage.getItem('token')
-    if (user) {
-      getUser().then((res) => {
-        this.sysUserName = res.data.username
-      })
-    }
-  },
-  methods: {
-    showDialog (skin, title) {
-      Dialog({
-        title: title,
-        message: '您确定要退出闪电呼吗？',
-        skin,
-        showCancelButton: true
-      }).then(() => {
-        this.$router.replace({path: '/login'})
-        localStorage.removeItem('token')
-      }).catch(() => {
-      })
+  export default {
+    data () {
+      return {}
+    },
+    mounted () {
+      let user = localStorage.getItem('token')
+      if (user) {
+        getUser().then((res) => {
+          this.sysUserName = res.data.username
+        })
+      }
+    },
+    methods: {
+      showDialog (skin, title) {
+        Dialog({
+          title: title,
+          message: '您确定要退出闪电呼吗？',
+          skin,
+          showCancelButton: true
+        }).then(() => {
+          this.$router.replace({path: '/login'})
+          localStorage.removeItem('token')
+        }).catch(() => {
+        })
+      }
     }
   }
-}
 </script>
 
 <style scoped lang="scss">

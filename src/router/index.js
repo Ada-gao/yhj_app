@@ -11,7 +11,7 @@ routes.push({
 
 routes.push({
   path: '/home',
-  component: resolve => require(['../pages/home.vue'], resolve),
+  component: resolve => require(['../pages/home/home.vue'], resolve),
   name: 'home',
   meta: {
     title: '首页',
@@ -22,7 +22,7 @@ routes.push({
 
 routes.push({
   path: '/profile',
-  component: resolve => require(['../pages/profile.vue'], resolve),
+  component: resolve => require(['../pages/my/profile.vue'], resolve),
   name: 'profile',
   meta: {
     title: '我的',
@@ -32,7 +32,7 @@ routes.push({
 
 routes.push({
   path: '/call',
-  component: resolve => require(['../pages/call.vue'], resolve),
+  component: resolve => require(['../pages/call/call.vue'], resolve),
   name: 'call',
   meta: {
     title: '数赟',
@@ -42,7 +42,7 @@ routes.push({
 
 routes.push({
   path: '/login',
-  component: resolve => require(['../pages/login.vue'], resolve),
+  component: resolve => require(['../pages/login/login.vue'], resolve),
   name: 'login',
   meta: {
     title: '登录',
@@ -52,8 +52,8 @@ routes.push({
 })
 
 routes.push({
-  path: '/trial',
-  component: resolve => require(['../pages/trial.vue'], resolve),
+  path: '/login/trial',
+  component: resolve => require(['../pages/login/trial.vue'], resolve),
   name: 'trial',
   meta: {
     title: '申请试用',
@@ -64,8 +64,8 @@ routes.push({
 })
 
 routes.push({
-  path: '/relevant',
-  component: resolve => require(['../pages/examples/relevant.vue'], resolve),
+  path: '/my/relevant',
+  component: resolve => require(['../pages/my/relevant.vue'], resolve),
   name: 'relevant',
   meta: {
     title: '关于闪电呼',
@@ -76,8 +76,8 @@ routes.push({
 })
 
 routes.push({
-  path: '/details-y',
-  component: resolve => require(['../pages/examples/customer-details.vue'], resolve),
+  path: '/call/details-y',
+  component: resolve => require(['../pages/call/customer-details.vue'], resolve),
   name: 'details-y',
   meta: {
     title: 'details-y',
@@ -88,8 +88,8 @@ routes.push({
 })
 
 routes.push({
-  path: '/feedback',
-  component: resolve => require(['../pages/examples/feedback.vue'], resolve),
+  path: '/my/feedback',
+  component: resolve => require(['../pages/my/feedback.vue'], resolve),
   name: 'feedback',
   meta: {
     title: 'feedback',

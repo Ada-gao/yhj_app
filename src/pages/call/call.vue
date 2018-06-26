@@ -25,19 +25,38 @@
       </div>
     </div>
 
-    <div class="page-infinite-wrapper" ref="wrapper">
+    <div class="page-infinite-wrapper" ref="wrapper" v-show="content==true">
       <wv-group title="" infinite-scroll-distance="50">
-        <wv-cell-swipe title="小阿西" is-link to="/details-y"></wv-cell-swipe>
-        <wv-cell-swipe title="小阿西" is-link to="/details-y"></wv-cell-swipe>
-        <wv-cell-swipe title="小阿西" is-link to="/details-y"></wv-cell-swipe>
-        <wv-cell-swipe title="小阿西" is-link to="/details-y"></wv-cell-swipe>
-        <wv-cell-swipe title="小阿西" is-link to="/details-y"></wv-cell-swipe>
-        <wv-cell-swipe title="小阿西" is-link to="/details-y"></wv-cell-swipe>
-        <wv-cell-swipe title="小阿西" is-link to="/details-y"></wv-cell-swipe>
-        <wv-cell-swipe title="小阿西" is-link to="/details-y"></wv-cell-swipe>
-        <wv-cell-swipe title="小阿西" is-link to="/details-y"></wv-cell-swipe>
-        <wv-cell-swipe title="小阿西" is-link to="/details-y"></wv-cell-swipe>
-        <wv-cell-swipe title="小阿西" is-link to="/details-y"></wv-cell-swipe>
+        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+      </wv-group>
+      <p class="loading-tips">
+        <wv-spinner type="snake" color="#444" :size="24"></wv-spinner>
+      </p>
+    </div>
+
+    <div class="page-infinite-wrapper" ref="wrapper" v-show="content==false">
+      <wv-group title="" infinite-scroll-distance="50">
+        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
       </wv-group>
       <p class="loading-tips">
         <wv-spinner type="snake" color="#444" :size="24"></wv-spinner>
@@ -50,9 +69,13 @@
 export default {
   data () {
     return {
+      content: true
     }
   },
   methods: {
+    contentShow () {
+      this.content = false
+    }
   /*  triggerCall: function (callFrom, callTo) {
       console.log('Call customer:')
       console.log(callTo)

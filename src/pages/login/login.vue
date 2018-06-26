@@ -24,12 +24,12 @@
     <div class="land" @click="login">
         登陆
       </div>
-    <div class="login_Application" @click="$router.push('/trial')">申请体验</div>
+    <div class="login_Application" @click="$router.push('/login/trial')">申请体验</div>
   </div>
 </template>
-<script>
-import { requestLogin } from '../api/api'
-import thumbSmall from '../assets/images/icon_tabbar.png'
+<script type="es6">
+import { requestLogin } from '../../api/api'
+import thumbSmall from '../../assets/images/icon_tabbar.png'
 import { Dialog } from 'we-vue'
 export default{
   data () {
