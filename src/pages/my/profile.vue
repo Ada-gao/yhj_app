@@ -48,37 +48,38 @@
   </div>
 </template>
 
-<script type="es6">
-  import { getUser } from '../../api/api'
-  import { Dialog } from 'we-vue'
+<script>
+import { getUser } from '../../api/api'
+import { Dialog } from 'we-vue'
 
-  export default {
-    data () {
-      return {}
-    },
-    mounted () {
-      let user = localStorage.getItem('token')
-      if (user) {
-        getUser().then((res) => {
-          this.sysUserName = res.data.username
-        })
-      }
-    },
-    methods: {
-      showDialog (skin, title) {
-        Dialog({
-          title: title,
-          message: '您确定要退出闪电呼吗？',
-          skin,
-          showCancelButton: true
-        }).then(() => {
-          this.$router.replace({path: '/login'})
-          localStorage.removeItem('token')
-        }).catch(() => {
-        })
-      }
+export default {
+  data () {
+    return {}
+  },
+  mounted () {
+    let user = localStorage.getItem('token')
+    if (user) {
+      getUser().then((res) => {
+        console.log(res)
+        // this.sysUserName = res.data.username
+      })
+    }
+  },
+  methods: {
+    showDialog (skin, title) {
+      Dialog({
+        title: title,
+        message: '您确定要退出闪电呼吗？',
+        skin,
+        showCancelButton: true
+      }).then(() => {
+        this.$router.replace({path: '/login'})
+        localStorage.removeItem('token')
+      }).catch(() => {
+      })
     }
   }
+}
 </script>
 
 <style scoped lang="scss">

@@ -12,8 +12,6 @@ axios.interceptors.request.use(config => {
 
 // 登陆验证
 export const requestLogin = params => axios.post('/auth/login', params)
-// 获取用户信息
-export const getUser = () => axios.get('/auth/user')
 // 提交申请体验
 export const postTrial = params => axios.post('/trial', params)
 // 发送验证码
@@ -24,3 +22,5 @@ export const postVerify = (phoneNum, verifyCode) => axios.post('/sms/verify?phon
 export const getIndustry = () => axios.get('/industry/auth/getAllTypes')
 // 获取公司规模
 export const getOrg = () => axios.get('/dict/TypeorgSize')
+// 获取用户信息
+export const getUser = () => axios.get('/app/me')

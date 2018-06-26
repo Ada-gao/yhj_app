@@ -19,15 +19,15 @@
           </wv-flex-item>
         </wv-flex>
         <div class="call_nav">
-          <p style="background: #32CCBC;border-radius: 3px;color: white">未完成 (29)</p>
-          <p>已完成 (30)</p>
+          <p @click="completeShow" ref="complete" class="call_complete">未完成 (29)</p>
+          <p @click="notShow" ref="not" class="not">已完成 (30)</p>
         </div>
       </div>
     </div>
 
-    <div class="page-infinite-wrapper" ref="wrapper" v-show="content==true">
+    <div class="page-infinite-wrapper" ref="wrapper" v-show="content==false">
       <wv-group title="" infinite-scroll-distance="50">
-        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+        <wv-cell-swipe title="小阿西未完成" is-link to="/call/details-y"></wv-cell-swipe>
         <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
         <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
         <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
@@ -44,9 +44,9 @@
       </p>
     </div>
 
-    <div class="page-infinite-wrapper" ref="wrapper" v-show="content==false">
+    <div class="page-infinite-wrapper" ref="wrapper" v-show="content==true">
       <wv-group title="" infinite-scroll-distance="50">
-        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+        <wv-cell-swipe title="小阿西已完成" is-link to="/call/details-y"></wv-cell-swipe>
         <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
         <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
         <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
@@ -64,40 +64,31 @@
     </div>
   </div>
 </template>
-
 <script>
 export default {
   data () {
     return {
-      content: true
+      content: true,
+      guigeSpan: '-1',
+      perDiv: null
+      // not: true
     }
   },
   methods: {
-    contentShow () {
+    completeShow () {
       this.content = false
+      this.$refs.complete.style.background = '#32CCBC'
+      this.$refs.complete.style.color = ''
+      this.$refs.not.style.color = '#b7b7b7'
+      this.$refs.not.style.background = '#FFFFFF'
+    },
+    notShow () {
+      this.content = true
+      this.$refs.complete.style.background = '#FFFFFF'
+      this.$refs.complete.style.color = '#b7b7b7'
+      this.$refs.not.style.color = '#FFFFFF'
+      this.$refs.not.style.background = '#32CCBC'
     }
-  /*  triggerCall: function (callFrom, callTo) {
-      console.log('Call customer:')
-      console.log(callTo)
-      // let vm = this
-      // vm.popupVisible = true
-      // axios.get('/api/call/' + callFrom.mobile + '/' + callTo.mobile)
-      //   .then(function (response) {
-      //     console.log(response)
-      //   })
-      //   .catch(function (error) {
-      //     console.log(error)
-      //   })
-    },
-    title: function (name, mobile) {
-      return name + '(' + this.mobileTail(mobile) + ')'
-    },
-    mobileTail: function (mobile) {
-      if (mobile.length >= 11) {
-        mobile = mobile.substring(mobile.length - 4, mobile.length)
-      }
-      return mobile
-    } */
   },
   created: function () {
     // var vm = this
@@ -110,6 +101,7 @@ export default {
     //   })
   },
   mounted () {
+    // let today = new Date()
   },
   computed: {
   /*  filterResult () {
@@ -142,6 +134,14 @@ export default {
     -moz-transform:rotate(180deg);
     -webkit-transform:rotate(180deg);
     -o-transform:rotate(180deg);
+  }
+  .call_complete{
+    background: #32CCBC;
+    border-radius: 3px;
+    color: white
+  }
+  .not{
+    border-radius: 3px;
   }
   .call_year{
     font-size: 0.56rem;
