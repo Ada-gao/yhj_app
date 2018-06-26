@@ -10,6 +10,28 @@ axios.interceptors.request.use(config => {
   return Promise.reject(error)
 })
 
+axios.interceptors.response.use(response => {
+  console.log(response.config.url)
+  return response
+}, error => {
+  console.log(error.response.config.url)
+  console.log(error.response)
+  if (error.response && error.response.status === 401) {
+    localStorage.removeItem('token')
+    this.$toast.text('你的身份信息已失效，请重新输入密码登录。')
+    this.$router.replace({
+      path: '/login',
+      query: {redirect: this.$router.currentRoute.fullPath}
+    })
+  } else {
+    this.$toast.fail({
+      duration: 1000,
+      message: error.response
+    })
+  }
+  return Promise.reject(error.response)
+})
+
 // 登陆验证
 export const requestLogin = params => axios.post('/auth/login', params)
 // 提交申请体验
@@ -23,4 +45,4 @@ export const getIndustry = () => axios.get('/industry/auth/getAllTypes')
 // 获取公司规模
 export const getOrg = () => axios.get('/dict/TypeorgSize')
 // 获取用户信息
-export const getUser = () => axios.get('/app/me')
+export const getUser = () => axios.get('/auth/user')

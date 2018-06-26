@@ -46,7 +46,9 @@ export default{
       let loginParams = {username: this.account, password: this.password}
       requestLogin(loginParams).then(res => {
         localStorage.setItem('token', res.data.token)
-        this.$router.push({path: '/home'})
+        const redirect = this.$route.query.redirect || '/home'
+        console.log('to jump to :' + redirect)
+        this.$router.replace(redirect)
       }).catch(() => {
         Dialog({message: '请检查账号或密码是否真确'})
       })

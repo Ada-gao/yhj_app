@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <wv-header title="我的" :fixed="true" background-color="#32CCBC">
+    <wv-header title="我的" :fixed="false" background-color="#32CCBC" class="x-header">
     </wv-header>
     <div class="profile_content">
       <div class="head">

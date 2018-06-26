@@ -58,4 +58,8 @@ export default {
   .weui-tabbar__label{
     line-height: 1.6;
   }
+  .weui-tabbar{
+    margin-bottom: constant(safe-area-inset-bottom);
+    margin-bottom: env(safe-area-inset-bottom);
+  }
 </style>

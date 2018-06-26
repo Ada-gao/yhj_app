@@ -1,6 +1,6 @@
 <template>
   <div class="page" style="background: #F5F5F5;">
-    <wv-header title="首页" :fixed="false" background-color="#32CCBC">
+    <wv-header title="首页" :fixed="false" background-color="#32CCBC" class="x-header">
       <div class="btn-back" slot="left">
       </div>
     </wv-header>
@@ -87,7 +87,7 @@ export default {
   .home_header{
     height: 5.42rem;
     width: 100%;
-    margin-top: 0.4rem;
+    margin-top: 1.29rem;
     margin-bottom: 0.06rem;
     background: #FFFFFF;
   }

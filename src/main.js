@@ -6,6 +6,8 @@ import App from './app.vue'
 import './assets/style/ywh.scss'
 import './assets/iconfont/iconfont.css'
 import router from './router'
+import FastClick from 'fastclick'
+import VueCordova from './vue-cordova/index'
 
 Vue.config.productionTip = false
 Vue.config.devtools = true
@@ -15,6 +17,10 @@ Vue.component('v-distpicker', VDistpicker)
 router.afterEach((to) => {
   document.title = to.meta.title
 })
+
+FastClick.attach(document.body)
+
+Vue.use(VueCordova)
 
 /* eslint-disable no-new */
 new Vue({
@@ -51,7 +57,7 @@ router.beforeEach((to, from, next) => {
   }
   let user = localStorage.getItem('token')
   if (!user && requiresAuth && to.path !== '/login') {
-    next({ path: '/login' })
+    next({path: '/login', query: {redirect: to.fullPath}})
   } else {
     next()
   }
