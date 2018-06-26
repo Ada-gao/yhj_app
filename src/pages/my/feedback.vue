@@ -14,10 +14,9 @@
     <div class="feedback_button">保存</div>
     <wv-actionsheet :type="type" title="<h3 style='color: red;'>一个大标题</h3><p>最多两行</p>" :actions="actions" cancel-text="取消" v-model="sheetVisible"/>
   </div>
-  </div>
 </template>
 <script type="es6">
-import { ActionSheet } from 'we-vue'
+// import { ActionSheet } from 'we-vue'
 export default {
   data () {
     return {

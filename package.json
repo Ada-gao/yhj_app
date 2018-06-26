@@ -16,6 +16,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "china-area-data": "^4.0.0",
+    "moment": "^2.22.2",
     "v-distpicker": "^1.0.17",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
@@ -38,7 +39,7 @@
     "babel-preset-stage-2": "^6.22.0",
     "babel-register": "^6.22.0",
     "chalk": "^2.0.1",
-    "chromedriver": "^2.27.2",
+    "chromedriver": "^2.40.0",
     "copy-webpack-plugin": "^4.0.1",
     "cross-spawn": "^5.0.1",
     "css-loader": "^0.28.0",

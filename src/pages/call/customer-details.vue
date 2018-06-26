@@ -58,9 +58,9 @@
           </wv-flex-item>
           <wv-flex-item>
             <div>
-              <select v-model="selected" class="Result_select">
-                <option v-for="item in items" style="font-size: 0.56rem;text-align: center">{{item.text}}</option>
-              </select>
+              <!--<select v-model="selected" class="Result_select">-->
+                <!--<option v-for="item in items" style="font-size: 0.56rem;text-align: center">{{item.text}}</option>-->
+              <!--</select>-->
             </div>
           </wv-flex-item>
         </wv-flex>
@@ -70,9 +70,9 @@
           </wv-flex-item>
           <wv-flex-item>
             <div>
-              <select v-model="selected" class="Result_select">
-                <option v-for="item in items" style="font-size: 0.56rem;text-align: center">{{item.text}}</option>
-              </select>
+              <!--<select v-model="selected" class="Result_select">-->
+                <!--<option v-for="item in items" style="font-size: 0.56rem;text-align: center">{{item.text}}</option>-->
+              <!--</select>-->
             </div>
           </wv-flex-item>
         </wv-flex>
@@ -145,7 +145,7 @@ export default {
       thumbSmall,
       resultShow: false,
       inform: false,
-      items:[
+      items: [
         {text: '占线', value: '1'},
         {text: '未外呼', value: '2'},
         {text: '无人接听', value: '3'},
