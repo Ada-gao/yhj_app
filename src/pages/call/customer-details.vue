@@ -135,7 +135,7 @@
     </div>
   </div>
 </template>
-<script type="es6">
+<script>
 import photoImg from '../../assets/images/photo.png'
 import thumbSmall from '../../assets/images/icon_tabbar.png'
 export default {
@@ -161,7 +161,7 @@ export default {
   }
 }
 </script>
-<style scoped lang="scss">
+<style lang="scss">
   .details_left{
     width: 100%;
     height: 9.28rem;

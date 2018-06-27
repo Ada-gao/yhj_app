@@ -3,7 +3,7 @@
     <wv-header title="我的" :fixed="true" background-color="#32CCBC">
     </wv-header>
     <div class="profile_content">
-      <div class="head">
+      <div class="profile_head">
       </div>
       <p class="profile_name">销售ABC</p>
       <p class="profile_company">上海甦翔投资咨询有限公司</p>
@@ -87,7 +87,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
   .wv-header .wv-header-title[data-v-a5b8d5b6]{
     font-size: 0.72rem;
   }
@@ -96,9 +96,9 @@ export default {
     height: 6.28rem;
     background-color: #32CCBC;
     padding-top: 2%;
-    margin-top: 1.8rem;
+    margin-top: 2rem;
   }
-  .head{
+  .profile_head{
     width: 3rem;
     height: 3rem;
     background: rebeccapurple;
