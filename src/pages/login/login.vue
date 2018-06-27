@@ -70,7 +70,7 @@ export default{
   }
 }
 </script>
-<style scoped lang="scss">
+<style lang="scss">
  .LOGO{
    width: 2.6rem;
    height: 2.6rem;
@@ -160,4 +160,7 @@ export default{
     font-size: 1.9rem;
     color: #32CCBC;
   }
+ .weui-toast_text .weui-toast__content[data-v-4af60de0]{
+   font-size: .6em;
+ }
 </style>

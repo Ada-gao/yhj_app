@@ -225,7 +225,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss">
   .trial_title{
     width: 80%;
     margin:auto;
@@ -290,5 +290,13 @@ export default {
   }
   .trial_Prompt{
     font-size: 0.8rem;
+  }
+  .distpicker-address-wrapper select{
+    padding: 0;
+    width: 41%;
+    font-size: 0.56rem;
+    height: 1.2rem;
+    margin-left: 0.8rem;
+    outline: none;
   }
 </style>
