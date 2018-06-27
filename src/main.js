@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import WeVue from 'we-vue'
+import moment from 'moment'
 import VDistpicker from 'v-distpicker'
 import 'we-vue/lib/style.css'
 import App from './app.vue'
@@ -8,6 +9,7 @@ import './assets/iconfont/iconfont.css'
 import router from './router'
 import FastClick from 'fastclick'
 import VueCordova from './vue-cordova/index'
+import VueClipboard from 'vue-clipboard2'
 
 Vue.config.productionTip = false
 Vue.config.devtools = true
@@ -15,6 +17,7 @@ Vue.config.debug = true
 
 Vue.use(WeVue)
 Vue.component('v-distpicker', VDistpicker)
+Vue.use(VueClipboard)
 
 FastClick.attach(document.body)
 
@@ -29,6 +32,10 @@ if (window.location.protocol === 'file:' || window.location.port === '8080' || w
   cordovaScript.setAttribute('src', 'cordova.js')
   document.body.appendChild(cordovaScript)
 }
+
+Vue.filter('moment', function (dataStr, pattern = 'YYYY-MM-DD HH:mm:ss') {
+  return moment(dataStr).format(pattern)
+})
 
 /* eslint-disable no-new */
 new Vue({

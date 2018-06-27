@@ -12,7 +12,9 @@
     <p class="relevant_edition">版权所有：上海数赟科技有限公司</p>
     <wv-footer style="font-size: 0.56rem" class="footer-demo" text="Copyright © 2018 suxiang.All Rights Reserved"/>
     <wv-group title="" style="margin-top: 1.86rem">
-      <wv-cell title="微信公众号" value="gh_374030c43f3c" is-link @click="showDialog('ios')"></wv-cell>
+      <wv-cell title="微信公众号" value="gh_374030c43f3c" is-link v-clipboard:copy="message"
+               v-clipboard:success="onCopy"
+      ></wv-cell>
     </wv-group>
   </div>
 </template>
@@ -22,15 +24,23 @@ import { Dialog } from 'we-vue'
 export default {
   data () {
     return {
-      logoImg
+      logoImg,
+      message: 'gh_374030c43f3c'
     }
   },
   methods: {
-    showDialog (skin, title) {
+    // showDialog (skin, title) {
+    //   Dialog({
+    //     title: '微信公众号已复制',
+    //     message: '点击微信-通讯录-公众号-添加<br/>在搜索栏中粘贴公众号，搜索关注“数赟科技”？',
+    //     skin,
+    //     showConfirmButton: true
+    //   }).then(() => {})
+    // },
+    onCopy: function (e) {
       Dialog({
         title: '微信公众号已复制',
         message: '点击微信-通讯录-公众号-添加<br/>在搜索栏中粘贴公众号，搜索关注“数赟科技”？',
-        skin,
         showConfirmButton: true
       }).then(() => {})
     }

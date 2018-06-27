@@ -8,7 +8,7 @@
       <div class="home_header">
         <div class="home_time">
         <p class="iconfont icon-rili" style="float: left;margin: 0 0.2rem"></p>
-        <p>2018年6月12日 星期一</p>
+        <p>{{dateTime}}</p>
         </div>
         <div class="home_head">
           <div class="head">
@@ -61,8 +61,12 @@ export default {
   data () {
     return {
       thumbSmall,
-      percent: 60
+      percent: 60,
+      dateTime: ''
     }
+  },
+  mounted () {
+    this.time()
   },
   methods: {
     onClick () {
@@ -70,6 +74,21 @@ export default {
     },
     selected (route) {
       return this.$router.currentRoute.path === route
+    },
+    time () {
+      var nowdate = new Date()
+      var y = nowdate.getFullYear()
+      var m = nowdate.getMonth() + 1
+      var d = nowdate.getDate()
+      var my = nowdate.getDay()
+      var weekday = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
+      if (m < 10) {
+        m = '0' + m
+      }
+      if (d < 10) {
+        d = '0' + d
+      }
+      this.dateTime = y + '年' + m + '月' + d + '日' + weekday[my]
     }
   },
   computed: {

@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { getUser } from '../../api/api'
+import { getUser, getTaskStatistics } from '../../api/api'
 import { Dialog } from 'we-vue'
 
 export default {
@@ -63,6 +63,11 @@ export default {
         console.log(res)
         // this.sysUserName = res.data.username
       })
+      getTaskStatistics().then((res) => {
+        // console.log(res)
+      })
+    } else if (!user || user === '') {
+      this.$router.replace({path: '/login'})
     }
   },
   methods: {
