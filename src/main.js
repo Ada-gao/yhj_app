@@ -7,18 +7,34 @@ import App from './app.vue'
 import './assets/style/ywh.scss'
 import './assets/iconfont/iconfont.css'
 import router from './router'
+import FastClick from 'fastclick'
+import VueCordova from './vue-cordova/index'
 import VueClipboard from 'vue-clipboard2'
+
 Vue.config.productionTip = false
 Vue.config.devtools = true
-Vue.prototype.$moment = moment
-Vue.use(VueClipboard)
+Vue.config.debug = true
+
 Vue.use(WeVue)
 Vue.component('v-distpicker', VDistpicker)
+Vue.use(VueClipboard)
+
+FastClick.attach(document.body)
+
+Vue.use(VueCordova)
+
+console.log('----------port:' + window.location.port)
+// add cordova.js only if serving the app through file://
+if (window.location.protocol === 'file:' || window.location.port === '8080' || window.location.port === '9080' || window.location.port === '') {
+  console.log('attach cordova.js')
+  var cordovaScript = document.createElement('script')
+  cordovaScript.setAttribute('type', 'text/javascript')
+  cordovaScript.setAttribute('src', 'cordova.js')
+  document.body.appendChild(cordovaScript)
+}
+
 Vue.filter('moment', function (dataStr, pattern = 'YYYY-MM-DD HH:mm:ss') {
   return moment(dataStr).format(pattern)
-})
-router.afterEach((to) => {
-  document.title = to.meta.title
 })
 
 /* eslint-disable no-new */
@@ -48,6 +64,10 @@ new Vue({
   }
 })
 
+router.afterEach((to) => {
+  document.title = to.meta.title
+})
+
 router.beforeEach((to, from, next) => {
   // 未显示申明，默认必须登录
   const requiresAuth = to.meta.requiresAuth === undefined ? true : to.meta.requiresAuth
@@ -56,7 +76,7 @@ router.beforeEach((to, from, next) => {
   }
   let user = localStorage.getItem('token')
   if (!user && requiresAuth && to.path !== '/login') {
-    next({ path: '/login' })
+    next({path: '/login', query: {redirect: to.fullPath}})
   } else {
     next()
   }

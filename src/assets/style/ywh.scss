@@ -53,3 +53,10 @@ img {
   opacity: 0;
   transform: translateX(100%);
 }
+
+.is-iOS .x-header {
+  position: fixed;
+  top: 1.25rem; // iOs 10 or lower
+  top: constant(safe-area-inset-top); // iOs 11
+  top: env(safe-area-inset-top); // iOs 11+ (feature)
+}
