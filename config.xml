@@ -9,6 +9,7 @@
     </author>
     <preference name="DisallowOverscroll" value="true" />
     <preference name="LogLevel" value="DEBUG" />
+    <preference name="StatusBarBackgroundColor" value="#9c9c9c" />
     <preference name="target-device" value="handset" />
     <preference name="deployment-target" value="9.0" />
     <preference name="android-minSdkVersion" value="19" />

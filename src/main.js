@@ -11,6 +11,7 @@ import VueCordova from './vue-cordova/index'
 
 Vue.config.productionTip = false
 Vue.config.devtools = true
+Vue.config.debug = true
 
 Vue.use(WeVue)
 Vue.component('v-distpicker', VDistpicker)
