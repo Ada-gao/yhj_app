@@ -31,7 +31,8 @@
 import { requestLogin } from '../../api/api'
 import thumbSmall from '../../assets/images/icon_tabbar.png'
 import { Dialog, Toast } from 'we-vue'
-export default{
+
+export default {
   data () {
     return {
       thumbSmall,
@@ -46,7 +47,7 @@ export default{
       let loginParams = {username: this.account, password: this.password}
       if (this.account === '' || this.password === '') {
         Toast.text({
-          duration: 1000,
+          duration: 10000,
           message: '账号或密码不能为空！'
         })
       } else {
