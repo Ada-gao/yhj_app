@@ -6,7 +6,7 @@
       </div>
     </div>
     <p class="title_one">闪电呼</p>
-    <p class="title_two">快如闪电，一击即中</p>
+    <p class="title_two">快如闪电，一击即中!</p>
     <!--<wv-group>-->
       <!--<wv-input placeholder="请输入账号" v-model="account"></wv-input>-->
       <!--<wv-input placeholder="请输入密码" v-model="password"></wv-input>-->
@@ -30,7 +30,7 @@
 <script type="es6">
 import { requestLogin } from '../../api/api'
 import thumbSmall from '../../assets/images/icon_tabbar.png'
-import { Dialog } from 'we-vue'
+import { Dialog, Toast } from 'we-vue'
 export default{
   data () {
     return {
@@ -44,12 +44,19 @@ export default{
   methods: {
     login: function () {
       let loginParams = {username: this.account, password: this.password}
-      requestLogin(loginParams).then(res => {
-        localStorage.setItem('token', res.data.token)
-        this.$router.push({path: '/home'})
-      }).catch(() => {
-        Dialog({message: '请检查账号或密码是否真确'})
-      })
+      if (this.account === '' || this.password === '') {
+        Toast.text({
+          duration: 1000,
+          message: '账号或密码不能为空！'
+        })
+      } else {
+        requestLogin(loginParams).then(res => {
+          localStorage.setItem('token', res.data.token)
+          this.$router.push({path: '/home'})
+        }).catch(() => {
+          Dialog({message: '请检查账号或密码是否真确'})
+        })
+      }
     },
     iconSee: function () {
       if (this.asee === true) {

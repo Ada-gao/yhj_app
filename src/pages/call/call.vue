@@ -12,7 +12,7 @@
             <div class="placeholder iconfont icon-fanhui place" @click="getPrevday"></div>
           </wv-flex-item>
           <wv-flex-item flex="5">
-            <div class="placeholder call_year">{{dateTime}}</div>
+            <div class="placeholder call_year">{{ dateTime | moment('YYYY年MM月DD日')}}</div>
           </wv-flex-item>
           <wv-flex-item flex="3">
             <div class="placeholder iconfont icon-fanhui icon_jian place" @click="getNetday"></div>
@@ -24,54 +24,55 @@
         </div>
       </div>
     </div>
+      <div class="page-infinite-wrapper" v-show="content==false">
+        <wv-group title="" infinite-scroll-distance="50">
+          <wv-cell-swipe title="小阿西未完成" is-link to="/call/details-y"></wv-cell-swipe>
+          <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+          <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+          <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+          <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+          <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+          <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+          <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+          <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+          <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+          <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+        </wv-group>
+        <p class="loading-tips">
+          <wv-spinner type="snake" color="#444" :size="24"></wv-spinner>
+        </p>
+      </div>
 
-    <div class="page-infinite-wrapper" ref="wrapper" v-show="content==false">
-      <wv-group title="" infinite-scroll-distance="50">
-        <wv-cell-swipe title="小阿西未完成" is-link to="/call/details-y"></wv-cell-swipe>
-        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
-        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
-        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
-        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
-        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
-        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
-        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
-        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
-        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
-        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
-      </wv-group>
-      <p class="loading-tips">
-        <wv-spinner type="snake" color="#444" :size="24"></wv-spinner>
-      </p>
-    </div>
-
-    <div class="page-infinite-wrapper" ref="wrapper" v-show="content==true">
-      <wv-group title="" infinite-scroll-distance="50">
-        <wv-cell-swipe title="小阿西已完成" is-link to="/call/details-y"></wv-cell-swipe>
-        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
-        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
-        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
-        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
-        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
-        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
-        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
-        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
-        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
-        <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
-      </wv-group>
-      <p class="loading-tips">
-        <wv-spinner type="snake" color="#444" :size="24"></wv-spinner>
-      </p>
-    </div>
+      <div class="page-infinite-wrapper" v-show="content==true">
+        <wv-group title="" infinite-scroll-distance="50">
+          <wv-cell-swipe title="小阿西已完成" is-link to="/call/details-y"></wv-cell-swipe>
+          <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+          <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+          <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+          <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+          <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+          <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+          <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+          <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+          <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+          <wv-cell-swipe title="小阿西" is-link to="/call/details-y"></wv-cell-swipe>
+        </wv-group>
+        <p class="loading-tips">
+          <wv-spinner type="snake" color="#444" :size="24"></wv-spinner>
+        </p>
+      </div>
   </div>
 </template>
 <script>
 export default {
   data () {
     return {
-      content: true,
+      content: false,
       guigeSpan: '-1',
       perDiv: null,
-      dateTime: ''
+      dateTime: '',
+      Date: new Date()
+      // moment
       // not: true
     }
   },
@@ -91,7 +92,7 @@ export default {
       this.$refs.not.style.background = '#32CCBC'
     },
     time () {
-      var nowdate = new Date()
+      var nowdate = this.Date
       var y = nowdate.getFullYear()
       var m = nowdate.getMonth() + 1
       var d = nowdate.getDate()
@@ -105,20 +106,33 @@ export default {
     },
     getNetday () {
       let str = this.dateTime
-      console.log(str)
-      str = new Date(str)
-      str = +str + 1000 * 60 * 60 * 24
-      str = new Date(str)
-      var y = str.getFullYear()
-      var m = str.getMonth() + 1
-      var d = str.getDate()
-      if (m < 10) {
-        m = '0' + m
+      let times = this.Date
+      var a = times.getFullYear()
+      var b = times.getMonth() + 1
+      var c = times.getDate()
+      if (b < 10) {
+        b = '0' + b
       }
-      if (d < 10) {
-        d = '0' + d
+      if (c < 10) {
+        c = '0' + c
       }
-      this.dateTime = y + '-' + m + '-' + d
+      times = a + '-' + b + '-' + c
+      if (this.dateTime === times) {
+      } else {
+        str = new Date(str)
+        str = +str + 1000 * 60 * 60 * 24
+        str = new Date(str)
+        var y = str.getFullYear()
+        var m = str.getMonth() + 1
+        var d = str.getDate()
+        if (m < 10) {
+          m = '0' + m
+        }
+        if (d < 10) {
+          d = '0' + d
+        }
+        this.dateTime = y + '-' + m + '-' + d
+      }
     },
     getPrevday () {
       let str = this.dateTime
@@ -139,7 +153,6 @@ export default {
         strDay = '0' + strDay
       }
       this.dateTime = strYear + '-' + strMonth + '-' + strDay
-      console.log(this.dateTime)
     }
   },
   created: function () {
@@ -202,6 +215,7 @@ export default {
   .place{
     width: 22%;
     margin: 0 auto;
+    color: #32CCBC;
   }
   .call_nav{
     width: 66%;

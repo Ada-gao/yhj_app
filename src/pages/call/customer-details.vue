@@ -239,23 +239,39 @@ export default {
     z-index: 501;
     position: fixed;
     top:0;
-    width: 100%;
-    height: 100%;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: rgba(0, 0, 0, 0.61);
   }
   .Record_content{
+    position: fixed;
+    z-index: 501;
     width: 87%;
+    max-width: 300px;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    overflow: hidden;
     height: 22.34rem;
-    margin:2.16rem  auto 0;
+    /*margin:2.16rem  auto 0;*/
     background: #FFFFFF;
     border-radius: 0.2rem;
   }
   .information_content{
+    position: fixed;
+    z-index: 501;
     width: 87%;
+    max-width: 300px;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    overflow: hidden;
     height: 10.34rem;
     background: #ffffff;
     border-radius: 0.2rem;
-    margin: 157px auto;
   }
   .Record_title,.information_title{
     width: 95%;

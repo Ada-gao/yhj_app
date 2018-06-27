@@ -1,17 +1,22 @@
 import Vue from 'vue'
 import WeVue from 'we-vue'
+import moment from 'moment'
 import VDistpicker from 'v-distpicker'
 import 'we-vue/lib/style.css'
 import App from './app.vue'
 import './assets/style/ywh.scss'
 import './assets/iconfont/iconfont.css'
 import router from './router'
-
+import VueClipboard from 'vue-clipboard2'
 Vue.config.productionTip = false
 Vue.config.devtools = true
-
+Vue.prototype.$moment = moment
+Vue.use(VueClipboard)
 Vue.use(WeVue)
 Vue.component('v-distpicker', VDistpicker)
+Vue.filter('moment', function (dataStr, pattern = 'YYYY-MM-DD HH:mm:ss') {
+  return moment(dataStr).format(pattern)
+})
 router.afterEach((to) => {
   document.title = to.meta.title
 })
