@@ -6,7 +6,7 @@ const pluginsList = [
 ]
 
 exports.install = (Vue, options) => {
-  console.log('install cordova plugin.')
+  // declare global Vue.cordova object
   Vue.cordova = Vue.cordova || {
     deviceready: false,
     plugins: []

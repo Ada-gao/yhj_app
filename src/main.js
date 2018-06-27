@@ -14,13 +14,20 @@ Vue.config.devtools = true
 
 Vue.use(WeVue)
 Vue.component('v-distpicker', VDistpicker)
-router.afterEach((to) => {
-  document.title = to.meta.title
-})
 
 FastClick.attach(document.body)
 
 Vue.use(VueCordova)
+
+console.log('----------port:' + window.location.port)
+// add cordova.js only if serving the app through file://
+if (window.location.protocol === 'file:' || window.location.port === '8080' || window.location.port === '9080' || window.location.port === '') {
+  console.log('attach cordova.js')
+  var cordovaScript = document.createElement('script')
+  cordovaScript.setAttribute('type', 'text/javascript')
+  cordovaScript.setAttribute('src', 'cordova.js')
+  document.body.appendChild(cordovaScript)
+}
 
 /* eslint-disable no-new */
 new Vue({
@@ -47,6 +54,10 @@ new Vue({
       this.transitionName = from.name === 'index' ? 'slide-left' : 'slide-right'
     }
   }
+})
+
+router.afterEach((to) => {
+  document.title = to.meta.title
 })
 
 router.beforeEach((to, from, next) => {
