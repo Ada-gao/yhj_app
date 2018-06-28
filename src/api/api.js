@@ -45,7 +45,8 @@ export const getIndustry = () => axios.get('/industry/auth/getAllTypes')
 // 获取公司规模
 export const getOrg = () => axios.get('/dict/TypeorgSize')
 // 获取用户信息
-
 export const getUser = () => axios.get('/app/me')
 // 个人任务完成统计
-export const getTaskStatistics = () => axios.get('/app/taskStatistics')
+// export const getTaskStatistics = () => axios.get('/app/taskStatistics')
+// 获取用户所属公司
+export const getCompany = (companyId) => axios.get('/app/queryCompany/' + companyId)

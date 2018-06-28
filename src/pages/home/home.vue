@@ -109,7 +109,7 @@ export default {
   .home_header{
     height: 5.42rem;
     width: 100%;
-    margin-top: 1.29rem;
+    /*margin-top: 1.29rem;*/
     margin-bottom: 0.06rem;
     background: #FFFFFF;
   }

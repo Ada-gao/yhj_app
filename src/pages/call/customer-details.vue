@@ -9,7 +9,7 @@
       </div>
     </wv-header>
     <wv-flex :gutter="10" style="margin-top: 2rem">
-      <wv-flex-item flex="3">
+      <wv-flex-item flex="3" style="margin-top: 0.272rem">
         <div class="placeholder details_left">
           <p style="font-size: 0.56rem;color: #32CCBC;text-align: center">外呼次数2次，最近外呼时间：2018.6.14</p>
           <p style="width: 2.5rem;margin: 0 auto">
@@ -166,7 +166,7 @@ export default {
     width: 100%;
     height: 9.28rem;
     background: white;
-    margin-top: 0.272rem;
+    /*margin-top: 0.272rem;*/
     border-radius: 0.1rem;
   }
   .details_right{
@@ -177,9 +177,10 @@ export default {
     border-radius: 0.1rem;
   }
   .inform{
+    width: 50%;
     font-size: 0.56rem;
-    padding-left: 3.38rem;
-    margin: 0.42rem 0;
+    /* padding-left: 3.38rem; */
+    margin: 0.42rem auto 0;
   }
   .photo_img{
     width: 0.88rem;
