@@ -3,10 +3,10 @@
     <wv-header title="我的" :fixed="false" background-color="#32CCBC" class="x-header">
     </wv-header>
     <div class="profile_content">
-      <div class="head">
+      <div class="profile_head">
       </div>
-      <p class="profile_name">销售ABC</p>
-      <p class="profile_company">上海甦翔投资咨询有限公司</p>
+      <p class="profile_name">{{dataInfrom.name}}</p>
+      <p class="profile_company">{{companyName}}</p>
     </div>
     <div style="background: #FFFFFF;margin-top: 0.4rem;height: 8.16rem">
     <wv-flex :gutter="10" style="width: 90%;margin:auto;border-bottom: 1px solid #D2D2D2">
@@ -49,26 +49,18 @@
 </template>
 
 <script>
-import { getUser, getTaskStatistics } from '../../api/api'
+import { getUser, getCompany } from '../../api/api'
 import { Dialog } from 'we-vue'
 
 export default {
   data () {
-    return {}
+    return {
+      dataInfrom: {},
+      companyName: ''
+    }
   },
   mounted () {
-    let user = localStorage.getItem('token')
-    if (user) {
-      getUser().then((res) => {
-        console.log(res)
-        // this.sysUserName = res.data.username
-      })
-      getTaskStatistics().then((res) => {
-        // console.log(res)
-      })
-    } else if (!user || user === '') {
-      this.$router.replace({path: '/login'})
-    }
+    this.userData()
   },
   methods: {
     showDialog (skin, title) {
@@ -82,12 +74,30 @@ export default {
         localStorage.removeItem('token')
       }).catch(() => {
       })
+    },
+    userData () {
+      let user = localStorage.getItem('token')
+      if (user) {
+        getUser().then((res) => {
+          this.dataInfrom = res.data
+          if (this.dataInfrom.companyId !== '') {
+            getCompany(this.dataInfrom.companyId).then((res) => {
+              this.companyName = res.data.companyName
+            })
+          }
+        })
+        // getTaskStatistics().then((res) => {
+        //   // console.log(res)
+        // })
+      } else if (!user || user === '') {
+        this.$router.replace({path: '/login'})
+      }
     }
   }
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
   .wv-header .wv-header-title[data-v-a5b8d5b6]{
     font-size: 0.72rem;
   }
@@ -96,9 +106,9 @@ export default {
     height: 6.28rem;
     background-color: #32CCBC;
     padding-top: 2%;
-    margin-top: 1.8rem;
+    /*margin-top: 2rem;*/
   }
-  .head{
+  .profile_head{
     width: 3rem;
     height: 3rem;
     background: rebeccapurple;
@@ -122,27 +132,31 @@ export default {
     text-align: center;
     margin-top: 0.48rem;
   }
-  .placeholder{
-    text-align: center;
-  }
+  /*.placeholder{*/
+    /*text-align: center;*/
+  /*}*/
   .task_number{
     font-size: 0.64rem;
     color: #02A2D1;
     margin-top: 1.02rem;
+    text-align: center;
   }
   .task_text{
     font-size: 0.52rem;
     margin-top: 0.66rem;
     margin-bottom: 0.83rem;
+    text-align: center;
   }
   .progress_number{
     font-size: 0.6rem;
     color: #32CCBC;
     margin-top: 1.07rem;
+    text-align: center;
   }
   .progress_text{
     font-size: 0.52rem;
     margin-bottom: 1.12rem;
+    text-align: center;
     /*margin-bottom: 1.12rem;*/
   }
   .button_return{

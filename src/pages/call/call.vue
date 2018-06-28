@@ -180,9 +180,9 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
   .call_content{
-    margin-top: 2rem;
+    /*margin-top: 2rem;*/
   }
   .call_time{
     height: 4.24rem;

@@ -11,7 +11,7 @@
         <p>{{dateTime}}</p>
         </div>
         <div class="home_head">
-          <div class="head">
+          <div class="head_h">
             <p class="head_img"></p>
           </div>
           <div class="inform">
@@ -100,13 +100,16 @@ export default {
 </script>
 
 <style scoped lang="scss">
+  .wv-header .left[data-v-a5b8d5b6],.wv-header .wv-header-title[data-v-a5b8d5b6]{
+    font-size: 0.72rem;
+  }
   .home_content{
     width: 100%;
   }
   .home_header{
     height: 5.42rem;
     width: 100%;
-    margin-top: 1.29rem;
+    /*margin-top: 1.29rem;*/
     margin-bottom: 0.06rem;
     background: #FFFFFF;
   }
@@ -121,10 +124,10 @@ export default {
   .home_head{
     height: 3.76rem;
   }
-  .head{
+  .head_h{
     width: 29%;
   }
-  .head,.inform{
+  .head_h,.inform{
     float: left;
   }
   .head_img{
