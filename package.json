@@ -5,8 +5,8 @@
   "author": "John Zhuang <zhuangyinping@shuyun365.com>",
   "private": true,
   "scripts": {
-    "android": "npm run build && cordova prepare android && cordova run android",
-    "ios": "npm run build && cordova prepare ios && cordova run ios",
+    "android": "npm run build && cordova prepare android && cordova run android --debug",
+    "ios": "npm run build && cordova prepare ios && cordova run ios --debug",
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "unit": "jest --config test/unit/jest.conf.js --coverage",
