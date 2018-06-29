@@ -5,20 +5,25 @@
         <i class="iconfont icon-fanhui" @click="$router.push('/profile')"></i>
       </div>
       <div class="btn-menu" slot="right">
-        <p style="font-size: 0.56rem">(40:20)</p>
+        <p style="font-size: 0.56rem">({{form.duration}}s)</p>
       </div>
     </wv-header>
     <wv-flex :gutter="10" style="margin-top: 2rem">
       <wv-flex-item flex="3">
         <div class="placeholder details_left">
-          <p style="font-size: 0.56rem;color: #32CCBC;text-align: center">外呼次数2次，最近外呼时间：2018.6.14</p>
+          <p style="font-size: 0.56rem;color: #32CCBC;text-align: center">外呼次数
+            {{form.callCount}}次，最近外呼时间：
+            {{form.lastCallDate||'彗星撞地球'}}</p>
           <p style="width: 2.5rem;margin: 0 auto">
             <img :src="thumbSmall" style="max-width: 100%">
           </p>
-          <p style="font-size: 0.64rem;text-align: center">小阿西</p>
-          <p class="inform">年龄：<small style="font-size: 100%;color: rgb(106, 107, 105)">10-20岁</small></p>
-          <p class="inform">性别：<small style="font-size: 100%;color: rgb(106, 107, 105) ">女</small></p>
-          <p class="inform">电话：<small style="font-size: 100%;color: rgb(106, 107, 105)">1366****489</small></p>
+          <p style="font-size: 0.64rem;text-align: center">{{form.contactName}}</p>
+          <p class="inform">年龄：<small style="font-size: 100%;color: rgb(106, 107, 105)">
+            {{form.age}}</small></p>
+          <p class="inform">性别：<small style="font-size: 100%;color: rgb(106, 107, 105) ">
+            {{form.genderText}}</small></p>
+          <p class="inform">电话：<small style="font-size: 100%;color: rgb(106, 107, 105)">
+            {{form.phoneNo}}</small></p>
         </div>
       </wv-flex-item>
       <wv-flex-item >
@@ -26,24 +31,25 @@
           <p class="photo_img">
             <img :src="photoImg">
           </p>
-          <p class="details_phone">无人接听</p>
+          <p class="details_phone">{{form.lastCallResultText}}</p>
         </div>
         <div class="placeholder details_right">
           <p class="iconfont icon-personal-center icon_ju"></p>
-          <p class="details_phone">聚宝盆</p>
+          <p class="details_phone">{{form.productName}}</p>
         </div>
         <div class="placeholder details_right">
           <p class="iconfont icon-xiansuo icon_sou"></p>
-          <p class="details_phone">自有线索</p>
+          <p class="details_phone">{{form.source}}</p>
         </div>
       </wv-flex-item>
     </wv-flex>
     <div class="phone_details">
       <p class="phone_content">外呼话述：</p>
-      <div class="phone_html" v-html="message">
+      <div class="phone_html">
+        <p style="margin: 5px">{{form.salesTalk}}</p>
         <!--<textarea class="weui-cells" placeholder="" :rows="8" :show-counter="false"></textarea>-->
       </div>
-      <div class="phone_button">
+      <div class="phone_button" @click="startCall">
         <small class="iconfont icon-waihuquerenxuanzhong" style="font-size: 100%;"></small>开始外呼
       </div>
     </div>
@@ -138,6 +144,10 @@
 <script type="es6">
 import photoImg from '../../assets/images/photo.png'
 import thumbSmall from '../../assets/images/icon_tabbar.png'
+import { getCall } from '@/api/api'
+import { transformText, queryObj } from '@/utils'
+// import qs from 'qs'
+
 export default {
   data () {
     return {
@@ -145,19 +155,23 @@ export default {
       thumbSmall,
       resultShow: false,
       inform: false,
-      items: [
-        {text: '占线', value: '1'},
-        {text: '未外呼', value: '2'},
-        {text: '无人接听', value: '3'},
-        {text: '无意向拒绝', value: '4'},
-        {text: '有意向进一步跟进', value: '5'}
-      ],
       selected: '',
-      message: '<p style="margin: 5px">客户：外呼</p>'
+      from: '18221835843',
+      to: '15623598264',
+      form: {}
     }
   },
+  created () {
+    this.form = this.$route.params
+    this.form.lastCallResultText = transformText(queryObj.callResult, this.form.lastCallResult)
+    this.form.genderText = transformText(queryObj.gender, this.form.gender)
+  },
   methods: {
-
+    startCall () {
+      getCall(this.from.outboundNameId).then(res => {
+        console.log(res)
+      })
+    }
   }
 }
 </script>

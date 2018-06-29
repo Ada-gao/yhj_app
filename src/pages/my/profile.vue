@@ -96,7 +96,7 @@ export default {
     height: 6.28rem;
     background-color: #32CCBC;
     padding-top: 2%;
-    margin-top: 1.8rem;
+    // margin-top: 1.8rem;
   }
   .head{
     width: 3rem;
