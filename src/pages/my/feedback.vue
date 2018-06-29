@@ -30,7 +30,7 @@ export default {
   },
 
   methods: {
-    showActionsheet (type) {
+    showActionsheet (type, mySourceType) {
       this.type = type
       this.sheetVisible = true
     },
@@ -45,8 +45,7 @@ export default {
       {
         name: '拍摄新照片',
         key: 'menu1',
-        method: () => {
-          this.menuClick('menu1')
+        method: (mySourceType) => {
         }
       },
       {

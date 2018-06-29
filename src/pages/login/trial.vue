@@ -40,14 +40,14 @@
     <!--</wv-flex>-->
     <wv-flex :gutter="10" style="width: 96%;margin: 0 auto;">
       <wv-flex-item @click.native="industryPickerShow = true">
-        <div class="placeholder task_number">
-          <input class="trial_company weui-input" placeholder="所属行业" :value="industryType | pickerValueFilter" />
+        <div class="placeholder">
+          <input class="trial_company weui-input" placeholder="所属行业" :value="industryType | pickerValueFilter" onfocus="this.blur();" />
           <!--<input type="text" placeholder="所在地" class="trial_company" >-->
         </div>
       </wv-flex-item>
       <wv-flex-item @click.native="scalePickerShow = true">
-        <div class="placeholder task_number"></div>
-        <input class="trial_company weui-input" placeholder="公司规模" :value="scales | pickerValueFilter" />
+        <div class="placeholder"></div>
+        <input class="trial_company weui-input" placeholder="公司规模" :value="scales | pickerValueFilter" onfocus="this.blur();" />
       </wv-flex-item>
     </wv-flex>
     <p style="font-size: 0.6rem;margin: 1.18rem auto 0;width: 87%">联系人信息</p>
@@ -292,11 +292,11 @@ export default {
     font-size: 0.8rem;
   }
   .distpicker-address-wrapper select{
-    padding: 0;
-    width: 41%;
-    font-size: 0.56rem;
-    height: 1.2rem;
-    margin-left: 0.8rem;
-    outline: none;
+    padding: 0!important;
+    width: 41% !important;
+    font-size: 0.56rem!important;
+    height: 1.2rem!important;
+    margin-left: 0.8rem!important;
+    outline: none!important;
   }
 </style>

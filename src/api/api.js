@@ -50,3 +50,6 @@ export const getUser = () => axios.get('/app/me')
 // export const getTaskStatistics = () => axios.get('/app/taskStatistics')
 // 获取用户所属公司
 export const getCompany = (companyId) => axios.get('/app/queryCompany/' + companyId)
+// 获取用户个人任务统计
+export const getSales = (userId) => axios.get('/task/statisBySales?userId=' + userId)
+// export const postFeedback = (img) => axios.post('/app')

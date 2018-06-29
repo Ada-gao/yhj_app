@@ -49,13 +49,14 @@
 </template>
 
 <script>
-import { getUser, getCompany } from '../../api/api'
+import { getUser, getCompany, getSales } from '../../api/api'
 import { Dialog } from 'we-vue'
 
 export default {
   data () {
     return {
       dataInfrom: {},
+      userId: '',
       companyName: ''
     }
   },
@@ -83,8 +84,12 @@ export default {
           if (this.dataInfrom.companyId !== '') {
             getCompany(this.dataInfrom.companyId).then((res) => {
               this.companyName = res.data.companyName
+              this.userId = this.dataInfrom.id
             })
           }
+          getSales(this.userId).then((res) => {
+            console.log(res)
+          })
         })
         // getTaskStatistics().then((res) => {
         //   // console.log(res)
