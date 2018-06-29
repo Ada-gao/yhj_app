@@ -64,3 +64,7 @@ export const getRandom = (createTime) => axios.get('/app/nextTask?createTime=' +
 export const getTaskHistory = (params) => axios.post('/app/tasks/history', params)
 // 更新外呼客户信息
 export const updateOutboundName = (id, params) => axios.put('/app/outboundName/' + id, params)
+// 获取排名数据
+export const getRank = (params) => axios.get('/task/statisTeamRank?companyId=' + params)
+// 获取排名数据
+export const getTaskStatisticsDaily = () => axios.get('/task/statisBySalesDaily')

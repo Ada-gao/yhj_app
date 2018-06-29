@@ -11,28 +11,28 @@
     <div style="background: #FFFFFF;margin-top: 0.4rem;height: 8.16rem">
     <wv-flex :gutter="10" style="width: 90%;margin:auto;border-bottom: 1px solid #D2D2D2">
       <wv-flex-item>
-        <div class="placeholder task_number">1200分</div>
+        <div class="placeholder task_number">{{form.totalDuration}}分</div>
         <div class="placeholder task_text">总通话时长</div>
       </wv-flex-item>
       <wv-flex-item>
-        <div class="placeholder task_number">699个</div>
+        <div class="placeholder task_number">{{form.totalTaskCompleteCnt}}个</div>
         <div class="placeholder task_text">总任务完成数</div>
       </wv-flex-item>
       <wv-flex-item>
-        <div class="placeholder task_number">50秒</div>
+        <div class="placeholder task_number">{{form.avgDuration}}秒</div>
         <div class="placeholder task_text">平均通话时长</div>
       </wv-flex-item>
     </wv-flex>
     <wv-flex :gutter="10">
       <wv-flex-item style="border-left: 1px solid grey">
         <div class="placeholder" style="border-right: 1px solid #979797">
-          <div class="placeholder progress_number">98%</div>
+          <div class="placeholder progress_number">{{form.rate}}%</div>
           <div class="placeholder progress_text">外呼完成率</div>
         </div>
       </wv-flex-item>
       <wv-flex-item>
         <div class="placeholder">
-          <div class="placeholder progress_number">第一名</div>
+          <div class="placeholder progress_number">第{{rank.rank}}名</div>
           <div class="placeholder progress_text">今日团队排名</div>
         </div>
       </wv-flex-item>
@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { getUser, getCompany, getSales } from '../../api/api'
+import { getUser, getCompany, getSales, getRank } from '../../api/api'
 import { Dialog } from 'we-vue'
 
 export default {
@@ -57,7 +57,9 @@ export default {
     return {
       dataInfrom: {},
       userId: '',
-      companyName: ''
+      companyName: '',
+      form: {},
+      rank: {}
     }
   },
   mounted () {
@@ -81,19 +83,22 @@ export default {
       if (user) {
         getUser().then((res) => {
           this.dataInfrom = res.data
+          this.userId = this.dataInfrom.id
           if (this.dataInfrom.companyId !== '') {
             getCompany(this.dataInfrom.companyId).then((res) => {
               this.companyName = res.data.companyName
-              this.userId = this.dataInfrom.id
             })
           }
           getSales(this.userId).then((res) => {
             // console.log(res)
+            this.form = res.data
+            this.form.rate = this.form.totalTaskCompleteCnt / this.form.totalTaskCnt
+            // console.log(this.form.rate)
+          })
+          getRank(this.dataInfrom.companyId).then((res) => {
+            this.rank = res.data
           })
         })
-        // getTaskStatistics().then((res) => {
-        //   // console.log(res)
-        // })
       } else if (!user || user === '') {
         this.$router.replace({path: '/login'})
       }

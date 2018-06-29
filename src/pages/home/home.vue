@@ -26,15 +26,15 @@
       <div style="width: 95%">
         <wv-flex :gutter="10" style="width: 100%;">
           <wv-flex-item>
-            <div class="placeholder home_number">1200分</div>
+            <div class="placeholder home_number">{{form.totalDuration}}分</div>
             <div class="placeholder home_text">总通话时长</div>
           </wv-flex-item>
           <wv-flex-item>
-            <div class="placeholder home_number">699个</div>
+            <div class="placeholder home_number">{{form.totalTaskCompleteCnt}}个</div>
             <div class="placeholder home_text">总任务完成数</div>
           </wv-flex-item>
           <wv-flex-item>
-            <div class="placeholder home_number">50秒</div>
+            <div class="placeholder home_number">{{form.avgDuration}}秒</div>
             <div class="placeholder home_text">平均通话时长</div>
           </wv-flex-item>
         </wv-flex>
@@ -57,19 +57,27 @@
 
 <script>
 import thumbSmall from '../../assets/images/icon_tabbar.png'
+import { getTaskStatisticsDaily } from '@/api/api'
 
 export default {
   data () {
     return {
       thumbSmall,
       percent: 60,
-      dateTime: ''
+      dateTime: '',
+      form: {}
     }
   },
   mounted () {
     this.time()
+    this.getList()
   },
   methods: {
+    getList () {
+      getTaskStatisticsDaily().then(res => {
+        this.form = res.data
+      })
+    },
     onClick () {
       this.$root.message('click')
     },

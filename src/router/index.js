@@ -36,7 +36,8 @@ routes.push({
   name: 'call',
   meta: {
     title: '数赟',
-    description: '数赟 云呼叫'
+    description: '数赟 云呼叫',
+    tabShow: false
   }
 })
 
