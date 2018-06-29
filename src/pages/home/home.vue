@@ -114,8 +114,8 @@ export default {
     margin-bottom: 0.06rem;
     background: #FFFFFF;
   }
-  .home_header>p{
-  }
+  // .home_header>p{
+  // }
   .home_time{
     height: 1.6rem;
     font-size: 0.52rem;

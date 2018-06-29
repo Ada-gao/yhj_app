@@ -59,45 +59,53 @@
         <p class="Record_time">通话时长：2:37</p>
         <div  style="margin: 87%;margin: 0 auto;border-bottom: 1px solid #eae8e8;height: 4.5rem">
         <wv-flex>
-          <wv-flex-item @click="ticketPickerShow = true">
+          <wv-flex-item>
             <div class="placeholder" style="font-size: 0.56rem;text-align: center;margin-top: 0.5rem">外呼结果</div>
           </wv-flex-item>
           <wv-flex-item>
-            <div>
-              <!--<select v-model="selected" class="Result_select">-->
-                <!--<option v-for="item in items" style="font-size: 0.56rem;text-align: center">{{item.text}}</option>-->
-              <!--</select>-->
-            </div>
+            <select name="select" v-model="history.result" class="Result_select">
+              <option v-for="item in callResult"
+                :key="item.value"
+                :value="item.value"
+                style="font-size: 0.56rem;text-align: center">
+                {{item.label}}
+              </option>
+            </select>
           </wv-flex-item>
         </wv-flex>
         <wv-flex style="margin-top: 0.4rem">
-          <wv-flex-item @click="ticketPickerShow = true">
+          <wv-flex-item>
             <div class="placeholder" style="font-size: 0.56rem;text-align: center;margin-top: 0.5rem">下一步行动计划</div>
           </wv-flex-item>
           <wv-flex-item>
             <div>
-              <!--<select v-model="selected" class="Result_select">-->
-                <!--<option v-for="item in items" style="font-size: 0.56rem;text-align: center">{{item.text}}</option>-->
-              <!--</select>-->
+              <select class="Result_select" v-model="history.status">
+                <option v-for="item in nextStepOptions"
+                  :key="item.value"
+                  :value="item.value"
+                  style="font-size: 0.56rem;text-align: center">
+                  {{item.label}}
+                </option>
+              </select>
             </div>
           </wv-flex-item>
         </wv-flex>
         </div>
         <div class="word">
-          <p>编辑</p>
+          <p @click="changeInfo">编辑</p>
         </div>
         <wv-flex>
           <wv-flex-item>
-            <div class="placeholder" style="line-height: 2.5rem;text-align: center">小阿西</div>
+            <div class="placeholder" style="line-height: 2.5rem;text-align: center">{{form.contactName}}</div>
           </wv-flex-item>
           <wv-flex-item>
-            <div class="placeholder Result_inform ">年龄：<small>30~40岁</small></div>
-            <div class="placeholder Result_inform" style="margin-top: 0.78rem">性别：<small>女</small></div>
+            <div class="placeholder Result_inform ">年龄：<small>{{form.age}}</small></div>
+            <div class="placeholder Result_inform" style="margin-top: 0.78rem">性别：<small>{{form.genderText}}</small></div>
           </wv-flex-item>
         </wv-flex>
         <p style="font-size: 0.56rem;padding-left: 0.98rem;margin-top: 1.42rem">备注：</p>
-        <textarea rows="5" placeholder="" class="Result_tex"></textarea>
-        <div class="Result_button" @click="resultShow=false">提交信息</div>
+        <textarea v-model="history.common" rows="5" placeholder="" class="Result_tex"></textarea>
+        <div class="Result_button" @click="submitCall">提交信息</div>
       </div>
     </div>
     <div class="information" v-show="inform">
@@ -107,36 +115,36 @@
           <li>
             <p class="list_title">姓名：</p>
             <p class="list_word">
-              <input>
+              <input class="item-input" v-model="info.contactName">
             </p>
           </li>
           <li>
             <p class="list_title">性别：</p>
             <div class="list_word">
-            <div class="female">
-              <input type="radio" id="female" name="sex"/>
-              <label for="female">女</label>
-            </div>
-            <div class="male">
-              <input type="radio" id="male" name="sex" />
-              <label for="male">男</label>
-            </div>
+              <div class="female">
+                <input type="radio" name="gender" value="LADY" v-model="info.gender"/>
+                <label for="female">女</label>
+              </div>
+              <div class="male">
+                <input type="radio" name="gender" value="GENTLEMAN" v-model="info.gender"/>
+                <label for="male">男</label>
+              </div>
             </div>
           </li>
           <li>
             <p class="list_title">手机号：</p>
             <p class="list_word">
-              <input>
+              <input class="item-input" v-model="info.phoneNo">
             </p>
           </li>
           <li>
             <p class="list_title">年龄：</p>
             <p class="list_word">
-              <input>
+              <input class="item-input" v-model="info.age">
             </p>
           </li>
         </ul>
-        <div class="information_button">保存</div>
+        <div class="information_button" @click="updateInfo">保存</div>
       </div>
     </div>
   </div>
@@ -144,7 +152,7 @@
 <script>
 import photoImg from '../../assets/images/photo.png'
 import thumbSmall from '../../assets/images/icon_tabbar.png'
-import { getCall, getRandom } from '@/api/api'
+import { getCall, getRandom, getTaskHistory, updateOutboundName } from '@/api/api'
 import { transformText, queryObj, parseTime } from '@/utils'
 // import qs from 'qs'
 
@@ -158,11 +166,22 @@ export default {
       selected: '',
       from: '18221835843',
       to: '15623598264',
-      form: {}
+      form: {},
+      nextStepOptions: [],
+      callResult: [],
+      history: {
+        result: 'FOLLOW',
+        status: 'CALL_AGAIN',
+        actualCallStartDate: new Date('2018-06-28').getTime(),
+        acutalCallEndDate: new Date().getTime(),
+        outboundTaskId: ''
+      },
+      info: {}
     }
   },
   created () {
-    console.log(this.$route)
+    this.nextStepOptions = queryObj.nextStep
+    this.callResult = queryObj.callResult
     this.form = this.$route.params
     this.getRandom()
 
@@ -173,7 +192,7 @@ export default {
     startCall () {
       // console.log(this.form.outboundNameId)
       getCall(this.form.outboundNameId).then(res => {
-        console.log(res)
+        // console.log(res)
         this.resultShow = true
       })
     },
@@ -182,6 +201,39 @@ export default {
       getRandom(createTime).then(res => {
         this.form = res.data
         this.form.lastCallResultText = transformText(queryObj.callResult, this.form.lastCallResult)
+        this.form.genderText = transformText(queryObj.gender, this.form.gender)
+      })
+    },
+    submitCall () {
+      this.resultShow = false
+      this.history.outboundTaskId = this.form.taskId
+      getTaskHistory(this.history).then(res => {
+        console.log(res)
+        let data = res.data
+        this.form.lastCallResultText = transformText(queryObj.callResult, data.result)
+        console.log(this.form.lastCallResultText)
+      })
+    },
+    changeInfo () {
+      this.inform = true
+      this.resultShow = false
+      this.info = this.form
+    },
+    updateInfo () {
+      this.inform = false
+      this.resultShow = true
+      let params = {
+        contactName: this.info.contactName,
+        gender: this.info.gender,
+        phoneNo: this.info.phoneNo,
+        age: this.info.age
+      }
+      updateOutboundName(this.info.outboundNameId, params).then(res => {
+        let data = res.data
+        this.form.contactName = data.contactName
+        this.form.age = data.age
+        this.form.phoneNo = data.phoneNo
+        this.form.gender = data.gender
         this.form.genderText = transformText(queryObj.gender, this.form.gender)
       })
     }
@@ -318,8 +370,10 @@ export default {
     margin-top: 0.36rem;
   }
   .Result_select{
-    height: 0.8rem;
-    border-radius: 0.2rem;
+    width: 80%;
+    border: 1px solid #ccc;
+    // height: 0.8rem;
+    // border-radius: 0.2rem;
     outline: none;
   }
   .word{
@@ -348,6 +402,8 @@ export default {
     display: inherit;
     border: 1.5px solid #818080;
     border-radius: 0.2rem;
+    padding: 5px;
+    box-sizing: border-box;
   }
   .Result_button{
     width: 87%;
@@ -374,7 +430,7 @@ export default {
     line-height: 1.3rem;
     font-size: 0.56rem;
   }
-  .information_list>li>p>input{
+  .item-input{
     width: 100%;
     border: 1px solid grey;
     height: 0.8rem;
@@ -400,30 +456,32 @@ export default {
     color: #ffffff;
     margin: 1rem auto 0;
   }
-  input[type="radio"] + label::before {
-    content: "\a0"; /*不换行空格*/
-    display: inline-block;
-    vertical-align: middle;
+  input[type="radio"] {
+    // content: "\a0"; /*不换行空格*/
+    // display: inline-block;
+    // vertical-align: middle;
     font-size: 14px;
-    width: 1em;
-    height: 1em;
+    // width: 1em;
+    // height: 1em;
     margin-right: .4em;
-    border-radius: 50%;
-    border: 1px solid #32CCBC;
-    text-indent: .15em;
+    // border-radius: 50%;
+    // border: 1px solid #32CCBC;
+    // text-indent: .15em;
     line-height: 1;
+    // margin-right: 5px;
   }
-  input[type="radio"]:checked + label::before {
+  input[type="radio"]:checked {
     background-color: #32CCBC;
     background-clip: content-box;
     padding: .2em;
   }
   input[type="radio"] {
-    position: absolute;
+    // position: absolute;
     clip: rect(0, 0, 0, 0);
   }
   .female,.male{
-    float: left;
-    width: 50%;
+    // float: left;
+    width: 40%;
+    display: inline-block;
   }
 </style>

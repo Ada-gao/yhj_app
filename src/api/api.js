@@ -60,3 +60,7 @@ export const getSales = (userId) => axios.get('/task/statisBySales?userId=' + us
 // export const postFeedback = (img) => axios.post('/app')
 // 获取随机外呼
 export const getRandom = (createTime) => axios.get('/app/nextTask?createTime=' + createTime)
+// 获取外呼记录
+export const getTaskHistory = (params) => axios.post('/app/tasks/history', params)
+// 更新外呼客户信息
+export const updateOutboundName = (id, params) => axios.put('/app/outboundName/' + id, params)

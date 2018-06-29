@@ -46,15 +46,20 @@ export function parseTime (time, cFormat) {
 
 let queryObj = {
   callResult: [
-    {label: '占线', value: '1'},
-    {label: '未外呼', value: '2'},
-    {label: '无人接听', value: '3'},
-    {label: '无意向拒绝', value: '4'},
-    {label: '有意向进一步跟进', value: '5'}
+    {label: '占线', value: 'BUSYING'},
+    {label: '未外呼', value: 'NOT_CALL'},
+    {label: '无人接听', value: 'NO_ANSWER'},
+    {label: '无意向拒绝', value: 'REFUSE'},
+    {label: '有意向进一步跟进', value: 'FOLLOW'}
+  ],
+  nextStep: [
+    {label: '复打', value: 'CALL_AGAIN'},
+    {label: '放弃', value: 'GIVE_UP'},
+    {label: '跟进', value: 'FLLOW'}
   ],
   gender: [
     {label: '男', value: 'GENTLEMAN'},
-    {label: '女', value: 'FEMALE'}
+    {label: '女', value: 'LADY'}
   ]
 }
 export { queryObj }
