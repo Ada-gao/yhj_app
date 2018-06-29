@@ -58,7 +58,7 @@
     <edit-config file="*-Info.plist" mode="merge" target="NSPhotoLibraryAddUsageDescription">
         <string>need photo library access to save pictures there</string>
     </edit-config>
-    <engine name="android" spec="^7.1.0" />
     <engine name="ios" spec="^4.5.4" />
     <engine name="browser" spec="^5.0.3" />
+    <engine name="android" spec="^7.1.0" />
 </widget>

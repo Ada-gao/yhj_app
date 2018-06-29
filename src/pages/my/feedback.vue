@@ -1,25 +1,28 @@
 <template>
   <div class="page">
-    <wv-header title="问题反馈" :fixed="true" background-color="#32CCBC">
+    <wv-header title="问题反馈" :fixed="false" background-color="#32CCBC">
       <div class="btn-back" slot="left">
         <i class="iconfont icon-fanhui" @click="$router.push('/profile')"></i>
       </div>
     </wv-header>
     <div class="feedback_content">
       <p style="font-size: 0.64rem;padding-left: 1rem">问题反馈:</p>
-      <textarea rows="13" placeholder="" class="feedback_tex"></textarea>
+      <textarea rows="5" placeholder="请描述在使用过程中，在什么页面，什么功能上遇到的问题，字数不少于10个字，谢谢！" class="feedback_tex"></textarea>
     </div>
     <!--<div class="feedback_img">上传</div>-->
-    <wv-button type="default" @click="showActionsheet('ios')">iOS ActionSheet</wv-button>
-    <div class="feedback_button">保存</div>
-    <wv-actionsheet :type="type" title="<h3 style='color: red;'>一个大标题</h3><p>最多两行</p>" :actions="actions" cancel-text="取消" v-model="sheetVisible"/>
+    <div @click="showActionsheet('ios')" class="feedback_upload">
+      <img :src="topImg" style="max-width: 100%">
+    </div>
+    <div class="feedback_button">提交</div>
+    <wv-actionsheet :type="type" :actions="actions" cancel-text="取消" v-model="sheetVisible"/>
   </div>
 </template>
 <script type="es6">
-// import { ActionSheet } from 'we-vue'
+import topImg from '../../assets/images/top_img.png'
 export default {
   data () {
     return {
+      topImg,
       type: 'ios',
       sheetVisible: false,
       actions: []
@@ -27,7 +30,7 @@ export default {
   },
 
   methods: {
-    showActionsheet (type) {
+    showActionsheet (type, mySourceType) {
       this.type = type
       this.sheetVisible = true
     },
@@ -40,24 +43,16 @@ export default {
   mounted () {
     this.actions = [
       {
-        name: '示例菜单1',
+        name: '拍摄新照片',
         key: 'menu1',
-        method: () => {
-          this.menuClick('menu1')
+        method: (mySourceType) => {
         }
       },
       {
-        name: '示例菜单2',
+        name: '从手机相册选择',
         key: 'menu2',
         method: () => {
           this.menuClick('menu2')
-        }
-      },
-      {
-        name: '示例菜单3',
-        key: 'menu3',
-        method: () => {
-          this.menuClick('menu3')
         }
       }
     ]
@@ -65,15 +60,16 @@ export default {
 }
 </script>
 <style>
-  .feedback_content{
-    margin-top: 2rem;
-  }
 .feedback_tex{
   width: 84%;
   margin: 0.3rem auto;
   display: inherit;
-  border: 1.5px solid #818080;
+  border: 1px solid #818080;
   border-radius: 0.2rem;
+  padding: .3rem;
+  line-height: 1rem;
+  background-color: whitesmoke;
+  outline: none;
 }
   .feedback_button{
     width: 87%;
@@ -90,5 +86,10 @@ export default {
     width: 2rem;
     height: 2rem;
     background-color: #ffffff;
+  }
+  .feedback_upload{
+    width: 3.46rem;
+    height: 3.16rem;
+    margin: 1rem;
   }
 </style>

@@ -112,9 +112,9 @@ export default {
   .icon_user>img{
     max-width: 100%;
   }
-  .weui-cell{
-    padding: 10px 7px!important;
-  }
+  /*.weui-cell{*/
+    /*padding: 10px 7px!important;*/
+  /*}*/
   .user_login{
     width: 79%;
     border-bottom: 1px solid #e5e3e3;

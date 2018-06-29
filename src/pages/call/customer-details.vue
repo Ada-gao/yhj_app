@@ -9,7 +9,7 @@
       </div>
     </wv-header>
     <wv-flex :gutter="10" style="margin-top: 2rem">
-      <wv-flex-item flex="3">
+      <wv-flex-item flex="3" style="margin-top: 0.272rem">
         <div class="placeholder details_left">
           <p style="font-size: 0.56rem;color: #32CCBC;text-align: center">外呼次数
             {{form.callCount}}次，最近外呼时间：
@@ -141,7 +141,7 @@
     </div>
   </div>
 </template>
-<script type="es6">
+<script>
 import photoImg from '../../assets/images/photo.png'
 import thumbSmall from '../../assets/images/icon_tabbar.png'
 import { getCall } from '@/api/api'
@@ -175,12 +175,12 @@ export default {
   }
 }
 </script>
-<style scoped lang="scss">
+<style lang="scss">
   .details_left{
     width: 100%;
     height: 9.28rem;
     background: white;
-    margin-top: 0.272rem;
+    /*margin-top: 0.272rem;*/
     border-radius: 0.1rem;
   }
   .details_right{
@@ -191,9 +191,10 @@ export default {
     border-radius: 0.1rem;
   }
   .inform{
+    width: 50%;
     font-size: 0.56rem;
-    padding-left: 3.38rem;
-    margin: 0.42rem 0;
+    /* padding-left: 3.38rem; */
+    margin: 0.42rem auto 0;
   }
   .photo_img{
     width: 0.88rem;
