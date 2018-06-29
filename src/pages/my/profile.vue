@@ -88,7 +88,7 @@ export default {
             })
           }
           getSales(this.userId).then((res) => {
-            console.log(res)
+            // console.log(res)
           })
         })
         // getTaskStatistics().then((res) => {

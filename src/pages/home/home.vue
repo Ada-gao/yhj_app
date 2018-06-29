@@ -40,7 +40,8 @@
         </wv-flex>
       </div>
       <div style="width: 5%">
-        <p class="iconfont icon-fanhui icon_jian"></p>
+        <router-link to="/call" class="iconfont icon-fanhui icon_jian"></router-link>
+        <!-- <p class="iconfont icon-fanhui icon_jian"></p> -->
       </div>
     </div>
     <div class="home_progress">

@@ -2,7 +2,7 @@
   <div class="page">
     <wv-header title="任务完成(15/20)" :fixed="true" background-color="#32CCBC">
       <div class="btn-back" slot="left">
-        <i class="iconfont icon-fanhui" @click="$router.push('/profile')"></i>
+        <i class="iconfont icon-fanhui" @click="$router.push('/call')"></i>
       </div>
       <div class="btn-menu" slot="right">
         <p style="font-size: 0.56rem">({{form.duration}}s)</p>
@@ -53,7 +53,7 @@
         <small class="iconfont icon-waihuquerenxuanzhong" style="font-size: 100%;"></small>开始外呼
       </div>
     </div>
-    <div class="Record" v-show="resultShow==true">
+    <div class="Record" v-show="resultShow">
       <div class="Record_content">
         <div class="Record_title">外呼记录</div>
         <p class="Record_time">通话时长：2:37</p>
@@ -97,7 +97,7 @@
         </wv-flex>
         <p style="font-size: 0.56rem;padding-left: 0.98rem;margin-top: 1.42rem">备注：</p>
         <textarea rows="5" placeholder="" class="Result_tex"></textarea>
-        <div class="Result_button">提交信息</div>
+        <div class="Result_button" @click="resultShow=false">提交信息</div>
       </div>
     </div>
     <div class="information" v-show="inform">
@@ -144,8 +144,8 @@
 <script>
 import photoImg from '../../assets/images/photo.png'
 import thumbSmall from '../../assets/images/icon_tabbar.png'
-import { getCall } from '@/api/api'
-import { transformText, queryObj } from '@/utils'
+import { getCall, getRandom } from '@/api/api'
+import { transformText, queryObj, parseTime } from '@/utils'
 // import qs from 'qs'
 
 export default {
@@ -162,14 +162,27 @@ export default {
     }
   },
   created () {
+    console.log(this.$route)
     this.form = this.$route.params
+    this.getRandom()
+
     this.form.lastCallResultText = transformText(queryObj.callResult, this.form.lastCallResult)
     this.form.genderText = transformText(queryObj.gender, this.form.gender)
   },
   methods: {
     startCall () {
-      getCall(this.from.outboundNameId).then(res => {
+      // console.log(this.form.outboundNameId)
+      getCall(this.form.outboundNameId).then(res => {
         console.log(res)
+        this.resultShow = true
+      })
+    },
+    getRandom () {
+      let createTime = parseTime(new Date(), '{y}-{m}-{d}')
+      getRandom(createTime).then(res => {
+        this.form = res.data
+        this.form.lastCallResultText = transformText(queryObj.callResult, this.form.lastCallResult)
+        this.form.genderText = transformText(queryObj.gender, this.form.gender)
       })
     }
   }

@@ -8,7 +8,7 @@
       </span>
         首页
       </wv-tabbar-item>
-      <wv-tabbar-item to="/call" :isOn="selected('/call')">
+      <wv-tabbar-item to="/call/details-y" :isOn="selected('/call/details-y')">
       <span slot="icon" style="display: inline-block; position: relative;">
         <div class="iconfont icon-hujiaozhongxin weui-tabbar__label" style="font-size: 0.96rem;"></div>
         <!--<wv-badge style="position: absolute;top: 0;right: -6px;">3</wv-badge>-->

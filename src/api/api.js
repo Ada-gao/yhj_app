@@ -58,3 +58,5 @@ export const getCompany = (companyId) => axios.get('/app/queryCompany/' + compan
 // 获取用户个人任务统计
 export const getSales = (userId) => axios.get('/task/statisBySales?userId=' + userId)
 // export const postFeedback = (img) => axios.post('/app')
+// 获取随机外呼
+export const getRandom = (createTime) => axios.get('/app/nextTask?createTime=' + createTime)
