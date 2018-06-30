@@ -44,30 +44,33 @@
         <!-- <p class="iconfont icon-fanhui icon_jian"></p> -->
       </div>
     </div>
-    <div class="home_progress">
-      <p class="progress_title">“聚宝盆”陌call</p>
-      <p class="progress_list"></p>
+    <div class="home_progress" v-for="item in statisGroup" :key="item.taskGroupId">
+      <p class="progress_title">{{item.productName}}</p>
+      <!-- <p class="progress_list"></p> -->
+      <wv-progress :percent="item.percent" :show-clear="false" style="width: 95%; margin: 0 auto"/>
       <p style="font-size: 0.48rem;margin-top: 0.58rem;margin-left: 0.4rem;">
-        <small style="color: #32CCBC;font-size: 100%">1000</small>/10000
+        <small style="color: #32CCBC;font-size: 100%">
+          {{item.totalTaskCompleteCnt}}</small>/{{item.totalTaskCnt}}
       </p>
-      <p class="progress_time">任务计划完成时间：2018.7.1</p>
+      <p class="progress_time">任务计划完成时间：{{item.taskEndDate}}</p>
     </div>
   </div>
 </template>
 
 <script>
 import thumbSmall from '../../assets/images/icon_tabbar.png'
-import { getTaskStatisticsDaily, getCompany, getUser } from '@/api/api'
+import { getTaskStatisticsDaily, getCompany, getUser, getStatisGroup } from '@/api/api'
 
 export default {
   data () {
     return {
       thumbSmall,
-      percent: 60,
       dateTime: '',
       form: {},
       company: {},
-      name: ''
+      name: '',
+      statisGroup: {},
+      percent: 60
     }
   },
   mounted () {
@@ -84,6 +87,13 @@ export default {
       })
       getUser().then(res => {
         this.name = res.data.name
+      })
+      getStatisGroup().then(res => {
+        this.statisGroup = res.data
+        this.statisGroup.forEach(item => {
+          item.percent = item.totalTaskCompleteCnt * 100 / item.totalTaskCnt
+          console.log(item.percent)
+        })
       })
     },
     onClick () {
@@ -116,7 +126,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
   .wv-header .left[data-v-a5b8d5b6],.wv-header .wv-header-title[data-v-a5b8d5b6]{
     font-size: 0.72rem;
   }
@@ -200,7 +210,7 @@ export default {
     float: left;
   }
   .home_progress{
-    height: 5.72rem;
+    height: 4.82rem;
     background: #FFFFFF;
     margin-top: 0.4rem;
   }
@@ -231,5 +241,14 @@ export default {
     -moz-transform:rotate(180deg);
     -webkit-transform:rotate(180deg);
     -o-transform:rotate(180deg);
+  }
+  .weui-progress__bar {
+    height: 0.5rem!important;
+    border-radius: 10px!important;
+  }
+  .weui-progress__inner-bar {
+    background-color: #32CCBC!important;
+    height: 0.5rem!important;
+    border-radius: 10px!important;
   }
 </style>

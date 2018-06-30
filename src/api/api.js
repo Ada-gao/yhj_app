@@ -80,3 +80,5 @@ export const postUpload = (obj) => axios(
       'Content-Type': 'multipart/form-data'
     }
   })
+// 首页任务组统计
+export const getStatisGroup = () => axios.get('/task/statisGroup')
