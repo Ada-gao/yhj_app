@@ -7,52 +7,153 @@
     </wv-header>
     <div class="feedback_content">
       <p style="font-size: 0.64rem;padding-left: 1rem">问题反馈:</p>
-      <textarea rows="5" placeholder="请描述在使用过程中，在什么页面，什么功能上遇到的问题，字数不少于10个字，谢谢！" class="feedback_tex"></textarea>
+      <textarea rows="5" v-model="content" placeholder="请描述在使用过程中，在什么页面，什么功能上遇到的问题，字数不少于10个字，谢谢！" class="feedback_tex"></textarea>
     </div>
     <!--<div class="feedback_img">上传</div>-->
-    <div @click="showActionsheet('ios')" class="feedback_upload">
-      <img :src="topImg" style="max-width: 100%">
+    <div style="width: 91%;height: 3rem;margin: 1rem auto;">
+      <div class="feedback_uploadimg" v-for="item in imgList" :key="item.id">
+         <!---->
+        <img :src="item" style="border-radius: 4px;max-width: 100%"/>
+      </div>
+      <div @click="showActionsheet('ios')" class="feedback_upload">
+        <img :src="topImg">
+      </div>
     </div>
-    <div class="feedback_button">提交</div>
+    <div class="feedback_button" @click="onImgdata">提交</div>
     <wv-actionsheet :type="type" :actions="actions" cancel-text="取消" v-model="sheetVisible"/>
   </div>
 </template>
 <script type="es6">
 import topImg from '../../assets/images/top_img.png'
+import { Toast } from 'we-vue'
+import { postUpload, postFeedback } from '../../api/api'
 export default {
   data () {
     return {
       topImg,
       type: 'ios',
       sheetVisible: false,
-      actions: []
+      actions: [],
+      onSuccess: '',
+      onFail: '',
+      imgList: [],
+      imgUrl: [],
+      content: ''
     }
   },
 
   methods: {
-    showActionsheet (type, mySourceType) {
+    showActionsheet (type) {
       this.type = type
       this.sheetVisible = true
     },
-
     menuClick (key) {
-      console.log(`menu ${key} clicked`)
+    },
+    upLoad (imgData) {
+      let file = this.dataURLtoFile('data:image/jpeg;base64,' + imgData, 'test.jpeg')
+      let formData = new FormData()
+      formData.append('file', file)
+      postUpload(formData).then((res) => {
+        this.imgUrl.push(res.data)
+      })
+    },
+    onImgdata () {
+      postFeedback(this.imgUrl, this.content).then((res) => {
+        if (res.status === 200) {
+          Toast.text({
+            duration: 1000,
+            message: '提交成功'
+          })
+          this.$router.push({path: '/profile'})
+        }
+      }).catch(() => {
+        Toast.text({
+          duration: 1000,
+          message: '失败'
+        })
+      })
+    },
+    dataURLtoFile (imgData, filename) {
+      let arr = imgData.split(',')
+      let mime = arr[0].match(/:(.*?);/)[1]
+      let bstr = window.atob(arr[1])
+      let n = bstr.length
+      let u8arr = new Uint8Array(n)
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n)
+      }
+      let blob = new Blob([u8arr], {type: mime})
+      blob.lastModifiedDate = new Date()
+      blob.name = filename
+      return blob
     }
   },
 
   mounted () {
-    this.actions = [
+    let _that = this
+    _that.actions = [
       {
         name: '拍摄新照片',
         key: 'menu1',
-        method: (mySourceType) => {
+        method: () => {
+          document.addEventListener('deviceready', onDeviceReady, false)
+          function onDeviceReady () {
+            let cameraOptions = {
+              quality: 50,
+              sourceType: 1,
+              allowEdit: true,
+              targetWidth: 80,
+              targetHeight: 80,
+              destinationType: navigator.camera.DestinationType.DATA_URL,
+              saveToPhotoAlbum: false,
+              encodingType: navigator.camera.EncodingType.JPEG
+            }
+            navigator.camera.getPicture(cameraSuccess, cameraError, cameraOptions)
+            function cameraSuccess (imgData) {
+              if (_that.imgList.length >= 5) {
+                Toast.text({
+                  duration: 1000,
+                  message: '最多只能上传5张图片'
+                })
+              } else {
+                _that.imgList.push('data:image/jpeg;base64,' + imgData)
+                _that.upLoad(imgData)
+              }
+            }
+            function cameraError () {
+            }
+          }
         }
       },
       {
         name: '从手机相册选择',
         key: 'menu2',
         method: () => {
-          this.menuClick('menu2')
+          document.addEventListener('deviceready', onDeviceReady, false)
+          function onDeviceReady () {
+            let cameraOptions = {
+              destinationType: navigator.camera.DestinationType.DATA_URL,
+              sourceType: 0,
+              quality: 50,
+              allowEdit: true,
+              targetWidth: 80,
+              targetHeight: 80
+            }
+            navigator.camera.getPicture(cameraSuccess, cameraError, cameraOptions)
+            function cameraSuccess (imgData) {
+              if (_that.imgList.length >= 5) {
+                Toast.text({
+                  duration: 1000,
+                  message: '最多只能上传5张图片'
+                })
+              } else {
+                _that.imgList.push('data:image/jpeg;base64,' + imgData)
+                _that.upLoad(imgData)
+              }
+            }
+            function cameraError () {
+            }
+          }
         }
       }
     ]
@@ -80,7 +181,7 @@ export default {
     text-align: center;
     border-radius: 0.1rem;
     color: #ffffff;
-    margin: 1rem auto 0;
+    margin: 5rem auto 0;
   }
   .feedback_img{
     width: 2rem;
@@ -90,6 +191,17 @@ export default {
   .feedback_upload{
     width: 3.46rem;
     height: 3.16rem;
-    margin: 1rem;
+    float: left;
+  }
+  .feedback_uploadimg{
+    float: left;
+    width: 20%;
+    margin-right: 0.2rem;
+  }
+  .feedback_upload>img{
+    max-width: 100%;
+  }
+  .weui-toast_text .weui-toast__content[data-v-4af60de0]{
+    font-size: .6em;
   }
 </style>

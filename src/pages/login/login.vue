@@ -47,7 +47,7 @@ export default {
       let loginParams = {username: this.account, password: this.password}
       if (this.account === '' || this.password === '') {
         Toast.text({
-          duration: 10000,
+          duration: 1000,
           message: '账号或密码不能为空！'
         })
       } else {

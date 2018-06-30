@@ -68,3 +68,15 @@ export const updateOutboundName = (id, params) => axios.put('/app/outboundName/'
 export const getRank = (params) => axios.get('/task/statisTeamRank?companyId=' + params)
 // 获取排名数据
 export const getTaskStatisticsDaily = () => axios.get('/task/statisBySalesDaily')
+// 问题反馈-文字及上传图片
+export const postFeedback = (imgData, content) => axios.post('/app/feedback?uuids=' + imgData + '&content=' + content)
+// 问题反馈-单张图片上传
+export const postUpload = (obj) => axios(
+  {
+    url: '/app/upload',
+    method: 'post',
+    data: obj,
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
