@@ -54,7 +54,7 @@ export const getTaskList = (type, params) => axios.get('/app/tasks/' + type, {pa
 export const getCall = (id) => axios.post('/app/call/' + id)
 // export const getTaskStatistics = () => axios.get('/app/taskStatistics')
 // 获取用户所属公司
-export const getCompany = (companyId) => axios.get('/app/queryCompany/' + companyId)
+export const getCompany = () => axios.get('/app/getLogoAndName')
 // 获取用户个人任务统计
 export const getSales = (userId) => axios.get('/task/statisBySales?userId=' + userId)
 // export const postFeedback = (img) => axios.post('/app')

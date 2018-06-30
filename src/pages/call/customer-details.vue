@@ -31,7 +31,7 @@
           <p class="photo_img">
             <img :src="photoImg">
           </p>
-          <p class="details_phone">{{form.lastCallResultText}}</p>
+          <p class="details_phone">{{form.lastCallResult}}</p>
         </div>
         <div class="placeholder details_right">
           <p class="iconfont icon-personal-center icon_ju"></p>
@@ -185,7 +185,7 @@ export default {
     this.form = this.$route.params
     this.getRandom()
 
-    this.form.lastCallResultText = transformText(queryObj.callResult, this.form.lastCallResult)
+    this.form.lastCallResult = transformText(queryObj.callResult, this.form.lastCallResult)
     this.form.genderText = transformText(queryObj.gender, this.form.gender)
   },
   methods: {
@@ -200,18 +200,19 @@ export default {
       // let createTime = parseTime(new Date(), '{y}-{m}-{d}')
       getRandom().then(res => {
         this.form = res.data
-        this.form.lastCallResultText = transformText(queryObj.callResult, this.form.lastCallResult)
+        this.form.lastCallResult = transformText(queryObj.callResult, this.form.lastCallResult)
         this.form.genderText = transformText(queryObj.gender, this.form.gender)
       })
     },
     submitCall () {
       this.resultShow = false
       this.history.outboundTaskId = this.form.taskId
+      let _this = this
       getTaskHistory(this.history).then(res => {
-        console.log(res)
+        // console.log(res)
         let data = res.data
-        this.form.lastCallResultText = transformText(queryObj.callResult, data.result)
-        console.log(this.form.lastCallResultText)
+        _this.form.lastCallResult = transformText(queryObj.callResult, data.result)
+        console.log(_this.form.lastCallResult)
       })
     },
     changeInfo () {

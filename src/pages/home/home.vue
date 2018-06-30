@@ -12,11 +12,11 @@
         </div>
         <div class="home_head">
           <div class="head_h">
-            <p class="head_img"></p>
+            <img :src="company.logo" alt="">
           </div>
           <div class="inform">
-            <h5 class="home_company">数赟科技</h5>
-            <h6 class="home_name">姓名：阿西</h6>
+            <h5 class="home_company">{{company.companyName}}</h5>
+            <h6 class="home_name">姓名：{{name}}</h6>
             <p class="home_state">状态：任务尚未完成，请继续努力</p>
           </div>
         </div>
@@ -26,7 +26,7 @@
       <div style="width: 95%">
         <wv-flex :gutter="10" style="width: 100%;">
           <wv-flex-item>
-            <div class="placeholder home_number">{{form.dailyTaskCnt}}分</div>
+            <div class="placeholder home_number">{{form.dailyTaskCnt}}个</div>
             <div class="placeholder home_text">今日任务数</div>
           </wv-flex-item>
           <wv-flex-item>
@@ -57,7 +57,7 @@
 
 <script>
 import thumbSmall from '../../assets/images/icon_tabbar.png'
-import { getTaskStatisticsDaily } from '@/api/api'
+import { getTaskStatisticsDaily, getCompany, getUser } from '@/api/api'
 
 export default {
   data () {
@@ -65,7 +65,9 @@ export default {
       thumbSmall,
       percent: 60,
       dateTime: '',
-      form: {}
+      form: {},
+      company: {},
+      name: ''
     }
   },
   mounted () {
@@ -76,6 +78,12 @@ export default {
     getList () {
       getTaskStatisticsDaily().then(res => {
         this.form = res.data
+      })
+      getCompany().then(res => {
+        this.company = res.data
+      })
+      getUser().then(res => {
+        this.name = res.data.name
       })
     },
     onClick () {
@@ -135,6 +143,14 @@ export default {
   }
   .head_h{
     width: 29%;
+    height: 100%;
+    text-align: center;
+    img {
+      width: 85px;
+      height: 85px;
+      border-radius: 50%;
+      margin-top: 5px;
+    }
   }
   .head_h,.inform{
     float: left;

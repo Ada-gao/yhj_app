@@ -4,9 +4,10 @@
     </wv-header>
     <div class="profile_content">
       <div class="profile_head">
+        <img :src="company.logo" alt="">
       </div>
       <p class="profile_name">{{dataInfrom.name}}</p>
-      <p class="profile_company">{{companyName}}</p>
+      <p class="profile_company">{{company.companyName}}</p>
     </div>
     <div style="background: #FFFFFF;margin-top: 0.4rem;height: 8.16rem">
     <wv-flex :gutter="10" style="width: 90%;margin:auto;border-bottom: 1px solid #D2D2D2">
@@ -51,15 +52,17 @@
 <script>
 import { getUser, getCompany, getSales, getRank } from '../../api/api'
 import { Dialog } from 'we-vue'
+import thumbSmall from '@/assets/images/icon_tabbar.png'
 
 export default {
   data () {
     return {
       dataInfrom: {},
       userId: '',
-      companyName: '',
+      company: {},
       form: {},
-      rank: {}
+      rank: {},
+      thumbSmall
     }
   },
   mounted () {
@@ -84,11 +87,9 @@ export default {
         getUser().then((res) => {
           this.dataInfrom = res.data
           this.userId = this.dataInfrom.id
-          if (this.dataInfrom.companyId !== '') {
-            getCompany(this.dataInfrom.companyId).then((res) => {
-              this.companyName = res.data.companyName
-            })
-          }
+          getCompany().then((res) => {
+            this.company = res.data
+          })
           getSales(this.userId).then((res) => {
             // console.log(res)
             this.form = res.data
@@ -121,10 +122,15 @@ export default {
   .profile_head{
     width: 3rem;
     height: 3rem;
-    background: rebeccapurple;
+    // background: rebeccapurple;
     margin: 0 auto;
     border-radius: 50%;
     box-shadow:rgba(238, 233, 233, 0.34) 0px 0px 0px 5px;
+    overflow: hidden;
+    img {
+      width: 3rem;
+      height: 3rem;
+    }
   }
   .profile_name{
     width: 100%;

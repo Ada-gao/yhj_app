@@ -50,7 +50,7 @@ let queryObj = {
     {label: '未外呼', value: 'NOT_CALL'},
     {label: '无人接听', value: 'NO_ANSWER'},
     {label: '无意向拒绝', value: 'REFUSE'},
-    {label: '有意向进一步跟进', value: 'FOLLOW'}
+    {label: '进一步跟进', value: 'FOLLOW'}
   ],
   nextStep: [
     {label: '复打', value: 'CALL_AGAIN'},
