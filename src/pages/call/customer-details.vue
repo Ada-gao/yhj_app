@@ -18,12 +18,12 @@
             <img :src="thumbSmall" style="max-width: 100%">
           </p>
           <p style="font-size: 0.64rem;text-align: center">{{form.contactName}}</p>
-          <p class="inform">年龄：<small style="font-size: 100%;color: rgb(106, 107, 105)">
-            {{form.age}}</small></p>
-          <p class="inform">性别：<small style="font-size: 100%;color: rgb(106, 107, 105) ">
-            {{form.genderText}}</small></p>
-          <p class="inform">电话：<small style="font-size: 100%;color: rgb(106, 107, 105)">
-            {{form.phoneNo}}</small></p>
+          <div class="inform">年龄：<small style="font-size: 100%;color: rgb(106, 107, 105)">
+            {{form.age}}</small></div>
+          <div class="inform">性别：<small style="font-size: 100%;color: rgb(106, 107, 105) ">
+            {{form.genderText}}</small></div>
+          <div class="inform">电话：<small style="font-size: 100%;color: rgb(106, 107, 105)">
+            {{form.phoneNo}}</small></div>
         </div>
       </wv-flex-item>
       <wv-flex-item >
