@@ -153,7 +153,7 @@
 import photoImg from '../../assets/images/photo.png'
 import thumbSmall from '../../assets/images/icon_tabbar.png'
 import { getCall, getRandom, getTaskHistory, updateOutboundName } from '@/api/api'
-import { transformText, queryObj, parseTime } from '@/utils'
+import { transformText, queryObj } from '@/utils'
 // import qs from 'qs'
 
 export default {
@@ -197,8 +197,8 @@ export default {
       })
     },
     getRandom () {
-      let createTime = parseTime(new Date(), '{y}-{m}-{d}')
-      getRandom(createTime).then(res => {
+      // let createTime = parseTime(new Date(), '{y}-{m}-{d}')
+      getRandom().then(res => {
         this.form = res.data
         this.form.lastCallResultText = transformText(queryObj.callResult, this.form.lastCallResult)
         this.form.genderText = transformText(queryObj.gender, this.form.gender)

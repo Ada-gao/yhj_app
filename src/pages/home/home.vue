@@ -26,16 +26,16 @@
       <div style="width: 95%">
         <wv-flex :gutter="10" style="width: 100%;">
           <wv-flex-item>
-            <div class="placeholder home_number">{{form.totalDuration}}分</div>
-            <div class="placeholder home_text">总通话时长</div>
+            <div class="placeholder home_number">{{form.dailyTaskCnt}}分</div>
+            <div class="placeholder home_text">今日任务数</div>
           </wv-flex-item>
           <wv-flex-item>
-            <div class="placeholder home_number">{{form.totalTaskCompleteCnt}}个</div>
-            <div class="placeholder home_text">总任务完成数</div>
+            <div class="placeholder home_number">{{form.dailyTaskCompleteCnt}}个</div>
+            <div class="placeholder home_text">今日完成数</div>
           </wv-flex-item>
           <wv-flex-item>
-            <div class="placeholder home_number">{{form.avgDuration}}秒</div>
-            <div class="placeholder home_text">平均通话时长</div>
+            <div class="placeholder home_number">{{form.dailyEffectiveDuration}}秒</div>
+            <div class="placeholder home_text">今日有效通话时长</div>
           </wv-flex-item>
         </wv-flex>
       </div>
