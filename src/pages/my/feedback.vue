@@ -10,7 +10,7 @@
       <textarea rows="5" v-model="content" placeholder="请描述在使用过程中，在什么页面，什么功能上遇到的问题，字数不少于10个字，谢谢！" class="feedback_tex"></textarea>
     </div>
     <!--<div class="feedback_img">上传</div>-->
-    <div style="width: 91%;height: 3rem;margin: 1rem auto;">
+    <div style="width: 88%;height: 3rem;margin: 1rem auto;">
       <div class="feedback_uploadimg" v-for="item in imgList" :key="item.id">
          <!---->
         <img :src="item" style="border-radius: 4px;max-width: 100%"/>
@@ -58,20 +58,27 @@ export default {
       })
     },
     onImgdata () {
-      postFeedback(this.imgUrl, this.content).then((res) => {
-        if (res.status === 200) {
-          Toast.text({
-            duration: 1000,
-            message: '提交成功'
-          })
-          this.$router.push({path: '/profile'})
-        }
-      }).catch(() => {
+      if (this.content === '') {
         Toast.text({
           duration: 1000,
-          message: '失败'
+          message: '内容不能为空！'
         })
-      })
+      } else {
+        postFeedback(this.imgUrl, this.content).then((res) => {
+          if (res.status === 200) {
+            Toast.text({
+              duration: 1000,
+              message: '提交成功'
+            })
+            this.$router.push({path: '/profile'})
+          }
+        }).catch(() => {
+          Toast.text({
+            duration: 1000,
+            message: '失败'
+          })
+        })
+      }
     },
     dataURLtoFile (imgData, filename) {
       let arr = imgData.split(',')
@@ -96,6 +103,7 @@ export default {
         name: '拍摄新照片',
         key: 'menu1',
         method: () => {
+          console.log(1234)
           document.addEventListener('deviceready', onDeviceReady, false)
           function onDeviceReady () {
             let cameraOptions = {

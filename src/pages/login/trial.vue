@@ -26,18 +26,6 @@
     <p style="font-size: 0.6rem;margin: 1.18rem auto 0;width: 87%">公司信息</p>
     <input type="text" placeholder="公司名称" class="trial_company" v-model="companyName">
     <v-distpicker hide-area @province="onChangeProvince" @city="onChangeCity"></v-distpicker>
-    <!--<wv-flex :gutter="10" style="width: 96%;margin: 0 auto;">-->
-      <!--<wv-flex-item >-->
-        <!--<div class="placeholder task_number">-->
-          <!--&lt;!&ndash;<input class="trial_company weui-input" placeholder="所在地" :value="ticket | pickerValueFilter" />&ndash;&gt;-->
-          <!--<v-distpicker hide-area></v-distpicker>-->
-        <!--</div>-->
-      <!--</wv-flex-item>-->
-      <!--<wv-flex-item @click.native="regionPickerShow = true">-->
-        <!--<div class="placeholder task_number"></div>-->
-        <!--<input class="trial_company weui-input" placeholder="区域" :value="region | pickerValueFilter" />-->
-      <!--</wv-flex-item>-->
-    <!--</wv-flex>-->
     <wv-flex :gutter="10" style="width: 96%;margin: 0 auto;">
       <wv-flex-item @click.native="industryPickerShow = true">
         <div class="placeholder">
@@ -148,9 +136,34 @@ export default {
           message: '请检查手机号是否有误',
           type: 'text'
         })
+      } else if (this.companyName === '' || this.contact === '') {
+        Toast({
+          duration: 1000,
+          message: '公司名称和姓名不能为空',
+          type: 'text'
+        })
+      } else if (this.companyProvince === '' || this.companyCity === '') {
+        Toast({
+          duration: 1000,
+          message: '地区不能为空',
+          type: 'text'
+        })
+      } else if (this.industry === '' || this.orgZize === '') {
+        Toast({
+          duration: 1000,
+          message: '行业和规模不能为空',
+          type: 'text'
+        })
       } else {
         postVerify(this.mobile, this.verification).then((res) => {
-          if (res.status === 200) {
+          console.log(res)
+          if (res.data === '失败') {
+            Toast({
+              duration: 1000,
+              message: '验证码输入有误。',
+              type: 'text'
+            })
+          } else {
             postTrial(params).then(res => {
               if (res.status === 200) {
                 Toast.success('提交成功')
@@ -158,6 +171,12 @@ export default {
               }
             })
           }
+        }).catch(() => {
+          Toast({
+            duration: 1000,
+            message: '验证码验证失败。',
+            type: 'text'
+          })
         })
       }
     },
@@ -186,6 +205,12 @@ export default {
           }, 1000)
         }
         postVerification(mobilePhone).then(res => {
+        }).catch(() => {
+          Toast({
+            duration: 1000,
+            message: '验证码发送失败，请稍后重试。',
+            type: 'text'
+          })
         })
       }
     },

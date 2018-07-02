@@ -15,7 +15,7 @@
             <div class="placeholder call_year">{{ createTime | moment('YYYY年MM月DD日')}}</div>
           </wv-flex-item>
           <wv-flex-item flex="3">
-            <div class="placeholder iconfont icon-fanhui icon_jian place" @click="getNetday"></div>
+            <div class="placeholder iconfont icon-fanhui icon_left place" @click="getNetday"></div>
           </wv-flex-item>
         </wv-flex>
         <div class="call_nav">
@@ -97,6 +97,8 @@ export default {
         if (flag) {
           // 多次加载
           this.hList = this.hList.concat(data)
+          console.log(this.hList)
+          console.log(flag)
           if (data.length === 0) {
             this.busy = true
           } else {
@@ -115,6 +117,7 @@ export default {
       type = type || this.type
       this.listQuery2.createTime = this.createTime
       getTaskList(type, this.listQuery2).then(res => {
+        console.log(2)
         let data = res.data.content
         if (flag) {
           // 多次加载
@@ -160,18 +163,20 @@ export default {
       this.getList2()
     },
     getNetday () {
-      let today = parseTime(new Date(), '{y}-{m}-{d}')
-      if (this.createTime === today) return false
+      // let today = parseTime(new Date(), '{y}-{m}-{d}')
+      // if (this.createTime === today) return false
       let day1 = new Date(this.createTime)
       day1.setDate(day1.getDate() + 1)
       this.createTime = parseTime(day1, '{y}-{m}-{d}')
       this.getList1()
+      this.getList2()
     },
     getPrevday () {
       let day1 = new Date(this.createTime)
       day1.setDate(day1.getDate() - 1)
       this.createTime = parseTime(day1, '{y}-{m}-{d}')
       this.getList1()
+      this.getList2()
     }
   },
   created () {
@@ -205,7 +210,7 @@ export default {
     /*top: 1.8rem;*/
     padding-top: 0.8rem;
   }
-  .icon_jian{
+  .icon_left{
     color:#32CCBC;
     transform:rotate(180deg);
     -ms-transform:rotate(180deg);

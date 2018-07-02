@@ -11,11 +11,11 @@ axios.interceptors.request.use(config => {
 })
 
 axios.interceptors.response.use(response => {
-  console.log(response.config.url)
+  // console.log(response.config.url)
   return response
 }, error => {
-  console.log(error.response.config.url)
-  console.log(error.response)
+  // console.log(error.response.config.url)
+  // console.log(error.response)
   if (error.response && error.response.status === 401) {
     localStorage.removeItem('token')
     this.$toast.text('你的身份信息已失效，请重新输入密码登录。')
@@ -49,7 +49,7 @@ export const getUser = () => axios.get('/app/me')
 // 个人任务完成统计
 export const getTaskStatistics = () => axios.get('/app/taskStatistics')
 // 获取任务列表
-export const getTaskList = (type, params) => axios.get('/app/tasks/' + type, {params: params})
+export const getTaskList = (type, params) => axios.get('/app/tasks/' + type, { params: params })
 // 开始外呼
 export const getCall = (id) => axios.post('/app/call/' + id)
 // export const getTaskStatistics = () => axios.get('/app/taskStatistics')

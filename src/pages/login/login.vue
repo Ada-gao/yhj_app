@@ -55,7 +55,7 @@ export default {
           localStorage.setItem('token', res.data.token)
           this.$router.push({path: '/home'})
         }).catch(() => {
-          Dialog({message: '请检查账号或密码是否真确'})
+          Dialog({message: '请检查账号或密码是否正确'})
         })
       }
     },
@@ -141,7 +141,7 @@ export default {
     font-size: 0.6rem;
     border: 0;
     margin-left: 0.5rem;
-    width: 77%;
+    width: 73%;
     outline:none;
     color: #CECECE;
   }

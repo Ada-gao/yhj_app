@@ -10,7 +10,7 @@
       </div>
     <p class="relevant_edition" style="margin-top: 1.18rem">客户端版本号：1.0</p>
     <p class="relevant_edition">版权所有：上海数赟科技有限公司</p>
-    <wv-footer style="font-size: 0.56rem" class="footer-demo" text="Copyright © 2018 suxiang.All Rights Reserved"/>
+    <wv-footer style="font-size: 0.56rem" class="footer-demo" text="Copyright © 2018 ShuYun.All Rights Reserved"/>
     <wv-group style="margin-top: 1.86rem">
       <wv-cell title="微信公众号" value="gh_374030c43f3c" is-link v-clipboard:copy="message"
                v-clipboard:success="onCopy">

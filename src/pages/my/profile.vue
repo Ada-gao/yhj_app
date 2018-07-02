@@ -72,7 +72,7 @@ export default {
     showDialog (skin, title) {
       Dialog({
         title: title,
-        message: '您确定要退出闪电呼吗？',
+        message: '您确定要退出吗？',
         skin,
         showCancelButton: true
       }).then(() => {

@@ -14,7 +14,7 @@
           <div class="head_h">
             <img :src="company.logo" alt="">
           </div>
-          <div class="inform">
+          <div class="home_inform">
             <h5 class="home_company">{{company.companyName}}</h5>
             <h6 class="home_name">姓名：{{name}}</h6>
             <p class="home_state">状态：任务尚未完成，请继续努力</p>
@@ -40,8 +40,9 @@
         </wv-flex>
       </div>
       <div style="width: 5%">
-        <router-link to="/call" class="iconfont icon-fanhui icon_jian"></router-link>
-        <!-- <p class="iconfont icon-fanhui icon_jian"></p> -->
+        <router-link to="/call">
+           <p class="iconfont icon-fanhui icon_right"></p>
+        </router-link>
       </div>
     </div>
     <div class="home_progress" v-for="item in statisGroup" :key="item.taskGroupId">
@@ -92,7 +93,7 @@ export default {
         this.statisGroup = res.data
         this.statisGroup.forEach(item => {
           item.percent = item.totalTaskCompleteCnt * 100 / item.totalTaskCnt
-          console.log(item.percent)
+          // console.log(item.percent)
         })
       })
     },
@@ -162,7 +163,7 @@ export default {
       margin-top: 5px;
     }
   }
-  .head_h,.inform{
+  .head_h,.home_inform{
     float: left;
   }
   .head_img{
@@ -179,7 +180,7 @@ export default {
     padding-right: 0.4rem;
     padding-top: 0.2rem;
   }
-  .inform{
+  .home_inform{
     width: 71%;
   }
   .home_name{
@@ -233,7 +234,7 @@ export default {
     text-align: right;
     width: 95%;
   }
-  .icon_jian{
+  .icon_right{
     line-height: 4.82rem;
     color:#32CCBC;
     transform:rotate(180deg);

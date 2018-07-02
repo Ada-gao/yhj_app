@@ -259,7 +259,7 @@ export default {
   .inform{
     width: 50%;
     font-size: 0.56rem;
-    /* padding-left: 3.38rem; */
+    /*padding-left: 3.38rem;*/
     margin: 0.42rem auto 0;
   }
   .photo_img{
