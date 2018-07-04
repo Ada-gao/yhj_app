@@ -1,5 +1,5 @@
 FROM nginx:1.13.12-alpine
-COPY dist /usr/share/nginx/html
+COPY www /usr/share/nginx/html
 COPY WW_verify_nO692fpHLvdQ7wpK.txt /usr/share/nginx/html
 
 COPY nginx.conf /etc/nginx/
