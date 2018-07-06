@@ -25,9 +25,11 @@
 </template>
 <script type="es6">
 import topImg from '../../assets/images/top_img.png'
-import Vue from 'vue'
+// import Vue from 'vue'
 import { Toast } from 'we-vue'
 import { postUpload, postFeedback } from '../../api/api'
+import Vue from 'vue'
+
 export default {
   data () {
     return {
@@ -49,12 +51,40 @@ export default {
       this.sheetVisible = true
     },
     menuClick (key) {
+      console.log(`menu ${key} clicked`)
+      let vm = this
+      let sourceType = Vue.cordova.camera.PictureSourceType.CAMERA
+      if (key === 'PHOTOLIBRARY') {
+        sourceType = Vue.cordova.camera.PictureSourceType.PHOTOLIBRARY
+      }
+      let cameraOptions = {
+        quality: 100,
+        sourceType: sourceType,
+        allowEdit: false,
+        destinationType: Vue.cordova.camera.DestinationType.DATA_URL,
+        saveToPhotoAlbum: false,
+        encodingType: Vue.cordova.camera.EncodingType.JPEG
+      }
+      Vue.cordova.camera.getPicture(function cameraSuccess (imgData) {
+        if (vm.imgList.length >= 5) {
+          Toast.text({
+            duration: 1000,
+            message: '最多只能上传5张图片'
+          })
+        } else {
+          vm.imgList.push('data:image/jpeg;base64,' + imgData)
+          vm.upLoad(imgData)
+        }
+      }, function cameraError (message) {
+        console.log('error to take picture:' + message)
+      }, cameraOptions)
     },
     upLoad (imgData) {
       let file = this.dataURLtoFile('data:image/jpeg;base64,' + imgData, 'test.jpeg')
       let formData = new FormData()
       formData.append('file', file)
       postUpload(formData).then((res) => {
+        console.log('uploaded...')
         this.imgUrl.push(res.data)
       })
     },
@@ -98,68 +128,69 @@ export default {
   },
 
   mounted () {
-    let _that = this
-    _that.actions = [
+    this.actions = [
       {
         name: '拍摄新照片',
         key: 'menu1',
         method: () => {
-          let cameraOptions = {
-            quality: 50,
-            sourceType: 1,
-            allowEdit: true,
-            targetWidth: 80,
-            targetHeight: 80,
-            destinationType: navigator.camera.DestinationType.DATA_URL,
-            saveToPhotoAlbum: false,
-            encodingType: navigator.camera.EncodingType.JPEG
-          }
-          Vue.cordova.camera.getPicture(cameraSuccess, cameraError, cameraOptions)
-          function cameraSuccess (imgData) {
-            if (_that.imgList.length >= 5) {
-              Toast.text({
-                duration: 1000,
-                message: '最多只能上传5张图片'
-              })
-            } else {
-              _that.imgList.push('data:image/jpeg;base64,' + imgData)
-              _that.upLoad(imgData)
-            }
-          }
-          function cameraError () {
-            Toast.text({
-              duration: 1000,
-              message: '上传失败，请稍后重试...'
-            })
-          }
+          // let cameraOptions = {
+          //   quality: 50,
+          //   sourceType: 1,
+          //   allowEdit: true,
+          //   targetWidth: 80,
+          //   targetHeight: 80,
+          //   destinationType: navigator.camera.DestinationType.DATA_URL,
+          //   saveToPhotoAlbum: false,
+          //   encodingType: navigator.camera.EncodingType.JPEG
+          // }
+          // Vue.cordova.camera.getPicture(cameraSuccess, cameraError, cameraOptions)
+          // function cameraSuccess (imgData) {
+          //   if (_that.imgList.length >= 5) {
+          //     Toast.text({
+          //       duration: 1000,
+          //       message: '最多只能上传5张图片'
+          //     })
+          //   } else {
+          //     _that.imgList.push('data:image/jpeg;base64,' + imgData)
+          //     _that.upLoad(imgData)
+          //   }
+          // }
+          // function cameraError () {
+          //   Toast.text({
+          //     duration: 1000,
+          //     message: '上传失败，请稍后重试...'
+          //   })
+          // }
+          this.menuClick('CAMERA')
         }
       },
       {
         name: '从手机相册选择',
         key: 'menu2',
         method: () => {
-          let cameraOptions = {
-            destinationType: navigator.camera.DestinationType.DATA_URL,
-            sourceType: 0,
-            quality: 50,
-            allowEdit: true,
-            targetWidth: 80,
-            targetHeight: 80
-          }
-          Vue.cordova.camera.getPicture(cameraSuccess, cameraError, cameraOptions)
-          function cameraSuccess (imgData) {
-            if (_that.imgList.length >= 5) {
-              Toast.text({
-                duration: 1000,
-                message: '最多只能上传5张图片'
-              })
-            } else {
-              _that.imgList.push('data:image/jpeg;base64,' + imgData)
-              _that.upLoad(imgData)
-            }
-          }
-          function cameraError () {
-          }
+          // let cameraOptions = {
+          //   destinationType: navigator.camera.DestinationType.DATA_URL,
+          //   sourceType: 0,
+          //   quality: 50,
+          //   allowEdit: true,
+          //   targetWidth: 80,
+          //   targetHeight: 80
+          // }
+          // Vue.cordova.camera.getPicture(cameraSuccess, cameraError, cameraOptions)
+          // function cameraSuccess (imgData) {
+          //   if (_that.imgList.length >= 5) {
+          //     Toast.text({
+          //       duration: 1000,
+          //       message: '最多只能上传5张图片'
+          //     })
+          //   } else {
+          //     _that.imgList.push('data:image/jpeg;base64,' + imgData)
+          //     _that.upLoad(imgData)
+          //   }
+          // }
+          // function cameraError () {
+          // }
+          this.menuClick('PHOTOLIBRARY')
         }
       }
     ]
