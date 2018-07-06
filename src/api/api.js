@@ -68,7 +68,7 @@ export const getTaskHistory = (params) => axios.post('/app/tasks/history', param
 // 更新外呼客户信息
 export const updateOutboundName = (id, params) => axios.put('/app/outboundName/' + id, params)
 // 获取排名数据
-export const getRank = (params) => axios.get('/task/statisTeamRank?companyId=' + params)
+export const getRank = (userId) => axios.get('/task/statisTeamRankBySales?userId=' + userId)
 // 获取排名数据
 export const getTaskStatisticsDaily = () => axios.get('/task/statisBySalesDaily')
 // 问题反馈-文字及上传图片

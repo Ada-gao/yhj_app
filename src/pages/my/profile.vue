@@ -98,7 +98,8 @@ export default {
               this.form.rate = this.form.totalTaskCompleteCnt / this.form.totalTaskCnt
             }
           })
-          getRank(this.dataInfrom.companyId).then((res) => {
+          getRank(this.userId).then((res) => {
+            console.log(res)
             if (res.data.length === 0) {
               let ranks = {
                 rank: 0

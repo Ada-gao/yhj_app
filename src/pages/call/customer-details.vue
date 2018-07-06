@@ -15,7 +15,7 @@
             {{form.callCount}}次，最近外呼时间：
             {{form.lastCallDate | moment('YYYY.MM.DD')}}</p>
           <p style="width: 2.5rem;margin:auto;padding-top: 16px">
-            <img :src="company.logo" style="max-width: 100%">
+            <img :src="company.logo" alt="">
           </p>
           <p style="font-size: 0.64rem;text-align: center">{{form.contactName}}</p>
           <div class="inform">年龄：<small style="font-size: 100%;color: rgb(106, 107, 105)">
