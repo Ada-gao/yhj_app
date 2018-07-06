@@ -17,7 +17,8 @@
           <div class="home_inform">
             <h5 class="home_company">{{company.companyName}}</h5>
             <h6 class="home_name">姓名：{{name}}</h6>
-            <p class="home_state">状态：任务尚未完成，请继续努力</p>
+            <p class="home_state" v-if="completeStatus==false">状态：任务尚未完成，请继续努力</p>
+            <p class="home_state" v-if="completeStatus==true">状态：任务已完成，请继续加油哦！</p>
           </div>
         </div>
       </div>
@@ -34,7 +35,7 @@
             <div class="placeholder home_text">今日完成数</div>
           </wv-flex-item>
           <wv-flex-item>
-            <div class="placeholder home_number">{{form.dailyEffectiveDuration}}秒</div>
+            <div class="placeholder home_number">{{form.dailyEffectiveDuration | moment('mm分ss')}}秒</div>
             <div class="placeholder home_text">今日有效通话时长</div>
           </wv-flex-item>
         </wv-flex>
@@ -53,15 +54,14 @@
         <small style="color: #32CCBC;font-size: 100%">
           {{item.totalTaskCompleteCnt}}</small>/{{item.totalTaskCnt}}
       </p>
-      <p class="progress_time">任务计划完成时间：{{item.taskEndDate}}</p>
+      <p class="progress_time">任务计划完成时间：{{item.taskEndDate | moment('YYYY.MM.DD')}}</p>
     </div>
   </div>
 </template>
 
 <script>
 import thumbSmall from '../../assets/images/icon_tabbar.png'
-import { getTaskStatisticsDaily, getCompany, getUser, getStatisGroup } from '@/api/api'
-
+import { getTaskStatisticsDaily, getCompany, getUser, getStatisGroup, getCompleteStatus } from '@/api/api'
 export default {
   data () {
     return {
@@ -71,7 +71,8 @@ export default {
       company: {},
       name: '',
       statisGroup: {},
-      percent: 60
+      percent: 60,
+      completeStatus: ''
     }
   },
   mounted () {
@@ -88,6 +89,10 @@ export default {
       })
       getUser().then(res => {
         this.name = res.data.name
+        getCompleteStatus(res.data.id).then((res) => {
+          this.completeStatus = res.data
+          // console.log(this.completeStatus)
+        })
       })
       getStatisGroup().then(res => {
         this.statisGroup = res.data
@@ -217,8 +222,7 @@ export default {
   }
   .progress_title{
     font-size: 0.56rem;
-    margin-top: 0.58rem;
-    margin-left: 0.4rem;
+    padding: 0.38rem 0 0.4rem 0.4rem;
   }
   .progress_list{
     width: 90%;
@@ -230,7 +234,7 @@ export default {
   .progress_time{
     font-size: 0.48rem;
     color: #666666;
-    margin-top: 0.56rem;
+    /*margin-top: 0.56rem;*/
     text-align: right;
     width: 95%;
   }

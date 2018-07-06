@@ -3,11 +3,18 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 let routes = []
-
-routes.push({
-  path: '/',
-  redirect: { path: '/home' }
-})
+let user = localStorage.getItem('token')
+if (!user || user === '') {
+  routes.push({
+    path: '/',
+    redirect: { path: '/login' }
+  })
+} else {
+  routes.push({
+    path: '/',
+    redirect: { path: '/home' }
+  })
+}
 
 routes.push({
   path: '/home',
@@ -114,6 +121,7 @@ const router = new VueRouter({
   base: '/',
   routes,
   scrollBehavior (to, from, savedPosition) {
+    // let token = localStorage['token']
     return { x: 0, y: 0 }
   }
 })

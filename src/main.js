@@ -75,6 +75,7 @@ router.beforeEach((to, from, next) => {
     sessionStorage.removeItem('token')
   }
   let user = localStorage.getItem('token')
+  // console.log(user)
   if (!user && requiresAuth && to.path !== '/login') {
     next({path: '/login', query: {redirect: to.fullPath}})
   } else {

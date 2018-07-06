@@ -44,7 +44,7 @@
       <wv-cell title="关于闪电呼" value="" is-link to="/my/relevant" style="font-size: 0.56rem"></wv-cell>
     </div>
     <!--<router-link to="/login">-->
-      <div class="button_return" @click="showDialog('ios')">退出登陆</div>
+      <div class="button_return" @click="showDialog('ios')">退出登录</div>
     <!--</router-link>-->
   </div>
 </template>
@@ -91,13 +91,23 @@ export default {
             this.company = res.data
           })
           getSales(this.userId).then((res) => {
-            // console.log(res)
             this.form = res.data
-            this.form.rate = this.form.totalTaskCompleteCnt / this.form.totalTaskCnt
-            // console.log(this.form.rate)
+            if (this.form.totalTaskCompleteCnt === null || this.form.totalTaskCompleteCnt === 0) {
+              this.form.rate = 0
+            } else {
+              this.form.rate = this.form.totalTaskCompleteCnt / this.form.totalTaskCnt
+            }
           })
           getRank(this.dataInfrom.companyId).then((res) => {
-            this.rank = res.data
+            if (res.data.length === 0) {
+              let ranks = {
+                rank: 0
+              }
+              this.rank = ranks
+            } else {
+              this.rank = res.data[0]
+            }
+            // console.log(this.rank)
           })
         })
       } else if (!user || user === '') {

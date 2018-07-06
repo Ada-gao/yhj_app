@@ -1,3 +1,5 @@
+import { Dialog } from 'we-vue'
+// import { BackgroundMode } from '@ionic-native/background-mode'
 export const install = function (Vue, options, cb) {
   document.addEventListener('deviceready', () => {
     /* global device */
@@ -32,7 +34,30 @@ export const install = function (Vue, options, cb) {
 
     console.log('app is ready..')
     var event = new Event('appReady')
-
+    document.addEventListener('backbutton', onBackKeyDown, false)
+    function onBackKeyDown () {
+      // console.log(this.$router.currentRoute.path)
+      let url = (location.href).split('#')[1]
+      if (url === '/home' || url === '/profile' || url === '/call' || url === '/login') {
+        if (navigator.app) {
+          Dialog({
+            title: '温馨提示',
+            message: '您确定要退出吗？',
+            showCancelButton: true
+          }).then(() => {
+            navigator.app.exitApp()
+            localStorage.removeItem('token')
+          }).catch(() => {
+          })
+        } else if (navigator.device) {
+          navigator.device.exitApp()
+        } else {
+          window.close()
+        }
+      } else {
+        history.back(-1)
+      }
+    }
     // Dispatch the event.
     document.dispatchEvent(event)
 

@@ -1,8 +1,8 @@
 <template>
-  <div class="page" style="position: absolute;top:2rem">
+  <div class="page" style="position: absolute;top:2rem;background-color: #ffffff">
     <wv-header class="trial_header" title="申请体验" :fixed="true" background-color="white" style="color:#32CCBC;">
       <div class="btn-back" slot="left">
-        <i class="iconfont icon-fanhui" @click="$router.push('/')" style="color:black"></i>
+        <i class="iconfont icon-fanhui" @click="$router.push('/')" style="color:#959292"></i>
       </div>
     </wv-header>
     <div class="trial_title">
@@ -136,22 +136,10 @@ export default {
           message: '请检查手机号是否有误',
           type: 'text'
         })
-      } else if (this.companyName === '' || this.contact === '') {
+      } else if (this.companyName === '' || this.contact === '' || this.companyProvince === '' || this.companyCity === '' || this.industry === '' || this.orgZize === '') {
         Toast({
-          duration: 1000,
-          message: '公司名称和姓名不能为空',
-          type: 'text'
-        })
-      } else if (this.companyProvince === '' || this.companyCity === '') {
-        Toast({
-          duration: 1000,
-          message: '地区不能为空',
-          type: 'text'
-        })
-      } else if (this.industry === '' || this.orgZize === '') {
-        Toast({
-          duration: 1000,
-          message: '行业和规模不能为空',
+          duration: 2000,
+          message: '请完善所有信息',
           type: 'text'
         })
       } else {
@@ -251,6 +239,12 @@ export default {
 </script>
 
 <style lang="scss">
+  .wv-header .wv-header-title[data-v-a5b8d5b6]{
+    font-size: 0.65rem;
+  }
+  .weui-toast_text .weui-toast__content[data-v-4af60de0]{
+    font-size: 0.7rem;
+  }
   .trial_title{
     width: 80%;
     margin:auto;

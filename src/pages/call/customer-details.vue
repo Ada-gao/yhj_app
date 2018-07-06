@@ -1,21 +1,21 @@
 <template>
   <div class="page">
-    <wv-header title="任务完成(15/20)" :fixed="true" background-color="#32CCBC">
+    <wv-header :title="'任务详情('+task.dailyTaskCompleteCnt +'/'+ task.dailyTaskCnt+')'" :fixed="false" background-color="#32CCBC">
       <div class="btn-back" slot="left">
         <i class="iconfont icon-fanhui" @click="$router.push('/call')"></i>
       </div>
       <div class="btn-menu" slot="right">
-        <p style="font-size: 0.56rem">({{form.duration}}s)</p>
+        <p style="font-size: 0.56rem">{{task.dailyEffectiveDuration | moment('mm:ss')}}</p>
       </div>
     </wv-header>
-    <wv-flex :gutter="10" style="margin-top: 2rem">
+    <wv-flex :gutter="10">
       <wv-flex-item flex="3" style="margin-top: 0.272rem">
         <div class="placeholder details_left">
-          <p style="font-size: 0.56rem;color: #32CCBC;text-align: center">外呼次数
+          <p style="font-size: 0.56rem;color: #32CCBC;text-align: center;font-weight: 600" v-if="form.callCount">外呼
             {{form.callCount}}次，最近外呼时间：
-            {{form.lastCallDate||'彗星撞地球'}}</p>
-          <p style="width: 2.5rem;margin: 0 auto">
-            <img :src="thumbSmall" style="max-width: 100%">
+            {{new Date(form.lastCallDate,'{y}-{m}-{d}')}}</p>
+          <p style="width: 2.5rem;margin:auto;padding-top: 16px">
+            <img :src="company.logo" style="max-width: 100%">
           </p>
           <p style="font-size: 0.64rem;text-align: center">{{form.contactName}}</p>
           <div class="inform">年龄：<small style="font-size: 100%;color: rgb(106, 107, 105)">
@@ -28,8 +28,11 @@
       </wv-flex-item>
       <wv-flex-item >
         <div class="placeholder details_right">
-          <p class="photo_img">
+          <p class="photo_img" v-if="form.lastCallResult === '无人接听'">
             <img :src="photoImg">
+          </p>
+          <p class="photo_img" v-if="form.lastCallResult != '无人接听'">
+            <img :src="photoImg1">
           </p>
           <p class="details_phone">{{form.lastCallResult}}</p>
         </div>
@@ -46,7 +49,7 @@
     <div class="phone_details">
       <p class="phone_content">外呼话述：</p>
       <div class="phone_html">
-        <p style="margin: 5px">{{form.salesTalk}}</p>
+        <p style="margin: 5px" v-html="form.salesTalk">{{form.salesTalk}}</p>
         <!--<textarea class="weui-cells" placeholder="" :rows="8" :show-counter="false"></textarea>-->
       </div>
       <div class="phone_button" @click="startCall">
@@ -56,7 +59,7 @@
     <div class="Record" v-show="resultShow">
       <div class="Record_content">
         <div class="Record_title">外呼记录</div>
-        <p class="Record_time">通话时长：2:37</p>
+        <p class="Record_time">通话时长：{{callTime.duration}}</p>
         <div  style="margin: 87%;margin: 0 auto;border-bottom: 1px solid #eae8e8;height: 4.5rem">
         <wv-flex>
           <wv-flex-item>
@@ -147,53 +150,86 @@
         <div class="information_button" @click="updateInfo">保存</div>
       </div>
     </div>
+    <div class="details_loading" v-show="details">
+      <p class="details_content">正在连接 请稍等...</p>
+    </div>
   </div>
 </template>
 <script>
-import photoImg from '../../assets/images/photo.png'
-import thumbSmall from '../../assets/images/icon_tabbar.png'
-import { getCall, getRandom, getTaskHistory, updateOutboundName } from '@/api/api'
+import photoImg from '@/assets/images/photo.png'
+import photoImg1 from '@/assets/images/phone_random.png'
+import thumbSmall from '@/assets/images/icon_tabbar.png'
+import { getCall, getRandom, getTaskHistory, updateOutboundName, getCallStatus, getTaskStatisticsDaily, getCompany } from '@/api/api'
 import { transformText, queryObj } from '@/utils'
+import { Dialog } from 'we-vue'
 // import qs from 'qs'
 
 export default {
   data () {
     return {
       photoImg,
+      photoImg1,
       thumbSmall,
+      company: {},
       resultShow: false,
       inform: false,
+      details: false,
       selected: '',
-      from: '18221835843',
-      to: '15623598264',
+      from: '13053108821',
+      to: '13661876489',
       form: {},
       nextStepOptions: [],
       callResult: [],
       history: {
         result: 'FOLLOW',
         status: 'CALL_AGAIN',
-        actualCallStartDate: new Date('2018-06-28').getTime(),
-        acutalCallEndDate: new Date().getTime(),
+        actualCallStartDate: '',
+        acutalCallEndDate: '',
         outboundTaskId: ''
       },
-      info: {}
+      info: {},
+      callSid: '',
+      duration: '',
+      task: {},
+      callStatus: false,
+      callTime: {}
     }
   },
   created () {
     this.nextStepOptions = queryObj.nextStep
     this.callResult = queryObj.callResult
     this.form = this.$route.params
-    this.getRandom()
-
-    this.form.lastCallResult = transformText(queryObj.callResult, this.form.lastCallResult)
-    this.form.genderText = transformText(queryObj.gender, this.form.gender)
+    if (this.form.taskId) {
+      this.form.lastCallResult = transformText(queryObj.callResult, this.form.lastCallResult)
+      this.form.genderText = transformText(queryObj.gender, this.form.gender)
+    } else {
+      this.getRandom()
+    }
+    this.teskData()
+  },
+  mounted () {
+    document.addEventListener('deviceready', () => {
+      document.addEventListener('resume', () => {
+        if (this.callStatus === true) {
+          this.details = false
+          this.resultShow = true
+          this.callDate()
+        }
+        // alert('resume')
+      }, false)
+    }, false)
+    this.headImg()
   },
   methods: {
     startCall () {
-      // console.log(this.form.outboundNameId)
+      this.details = true
       getCall(this.form.outboundNameId).then(res => {
-        // console.log(res)
-        this.resultShow = true
+        console.log(res)
+        this.callStatus = true
+        this.callSid = res.data.callSid
+        // setTimeout(() => {
+        //   this.resultShow = true
+        // }, 8000)
       })
     },
     getRandom () {
@@ -202,17 +238,35 @@ export default {
         this.form = res.data
         this.form.lastCallResult = transformText(queryObj.callResult, this.form.lastCallResult)
         this.form.genderText = transformText(queryObj.gender, this.form.gender)
+      }).catch(() => {
+        this.form.lastCallDate = 0
+        Dialog({message: '当前无任务分配'}).then(() => {
+          this.$router.push({path: '/call'})
+        })
       })
     },
     submitCall () {
+      this.callStatus = false
       this.resultShow = false
       this.history.outboundTaskId = this.form.taskId
       let _this = this
-      getTaskHistory(this.history).then(res => {
-        // console.log(res)
-        let data = res.data
-        _this.form.lastCallResult = transformText(queryObj.callResult, data.result)
-        console.log(_this.form.lastCallResult)
+      getCallStatus(this.callSid).then((res) => {
+        _this.history.actualCallStartDate = res.data.start
+        _this.history.acutalCallEndDate = res.data.end
+        getTaskHistory(this.history).then(res => {
+          let data = res.data
+          _this.form.lastCallResult = transformText(queryObj.callResult, data.result)
+          // console.log(_this.form.lastCallResult)
+        })
+      })
+    },
+    callDate () {
+      getCallStatus(this.callSid).then((res) => {
+        let min = res.data.duration.split(':')[1]
+        let sec = res.data.duration.split(':')[2]
+        this.callTime = Number(min * 60) + Number(sec)
+        // this.callTime.duration
+        console.log(this.callTime)
       })
     },
     changeInfo () {
@@ -237,11 +291,29 @@ export default {
         this.form.gender = data.gender
         this.form.genderText = transformText(queryObj.gender, this.form.gender)
       })
+    },
+    teskData () {
+      getTaskStatisticsDaily().then(res => {
+        this.task = res.data
+        // if (this.task.dailyTaskCompleteCnt)
+      }).catch((res) => {
+        this.task.dailyTaskCompleteCnt = 0
+        this.task.dailyTaskCnt = 0
+        this.dailyEffectiveDuration = 0
+      })
+    },
+    headImg () {
+      getCompany().then(res => {
+        this.company = res.data
+      })
     }
   }
 }
 </script>
 <style lang="scss">
+  .wv-header-title{
+    font-size: 19px;
+  }
   .details_left{
     width: 100%;
     height: 9.28rem;
@@ -265,6 +337,7 @@ export default {
   .photo_img{
     width: 0.88rem;
     margin: 0 auto;
+    padding-top: 0.3rem;
   }
   .photo_img>img{
     max-width: 100%;
@@ -274,6 +347,7 @@ export default {
     margin: 0 auto;
     font-size: 0.85rem;
     color: #CF2828;
+    padding-top: 0.3rem;
 
   }
   .details_phone{
@@ -285,6 +359,7 @@ export default {
     margin: 0 auto;
     font-size: 0.85rem;
     color: #3A99FC;
+    padding-top: 0.3rem;
   }
   .phone_details{
     width: 100%;
@@ -316,7 +391,7 @@ export default {
     line-height: 1.64rem;
     color: #FFFFFF ;
   }
-  .Record,.information{
+  .Record,.information,.details_loading{
     z-index: 501;
     position: fixed;
     top:0;
@@ -353,6 +428,24 @@ export default {
     height: 10.34rem;
     background: #ffffff;
     border-radius: 0.2rem;
+  }
+  .details_content{
+    position: fixed;
+    z-index: 501;
+    width: 50%;
+    max-width: 300px;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    overflow: hidden;
+    height: 5rem;
+    line-height: 5rem;
+    text-align: center;
+    background: #ffffff;
+    border-radius: 0.2rem;
+    font-size: 0.8rem;
+    color: #32CCBC;
   }
   .Record_title,.information_title{
     width: 95%;
@@ -405,6 +498,7 @@ export default {
     border-radius: 0.2rem;
     padding: 5px;
     box-sizing: border-box;
+    outline: none;
   }
   .Result_button{
     width: 87%;

@@ -6,7 +6,7 @@
       </div>
     </wv-header>
     <div class="feedback_content">
-      <p style="font-size: 0.64rem;padding-left: 1rem">问题反馈:</p>
+      <p style="font-size: 0.6rem;padding-left: 1rem;margin-top: 1rem">问题反馈:</p>
       <textarea rows="5" v-model="content" placeholder="请描述在使用过程中，在什么页面，什么功能上遇到的问题，字数不少于10个字，谢谢！" class="feedback_tex"></textarea>
     </div>
     <!--<div class="feedback_img">上传</div>-->

@@ -52,6 +52,9 @@ export const getTaskStatistics = () => axios.get('/app/taskStatistics')
 export const getTaskList = (type, params) => axios.get('/app/tasks/' + type, { params: params })
 // 开始外呼
 export const getCall = (id) => axios.post('/app/call/' + id)
+// 获取外呼时间
+export const getCallStatus = (callSid) => axios.get('/app/callStatusResult/' + callSid)
+
 // export const getTaskStatistics = () => axios.get('/app/taskStatistics')
 // 获取用户所属公司
 export const getCompany = () => axios.get('/app/getLogoAndName')
@@ -82,3 +85,5 @@ export const postUpload = (obj) => axios(
   })
 // 首页任务组统计
 export const getStatisGroup = () => axios.get('/task/statisGroup')
+// 获取任务完成状态
+export const getCompleteStatus = (userId) => axios.get('/task/saleDailyCompleteStatus?userId=' + userId)

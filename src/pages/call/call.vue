@@ -84,7 +84,8 @@ export default {
         pageIndex: 0,
         pageSize: 10
         // createTime: ''
-      }
+      },
+      call: 1
     }
   },
   methods: {
@@ -97,8 +98,6 @@ export default {
         if (flag) {
           // 多次加载
           this.hList = this.hList.concat(data)
-          console.log(this.hList)
-          console.log(flag)
           if (data.length === 0) {
             this.busy = true
           } else {
@@ -115,9 +114,9 @@ export default {
       // console.log('这是已完成')
       this.floading = true
       type = type || this.type
+      console.log(type)
       this.listQuery2.createTime = this.createTime
       getTaskList(type, this.listQuery2).then(res => {
-        console.log(2)
         let data = res.data.content
         if (flag) {
           // 多次加载
@@ -165,22 +164,21 @@ export default {
     getNetday () {
       // let today = parseTime(new Date(), '{y}-{m}-{d}')
       // if (this.createTime === today) return false
+      this.listQuery1.pageIndex = 0
       let day1 = new Date(this.createTime)
       day1.setDate(day1.getDate() + 1)
       this.createTime = parseTime(day1, '{y}-{m}-{d}')
       this.getList1()
-      this.getList2()
     },
     getPrevday () {
       let day1 = new Date(this.createTime)
       day1.setDate(day1.getDate() - 1)
       this.createTime = parseTime(day1, '{y}-{m}-{d}')
       this.getList1()
-      this.getList2()
     }
   },
   created () {
-    console.log(this.createTime)
+    // console.log(this.createTime)
   },
   mounted () {
     this.getList1()
@@ -231,7 +229,6 @@ export default {
     width: 66%;
     height: 1.064rem;
     margin: 1.16rem auto 0;
-    line-height: 1.064rem;
     border: 1px solid gainsboro;
     border-radius: 4px;
     color: gray;
@@ -241,6 +238,9 @@ export default {
     text-align: center;
     font-size: 0.48rem;
     float: left;
+    border-radius: 3px;
+    height: 1.08rem;
+    line-height: 1.064rem;
   }
   .page-infinite-wrapper {
     padding-bottom: 60px;

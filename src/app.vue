@@ -13,7 +13,7 @@
         <div class="iconfont icon-hujiaozhongxin weui-tabbar__label" style="font-size: 0.96rem;"></div>
         <!--<wv-badge style="position: absolute;top: 0;right: -6px;">3</wv-badge>-->
       </span>
-        外呼
+        开始外呼
       </wv-tabbar-item>
       <wv-tabbar-item to="/profile" :isOn="selected('/profile')">
         <span slot="icon" style="display: inline-block; position: relative;">

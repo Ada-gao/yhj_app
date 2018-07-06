@@ -22,7 +22,7 @@
       <i v-if="asee==false" class="iconfont icon-zhengyan" style="color: #32CCBC;float: right;font-size: 26px" @click="iconSee"></i>
     </div>
     <div class="land" @click="login">
-        登陆
+        登录
       </div>
     <div class="login_Application" @click="$router.push('/login/trial')">申请体验</div>
   </div>
@@ -98,7 +98,7 @@ export default {
     height: 1.76rem;
     color: white;
     text-align: center;
-    line-height: 40px;
+    line-height: 1.76rem;
     background: #32CCBC;
     border-radius: 0.2rem;
     margin: 13% auto;
@@ -135,6 +135,7 @@ export default {
     width: 80%;
     outline:none;
     color: #CECECE;
+    background-color: #ffffff;
   }
   .pass_input{
     height: 1rem;
@@ -144,6 +145,7 @@ export default {
     width: 73%;
     outline:none;
     color: #CECECE;
+    background-color: #ffffff;
   }
   .user_login>div{
     float: left;
