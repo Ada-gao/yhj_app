@@ -5,7 +5,7 @@
         <i class="iconfont icon-fanhui" @click="$router.push('/call')"></i>
       </div>
       <div class="btn-menu" slot="right">
-        <p style="font-size: 0.56rem">{{task.dailyEffectiveDuration | moment('mm:ss')}}</p>
+        <p style="font-size: 0.56rem">{{task.dailyEffectiveDuration}}</p>
       </div>
     </wv-header>
     <wv-flex :gutter="10">
@@ -13,7 +13,7 @@
         <div class="placeholder details_left">
           <p style="font-size: 0.56rem;color: #32CCBC;text-align: center;font-weight: 600" v-if="form.callCount">外呼
             {{form.callCount}}次，最近外呼时间：
-            {{new Date(form.lastCallDate,'{y}-{m}-{d}')}}</p>
+            {{form.lastCallDate | moment('YYYY.MM.DD')}}</p>
           <p style="width: 2.5rem;margin:auto;padding-top: 16px">
             <img :src="company.logo" style="max-width: 100%">
           </p>
@@ -59,7 +59,7 @@
     <div class="Record" v-show="resultShow">
       <div class="Record_content">
         <div class="Record_title">外呼记录</div>
-        <p class="Record_time">通话时长：{{callTime.duration}}</p>
+        <p class="Record_time">通话时长：{{callTime}}</p>
         <div  style="margin: 87%;margin: 0 auto;border-bottom: 1px solid #eae8e8;height: 4.5rem">
         <wv-flex>
           <wv-flex-item>
@@ -262,9 +262,17 @@ export default {
     },
     callDate () {
       getCallStatus(this.callSid).then((res) => {
-        let min = res.data.duration.split(':')[1]
-        let sec = res.data.duration.split(':')[2]
-        this.callTime = Number(min * 60) + Number(sec)
+        let theTime = parseInt(res.data.duration)
+        let theTime1 = 0
+        if (theTime > 60) {
+          theTime1 = parseInt(theTime / 60)
+          theTime = parseInt(theTime % 60)
+        }
+        var result = parseInt(theTime) + '秒'
+        if (theTime1 > 0) {
+          result = parseInt(theTime1) + '分' + result
+        }
+        this.callTime = result
         // this.callTime.duration
         console.log(this.callTime)
       })
@@ -295,6 +303,17 @@ export default {
     teskData () {
       getTaskStatisticsDaily().then(res => {
         this.task = res.data
+        let theTime = parseInt(res.data.dailyEffectiveDuration)
+        let theTime1 = 0
+        if (theTime > 60) {
+          theTime1 = parseInt(theTime / 60)
+          theTime = parseInt(theTime % 60)
+        }
+        let result = parseInt(theTime)
+        if (theTime1 > 0) {
+          result = parseInt(theTime1) + ':' + result
+        }
+        this.task.dailyEffectiveDuration = result
         // if (this.task.dailyTaskCompleteCnt)
       }).catch((res) => {
         this.task.dailyTaskCompleteCnt = 0
