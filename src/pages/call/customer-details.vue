@@ -161,7 +161,7 @@ import photoImg1 from '@/assets/images/phone_random.png'
 import thumbSmall from '@/assets/images/icon_tabbar.png'
 import { getCall, getRandom, getTaskHistory, updateOutboundName, getCallStatus, getTaskStatisticsDaily, getCompany } from '@/api/api'
 import { transformText, queryObj } from '@/utils'
-import { Dialog } from 'we-vue'
+import { Dialog, Toast } from 'we-vue'
 // import qs from 'qs'
 
 export default {
@@ -222,14 +222,19 @@ export default {
   },
   methods: {
     startCall () {
-      this.details = true
       getCall(this.form.outboundNameId).then(res => {
         console.log(res)
-        this.callStatus = true
         this.callSid = res.data.callSid
-        // setTimeout(() => {
-        //   this.resultShow = true
-        // }, 8000)
+        if (this.callSid === null) {
+          Toast.fail({
+            duration: 2000,
+            message: '我可能走丢了,请稍等.....'
+          })
+          this.details = false
+        } else {
+          this.details = true
+          this.callStatus = true
+        }
       })
     },
     getRandom () {
@@ -330,6 +335,12 @@ export default {
 }
 </script>
 <style lang="scss">
+  .weui-toast{
+    min-height: 5em;
+  }
+  .weui-toast__content{
+    font-size: 0.6rem;
+  }
   .wv-header-title{
     font-size: 19px;
   }

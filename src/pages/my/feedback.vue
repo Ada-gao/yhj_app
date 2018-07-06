@@ -25,6 +25,7 @@
 </template>
 <script type="es6">
 import topImg from '../../assets/images/top_img.png'
+import Vue from 'vue'
 import { Toast } from 'we-vue'
 import { postUpload, postFeedback } from '../../api/api'
 export default {
@@ -103,33 +104,33 @@ export default {
         name: '拍摄新照片',
         key: 'menu1',
         method: () => {
-          console.log(1234)
-          document.addEventListener('deviceready', onDeviceReady, false)
-          function onDeviceReady () {
-            let cameraOptions = {
-              quality: 50,
-              sourceType: 1,
-              allowEdit: true,
-              targetWidth: 80,
-              targetHeight: 80,
-              destinationType: navigator.camera.DestinationType.DATA_URL,
-              saveToPhotoAlbum: false,
-              encodingType: navigator.camera.EncodingType.JPEG
+          let cameraOptions = {
+            quality: 50,
+            sourceType: 1,
+            allowEdit: true,
+            targetWidth: 80,
+            targetHeight: 80,
+            destinationType: navigator.camera.DestinationType.DATA_URL,
+            saveToPhotoAlbum: false,
+            encodingType: navigator.camera.EncodingType.JPEG
+          }
+          Vue.cordova.camera.getPicture(cameraSuccess, cameraError, cameraOptions)
+          function cameraSuccess (imgData) {
+            if (_that.imgList.length >= 5) {
+              Toast.text({
+                duration: 1000,
+                message: '最多只能上传5张图片'
+              })
+            } else {
+              _that.imgList.push('data:image/jpeg;base64,' + imgData)
+              _that.upLoad(imgData)
             }
-            navigator.camera.getPicture(cameraSuccess, cameraError, cameraOptions)
-            function cameraSuccess (imgData) {
-              if (_that.imgList.length >= 5) {
-                Toast.text({
-                  duration: 1000,
-                  message: '最多只能上传5张图片'
-                })
-              } else {
-                _that.imgList.push('data:image/jpeg;base64,' + imgData)
-                _that.upLoad(imgData)
-              }
-            }
-            function cameraError () {
-            }
+          }
+          function cameraError () {
+            Toast.text({
+              duration: 1000,
+              message: '上传失败，请稍后重试...'
+            })
           }
         }
       },
@@ -137,30 +138,27 @@ export default {
         name: '从手机相册选择',
         key: 'menu2',
         method: () => {
-          document.addEventListener('deviceready', onDeviceReady, false)
-          function onDeviceReady () {
-            let cameraOptions = {
-              destinationType: navigator.camera.DestinationType.DATA_URL,
-              sourceType: 0,
-              quality: 50,
-              allowEdit: true,
-              targetWidth: 80,
-              targetHeight: 80
+          let cameraOptions = {
+            destinationType: navigator.camera.DestinationType.DATA_URL,
+            sourceType: 0,
+            quality: 50,
+            allowEdit: true,
+            targetWidth: 80,
+            targetHeight: 80
+          }
+          Vue.cordova.camera.getPicture(cameraSuccess, cameraError, cameraOptions)
+          function cameraSuccess (imgData) {
+            if (_that.imgList.length >= 5) {
+              Toast.text({
+                duration: 1000,
+                message: '最多只能上传5张图片'
+              })
+            } else {
+              _that.imgList.push('data:image/jpeg;base64,' + imgData)
+              _that.upLoad(imgData)
             }
-            navigator.camera.getPicture(cameraSuccess, cameraError, cameraOptions)
-            function cameraSuccess (imgData) {
-              if (_that.imgList.length >= 5) {
-                Toast.text({
-                  duration: 1000,
-                  message: '最多只能上传5张图片'
-                })
-              } else {
-                _that.imgList.push('data:image/jpeg;base64,' + imgData)
-                _that.upLoad(imgData)
-              }
-            }
-            function cameraError () {
-            }
+          }
+          function cameraError () {
           }
         }
       }
@@ -168,7 +166,7 @@ export default {
   }
 }
 </script>
-<style>
+<style lang="scss">
 .feedback_tex{
   width: 84%;
   margin: 0.3rem auto;

@@ -35,7 +35,7 @@
             <div class="placeholder home_text">今日完成数</div>
           </wv-flex-item>
           <wv-flex-item>
-            <div class="placeholder home_number">{{form.dailyEffectiveDuration | moment('mm分ss')}}秒</div>
+            <div class="placeholder home_number">{{form.dailyEffectiveDuration}}</div>
             <div class="placeholder home_text">今日有效通话时长</div>
           </wv-flex-item>
         </wv-flex>
@@ -83,6 +83,21 @@ export default {
     getList () {
       getTaskStatisticsDaily().then(res => {
         this.form = res.data
+        if (!this.form.dailyEffectiveDuration) {
+          this.form.dailyEffectiveDuration = '00分00秒'
+        } else {
+          let theTime = parseInt(res.data.dailyEffectiveDuration)
+          let theTime1 = 0
+          if (theTime > 60) {
+            theTime1 = parseInt(theTime / 60)
+            theTime = parseInt(theTime % 60)
+          }
+          var result = parseInt(theTime) + '秒'
+          if (theTime1 > 0) {
+            result = parseInt(theTime1) + '分' + result
+          }
+          this.form.dailyEffectiveDuration = result
+        }
       })
       getCompany().then(res => {
         this.company = res.data

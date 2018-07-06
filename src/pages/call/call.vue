@@ -169,12 +169,15 @@ export default {
       day1.setDate(day1.getDate() + 1)
       this.createTime = parseTime(day1, '{y}-{m}-{d}')
       this.getList1()
+      this.getList2()
     },
     getPrevday () {
+      this.listQuery1.pageIndex = 0
       let day1 = new Date(this.createTime)
       day1.setDate(day1.getDate() - 1)
       this.createTime = parseTime(day1, '{y}-{m}-{d}')
       this.getList1()
+      this.getList2()
     }
   },
   created () {
@@ -239,7 +242,7 @@ export default {
     font-size: 0.48rem;
     float: left;
     border-radius: 3px;
-    height: 1.08rem;
+    height: 1.064rem;
     line-height: 1.064rem;
   }
   .page-infinite-wrapper {
