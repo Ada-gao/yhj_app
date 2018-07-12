@@ -12,15 +12,18 @@
     <div style="background: #FFFFFF;margin-top: 0.4rem;height: 8.16rem">
     <wv-flex :gutter="10" style="width: 90%;margin:auto;border-bottom: 1px solid #D2D2D2">
       <wv-flex-item>
-        <div class="placeholder task_number">{{form.totalDuration}}分</div>
+        <div class="placeholder task_number" v-if="form.totalDuration !== null">{{form.totalDuration}}分</div>
+        <div class="placeholder task_number" v-if="form.totalDuration === null || form.totalDuration === ''">0分</div>
         <div class="placeholder task_text">总通话时长</div>
       </wv-flex-item>
       <wv-flex-item>
-        <div class="placeholder task_number">{{form.totalTaskCompleteCnt}}个</div>
+        <div class="placeholder task_number" v-if="form.totalTaskCompleteCnt !== null">{{form.totalTaskCompleteCnt}}个</div>
+        <div class="placeholder task_number" v-if="form.totalTaskCompleteCnt === null">0个</div>
         <div class="placeholder task_text">总任务完成数</div>
       </wv-flex-item>
       <wv-flex-item>
-        <div class="placeholder task_number">{{form.avgDuration}}秒</div>
+        <div class="placeholder task_number" v-if="form.avgDuration!==null">{{form.avgDuration}}秒</div>
+        <div class="placeholder task_number" v-if="form.avgDuration ===null">0秒</div>
         <div class="placeholder task_text">平均通话时长</div>
       </wv-flex-item>
     </wv-flex>
@@ -33,7 +36,7 @@
       </wv-flex-item>
       <wv-flex-item>
         <div class="placeholder">
-          <div class="placeholder progress_number">第{{rank.rank}}名</div>
+          <div class="placeholder progress_number">第{{form.rank}}名</div>
           <div class="placeholder progress_text">今日团队排名</div>
         </div>
       </wv-flex-item>
@@ -50,7 +53,7 @@
 </template>
 
 <script>
-import { getUser, getCompany, getSales, getRank } from '../../api/api'
+import { getUser, getCompany, getRank } from '../../api/api'
 import { Dialog } from 'we-vue'
 import thumbSmall from '@/assets/images/icon_tabbar.png'
 
@@ -90,23 +93,29 @@ export default {
           getCompany().then((res) => {
             this.company = res.data
           })
-          getSales(this.userId).then((res) => {
+          // getSales(this.userId).then((res) => {
+          //   this.form = res.data
+          //   if (this.form.totalTaskCompleteCnt === null || this.form.totalTaskCompleteCnt === 0) {
+          //     this.form.rate = 0
+          //   } else {
+          //     this.form.rate = parseInt(this.form.totalTaskCompleteCnt / this.form.totalTaskCnt * 100)
+          //   }
+          // })
+          getRank(this.userId).then((res) => {
+            console.log(res)
             this.form = res.data
             if (this.form.totalTaskCompleteCnt === null || this.form.totalTaskCompleteCnt === 0) {
               this.form.rate = 0
             } else {
-              this.form.rate = this.form.totalTaskCompleteCnt / this.form.totalTaskCnt
+              this.form.rate = parseInt(this.form.totalTaskCompleteCnt / this.form.totalTaskCnt * 100)
             }
-          })
-          getRank(this.userId).then((res) => {
-            console.log(res)
             if (res.data.length === 0) {
               let ranks = {
                 rank: 0
               }
-              this.rank = ranks
+              this.form = ranks
             } else {
-              this.rank = res.data[0]
+              this.form = res.data
             }
             // console.log(this.rank)
           })

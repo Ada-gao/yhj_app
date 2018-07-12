@@ -51,7 +51,7 @@ export default {
       this.sheetVisible = true
     },
     menuClick (key) {
-      console.log(`menu ${key} clicked`)
+      // console.log(`menu ${key} clicked`)
       let vm = this
       let sourceType = Vue.cordova.camera.PictureSourceType.CAMERA
       if (key === 'PHOTOLIBRARY') {
@@ -60,55 +60,25 @@ export default {
       let cameraOptions = {
         quality: 100,
         sourceType: sourceType,
-        allowEdit: false,
-        destinationType: Vue.cordova.camera.DestinationType.DATA_URL,
+        allowEdit: true,
+        destinationType: navigator.camera.DestinationType.DATA_URL,
         saveToPhotoAlbum: false,
-        encodingType: Vue.cordova.camera.EncodingType.JPEG
+        encodingType: navigator.camera.EncodingType.JPEG
       }
-      Vue.cordova.camera.getPicture(function cameraSuccess (imgData) {
+      Vue.cordova.camera.getPicture(cameraSuccess, cameraError, cameraOptions)
+      function cameraSuccess (imageURI) {
         if (vm.imgList.length >= 5) {
           Toast.text({
             duration: 1000,
             message: '最多只能上传5张图片'
           })
         } else {
-          vm.imgList.push('data:image/jpeg;base64,' + imgData)
-          vm.upLoad(imgData)
+          vm.imgList.push('data:image/jpeg;base64,' + imageURI)
+          vm.upLoad(imageURI)
         }
-      }, function cameraError (message) {
-        console.log('error to take picture:' + message)
-      }, cameraOptions)
-    },
-    upLoad (imgData) {
-      let file = this.dataURLtoFile('data:image/jpeg;base64,' + imgData, 'test.jpeg')
-      let formData = new FormData()
-      formData.append('file', file)
-      postUpload(formData).then((res) => {
-        console.log('uploaded...')
-        this.imgUrl.push(res.data)
-      })
-    },
-    onImgdata () {
-      if (this.content === '') {
-        Toast.text({
-          duration: 1000,
-          message: '内容不能为空！'
-        })
-      } else {
-        postFeedback(this.imgUrl, this.content).then((res) => {
-          if (res.status === 200) {
-            Toast.text({
-              duration: 1000,
-              message: '提交成功'
-            })
-            this.$router.push({path: '/profile'})
-          }
-        }).catch(() => {
-          Toast.text({
-            duration: 1000,
-            message: '失败'
-          })
-        })
+      }
+      function cameraError (message) {
+        alert('error to take picture:' + message)
       }
     },
     dataURLtoFile (imgData, filename) {
@@ -124,6 +94,44 @@ export default {
       blob.lastModifiedDate = new Date()
       blob.name = filename
       return blob
+    },
+    upLoad (imageURI) {
+      let file = this.dataURLtoFile('data:image/jpeg;base64,' + imageURI, 'test.jpeg')
+      let formData = new FormData()
+      formData.append('file', file)
+      alert(formData)
+      alert(file)
+      postUpload(formData).then((res) => {
+        alert('单张')
+        console.log(res.data)
+        this.imgUrl.push(res.data)
+      }).catch((message) => {
+        alert(message)
+      })
+    },
+    onImgdata () {
+      if (this.content === '') {
+        Toast.text({
+          duration: 1000,
+          message: '内容不能为空！'
+        })
+      } else {
+        postFeedback(this.imgUrl, this.content).then((res) => {
+          if (res.status === 200) {
+            Toast.text({
+              duration: 1000,
+              message: '提交成功'
+            })
+            alert(this.imgUrl)
+            this.$router.push({path: '/profile'})
+          }
+        }).catch(() => {
+          Toast.text({
+            duration: 1000,
+            message: '失败'
+          })
+        })
+      }
     }
   },
 

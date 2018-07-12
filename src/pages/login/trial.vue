@@ -78,7 +78,7 @@ export default {
       companyCity: '',
       contact: '',
       industry: '',
-      orgZize: '',
+      orgSize: '',
       mobile: '',
       verification: '',
       industryValue: [],
@@ -137,7 +137,7 @@ export default {
           message: '请检查手机号是否有误',
           type: 'text'
         })
-      } else if (this.companyName === '' || this.contact === '' || this.companyProvince === '' || this.companyCity === '' || this.industry === '' || this.orgZize === '') {
+      } else if (this.companyName === '' || this.contact === '' || this.companyProvince === '' || this.companyCity === '' || this.industry === '' || this.orgSize === '') {
         Toast({
           duration: 2000,
           message: '请完善所有信息',
@@ -145,7 +145,6 @@ export default {
         })
       } else {
         postVerify(this.mobile, this.verification).then((res) => {
-          console.log(res)
           if (res.data === '失败') {
             Toast({
               duration: 1000,
@@ -210,7 +209,7 @@ export default {
     },
     confirmScale (picker) {
       this.scales = picker.getValues()
-      this.orgZize = this.scales[0]
+      this.orgSize = this.scales[0]
       console.log(this.scales)
     },
     // 获取行业

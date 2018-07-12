@@ -5,7 +5,7 @@
         <i class="iconfont icon-fanhui" @click="$router.push('/call')"></i>
       </div>
       <div class="btn-menu" slot="right">
-        <p style="font-size: 0.56rem">{{task.dailyEffectiveDuration}}</p>
+        <p style="font-size: 0.56rem">{{task.dailyEffectiveDuration}}s</p>
       </div>
     </wv-header>
     <wv-flex :gutter="10">
@@ -134,12 +134,12 @@
               </div>
             </div>
           </li>
-          <li>
-            <p class="list_title">手机号：</p>
-            <p class="list_word">
-              <input class="item-input" v-model="info.phoneNo">
-            </p>
-          </li>
+          <!--<li>-->
+            <!--<p class="list_title">手机号：</p>-->
+            <!--<p class="list_word">-->
+              <!--<input class="item-input" v-model="info.phoneNo">-->
+            <!--</p>-->
+          <!--</li>-->
           <li>
             <p class="list_title">年龄：</p>
             <p class="list_word">
@@ -192,13 +192,16 @@ export default {
       duration: '',
       task: {},
       callStatus: false,
-      callTime: {}
+      callTime: {},
+      pageNumber: ''
     }
   },
   created () {
     this.nextStepOptions = queryObj.nextStep
     this.callResult = queryObj.callResult
     this.form = this.$route.params
+    console.log(this.form)
+    // this.pageNumber = this.$route.params.call
     if (this.form.taskId) {
       this.form.lastCallResult = transformText(queryObj.callResult, this.form.lastCallResult)
       this.form.genderText = transformText(queryObj.gender, this.form.gender)
@@ -256,6 +259,7 @@ export default {
       this.history.outboundTaskId = this.form.taskId
       let _this = this
       getCallStatus(this.callSid).then((res) => {
+        console.log(res)
         _this.history.actualCallStartDate = res.data.start
         _this.history.acutalCallEndDate = res.data.end
         getTaskHistory(this.history).then(res => {
@@ -279,7 +283,6 @@ export default {
         }
         this.callTime = result
         // this.callTime.duration
-        console.log(this.callTime)
       })
     },
     changeInfo () {
@@ -293,14 +296,12 @@ export default {
       let params = {
         contactName: this.info.contactName,
         gender: this.info.gender,
-        phoneNo: this.info.phoneNo,
         age: this.info.age
       }
       updateOutboundName(this.info.outboundNameId, params).then(res => {
         let data = res.data
         this.form.contactName = data.contactName
         this.form.age = data.age
-        this.form.phoneNo = data.phoneNo
         this.form.gender = data.gender
         this.form.genderText = transformText(queryObj.gender, this.form.gender)
       })

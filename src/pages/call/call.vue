@@ -2,7 +2,7 @@
   <div class="page">
     <wv-header title="任务列表" :fixed="false" background-color="#32CCBC" class="x-header">
       <div class="btn-back" slot="left">
-        <i class="iconfont icon-fanhui" @click="$router.push('/')"></i>
+        <i class="iconfont icon-fanhui" @click="$router.push('/home')"></i>
       </div>
     </wv-header>
     <div class="call_content">
@@ -114,7 +114,6 @@ export default {
       // console.log('这是已完成')
       this.floading = true
       type = type || this.type
-      console.log(type)
       this.listQuery2.createTime = this.createTime
       getTaskList(type, this.listQuery2).then(res => {
         let data = res.data.content
