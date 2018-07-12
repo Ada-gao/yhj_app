@@ -51,9 +51,12 @@ export default {
   }
 }
 </script>
-<style>
+<style lang="scss">
   .weui-tabbar__item.weui-bar__item_on .weui-tabbar__icon, .weui-tabbar__item.weui-bar__item_on .weui-tabbar__icon>i, .weui-tabbar__item.weui-bar__item_on .weui-tabbar__label{
     color: #32CCBC;
+  }
+  .weui-tabbar__item{
+    padding: 0;
   }
   .weui-tabbar__label{
     line-height: 1.6;

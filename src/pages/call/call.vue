@@ -2,7 +2,7 @@
   <div class="page">
     <wv-header title="任务列表" :fixed="false" background-color="#32CCBC" class="x-header">
       <div class="btn-back" slot="left">
-        <i class="iconfont icon-fanhui" @click="$router.push('/')"></i>
+        <i class="iconfont icon-fanhui" @click="$router.push('/home')"></i>
       </div>
     </wv-header>
     <div class="call_content">
@@ -114,7 +114,6 @@ export default {
       // console.log('这是已完成')
       this.floading = true
       type = type || this.type
-      console.log(type)
       this.listQuery2.createTime = this.createTime
       getTaskList(type, this.listQuery2).then(res => {
         let data = res.data.content
@@ -169,12 +168,15 @@ export default {
       day1.setDate(day1.getDate() + 1)
       this.createTime = parseTime(day1, '{y}-{m}-{d}')
       this.getList1()
+      this.getList2()
     },
     getPrevday () {
+      this.listQuery1.pageIndex = 0
       let day1 = new Date(this.createTime)
       day1.setDate(day1.getDate() - 1)
       this.createTime = parseTime(day1, '{y}-{m}-{d}')
       this.getList1()
+      this.getList2()
     }
   },
   created () {
@@ -239,7 +241,7 @@ export default {
     font-size: 0.48rem;
     float: left;
     border-radius: 3px;
-    height: 1.08rem;
+    height: 1.064rem;
     line-height: 1.064rem;
   }
   .page-infinite-wrapper {

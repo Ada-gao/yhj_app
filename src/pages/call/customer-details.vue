@@ -5,7 +5,7 @@
         <i class="iconfont icon-fanhui" @click="$router.push('/call')"></i>
       </div>
       <div class="btn-menu" slot="right">
-        <p style="font-size: 0.56rem">{{task.dailyEffectiveDuration}}</p>
+        <p style="font-size: 0.56rem">{{task.dailyEffectiveDuration}}s</p>
       </div>
     </wv-header>
     <wv-flex :gutter="10">
@@ -134,12 +134,12 @@
               </div>
             </div>
           </li>
-          <li>
-            <p class="list_title">手机号：</p>
-            <p class="list_word">
-              <input class="item-input" v-model="info.phoneNo">
-            </p>
-          </li>
+          <!--<li>-->
+            <!--<p class="list_title">手机号：</p>-->
+            <!--<p class="list_word">-->
+              <!--<input class="item-input" v-model="info.phoneNo">-->
+            <!--</p>-->
+          <!--</li>-->
           <li>
             <p class="list_title">年龄：</p>
             <p class="list_word">
@@ -161,7 +161,7 @@ import photoImg1 from '@/assets/images/phone_random.png'
 import thumbSmall from '@/assets/images/icon_tabbar.png'
 import { getCall, getRandom, getTaskHistory, updateOutboundName, getCallStatus, getTaskStatisticsDaily, getCompany } from '@/api/api'
 import { transformText, queryObj } from '@/utils'
-import { Dialog } from 'we-vue'
+import { Dialog, Toast } from 'we-vue'
 // import qs from 'qs'
 
 export default {
@@ -192,13 +192,16 @@ export default {
       duration: '',
       task: {},
       callStatus: false,
-      callTime: {}
+      callTime: {},
+      pageNumber: ''
     }
   },
   created () {
     this.nextStepOptions = queryObj.nextStep
     this.callResult = queryObj.callResult
     this.form = this.$route.params
+    console.log(this.form)
+    // this.pageNumber = this.$route.params.call
     if (this.form.taskId) {
       this.form.lastCallResult = transformText(queryObj.callResult, this.form.lastCallResult)
       this.form.genderText = transformText(queryObj.gender, this.form.gender)
@@ -222,14 +225,19 @@ export default {
   },
   methods: {
     startCall () {
-      this.details = true
       getCall(this.form.outboundNameId).then(res => {
         console.log(res)
-        this.callStatus = true
         this.callSid = res.data.callSid
-        // setTimeout(() => {
-        //   this.resultShow = true
-        // }, 8000)
+        if (this.callSid === null) {
+          Toast.fail({
+            duration: 2000,
+            message: '我可能走丢了,请稍等.....'
+          })
+          this.details = false
+        } else {
+          this.details = true
+          this.callStatus = true
+        }
       })
     },
     getRandom () {
@@ -251,6 +259,7 @@ export default {
       this.history.outboundTaskId = this.form.taskId
       let _this = this
       getCallStatus(this.callSid).then((res) => {
+        console.log(res)
         _this.history.actualCallStartDate = res.data.start
         _this.history.acutalCallEndDate = res.data.end
         getTaskHistory(this.history).then(res => {
@@ -274,7 +283,6 @@ export default {
         }
         this.callTime = result
         // this.callTime.duration
-        console.log(this.callTime)
       })
     },
     changeInfo () {
@@ -288,14 +296,12 @@ export default {
       let params = {
         contactName: this.info.contactName,
         gender: this.info.gender,
-        phoneNo: this.info.phoneNo,
         age: this.info.age
       }
       updateOutboundName(this.info.outboundNameId, params).then(res => {
         let data = res.data
         this.form.contactName = data.contactName
         this.form.age = data.age
-        this.form.phoneNo = data.phoneNo
         this.form.gender = data.gender
         this.form.genderText = transformText(queryObj.gender, this.form.gender)
       })
@@ -330,6 +336,12 @@ export default {
 }
 </script>
 <style lang="scss">
+  .weui-toast{
+    min-height: 5em;
+  }
+  .weui-toast__content{
+    font-size: 0.6rem;
+  }
   .wv-header-title{
     font-size: 19px;
   }

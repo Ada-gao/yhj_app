@@ -32,7 +32,7 @@ export default {
     onCopy: function (e) {
       Dialog({
         title: '微信公众号已复制',
-        message: '点击微信-通讯录-公众号-添加<br/>在搜索栏中粘贴公众号，搜索关注“数赟科技”？',
+        message: '点击微信-通讯录-公众号-添加<br/>在搜索栏中粘贴公众号，搜索关注“数赟科技”',
         showConfirmButton: true
       }).then(() => {})
     }

@@ -134,7 +134,6 @@ export default {
     margin-left: 0.5rem;
     width: 80%;
     outline:none;
-    color: #CECECE;
     background-color: #ffffff;
   }
   .pass_input{
@@ -144,7 +143,6 @@ export default {
     margin-left: 0.5rem;
     width: 73%;
     outline:none;
-    color: #CECECE;
     background-color: #ffffff;
   }
   .user_login>div{
