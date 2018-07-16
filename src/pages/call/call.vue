@@ -24,7 +24,7 @@
         </div>
       </div>
     </div>
-    <div class="page-infinite-wrapper" v-show="content==false">
+    <div class="page-infinite-wrapper" v-show="content==='notFinish'">
       <wv-group title="">
         <wv-cell-swipe :title="item.contactName" is-link
           v-for="(item, index) in hList"
@@ -39,7 +39,7 @@
       </p>
     </div>
 
-    <div class="page-infinite-wrapper" v-show="content==true">
+    <div class="page-infinite-wrapper" v-show="content==='finish'">
       <wv-group title="">
         <wv-cell-swipe :title="item.contactName" is-link
           v-for="(item, index) in fList"
@@ -62,7 +62,7 @@ import { parseTime } from '@/utils'
 export default {
   data () {
     return {
-      content: false,
+      content: 'notFinish',
       guigeSpan: '-1',
       perDiv: null,
       createTime: parseTime(new Date(), '{y}-{m}-{d}'),
@@ -93,7 +93,7 @@ export default {
       // console.log('这是未完成')
       this.floading = true
       this.listQuery1.createTime = this.createTime
-      getTaskList(this.type, this.listQuery1).then(res => {
+      getTaskList('dnf', this.listQuery1).then(res => {
         let data = res.data.content
         if (flag) {
           // 多次加载
@@ -113,9 +113,11 @@ export default {
     getList2 (flag, type) {
       // console.log('这是已完成')
       this.floading = true
-      type = type || this.type
+      console.log('type: ' + type)
+      console.log('this.type: ' + this.type)
+      // type = type || this.type
       this.listQuery2.createTime = this.createTime
-      getTaskList(type, this.listQuery2).then(res => {
+      getTaskList('finish', this.listQuery2).then(res => {
         let data = res.data.content
         if (flag) {
           // 多次加载
@@ -146,7 +148,7 @@ export default {
     },
     handleHand () {
       this.type = 'dnf'
-      this.content = false
+      this.content = 'notFinish'
       this.listQuery1.pageIndex = 0
       this.busy2 = true
       this.busy = false
@@ -154,7 +156,7 @@ export default {
     },
     handleFinish () {
       this.type = 'finish'
-      this.content = true
+      this.content = 'finish'
       this.busy2 = false
       this.busy = true
       this.listQuery2.pageIndex = 0

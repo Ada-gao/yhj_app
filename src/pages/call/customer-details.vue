@@ -265,6 +265,7 @@ export default {
         getTaskHistory(this.history).then(res => {
           let data = res.data
           _this.form.lastCallResult = transformText(queryObj.callResult, data.result)
+          this.$router.push({path: '/home'})
           // console.log(_this.form.lastCallResult)
         })
       })

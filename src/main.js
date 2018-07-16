@@ -10,6 +10,7 @@ import router from './router'
 import FastClick from 'fastclick'
 import VueCordova from './vue-cordova/index'
 import VueClipboard from 'vue-clipboard2'
+import 'lib-flexible'
 
 Vue.config.productionTip = false
 Vue.config.devtools = true
