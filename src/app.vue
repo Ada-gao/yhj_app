@@ -52,8 +52,42 @@ export default {
 }
 </script>
 <style lang="scss">
+
   .weui-tabbar__item.weui-bar__item_on .weui-tabbar__icon, .weui-tabbar__item.weui-bar__item_on .weui-tabbar__icon>i, .weui-tabbar__item.weui-bar__item_on .weui-tabbar__label{
     color: #32CCBC;
+  }
+  .wv-content_nav{
+    position: absolute;
+    top: 1.8rem;
+    left: 0;
+    right: 0;
+    bottom: 51px;
+    /* height: 18.2rem; */
+    overflow: hidden;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+  }
+  .wv-content_profile{
+    position: absolute;
+    top: 1.6rem;
+    left: 0;
+    right: 0;
+    bottom: 51px;
+    /* height: 18.2rem; */
+    overflow: hidden;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+  }
+  .wv-content{
+    position: absolute;
+    top: 2rem;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* height: 18.2rem; */
+    overflow: hidden;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
   }
   .weui-tabbar__item{
     padding: 0;

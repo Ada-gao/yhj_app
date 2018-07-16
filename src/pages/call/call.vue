@@ -1,60 +1,63 @@
 <template>
   <div class="page">
-    <wv-header title="任务列表" :fixed="false" background-color="#32CCBC" class="x-header">
+    <wv-header title="任务列表" :fixed="true" background-color="#32CCBC" class="x-header">
       <div class="btn-back" slot="left">
         <i class="iconfont icon-fanhui" @click="$router.push('/home')"></i>
       </div>
     </wv-header>
-    <div class="call_content">
-      <div class="call_time">
-        <wv-flex :gutter="10">
-          <wv-flex-item flex="3">
-            <div class="placeholder iconfont icon-fanhui place" @click="getPrevday"></div>
-          </wv-flex-item>
-          <wv-flex-item flex="5">
-            <div class="placeholder call_year">{{ createTime | moment('YYYY年MM月DD日')}}</div>
-          </wv-flex-item>
-          <wv-flex-item flex="3">
-            <div class="placeholder iconfont icon-fanhui icon_left place" @click="getNetday"></div>
-          </wv-flex-item>
-        </wv-flex>
-        <div class="call_nav">
-          <p :class="{'active-tab': type==='dnf'}" @click="handleHand" class="tab-item">未完成 ({{handTotal}})</p>
-          <p :class="{'active-tab': type==='finish'}" @click="handleFinish" class="tab-item">已完成 ({{finishTotal}})</p>
+    <div class="wv-content">
+      <div class="call_content">
+        <div class="call_time">
+          <wv-flex :gutter="10">
+            <wv-flex-item flex="3">
+              <div class="placeholder iconfont icon-fanhui place" @click="getPrevday"></div>
+            </wv-flex-item>
+            <wv-flex-item flex="5">
+              <div class="placeholder call_year">{{ createTime | moment('YYYY年MM月DD日')}}</div>
+            </wv-flex-item>
+            <wv-flex-item flex="3">
+              <div class="placeholder iconfont icon-fanhui icon_left place" @click="getNetday"></div>
+            </wv-flex-item>
+          </wv-flex>
+          <div class="call_nav">
+            <p :class="{'active-tab': type==='dnf'}" @click="handleHand" class="tab-item">未完成 ({{handTotal}})</p>
+            <p :class="{'active-tab': type==='finish'}" @click="handleFinish" class="tab-item">已完成 ({{finishTotal}})</p>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="page-infinite-wrapper" v-show="content==false">
-      <wv-group title="">
-        <wv-cell-swipe :title="item.contactName" is-link
-          v-for="(item, index) in hList"
-          :key="index"
-          :to="{name: 'details-y', params: item}">
-        </wv-cell-swipe>
-        <div v-infinite-scroll="loadMore1" infinite-scroll-disabled="busy" infinite-scroll-distance="50">
-        </div>
-      </wv-group>
-      <p class="loading-tips" v-show="floading" style="text-align: center">
-        <wv-spinner type="snake" color="#444" :size="24"></wv-spinner>
-      </p>
-    </div>
+      <div class="page-infinite-wrapper" v-show="content==='notFinish'">
+        <wv-group title="">
+          <wv-cell-swipe :title="item.contactName" is-link
+                         v-for="(item, index) in hList"
+                         :key="index"
+                         :to="{name: 'details-y', params: item}">
+          </wv-cell-swipe>
+          <div v-infinite-scroll="loadMore1" infinite-scroll-disabled="busy" infinite-scroll-distance="50">
+          </div>
+        </wv-group>
+        <p class="loading-tips" v-show="floading" style="text-align: center">
+          <wv-spinner type="snake" color="#444" :size="24"></wv-spinner>
+        </p>
+      </div>
 
-    <div class="page-infinite-wrapper" v-show="content==true">
-      <wv-group title="">
-        <wv-cell-swipe :title="item.contactName" is-link
-          v-for="(item, index) in fList"
-          :key="index"
-          :to="{name: 'details-y', params: item}">
-        </wv-cell-swipe>
-        <div v-infinite-scroll="loadMore2" infinite-scroll-disabled="busy2" infinite-scroll-distance="50">
-        </div>
-      </wv-group>
-      <p class="loading-tips" v-show="floading" style="text-align: center">
-        <wv-spinner type="snake" color="#444" :size="24"></wv-spinner>
-      </p>
+      <div class="page-infinite-wrapper" v-show="content==='finish'">
+        <wv-group title="">
+          <wv-cell-swipe :title="item.contactName" is-link
+                         v-for="(item, index) in fList"
+                         :key="index"
+                         :to="{name: 'details-y', params: item}">
+          </wv-cell-swipe>
+          <div v-infinite-scroll="loadMore2" infinite-scroll-disabled="busy2" infinite-scroll-distance="50">
+          </div>
+        </wv-group>
+        <p class="loading-tips" v-show="floading" style="text-align: center">
+          <wv-spinner type="snake" color="#444" :size="24"></wv-spinner>
+        </p>
+      </div>
     </div>
   </div>
 </template>
+
 <script>
 import { getTaskList } from '@/api/api'
 import { parseTime } from '@/utils'
@@ -62,7 +65,7 @@ import { parseTime } from '@/utils'
 export default {
   data () {
     return {
-      content: false,
+      content: 'notFinish',
       guigeSpan: '-1',
       perDiv: null,
       createTime: parseTime(new Date(), '{y}-{m}-{d}'),
@@ -93,7 +96,7 @@ export default {
       // console.log('这是未完成')
       this.floading = true
       this.listQuery1.createTime = this.createTime
-      getTaskList(this.type, this.listQuery1).then(res => {
+      getTaskList('dnf', this.listQuery1).then(res => {
         let data = res.data.content
         if (flag) {
           // 多次加载
@@ -113,9 +116,11 @@ export default {
     getList2 (flag, type) {
       // console.log('这是已完成')
       this.floading = true
-      type = type || this.type
+      console.log('type: ' + type)
+      console.log('this.type: ' + this.type)
+      // type = type || this.type
       this.listQuery2.createTime = this.createTime
-      getTaskList(type, this.listQuery2).then(res => {
+      getTaskList('finish', this.listQuery2).then(res => {
         let data = res.data.content
         if (flag) {
           // 多次加载
@@ -146,7 +151,7 @@ export default {
     },
     handleHand () {
       this.type = 'dnf'
-      this.content = false
+      this.content = 'notFinish'
       this.listQuery1.pageIndex = 0
       this.busy2 = true
       this.busy = false
@@ -154,7 +159,7 @@ export default {
     },
     handleFinish () {
       this.type = 'finish'
-      this.content = true
+      this.content = 'finish'
       this.busy2 = false
       this.busy = true
       this.listQuery2.pageIndex = 0
@@ -185,22 +190,22 @@ export default {
   mounted () {
     this.getList1()
     this.getList2(false, 'finish')
-  },
-  computed: {
-  /*  filterResult () {
-      var allCustomers = []
-      this.users.map(user => {
-        allCustomers = allCustomers.concat(user.customers)
-      })
-      return allCustomers.filter(value => new RegExp(this.keyword, 'i').test(value.name))
-    } */
   }
+  // computed: {
+  //   filterResult () {
+  //     var allCustomers = []
+  //     this.users.map(user => {
+  //       allCustomers = allCustomers.concat(user.customers)
+  //     })
+  //     return allCustomers.filter(value => new RegExp(this.keyword, 'i').test(value.name))
+  //   }
+  // }
 }
 </script>
 
 <style lang="scss">
   // .call_content{
-    /*margin-top: 2rem;*/
+  /*margin-top: 2rem;*/
   // }
   .call_time{
     height: 4.24rem;
