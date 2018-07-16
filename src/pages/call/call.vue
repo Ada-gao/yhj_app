@@ -25,6 +25,21 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="page-infinite-wrapper" v-show="content==='notFinish'">
+      <wv-group title="">
+        <wv-cell-swipe :title="item.contactName" is-link
+          v-for="(item, index) in hList"
+          :key="index"
+          :to="{name: 'details-y', params: item}">
+        </wv-cell-swipe>
+        <div v-infinite-scroll="loadMore1" infinite-scroll-disabled="busy" infinite-scroll-distance="50">
+        </div>
+      </wv-group>
+      <p class="loading-tips" v-show="floading" style="text-align: center">
+        <wv-spinner type="snake" color="#444" :size="24"></wv-spinner>
+      </p>
+    </div>
       <div class="page-infinite-wrapper" v-show="content==='notFinish'">
         <wv-group title="">
           <wv-cell-swipe :title="item.contactName" is-link
@@ -39,23 +54,7 @@
           <wv-spinner type="snake" color="#444" :size="24"></wv-spinner>
         </p>
       </div>
-
-      <div class="page-infinite-wrapper" v-show="content==='finish'">
-        <wv-group title="">
-          <wv-cell-swipe :title="item.contactName" is-link
-                         v-for="(item, index) in fList"
-                         :key="index"
-                         :to="{name: 'details-y', params: item}">
-          </wv-cell-swipe>
-          <div v-infinite-scroll="loadMore2" infinite-scroll-disabled="busy2" infinite-scroll-distance="50">
-          </div>
-        </wv-group>
-        <p class="loading-tips" v-show="floading" style="text-align: center">
-          <wv-spinner type="snake" color="#444" :size="24"></wv-spinner>
-        </p>
-      </div>
     </div>
-  </div>
 </template>
 
 <script>

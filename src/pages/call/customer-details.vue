@@ -274,13 +274,10 @@ export default {
             console.log(this.form.taskId)
             this.form.lastCallResult = transformText(queryObj.callResult, this.form.lastCallResult)
             this.form.genderText = transformText(queryObj.gender, this.form.gender)
-            alert(1)
           } else {
             this.getRandom()
-            alert(2)
           }
           this.teskData()
-          alert(3)
           // console.log(_this.form.lastCallResult)
         })
       })
