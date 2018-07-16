@@ -1,26 +1,28 @@
 <template>
   <div class="page">
-    <wv-header title="任务列表" :fixed="false" background-color="#32CCBC" class="x-header">
+    <wv-header title="任务列表" :fixed="true" background-color="#32CCBC" class="x-header">
       <div class="btn-back" slot="left">
         <i class="iconfont icon-fanhui" @click="$router.push('/home')"></i>
       </div>
     </wv-header>
-    <div class="call_content">
-      <div class="call_time">
-        <wv-flex :gutter="10">
-          <wv-flex-item flex="3">
-            <div class="placeholder iconfont icon-fanhui place" @click="getPrevday"></div>
-          </wv-flex-item>
-          <wv-flex-item flex="5">
-            <div class="placeholder call_year">{{ createTime | moment('YYYY年MM月DD日')}}</div>
-          </wv-flex-item>
-          <wv-flex-item flex="3">
-            <div class="placeholder iconfont icon-fanhui icon_left place" @click="getNetday"></div>
-          </wv-flex-item>
-        </wv-flex>
-        <div class="call_nav">
-          <p :class="{'active-tab': type==='dnf'}" @click="handleHand" class="tab-item">未完成 ({{handTotal}})</p>
-          <p :class="{'active-tab': type==='finish'}" @click="handleFinish" class="tab-item">已完成 ({{finishTotal}})</p>
+    <div class="wv-content">
+      <div class="call_content">
+        <div class="call_time">
+          <wv-flex :gutter="10">
+            <wv-flex-item flex="3">
+              <div class="placeholder iconfont icon-fanhui place" @click="getPrevday"></div>
+            </wv-flex-item>
+            <wv-flex-item flex="5">
+              <div class="placeholder call_year">{{ createTime | moment('YYYY年MM月DD日')}}</div>
+            </wv-flex-item>
+            <wv-flex-item flex="3">
+              <div class="placeholder iconfont icon-fanhui icon_left place" @click="getNetday"></div>
+            </wv-flex-item>
+          </wv-flex>
+          <div class="call_nav">
+            <p :class="{'active-tab': type==='dnf'}" @click="handleHand" class="tab-item">未完成 ({{handTotal}})</p>
+            <p :class="{'active-tab': type==='finish'}" @click="handleFinish" class="tab-item">已完成 ({{finishTotal}})</p>
+          </div>
         </div>
       </div>
     </div>
@@ -38,23 +40,23 @@
         <wv-spinner type="snake" color="#444" :size="24"></wv-spinner>
       </p>
     </div>
-
-    <div class="page-infinite-wrapper" v-show="content==='finish'">
-      <wv-group title="">
-        <wv-cell-swipe :title="item.contactName" is-link
-          v-for="(item, index) in fList"
-          :key="index"
-          :to="{name: 'details-y', params: item}">
-        </wv-cell-swipe>
-        <div v-infinite-scroll="loadMore2" infinite-scroll-disabled="busy2" infinite-scroll-distance="50">
-        </div>
-      </wv-group>
-      <p class="loading-tips" v-show="floading" style="text-align: center">
-        <wv-spinner type="snake" color="#444" :size="24"></wv-spinner>
-      </p>
+      <div class="page-infinite-wrapper" v-show="content==='notFinish'">
+        <wv-group title="">
+          <wv-cell-swipe :title="item.contactName" is-link
+                         v-for="(item, index) in hList"
+                         :key="index"
+                         :to="{name: 'details-y', params: item}">
+          </wv-cell-swipe>
+          <div v-infinite-scroll="loadMore1" infinite-scroll-disabled="busy" infinite-scroll-distance="50">
+          </div>
+        </wv-group>
+        <p class="loading-tips" v-show="floading" style="text-align: center">
+          <wv-spinner type="snake" color="#444" :size="24"></wv-spinner>
+        </p>
+      </div>
     </div>
-  </div>
 </template>
+
 <script>
 import { getTaskList } from '@/api/api'
 import { parseTime } from '@/utils'
@@ -187,22 +189,22 @@ export default {
   mounted () {
     this.getList1()
     this.getList2(false, 'finish')
-  },
-  computed: {
-  /*  filterResult () {
-      var allCustomers = []
-      this.users.map(user => {
-        allCustomers = allCustomers.concat(user.customers)
-      })
-      return allCustomers.filter(value => new RegExp(this.keyword, 'i').test(value.name))
-    } */
   }
+  // computed: {
+  //   filterResult () {
+  //     var allCustomers = []
+  //     this.users.map(user => {
+  //       allCustomers = allCustomers.concat(user.customers)
+  //     })
+  //     return allCustomers.filter(value => new RegExp(this.keyword, 'i').test(value.name))
+  //   }
+  // }
 }
 </script>
 
 <style lang="scss">
   // .call_content{
-    /*margin-top: 2rem;*/
+  /*margin-top: 2rem;*/
   // }
   .call_time{
     height: 4.24rem;

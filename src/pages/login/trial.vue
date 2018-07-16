@@ -5,6 +5,7 @@
         <i class="iconfont icon-fanhui" @click="$router.push('/')" style="color:#959292"></i>
       </div>
     </wv-header>
+    <div class="wv-content">
     <div class="trial_title">
       我们提供免费体验活动，您可以在此提交申请。申
       请成功后，将由我们专属服务人员为你安排预约。
@@ -59,6 +60,7 @@
       :columns="scaleColumns"
       @confirm="confirmScale"
     />
+    </div>
   </div>
 </template>
 <script>

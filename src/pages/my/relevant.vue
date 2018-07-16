@@ -5,6 +5,7 @@
         <i class="iconfont icon-fanhui" @click="$router.push('/profile')"></i>
       </div>
     </wv-header>
+    <div class="wv-content">
       <div style="width: 3.14rem;margin: 0 auto;padding-top: 4.8rem">
         <img :src="logoImg" style="max-width: 100%">
       </div>
@@ -16,6 +17,7 @@
                v-clipboard:success="onCopy">
       </wv-cell>
     </wv-group>
+    </div>
   </div>
 </template>
 <script>

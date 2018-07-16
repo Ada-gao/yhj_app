@@ -135,6 +135,7 @@ export default {
     width: 80%;
     outline:none;
     background-color: #ffffff;
+    outline: none;
   }
   .pass_input{
     height: 1rem;

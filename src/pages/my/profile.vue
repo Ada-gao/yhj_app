@@ -1,7 +1,8 @@
 <template>
   <div class="page">
-    <wv-header title="我的" :fixed="false" background-color="#32CCBC" class="x-header">
+    <wv-header title="我的" :fixed="true" background-color="#32CCBC" class="x-header">
     </wv-header>
+    <div class="wv-content_nav">
     <div class="profile_content">
       <div class="profile_head">
         <img :src="company.logo" alt="">
@@ -49,6 +50,7 @@
     <!--<router-link to="/login">-->
       <div class="button_return" @click="showDialog('ios')">退出登录</div>
     <!--</router-link>-->
+    </div>
   </div>
 </template>
 

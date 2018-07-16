@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <wv-header :title="'任务详情('+task.dailyTaskCompleteCnt +'/'+ task.dailyTaskCnt+')'" :fixed="false" background-color="#32CCBC">
+    <wv-header :title="'任务详情('+task.dailyTaskCompleteCnt +'/'+ task.dailyTaskCnt+')'" :fixed="true" background-color="#32CCBC">
       <div class="btn-back" slot="left">
         <i class="iconfont icon-fanhui" @click="$router.push('/call')"></i>
       </div>
@@ -8,158 +8,161 @@
         <p style="font-size: 0.56rem">{{task.dailyEffectiveDuration}}s</p>
       </div>
     </wv-header>
-    <wv-flex :gutter="10">
-      <wv-flex-item flex="3" style="margin-top: 0.272rem">
-        <div class="placeholder details_left">
-          <p style="font-size: 0.56rem;color: #32CCBC;text-align: center;font-weight: 600" v-if="form.callCount">外呼
-            {{form.callCount}}次，最近外呼时间：
-            {{form.lastCallDate | moment('YYYY.MM.DD')}}</p>
-          <p style="width: 2.5rem;margin:auto;padding-top: 16px">
-            <img :src="company.logo" alt="">
-          </p>
-          <p style="font-size: 0.64rem;text-align: center">{{form.contactName}}</p>
-          <div class="inform">年龄：<small style="font-size: 100%;color: rgb(106, 107, 105)">
-            {{form.age}}</small></div>
-          <div class="inform">性别：<small style="font-size: 100%;color: rgb(106, 107, 105) ">
-            {{form.genderText}}</small></div>
-          <div class="inform">电话：<small style="font-size: 100%;color: rgb(106, 107, 105)">
-            {{form.phoneNo}}</small></div>
-        </div>
-      </wv-flex-item>
-      <wv-flex-item >
-        <div class="placeholder details_right">
-          <p class="photo_img" v-if="form.lastCallResult === '无人接听'">
-            <img :src="photoImg">
-          </p>
-          <p class="photo_img" v-if="form.lastCallResult != '无人接听'">
-            <img :src="photoImg1">
-          </p>
-          <p class="details_phone">{{form.lastCallResult}}</p>
-        </div>
-        <div class="placeholder details_right">
-          <p class="iconfont icon-personal-center icon_ju"></p>
-          <p class="details_phone">{{form.productName}}</p>
-        </div>
-        <div class="placeholder details_right">
-          <p class="iconfont icon-xiansuo icon_sou"></p>
-          <p class="details_phone">{{form.source}}</p>
-        </div>
-      </wv-flex-item>
-    </wv-flex>
-    <div class="phone_details">
-      <p class="phone_content">外呼话述：</p>
-      <div class="phone_html">
-        <p style="margin: 5px" v-html="form.salesTalk">{{form.salesTalk}}</p>
-        <!--<textarea class="weui-cells" placeholder="" :rows="8" :show-counter="false"></textarea>-->
-      </div>
-      <div class="phone_button" @click="startCall">
-        <small class="iconfont icon-waihuquerenxuanzhong" style="font-size: 100%;"></small>开始外呼
-      </div>
-    </div>
-    <div class="Record" v-show="resultShow">
-      <div class="Record_content">
-        <div class="Record_title">外呼记录</div>
-        <p class="Record_time">通话时长：{{callTime}}</p>
-        <div  style="margin: 87%;margin: 0 auto;border-bottom: 1px solid #eae8e8;height: 4.5rem">
-        <wv-flex>
-          <wv-flex-item>
-            <div class="placeholder" style="font-size: 0.56rem;text-align: center;margin-top: 0.5rem">外呼结果</div>
-          </wv-flex-item>
-          <wv-flex-item>
-            <select name="select" v-model="history.result" class="Result_select">
-              <option v-for="item in callResult"
-                :key="item.value"
-                :value="item.value"
-                style="font-size: 0.56rem;text-align: center">
-                {{item.label}}
-              </option>
-            </select>
-          </wv-flex-item>
-        </wv-flex>
-        <wv-flex style="margin-top: 0.4rem">
-          <wv-flex-item>
-            <div class="placeholder" style="font-size: 0.56rem;text-align: center;margin-top: 0.5rem">下一步行动计划</div>
-          </wv-flex-item>
-          <wv-flex-item>
-            <div>
-              <select class="Result_select" v-model="history.status">
-                <option v-for="item in nextStepOptions"
-                  :key="item.value"
-                  :value="item.value"
-                  style="font-size: 0.56rem;text-align: center">
-                  {{item.label}}
-                </option>
-              </select>
-            </div>
-          </wv-flex-item>
-        </wv-flex>
-        </div>
-        <div class="word">
-          <p @click="changeInfo">编辑</p>
-        </div>
-        <wv-flex>
-          <wv-flex-item>
-            <div class="placeholder" style="line-height: 2.5rem;text-align: center">{{form.contactName}}</div>
-          </wv-flex-item>
-          <wv-flex-item>
-            <div class="placeholder Result_inform ">年龄：<small>{{form.age}}</small></div>
-            <div class="placeholder Result_inform" style="margin-top: 0.78rem">性别：<small>{{form.genderText}}</small></div>
-          </wv-flex-item>
-        </wv-flex>
-        <p style="font-size: 0.56rem;padding-left: 0.98rem;margin-top: 1.42rem">备注：</p>
-        <textarea v-model="history.common" rows="5" placeholder="" class="Result_tex"></textarea>
-        <div class="Result_button" @click="submitCall">提交信息</div>
-      </div>
-    </div>
-    <div class="information" v-show="inform">
-      <div class="information_content">
-        <div class="information_title">个人信息</div>
-        <ul class="information_list">
-          <li>
-            <p class="list_title">姓名：</p>
-            <p class="list_word">
-              <input class="item-input" v-model="info.contactName">
+    <div class="wv-content">
+      <wv-flex :gutter="10">
+        <wv-flex-item flex="3" style="margin-top: 0.272rem">
+          <div class="placeholder details_left">
+            <p style="font-size: 0.56rem;color: #32CCBC;text-align: center;font-weight: 600" v-if="form.callCount">外呼
+              {{form.callCount}}次，最近外呼时间：
+              {{form.lastCallDate | moment('YYYY.MM.DD')}}</p>
+            <p style="width: 2.5rem;margin:auto;padding-top: 16px">
+              <img :src="company" alt="" style="max-width: 100%">
             </p>
-          </li>
-          <li>
-            <p class="list_title">性别：</p>
-            <div class="list_word">
-              <div class="female">
-                <input type="radio" name="gender" value="LADY" v-model="info.gender"/>
-                <label for="female">女</label>
+            <p style="font-size: 0.64rem;text-align: center">{{form.contactName}}</p>
+            <div class="inform">年龄：<small style="font-size: 100%;color: rgb(106, 107, 105)">
+              {{form.age}}</small></div>
+            <div class="inform">性别：<small style="font-size: 100%;color: rgb(106, 107, 105) ">
+              {{form.genderText}}</small></div>
+            <div class="inform">电话：<small style="font-size: 100%;color: rgb(106, 107, 105)">
+              {{form.phoneNo}}</small></div>
+          </div>
+        </wv-flex-item>
+        <wv-flex-item >
+          <div class="placeholder details_right">
+            <p class="photo_img" v-if="form.lastCallResult === '无人接听'">
+              <img :src="photoImg">
+            </p>
+            <p class="photo_img" v-if="form.lastCallResult != '无人接听'">
+              <img :src="photoImg1">
+            </p>
+            <p class="details_phone">{{form.lastCallResult || '未外呼'}}</p>
+          </div>
+          <div class="placeholder details_right">
+            <p class="iconfont icon-personal-center icon_ju"></p>
+            <p class="details_phone">{{form.productName}}</p>
+          </div>
+          <div class="placeholder details_right">
+            <p class="iconfont icon-xiansuo icon_sou"></p>
+            <p class="details_phone">{{form.source}}</p>
+          </div>
+        </wv-flex-item>
+      </wv-flex>
+      <div class="phone_details">
+        <p class="phone_content">外呼话术：</p>
+        <div class="phone_html">
+          <p style="margin: 5px" v-html="form.salesTalk">{{form.salesTalk}}</p>
+          <!--<textarea class="weui-cells" placeholder="" :rows="8" :show-counter="false"></textarea>-->
+        </div>
+        <div class="phone_button" @click="startCall">
+          <small class="iconfont icon-waihuquerenxuanzhong" style="font-size: 100%;"></small>开始外呼
+        </div>
+      </div>
+      <div class="Record" v-show="resultShow">
+        <div class="Record_content">
+          <div class="Record_title">外呼记录</div>
+          <p class="Record_time">通话时长：{{callTime}}</p>
+          <div  style="margin: 87%;margin: 0 auto;border-bottom: 1px solid #eae8e8;height: 4.5rem">
+            <wv-flex>
+              <wv-flex-item>
+                <div class="placeholder" style="font-size: 0.56rem;text-align: center;margin-top: 0.5rem">外呼结果</div>
+              </wv-flex-item>
+              <wv-flex-item>
+                <select name="select" v-model="history.result" class="Result_select">
+                  <option v-for="item in callResult"
+                          :key="item.value"
+                          :value="item.value"
+                          style="font-size: 0.56rem;text-align: center">
+                    {{item.label}}
+                  </option>
+                </select>
+              </wv-flex-item>
+            </wv-flex>
+            <wv-flex style="margin-top: 0.4rem">
+              <wv-flex-item>
+                <div class="placeholder" style="font-size: 0.56rem;text-align: center;margin-top: 0.5rem">下一步行动计划</div>
+              </wv-flex-item>
+              <wv-flex-item>
+                <div>
+                  <select class="Result_select" v-model="history.status">
+                    <option v-for="item in nextStepOptions"
+                            :key="item.value"
+                            :value="item.value"
+                            style="font-size: 0.56rem;text-align: center">
+                      {{item.label}}
+                    </option>
+                  </select>
+                </div>
+              </wv-flex-item>
+            </wv-flex>
+          </div>
+          <div class="word">
+            <p @click="changeInfo">编辑</p>
+          </div>
+          <wv-flex>
+            <wv-flex-item>
+              <div class="placeholder" style="line-height: 2.5rem;text-align: center">{{form.contactName}}</div>
+            </wv-flex-item>
+            <wv-flex-item>
+              <div class="placeholder Result_inform ">年龄：<small>{{form.age}}</small></div>
+              <div class="placeholder Result_inform" style="margin-top: 0.78rem">性别：<small>{{form.genderText}}</small></div>
+            </wv-flex-item>
+          </wv-flex>
+          <p style="font-size: 0.56rem;padding-left: 0.98rem;margin-top: 1.42rem">备注：</p>
+          <textarea v-model="history.common" rows="5" placeholder="" class="Result_tex"></textarea>
+          <div class="Result_button" @click="ç">提交信息</div>
+        </div>
+      </div>
+      <div class="information" v-show="inform">
+        <div class="information_content">
+          <div class="information_title">个人信息</div>
+          <ul class="information_list">
+            <li>
+              <p class="list_title">姓名：</p>
+              <p class="list_word">
+                <input class="item-input" v-model="info.contactName">
+              </p>
+            </li>
+            <li>
+              <p class="list_title">性别：</p>
+              <div class="list_word">
+                <div class="female">
+                  <input type="radio" name="gender" value="LADY" v-model="info.gender"/>
+                  <label for="female">女</label>
+                </div>
+                <div class="male">
+                  <input type="radio" name="gender" value="GENTLEMAN" v-model="info.gender"/>
+                  <label for="male">男</label>
+                </div>
               </div>
-              <div class="male">
-                <input type="radio" name="gender" value="GENTLEMAN" v-model="info.gender"/>
-                <label for="male">男</label>
-              </div>
-            </div>
-          </li>
-          <!--<li>-->
+            </li>
+            <!--<li>-->
             <!--<p class="list_title">手机号：</p>-->
             <!--<p class="list_word">-->
-              <!--<input class="item-input" v-model="info.phoneNo">-->
+            <!--<input class="item-input" v-model="info.phoneNo">-->
             <!--</p>-->
-          <!--</li>-->
-          <li>
-            <p class="list_title">年龄：</p>
-            <p class="list_word">
-              <input class="item-input" v-model="info.age">
-            </p>
-          </li>
-        </ul>
-        <div class="information_button" @click="updateInfo">保存</div>
+            <!--</li>-->
+            <li>
+              <p class="list_title">年龄：</p>
+              <p class="list_word">
+                <input class="item-input" v-model="info.age">
+              </p>
+            </li>
+          </ul>
+          <div class="information_button" @click="updateInfo">保存</div>
+        </div>
       </div>
-    </div>
-    <div class="details_loading" v-show="details">
-      <p class="details_content">正在连接 请稍等...</p>
+      <div class="details_loading" v-show="details">
+        <p class="details_content">正在连接 请稍等...</p>
+      </div>
     </div>
   </div>
 </template>
 <script>
 import photoImg from '@/assets/images/photo.png'
 import photoImg1 from '@/assets/images/phone_random.png'
+import company from '@/assets/images/hand.png'
 import thumbSmall from '@/assets/images/icon_tabbar.png'
-import { getCall, getRandom, getTaskHistory, updateOutboundName, getCallStatus, getTaskStatisticsDaily, getCompany } from '@/api/api'
+import { getCall, getRandom, getTaskHistory, updateOutboundName, getCallStatus, getTaskStatisticsDaily } from '@/api/api'
 import { transformText, queryObj } from '@/utils'
 import { Dialog, Toast } from 'we-vue'
 // import qs from 'qs'
@@ -169,8 +172,8 @@ export default {
     return {
       photoImg,
       photoImg1,
+      company,
       thumbSmall,
-      company: {},
       resultShow: false,
       inform: false,
       details: false,
@@ -221,7 +224,7 @@ export default {
         // alert('resume')
       }, false)
     }, false)
-    this.headImg()
+    // this.headImg()
   },
   methods: {
     startCall () {
@@ -326,11 +329,6 @@ export default {
         this.task.dailyTaskCompleteCnt = 0
         this.task.dailyTaskCnt = 0
         this.dailyEffectiveDuration = 0
-      })
-    },
-    headImg () {
-      getCompany().then(res => {
-        this.company = res.data
       })
     }
   }
