@@ -109,7 +109,7 @@
           </wv-flex>
           <p style="font-size: 0.56rem;padding-left: 0.98rem;margin-top: 1.42rem">备注：</p>
           <textarea v-model="history.common" rows="5" placeholder="" class="Result_tex"></textarea>
-          <div class="Result_button" @click="ç">提交信息</div>
+          <div class="Result_button" @click="submitCall">提交信息</div>
         </div>
       </div>
       <div class="information" v-show="inform">
@@ -196,7 +196,8 @@ export default {
       task: {},
       callStatus: false,
       callTime: {},
-      pageNumber: ''
+      pageNumber: '',
+      pages: 1
     }
   },
   created () {
@@ -206,6 +207,7 @@ export default {
     console.log(this.form)
     // this.pageNumber = this.$route.params.call
     if (this.form.taskId) {
+      this.pages = 2
       this.form.lastCallResult = transformText(queryObj.callResult, this.form.lastCallResult)
       this.form.genderText = transformText(queryObj.gender, this.form.gender)
     } else {
@@ -268,6 +270,17 @@ export default {
         getTaskHistory(this.history).then(res => {
           let data = res.data
           _this.form.lastCallResult = transformText(queryObj.callResult, data.result)
+          if (this.pages === 2) {
+            console.log(this.form.taskId)
+            this.form.lastCallResult = transformText(queryObj.callResult, this.form.lastCallResult)
+            this.form.genderText = transformText(queryObj.gender, this.form.gender)
+            alert(1)
+          } else {
+            this.getRandom()
+            alert(2)
+          }
+          this.teskData()
+          alert(3)
           // console.log(_this.form.lastCallResult)
         })
       })
