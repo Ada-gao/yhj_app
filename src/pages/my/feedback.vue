@@ -104,8 +104,6 @@ export default {
       alert(formData)
       alert(file)
       postUpload(formData).then((res) => {
-        alert('单张')
-        console.log(res.data)
         this.imgUrl.push(res.data)
       }).catch((message) => {
         alert(message)

@@ -58,10 +58,10 @@ export default {
   }
   .wv-content_nav{
     position: absolute;
-    top: 1.8rem;
+    top: 1.9rem;
     left: 0;
     right: 0;
-    bottom: 51px;
+    bottom: 58px;
     /* height: 18.2rem; */
     overflow: hidden;
     overflow-y: scroll;

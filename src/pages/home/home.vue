@@ -13,7 +13,7 @@
         </div>
         <div class="home_head">
           <div class="head_h">
-            <img :src="company.logo" alt="">
+            <img :src="company" alt="">
           </div>
           <div class="home_inform">
             <h5 class="home_company">{{company.companyName}}</h5>
@@ -57,6 +57,7 @@
       </p>
       <p class="progress_time">任务计划完成时间：{{item.taskEndDate | moment('YYYY.MM.DD')}}</p>
     </div>
+      <wv-footer class="footer-demo footer_status" text="——已加载全部——"></wv-footer>
     </div>
   </div>
 </template>
@@ -85,8 +86,7 @@ export default {
   methods: {
     getList () {
       getCompany().then(res => {
-        this.company = res.data
-        console.log(this.company)
+        this.company = process.env.BASE_API + '/file/' + res.data.logo
       })
       getUser().then(res => {
         this.name = res.data.name
@@ -180,6 +180,7 @@ export default {
     width: 29%;
     height: 100%;
     text-align: center;
+    background-color: #ffffff;
     img {
       width: 85px;
       height: 85px;
@@ -274,5 +275,9 @@ export default {
     background-color: #32CCBC!important;
     height: 0.5rem!important;
     border-radius: 10px!important;
+  }
+  .footer_status{
+    height: 1.5rem;
+    line-height: 1.5rem;
   }
 </style>
