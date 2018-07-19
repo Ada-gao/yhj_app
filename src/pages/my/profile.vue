@@ -1,7 +1,8 @@
 <template>
   <div class="page">
-    <wv-header title="我的" :fixed="false" background-color="#32CCBC" class="x-header">
+    <wv-header title="我的" :fixed="true" background-color="#32CCBC" class="x-header">
     </wv-header>
+    <div class="wv-content_nav">
     <div class="profile_content">
       <div class="profile_head">
         <img :src="company.logo" alt="">
@@ -47,14 +48,28 @@
       <wv-cell title="关于闪电呼" value="" is-link to="/my/relevant" style="font-size: 0.56rem"></wv-cell>
     </div>
     <!--<router-link to="/login">-->
-      <div class="button_return" @click="showDialog('ios')">退出登录</div>
+      <div class="button_return" @click="showDialog">退出登录</div>
     <!--</router-link>-->
+    </div>
+    <div class="details_return" v-show="details">
+      <div class="detail_content">
+        <div style="height: 4rem;line-height: 4rem;font-size: 18px;color: #333333;">您确定要退出吗？</div>
+        <wv-flex>
+          <wv-flex-item>
+            <div class="placeholder button_out" @click="buttoneturn">确 定</div>
+          </wv-flex-item>
+          <wv-flex-item>
+            <div class="placeholder button_out" @click="buttoncancel">取 消</div>
+          </wv-flex-item>
+        </wv-flex>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { getUser, getCompany, getRank } from '../../api/api'
-import { Dialog } from 'we-vue'
+// import { Dialog } from 'we-vue'
 import thumbSmall from '@/assets/images/icon_tabbar.png'
 
 export default {
@@ -65,24 +80,33 @@ export default {
       company: {},
       form: {},
       rank: {},
-      thumbSmall
+      thumbSmall,
+      details: false
     }
   },
   mounted () {
     this.userData()
   },
   methods: {
-    showDialog (skin, title) {
-      Dialog({
-        title: title,
-        message: '您确定要退出吗？',
-        skin,
-        showCancelButton: true
-      }).then(() => {
-        this.$router.replace({path: '/login'})
-        localStorage.removeItem('token')
-      }).catch(() => {
-      })
+    showDialog () {
+      this.details = true
+      // Dialog({
+      //   title: title,
+      //   message: '您确定要退出吗？',
+      //   skin,
+      //   showCancelButton: true
+      // }).then(() => {
+      //   this.$router.replace({path: '/login'})
+      //   localStorage.removeItem('token')
+      // }).catch(() => {
+      // })
+    },
+    buttoneturn () {
+      this.$router.replace({path: '/login'})
+      localStorage.removeItem('token')
+    },
+    buttoncancel () {
+      this.details = false
     },
     userData () {
       let user = localStorage.getItem('token')
@@ -92,6 +116,7 @@ export default {
           this.userId = this.dataInfrom.id
           getCompany().then((res) => {
             this.company = res.data
+            console.log(this.company)
           })
           // getSales(this.userId).then((res) => {
           //   this.form = res.data
@@ -129,6 +154,41 @@ export default {
 </script>
 
 <style lang="scss">
+  .button_out{
+    background-color: #31ccbc;
+    color: #F0F0F0;
+    width: 59%;
+    margin: 0 auto;
+    border-radius: 4px;
+    font-size: 17px;
+    height: 1.61rem;
+    line-height: 1.61rem;
+  }
+  .details_return{
+    z-index: 501;
+    position: fixed;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.61);
+  }
+  .detail_content{
+    position: fixed;
+    z-index: 501;
+    width: 73%;
+    max-width: 300px;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    overflow: hidden;
+    height: 6.9rem;
+    text-align: center;
+    background: #ffffff;
+    border-radius: 0.2rem;
+    font-size: 0.8rem;
+  }
   .wv-header .wv-header-title[data-v-a5b8d5b6]{
     font-size: 0.72rem;
   }

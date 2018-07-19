@@ -1,10 +1,11 @@
 <template>
   <div class="page">
-    <wv-header title="问题反馈" :fixed="false" background-color="#32CCBC">
+    <wv-header title="问题反馈" :fixed="true" background-color="#32CCBC">
       <div class="btn-back" slot="left">
         <i class="iconfont icon-fanhui" @click="$router.push('/profile')"></i>
       </div>
     </wv-header>
+    <div class="wv-content">
     <div class="feedback_content">
       <p style="font-size: 0.6rem;padding-left: 1rem;margin-top: 1rem">问题反馈:</p>
       <textarea rows="5" v-model="content" placeholder="请描述在使用过程中，在什么页面，什么功能上遇到的问题，字数不少于10个字，谢谢！" class="feedback_tex"></textarea>
@@ -21,6 +22,7 @@
     </div>
     <div class="feedback_button" @click="onImgdata">提交</div>
     <wv-actionsheet :type="type" :actions="actions" cancel-text="取消" v-model="sheetVisible"/>
+    </div>
   </div>
 </template>
 <script type="es6">

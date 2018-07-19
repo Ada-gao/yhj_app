@@ -53,7 +53,7 @@ export default {
       } else {
         requestLogin(loginParams).then(res => {
           localStorage.setItem('token', res.data.token)
-          this.$router.push({path: '/home'})
+          this.$router.push({path: '/call/details-y'})
         }).catch(() => {
           Dialog({message: '请检查账号或密码是否正确'})
         })
@@ -135,6 +135,7 @@ export default {
     width: 80%;
     outline:none;
     background-color: #ffffff;
+    outline: none;
   }
   .pass_input{
     height: 1rem;

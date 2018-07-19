@@ -1,9 +1,10 @@
 <template>
   <div class="page" style="background: #F5F5F5;">
-    <wv-header title="首页" :fixed="false" background-color="#32CCBC" class="x-header">
+    <wv-header title="首页" :fixed="true" background-color="#32CCBC" class="x-header">
       <div class="btn-back" slot="left">
       </div>
     </wv-header>
+    <div class="wv-content_nav">
     <div class="home_content" >
       <div class="home_header">
         <div class="home_time">
@@ -12,7 +13,7 @@
         </div>
         <div class="home_head">
           <div class="head_h">
-            <img :src="company" alt="">
+            <img :src="company.logo" alt="">
           </div>
           <div class="home_inform">
             <h5 class="home_company">{{company.companyName}}</h5>
@@ -56,6 +57,7 @@
       </p>
       <p class="progress_time">任务计划完成时间：{{item.taskEndDate | moment('YYYY.MM.DD')}}</p>
     </div>
+    </div>
   </div>
 </template>
 
@@ -83,7 +85,7 @@ export default {
   methods: {
     getList () {
       getCompany().then(res => {
-        this.company = res.data.logo
+        this.company = res.data
         console.log(this.company)
       })
       getUser().then(res => {
