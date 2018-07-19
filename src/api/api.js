@@ -64,6 +64,8 @@ export const getSales = (userId) => axios.get('/task/statisBySales?userId=' + us
 // export const postFeedback = (img) => axios.post('/app')
 // 获取随机外呼
 export const getRandom = () => axios.get('/app/nextTask')
+// 外呼中断
+export const getCallscancle = (callSid) => axios.get('/call/' + callSid)
 // 获取外呼记录
 export const getTaskHistory = (params) => axios.post('/app/tasks/history', params)
 // 更新外呼客户信息

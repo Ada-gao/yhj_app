@@ -135,12 +135,18 @@
                 </div>
               </div>
             </li>
-            <!--<li>-->
-            <!--<p class="list_title">手机号：</p>-->
-            <!--<p class="list_word">-->
-            <!--<input class="item-input" v-model="info.phoneNo">-->
-            <!--</p>-->
-            <!--</li>-->
+            <li>
+            <p class="list_title">手机号：</p>
+            <p class="list_word">
+            <input class="item-input" v-model="info.mobileNo">
+            </p>
+            </li>
+            <li>
+              <p class="list_title">微信号：</p>
+              <p class="list_word">
+                <input class="item-input" v-model="info.wechatNo">
+              </p>
+            </li>
             <li>
               <p class="list_title">年龄：</p>
               <p class="list_word">
@@ -151,11 +157,19 @@
           <div class="information_button" @click="updateInfo">保存</div>
         </div>
       </div>
-      <div class="details_loading" v-show="details" style="display: block">
-        <!--<div>-->
-          <!--<img :src="phoneImg" width="200" height="200" style="max-width: 100%">-->
-        <!--</div>-->
-        <p class="details_content">正在连接 请稍等...</p>
+      <div class="details_loading" v-show="details" style="background-color: #191919">
+        <div class="phone_hand">
+          <img :src="company">
+        </div>
+        <p class="phone_txt">{{form.contactName}}</p>
+        <p class="phone_txt">{{form.phoneNo}}</p>
+        <div class="phone">
+          <img :src="phoneImg">
+        </div>
+        <div class="phone_cancle" @click="callsCancle">
+          <img :src="cancle">
+        </div>
+        <!--<p class="details_content">正在连接 请稍等...</p>-->
       </div>
     </div>
   </div>
@@ -164,9 +178,10 @@
 import photoImg from '@/assets/images/photo.png'
 import photoImg1 from '@/assets/images/phone_random.png'
 import company from '@/assets/images/hand.png'
-import phoneImg from '../../assets/images/ceshi.gif'
+import phoneImg from '../../assets/images/phone.gif'
 import thumbSmall from '@/assets/images/icon_tabbar.png'
-import { getCall, getRandom, getTaskHistory, updateOutboundName, getCallStatus, getTaskStatisticsDaily } from '@/api/api'
+import cancle from '@/assets/images/cancle.png'
+import { getCall, getRandom, getTaskHistory, updateOutboundName, getCallStatus, getTaskStatisticsDaily, getCallscancle } from '@/api/api'
 import { transformText, queryObj } from '@/utils'
 import { Dialog, Toast } from 'we-vue'
 // import qs from 'qs'
@@ -179,6 +194,7 @@ export default {
       company,
       thumbSmall,
       phoneImg,
+      cancle,
       resultShow: false,
       inform: false,
       details: false,
@@ -343,6 +359,11 @@ export default {
         this.task.dailyTaskCompleteCnt = 0
         this.task.dailyTaskCnt = 0
         this.dailyEffectiveDuration = 0
+      })
+    },
+    callsCancle () {
+      getCallscancle(this.callSid).then(() => {
+        this.details = false
       })
     }
   }
@@ -622,5 +643,21 @@ export default {
     // float: left;
     width: 40%;
     display: inline-block;
+  }
+  .phone_cancle{
+    width: 18%;
+    margin: 20% auto;
+  }
+  .phone_hand{
+    width: 30%;
+    margin: 4rem auto 0;
+  }
+  .phone>img,.phone_hand>img,.phone_cancle>img{
+    max-width: 100%;
+  }
+  .phone_txt{
+    text-align: center;
+    color: #dee2ed;
+    font-size: 17px;
   }
 </style>
