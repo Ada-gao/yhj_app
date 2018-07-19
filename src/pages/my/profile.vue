@@ -5,7 +5,7 @@
     <div class="wv-content_nav">
     <div class="profile_content">
       <div class="profile_head">
-        <img :src="company.logo" alt="">
+        <img :src="company" alt="">
       </div>
       <p class="profile_name">{{dataInfrom.name}}</p>
       <p class="profile_company">{{company.companyName}}</p>
@@ -77,7 +77,7 @@ export default {
     return {
       dataInfrom: {},
       userId: '',
-      company: {},
+      company: '',
       form: {},
       rank: {},
       thumbSmall,
@@ -115,8 +115,7 @@ export default {
           this.dataInfrom = res.data
           this.userId = this.dataInfrom.id
           getCompany().then((res) => {
-            this.company = res.data
-            console.log(this.company)
+            this.company = process.env.BASE_API + '/file/' + res.data.logo
           })
           // getSales(this.userId).then((res) => {
           //   this.form = res.data
@@ -207,6 +206,7 @@ export default {
     border-radius: 50%;
     box-shadow:rgba(238, 233, 233, 0.34) 0px 0px 0px 5px;
     overflow: hidden;
+    background-color: #ffffff;
     img {
       width: 3rem;
       height: 3rem;

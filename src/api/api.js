@@ -58,6 +58,7 @@ export const getCallStatus = (callSid) => axios.get('/app/callStatusResult/' + c
 // export const getTaskStatistics = () => axios.get('/app/taskStatistics')
 // 获取用户所属公司
 export const getCompany = () => axios.get('/app/getLogoAndName')
+export const getHand = (fileUuid) => axios.get('/file/' + fileUuid)
 // 获取用户个人任务统计
 export const getSales = (userId) => axios.get('/task/statisBySales?userId=' + userId)
 // export const postFeedback = (img) => axios.post('/app')

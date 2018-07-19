@@ -151,7 +151,10 @@
           <div class="information_button" @click="updateInfo">保存</div>
         </div>
       </div>
-      <div class="details_loading" v-show="details">
+      <div class="details_loading" v-show="details" style="display: block">
+        <!--<div>-->
+          <!--<img :src="phoneImg" width="200" height="200" style="max-width: 100%">-->
+        <!--</div>-->
         <p class="details_content">正在连接 请稍等...</p>
       </div>
     </div>
@@ -161,6 +164,7 @@
 import photoImg from '@/assets/images/photo.png'
 import photoImg1 from '@/assets/images/phone_random.png'
 import company from '@/assets/images/hand.png'
+import phoneImg from '../../assets/images/ceshi.gif'
 import thumbSmall from '@/assets/images/icon_tabbar.png'
 import { getCall, getRandom, getTaskHistory, updateOutboundName, getCallStatus, getTaskStatisticsDaily } from '@/api/api'
 import { transformText, queryObj } from '@/utils'
@@ -174,6 +178,7 @@ export default {
       photoImg1,
       company,
       thumbSmall,
+      phoneImg,
       resultShow: false,
       inform: false,
       details: false,

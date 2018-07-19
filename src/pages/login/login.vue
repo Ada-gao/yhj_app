@@ -53,7 +53,7 @@ export default {
       } else {
         requestLogin(loginParams).then(res => {
           localStorage.setItem('token', res.data.token)
-          this.$router.push({path: '/call/details-y'})
+          this.$router.push({path: '/home'})
         }).catch(() => {
           Dialog({message: '请检查账号或密码是否正确'})
         })
