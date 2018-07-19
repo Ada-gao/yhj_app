@@ -2,7 +2,7 @@
   <div class="page">
     <wv-header title="我的" :fixed="true" background-color="#32CCBC" class="x-header">
     </wv-header>
-    <div class="wv-content_nav">
+    <div class="wv-content_nav x-wrapper">
     <div class="profile_content">
       <div class="profile_head">
         <img :src="company" alt="">

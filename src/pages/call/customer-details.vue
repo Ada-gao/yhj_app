@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <wv-header :title="'任务详情('+task.dailyTaskCompleteCnt +'/'+ task.dailyTaskCnt+')'" :fixed="true" background-color="#32CCBC">
+    <wv-header :title="'任务详情('+task.dailyTaskCompleteCnt +'/'+ task.dailyTaskCnt+')'" :fixed="true" background-color="#32CCBC" class="x-header">
       <div class="btn-back" slot="left">
         <i class="iconfont icon-fanhui" @click="$router.push('/call')"></i>
       </div>

@@ -4,59 +4,59 @@
       <div class="btn-back" slot="left">
       </div>
     </wv-header>
-    <div class="wv-content_nav">
-    <div class="home_content" >
-      <div class="home_header">
-        <div class="home_time">
-        <p class="iconfont icon-rili" style="float: left;margin: 0 0.2rem"></p>
-        <p>{{dateTime}}</p>
-        </div>
-        <div class="home_head">
-          <div class="head_h">
-            <img :src="company" alt="">
+    <div class="wv-content_nav x-wrapper">
+      <div class="home_content" >
+        <div class="home_header">
+          <div class="home_time">
+          <p class="iconfont icon-rili" style="float: left;margin: 0 0.2rem"></p>
+          <p>{{dateTime}}</p>
           </div>
-          <div class="home_inform">
-            <h5 class="home_company">{{company.companyName}}</h5>
-            <h6 class="home_name">姓名：{{name}}</h6>
-            <p class="home_state" v-if="completeStatus==false">状态：任务尚未完成，请继续努力</p>
-            <p class="home_state" v-if="completeStatus==true">状态：任务已完成，请继续加油哦！</p>
+          <div class="home_head">
+            <div class="head_h">
+              <img :src="company" alt="">
+            </div>
+            <div class="home_inform">
+              <h5 class="home_company">{{company.companyName}}</h5>
+              <h6 class="home_name">姓名：{{name}}</h6>
+              <p class="home_state" v-if="completeStatus==false">状态：任务尚未完成，请继续努力</p>
+              <p class="home_state" v-if="completeStatus==true">状态：任务已完成，请继续加油哦！</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="home_nav">
-      <div style="width: 95%">
-        <wv-flex :gutter="10" style="width: 100%;">
-          <wv-flex-item>
-            <div class="placeholder home_number">{{form.dailyTaskCnt || 0}}个</div>
-            <div class="placeholder home_text">今日任务数</div>
-          </wv-flex-item>
-          <wv-flex-item>
-            <div class="placeholder home_number">{{form.dailyTaskCompleteCnt || 0}}个</div>
-            <div class="placeholder home_text">今日完成数</div>
-          </wv-flex-item>
-          <wv-flex-item>
-            <div class="placeholder home_number">{{form.dailyEffectiveDuration}}</div>
-            <div class="placeholder home_text">今日有效通话时长</div>
-          </wv-flex-item>
-        </wv-flex>
+      <div class="home_nav">
+        <div style="width: 95%">
+          <wv-flex :gutter="10" style="width: 100%;">
+            <wv-flex-item>
+              <div class="placeholder home_number">{{form.dailyTaskCnt || 0}}个</div>
+              <div class="placeholder home_text">今日任务数</div>
+            </wv-flex-item>
+            <wv-flex-item>
+              <div class="placeholder home_number">{{form.dailyTaskCompleteCnt || 0}}个</div>
+              <div class="placeholder home_text">今日完成数</div>
+            </wv-flex-item>
+            <wv-flex-item>
+              <div class="placeholder home_number">{{form.dailyEffectiveDuration}}</div>
+              <div class="placeholder home_text">今日有效通话时长</div>
+            </wv-flex-item>
+          </wv-flex>
+        </div>
+        <div style="width: 5%">
+          <router-link to="/call">
+            <p class="iconfont icon-fanhui icon_right"></p>
+          </router-link>
+        </div>
       </div>
-      <div style="width: 5%">
-        <router-link to="/call">
-           <p class="iconfont icon-fanhui icon_right"></p>
-        </router-link>
+      <div class="home_progress" v-for="item in statisGroup" :key="item.taskGroupId">
+        <p class="progress_title">{{item.productName}}</p>
+        <!-- <p class="progress_list"></p> -->
+        <wv-progress :percent="item.percent" :show-clear="false" style="width: 95%; margin: 0 auto"/>
+        <p style="font-size: 0.48rem;margin-top: 0.58rem;margin-left: 0.4rem;">
+          <small style="color: #32CCBC;font-size: 100%">
+            {{item.totalTaskCompleteCnt}}</small>/{{item.totalTaskCnt}}
+        </p>
+        <p class="progress_time">任务计划完成时间：{{item.taskEndDate | moment('YYYY.MM.DD')}}</p>
       </div>
-    </div>
-    <div class="home_progress" v-for="item in statisGroup" :key="item.taskGroupId">
-      <p class="progress_title">{{item.productName}}</p>
-      <!-- <p class="progress_list"></p> -->
-      <wv-progress :percent="item.percent" :show-clear="false" style="width: 95%; margin: 0 auto"/>
-      <p style="font-size: 0.48rem;margin-top: 0.58rem;margin-left: 0.4rem;">
-        <small style="color: #32CCBC;font-size: 100%">
-          {{item.totalTaskCompleteCnt}}</small>/{{item.totalTaskCnt}}
-      </p>
-      <p class="progress_time">任务计划完成时间：{{item.taskEndDate | moment('YYYY.MM.DD')}}</p>
-    </div>
       <wv-footer class="footer-demo footer_status" text="——已加载全部——"></wv-footer>
     </div>
   </div>

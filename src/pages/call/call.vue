@@ -5,7 +5,7 @@
         <i class="iconfont icon-fanhui" @click="$router.push('/home')"></i>
       </div>
     </wv-header>
-    <div class="wv-content">
+    <div class="wv-content x-wrapper">
       <div class="call_content">
         <div class="call_time">
           <wv-flex :gutter="10">
