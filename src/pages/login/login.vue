@@ -1,5 +1,5 @@
 <template>
-  <div class="page" style="background: #FFFFFF;position: absolute;">
+  <div class="page" style="background: #FFFFFF;position: absolute;top: 0;left: 0;right: 0;bottom: 0">
     <div class="LOGO">
       <div class="logo_img">
         <i class="iconfont icon-tonghuashijian"></i>
@@ -28,7 +28,7 @@
   </div>
 </template>
 <script type="es6">
-import { requestLogin } from '../../api/api'
+import { requestLogin, getUser } from '../../api/api'
 import thumbSmall from '../../assets/images/icon_tabbar.png'
 import { Dialog, Toast } from 'we-vue'
 
@@ -52,6 +52,9 @@ export default {
         })
       } else {
         requestLogin(loginParams).then(res => {
+          getUser().then((res) => {
+            console.log(res)
+          })
           localStorage.setItem('token', res.data.token)
           this.$router.push({path: '/home'})
         }).catch(() => {
@@ -128,23 +131,23 @@ export default {
     font-family: PingFangSC-Regular;
   }
   .user_input{
-    height: 1rem;
+    height: 1.5rem;
     font-size: 0.6rem;
     border: 0;
     margin-left: 0.5rem;
     width: 80%;
     outline:none;
-    background-color: #ffffff;
+    background: #ffffff;
     outline: none;
   }
   .pass_input{
-    height: 1rem;
+    height: 1.5rem;
     font-size: 0.6rem;
     border: 0;
     margin-left: 0.5rem;
     width: 73%;
     outline:none;
-    background-color: #ffffff;
+    background: #ffffff;
   }
   .user_login>div{
     float: left;
