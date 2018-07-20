@@ -62,7 +62,7 @@ img {
 }
 
 .is-iOS .x-wrapper {
-  top: 3.15rem!important; // iOs 10 or lower
+  //top: 3.15rem!important; // iOs 10 or lower 3.15rem
   top: constant(safe-area-inset-top); // iOs 11
   top: env(safe-area-inset-top)!important; // iOs 11+ (feature)
   padding-top: 50px;

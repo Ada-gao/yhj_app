@@ -11,37 +11,37 @@
       <p class="profile_company">{{company.companyName}}</p>
     </div>
     <div style="background: #FFFFFF;margin-top: 0.4rem;height: 8.16rem">
-    <wv-flex :gutter="10" style="width: 90%;margin:auto;border-bottom: 1px solid #D2D2D2">
-      <wv-flex-item>
-        <div class="placeholder task_number" v-if="form.totalDuration !== null">{{form.totalDuration}}分</div>
-        <div class="placeholder task_number" v-if="form.totalDuration === null || form.totalDuration === ''">0分</div>
-        <div class="placeholder task_text">总通话时长</div>
-      </wv-flex-item>
-      <wv-flex-item>
+     <wv-flex :gutter="10" style="width: 90%;margin:auto;border-bottom: 1px solid #D2D2D2">
+       <wv-flex-item>
+         <div class="placeholder task_number" v-if="form.totalDuration !== null">{{form.totalDuration}}分</div>
+         <div class="placeholder task_number" v-if="form.totalDuration === null || form.totalDuration === ''">0分</div>
+         <div class="placeholder task_text">总通话时长</div>
+       </wv-flex-item>
+       <wv-flex-item>
         <div class="placeholder task_number" v-if="form.totalTaskCompleteCnt !== null">{{form.totalTaskCompleteCnt}}个</div>
         <div class="placeholder task_number" v-if="form.totalTaskCompleteCnt === null">0个</div>
         <div class="placeholder task_text">总任务完成数</div>
-      </wv-flex-item>
-      <wv-flex-item>
-        <div class="placeholder task_number" v-if="form.avgDuration!==null">{{form.avgDuration}}秒</div>
-        <div class="placeholder task_number" v-if="form.avgDuration ===null">0秒</div>
-        <div class="placeholder task_text">平均通话时长</div>
-      </wv-flex-item>
-    </wv-flex>
-    <wv-flex :gutter="10">
-      <wv-flex-item style="border-left: 1px solid grey">
-        <div class="placeholder" style="border-right: 1px solid #979797">
-          <div class="placeholder progress_number">{{form.rate}}%</div>
-          <div class="placeholder progress_text">外呼完成率</div>
+       </wv-flex-item>
+       <wv-flex-item>
+         <div class="placeholder task_number" v-if="form.avgDuration!==null">{{form.avgDuration}}秒</div>
+         <div class="placeholder task_number" v-if="form.avgDuration ===null">0秒</div>
+         <div class="placeholder task_text">平均通话时长</div>
+       </wv-flex-item>
+     </wv-flex>
+     <wv-flex :gutter="10">
+       <wv-flex-item style="border-left: 1px solid grey">
+         <div class="placeholder" style="border-right: 1px solid #979797">
+           <div class="placeholder progress_number">{{form.rate}}%</div>
+           <div class="placeholder progress_text">外呼完成率</div>
         </div>
-      </wv-flex-item>
-      <wv-flex-item>
-        <div class="placeholder">
-          <div class="placeholder progress_number">第{{form.rank}}名</div>
-          <div class="placeholder progress_text">今日团队排名</div>
-        </div>
-      </wv-flex-item>
-    </wv-flex>
+       </wv-flex-item>
+       <wv-flex-item>
+         <div class="placeholder">
+           <div class="placeholder progress_number">第{{form.rank}}名</div>
+           <div class="placeholder progress_text">今日团队排名</div>
+         </div>
+       </wv-flex-item>
+     </wv-flex>
     </div>
     <div style="margin-top: 0.4rem;background: #FFFFFF">
       <wv-cell title="问题反馈" value="" is-link to="/my/feedback" style="font-size: 0.56rem"></wv-cell>

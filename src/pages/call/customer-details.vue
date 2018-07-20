@@ -8,7 +8,7 @@
         <p style="font-size: 0.56rem">{{task.dailyEffectiveDuration}}s</p>
       </div>
     </wv-header>
-    <div class="wv-content">
+    <div class="wv-content x-wrapper">
       <wv-flex :gutter="10">
         <wv-flex-item flex="3" style="margin-top: 0.272rem">
           <div class="placeholder details_left">
@@ -57,120 +57,120 @@
           <small class="iconfont icon-waihuquerenxuanzhong" style="font-size: 100%;"></small>开始外呼
         </div>
       </div>
-      <div class="Record" v-show="resultShow">
-        <div class="Record_content">
-          <div class="Record_title">外呼记录</div>
-          <p class="Record_time">通话时长：{{callTime}}</p>
-          <div  style="margin: 87%;margin: 0 auto;border-bottom: 1px solid #eae8e8;height: 4.5rem">
-            <wv-flex>
-              <wv-flex-item>
-                <div class="placeholder" style="font-size: 0.56rem;text-align: center;margin-top: 0.5rem">外呼结果</div>
-              </wv-flex-item>
-              <wv-flex-item>
-                <select name="select" v-model="history.result" class="Result_select">
-                  <option v-for="item in callResult"
+    </div>
+    <div class="Record" v-show="resultShow">
+      <div class="Record_content">
+        <div class="Record_title">外呼记录</div>
+        <p class="Record_time">通话时长：{{callTime}}</p>
+        <div  style="margin: 87%;margin: 0 auto;border-bottom: 1px solid #eae8e8;height: 4.5rem">
+          <wv-flex>
+            <wv-flex-item>
+              <div class="placeholder" style="font-size: 0.56rem;text-align: center;margin-top: 0.5rem">外呼结果</div>
+            </wv-flex-item>
+            <wv-flex-item>
+              <select name="select" v-model="history.result" class="Result_select">
+                <option v-for="item in callResult"
+                        :key="item.value"
+                        :value="item.value"
+                        style="font-size: 0.56rem;text-align: center">
+                  {{item.label}}
+                </option>
+              </select>
+            </wv-flex-item>
+          </wv-flex>
+          <wv-flex style="margin-top: 0.4rem">
+            <wv-flex-item>
+              <div class="placeholder" style="font-size: 0.56rem;text-align: center;margin-top: 0.5rem">下一步行动计划</div>
+            </wv-flex-item>
+            <wv-flex-item>
+              <div>
+                <select class="Result_select" v-model="history.status">
+                  <option v-for="item in nextStepOptions"
                           :key="item.value"
                           :value="item.value"
                           style="font-size: 0.56rem;text-align: center">
                     {{item.label}}
                   </option>
                 </select>
-              </wv-flex-item>
-            </wv-flex>
-            <wv-flex style="margin-top: 0.4rem">
-              <wv-flex-item>
-                <div class="placeholder" style="font-size: 0.56rem;text-align: center;margin-top: 0.5rem">下一步行动计划</div>
-              </wv-flex-item>
-              <wv-flex-item>
-                <div>
-                  <select class="Result_select" v-model="history.status">
-                    <option v-for="item in nextStepOptions"
-                            :key="item.value"
-                            :value="item.value"
-                            style="font-size: 0.56rem;text-align: center">
-                      {{item.label}}
-                    </option>
-                  </select>
-                </div>
-              </wv-flex-item>
-            </wv-flex>
-          </div>
-          <div class="word">
-            <p @click="changeInfo">编辑</p>
-          </div>
-          <wv-flex>
-            <wv-flex-item>
-              <div class="placeholder" style="line-height: 2.5rem;text-align: center">{{form.contactName}}</div>
-            </wv-flex-item>
-            <wv-flex-item>
-              <div class="placeholder Result_inform ">年龄：<small>{{form.age}}</small></div>
-              <div class="placeholder Result_inform" style="margin-top: 0.78rem">性别：<small>{{form.genderText}}</small></div>
+              </div>
             </wv-flex-item>
           </wv-flex>
-          <p style="font-size: 0.56rem;padding-left: 0.98rem;margin-top: 1.42rem">备注：</p>
-          <textarea v-model="history.common" rows="5" placeholder="" class="Result_tex"></textarea>
-          <div class="Result_button" @click="submitCall">提交信息</div>
         </div>
+        <div class="word">
+          <p @click="changeInfo">编辑</p>
+        </div>
+        <wv-flex>
+          <wv-flex-item>
+            <div class="placeholder" style="line-height: 2.5rem;text-align: center">{{form.contactName}}</div>
+          </wv-flex-item>
+          <wv-flex-item>
+            <div class="placeholder Result_inform ">年龄：<small>{{form.age}}</small></div>
+            <div class="placeholder Result_inform" style="margin-top: 0.78rem">性别：<small>{{form.genderText}}</small></div>
+          </wv-flex-item>
+        </wv-flex>
+        <p style="font-size: 0.56rem;padding-left: 0.98rem;margin-top: 1.42rem">备注：</p>
+        <textarea v-model="history.common" rows="5" placeholder="" class="Result_tex"></textarea>
+        <div class="Result_button" @click="submitCall">提交信息</div>
       </div>
-      <div class="information" v-show="inform">
-        <div class="information_content">
-          <div class="information_title">个人信息</div>
-          <ul class="information_list">
-            <li>
-              <p class="list_title">姓名：</p>
-              <p class="list_word">
-                <input class="item-input" v-model="info.contactName">
-              </p>
-            </li>
-            <li>
-              <p class="list_title">性别：</p>
-              <div class="list_word">
-                <div class="female">
-                  <input type="radio" name="gender" value="LADY" v-model="info.gender"/>
-                  <label for="female">女</label>
-                </div>
-                <div class="male">
-                  <input type="radio" name="gender" value="GENTLEMAN" v-model="info.gender"/>
-                  <label for="male">男</label>
-                </div>
+    </div>
+    <div class="information" v-show="inform">
+      <div class="information_content">
+        <div class="information_title">个人信息</div>
+        <ul class="information_list">
+          <li>
+            <p class="list_title">姓名：</p>
+            <p class="list_word">
+              <input class="item-input" v-model="info.contactName">
+            </p>
+          </li>
+          <li>
+            <p class="list_title">性别：</p>
+            <div class="list_word">
+              <div class="female">
+                <input type="radio" name="gender" value="LADY" v-model="info.gender"/>
+                <label for="female">女</label>
               </div>
-            </li>
-            <li>
+              <div class="male">
+                <input type="radio" name="gender" value="GENTLEMAN" v-model="info.gender"/>
+                <label for="male">男</label>
+              </div>
+            </div>
+          </li>
+          <li>
             <p class="list_title">手机号：</p>
             <p class="list_word">
-            <input class="item-input" v-model="info.mobileNo">
+              <input class="item-input" v-model="info.mobileNo">
             </p>
-            </li>
-            <li>
-              <p class="list_title">微信号：</p>
-              <p class="list_word">
-                <input class="item-input" v-model="info.wechatNo">
-              </p>
-            </li>
-            <li>
-              <p class="list_title">年龄：</p>
-              <p class="list_word">
-                <input class="item-input" v-model="info.age">
-              </p>
-            </li>
-          </ul>
-          <div class="information_button" @click="updateInfo">保存</div>
-        </div>
+          </li>
+          <li>
+            <p class="list_title">微信号：</p>
+            <p class="list_word">
+              <input class="item-input" v-model="info.wechatNo">
+            </p>
+          </li>
+          <li>
+            <p class="list_title">年龄：</p>
+            <p class="list_word">
+              <input class="item-input" v-model="info.age">
+            </p>
+          </li>
+        </ul>
+        <div class="information_button" @click="updateInfo">保存</div>
       </div>
-      <div class="details_loading" v-show="details" style="background-color: #191919">
-        <div class="phone_hand">
-          <img :src="company">
-        </div>
-        <p class="phone_txt">{{form.contactName}}</p>
-        <p class="phone_txt">{{form.phoneNo}}</p>
-        <div class="phone">
-          <img :src="phoneImg">
-        </div>
-        <div class="phone_cancle" @click="callsCancle">
-          <img :src="cancle">
-        </div>
-        <!--<p class="details_content">正在连接 请稍等...</p>-->
+    </div>
+    <div class="details_loading" v-show="details" style="background-color: #191919">
+      <div class="phone_hand">
+        <img :src="company">
       </div>
+      <p class="phone_txt">{{form.contactName}}</p>
+      <p class="phone_txt">{{form.phoneNo}}</p>
+      <div class="phone">
+        <img :src="phoneImg">
+      </div>
+      <div class="phone_cancle" @click="callsCancle">
+        <img :src="cancle">
+      </div>
+      <!--<p class="details_content">正在连接 请稍等...</p>-->
     </div>
   </div>
 </template>
@@ -238,7 +238,7 @@ export default {
   },
   mounted () {
     document.addEventListener('deviceready', () => {
-      document.addEventListener('resume', () => {
+      document.addEventListener('pause', () => {
         if (this.callStatus === true) {
           this.details = false
           this.resultShow = true

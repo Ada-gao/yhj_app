@@ -1,11 +1,11 @@
 <template>
-  <div class="page" style="position: absolute;top:2rem;background-color: #ffffff">
-    <wv-header class="trial_header" title="申请体验" :fixed="true" background-color="white" style="color:#32CCBC;">
+  <div class="page">
+    <wv-header class="x-header" title="申请体验" :fixed="true" background-color="white" style="color:#32CCBC;">
       <div class="btn-back" slot="left">
         <i class="iconfont icon-fanhui" @click="$router.push('/')" style="color:#959292"></i>
       </div>
     </wv-header>
-    <div class="wv-content">
+    <div class="wv-content x-wrapper" style="background-color: #ffffff">
     <div class="trial_title">
       我们提供免费体验活动，您可以在此提交申请。申
       请成功后，将由我们专属服务人员为你安排预约。

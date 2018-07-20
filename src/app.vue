@@ -58,7 +58,7 @@ export default {
   }
   .wv-content_nav{
     position: absolute;
-    top: 1.9rem;
+    top: 50px;
     left: 0;
     right: 0;
     bottom: 58px;
@@ -80,7 +80,7 @@ export default {
   }
   .wv-content{
     position: absolute;
-    top: 2rem;
+    top: 50px;
     left: 0;
     right: 0;
     bottom: 0;
