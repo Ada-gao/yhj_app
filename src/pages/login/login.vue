@@ -13,7 +13,7 @@
     <!--</wv-group>-->
     <div class="user_login" style="margin-top: 8.5%">
       <i class="iconfont icon-geren11" style="color: #CECECE;float: left;font-size: 26px"></i>
-        <input class="user_input" placeholder="请输入账号" v-model="account"/>
+        <input class="user_input" placeholder="请输入账号" v-model="account" autocapitalize="off" autocorrect="off"/>
     </div>
     <div class="user_login" style="margin-top: 4.4%">
       <i class="iconfont icon-suotou-moren" style="color: #CECECE;float: left;font-size: 26px;clear: both"></i>
