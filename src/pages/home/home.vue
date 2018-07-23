@@ -13,7 +13,9 @@
           </div>
           <div class="home_head">
             <div class="head_h">
+              <div class="head_img">
               <img :src="company" alt="">
+              </div>
             </div>
             <div class="home_inform">
               <h5 class="home_company">{{company.companyName}}</h5>
@@ -183,12 +185,6 @@ export default {
     height: 100%;
     text-align: center;
     background-color: #ffffff;
-    img {
-      width: 85px;
-      height: 85px;
-      border-radius: 50%;
-      margin-top: 5px;
-    }
   }
   .head_h,.home_inform{
     float: left;
@@ -196,10 +192,18 @@ export default {
   .head_img{
     width: 2.5rem;
     height: 2.5rem;
-    background-color: #1aad19;
+    /*background-color: #1aad19;*/
     border-radius: 50%;
     box-shadow:rgba(238, 233, 233, 0.34) 0px 0px 0px 5px;
     margin: 0.6rem auto;
+  }
+  .head_img>img{
+    width: 2.5rem;
+    height: 2.5rem;
+    max-width: 100%;
+    border-radius: 50%;
+    /*border-radius: 50%;*/
+    /*margin-top: 5px;*/
   }
   .home_company{
     font-size: 0.48rem;
