@@ -14,11 +14,11 @@
           <div class="home_head">
             <div class="head_h">
               <div class="head_img">
-              <img :src="company" alt="">
+              <img :src="logo" alt="">
               </div>
             </div>
             <div class="home_inform">
-              <h5 class="home_company">{{company.companyName}}</h5>
+              <h5 class="home_company">{{Belonged}}</h5>
               <h6 class="home_name">姓名：{{name}}</h6>
               <p class="home_state" v-if="completeStatus==false">状态：任务尚未完成，请继续努力</p>
               <p class="home_state" v-if="completeStatus==true">状态：任务已完成，请继续加油哦！</p>
@@ -59,7 +59,7 @@
         </p>
         <p class="progress_time">任务计划完成时间：{{item.taskEndDate | moment('YYYY.MM.DD')}}</p>
       </div>
-      <wv-footer class="footer-demo footer_status" text="——已加载全部——"></wv-footer>
+      <!--<wv-footer class="footer-demo footer_status" text="——已加载全部——"></wv-footer>-->
     </div>
   </div>
 </template>
@@ -74,12 +74,13 @@ export default {
       thumbSmall,
       dateTime: '',
       form: {},
-      company: '',
+      Belonged: {},
       name: '',
       statisGroup: {},
       percent: 60,
       completeStatus: '',
-      userId: ''
+      userId: '',
+      logo: ''
     }
   },
   mounted () {
@@ -89,7 +90,8 @@ export default {
   methods: {
     getList () {
       getCompany().then(res => {
-        this.company = process.env.BASE_API + '/file/' + res.data.logo
+        this.Belonged = res.data.companyName
+        this.logo = process.env.BASE_API + '/file/' + res.data.logo
       })
       getUser().then(res => {
         this.name = res.data.name

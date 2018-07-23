@@ -224,7 +224,9 @@ export default {
   }
   .call_year{
     font-size: 0.56rem;
+    font-weight: bold;
     text-align: center;
+    font-family: sans-serif;
   }
   .place{
     width: 22%;

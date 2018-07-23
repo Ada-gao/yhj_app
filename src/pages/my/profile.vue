@@ -5,7 +5,7 @@
     <div class="wv-content_nav x-wrapper">
     <div class="profile_content">
       <div class="profile_head">
-        <img :src="company" alt="">
+        <img :src="logo" alt="">
       </div>
       <p class="profile_name">{{dataInfrom.name}}</p>
       <p class="profile_company">{{company.companyName}}</p>
@@ -81,7 +81,8 @@ export default {
       form: {},
       rank: {},
       thumbSmall,
-      details: false
+      details: false,
+      logo: ''
     }
   },
   mounted () {
@@ -115,7 +116,8 @@ export default {
           this.dataInfrom = res.data
           this.userId = this.dataInfrom.id
           getCompany().then((res) => {
-            this.company = process.env.BASE_API + '/file/' + res.data.logo
+            this.company = res.data
+            this.logo = process.env.BASE_API + '/file/' + res.data.logo
           })
           // getSales(this.userId).then((res) => {
           //   this.form = res.data
@@ -128,6 +130,7 @@ export default {
           getRank(this.userId).then((res) => {
             console.log(res)
             this.form = res.data
+            this.form.avgDuration = this.form.avgDuration.toFixed(1)
             if (this.form.totalTaskCompleteCnt === null || this.form.totalTaskCompleteCnt === 0) {
               this.form.rate = 0
             } else {
@@ -261,7 +264,7 @@ export default {
     font-size: 0.64rem;
     color: #FFFFFF;
     background: #32CCBC;
-    margin: 1rem auto 0;
+    margin: 0.5rem auto 0;
     border-radius: 0.2rem;
     text-align: center;
     line-height: 1.6rem;

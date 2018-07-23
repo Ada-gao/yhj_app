@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <wv-header :title="'任务详情('+task.dailyTaskCompleteCnt +'/'+ task.dailyTaskCnt+')'" :fixed="true" background-color="#32CCBC" class="x-header">
+    <wv-header :title="'任务完成('+task.dailyTaskCompleteCnt +'/'+ task.dailyTaskCnt+')'" :fixed="true" background-color="#32CCBC" class="x-header">
       <div class="btn-back" slot="left">
         <i class="iconfont icon-fanhui" @click="$router.push('/call')"></i>
       </div>
@@ -53,9 +53,9 @@
           <p style="margin: 5px" v-html="form.salesTalk">{{form.salesTalk}}</p>
           <!--<textarea class="weui-cells" placeholder="" :rows="8" :show-counter="false"></textarea>-->
         </div>
-        <div class="phone_button" @click="startCall">
-          <small class="iconfont icon-waihuquerenxuanzhong" style="font-size: 100%;"></small>开始外呼
-        </div>
+      </div>
+      <div class="phone_button" @click="startCall">
+        <small class="iconfont icon-waihuquerenxuanzhong" style="font-size: 100%;"></small>开始外呼
       </div>
     </div>
     <div class="Record" v-show="resultShow">
@@ -238,26 +238,31 @@ export default {
     this.teskData()
   },
   mounted () {
-    console.log('customer-detail vue page mounted.')
-    Vue.cordova.backgroundMode.on('activate', () => { // 监听是否后台运行
-      console.log('Now app is running in background.')
-    })
+    // console.log('customer-detail vue page mounted.')
+    // Vue.cordova.backgroundMode.on('activate', () => { // 监听是否后台运行
+    //   console.log('Now app is running in background.')
+    //   alert('后台')
+    // })
 
     Vue.cordova.backgroundMode.on('deactivate', () => { // 监听是否前台台运行
-      console.log('Now app is running in foreground.')
+      // console.log('Now app is running in foreground.')
+      // alert('前台')
+      if (this.callStatus === true) {
+        this.details = false
+        this.resultShow = true
+        this.callDate()
+      }
     })
-
-    document.addEventListener('deviceready', () => {
-      document.addEventListener('pause', () => {
-        if (this.callStatus === true) {
-          this.details = false
-          this.resultShow = true
-          this.callDate()
-        }
-        // alert('resume')
-      }, false)
-    }, false)
-    // this.headImg()
+    // document.addEventListener('deviceready', () => {
+    //   document.addEventListener('pause', () => {
+    //     if (this.callStatus === true) {
+    //       this.details = false
+    //       this.resultShow = true
+    //       this.callDate()
+    //     }
+    //     // alert('resume')
+    //   }, false)
+    // }, false)
   },
   methods: {
     startCall () {
@@ -267,7 +272,7 @@ export default {
         if (this.callSid === null) {
           Toast.fail({
             duration: 2000,
-            message: '我可能走丢了,请稍等.....'
+            message: '我可能走丢了,请稍等...'
           })
           this.details = false
         } else {
@@ -401,7 +406,7 @@ export default {
     width: 100%;
     background: white;
     height: 2.9rem;
-    margin: 0.272rem 0 ;
+    margin: 0.272rem 0 0;
     border-radius: 0.1rem;
   }
   .inform{
@@ -441,6 +446,7 @@ export default {
     width: 100%;
     height: 10.34rem;
     background: #FFFFFF;
+    margin-top: 0.4rem;
   }
   .phone_html{
     width: 92%;
@@ -454,7 +460,8 @@ export default {
   .phone_content{
     font-size: 0.6rem;
     width: 92%;
-    margin: 0.38rem auto;
+    margin: 0 auto;
+    padding: 0.2rem 0;
   }
   .phone_button{
     width: 90%;
@@ -501,7 +508,7 @@ export default {
     -webkit-transform: translate(-50%,-50%);
     transform: translate(-50%,-50%);
     overflow: hidden;
-    height: 10.34rem;
+    height: 11.34rem;
     background: #ffffff;
     border-radius: 0.2rem;
   }
