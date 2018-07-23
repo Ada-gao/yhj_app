@@ -184,6 +184,7 @@ import cancle from '@/assets/images/cancle.png'
 import { getCall, getRandom, getTaskHistory, updateOutboundName, getCallStatus, getRank, getCallscancle } from '@/api/api'
 import { transformText, queryObj } from '@/utils'
 import { Dialog, Toast } from 'we-vue'
+import Vue from 'vue'
 // import qs from 'qs'
 
 export default {
@@ -237,6 +238,15 @@ export default {
     this.teskData()
   },
   mounted () {
+    console.log('customer-detail vue page mounted.')
+    Vue.cordova.backgroundMode.on('activate', () => { // 监听是否后台运行
+      console.log('Now app is running in background.')
+    })
+
+    Vue.cordova.backgroundMode.on('deactivate', () => { // 监听是否前台台运行
+      console.log('Now app is running in foreground.')
+    })
+
     document.addEventListener('deviceready', () => {
       document.addEventListener('pause', () => {
         if (this.callStatus === true) {
