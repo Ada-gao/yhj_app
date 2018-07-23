@@ -34,6 +34,8 @@ axios.interceptors.response.use(response => {
 
 // 登陆验证
 export const requestLogin = params => axios.post('/auth/login', params)
+// 权限验证
+export const getUsers = () => axios.get('/auth/user')
 // 提交申请体验
 export const postTrial = params => axios.post('/trial', params)
 // 发送验证码

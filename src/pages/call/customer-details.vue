@@ -5,7 +5,7 @@
         <i class="iconfont icon-fanhui" @click="$router.push('/call')"></i>
       </div>
       <div class="btn-menu" slot="right">
-        <p style="font-size: 0.56rem">{{task.dailyEffectiveDuration}}s</p>
+        <p style="font-size: 0.56rem">{{task.dailyEffectiveDuration}}</p>
       </div>
     </wv-header>
     <div class="wv-content x-wrapper">
@@ -181,7 +181,7 @@ import company from '@/assets/images/hand.png'
 import phoneImg from '../../assets/images/phone.gif'
 import thumbSmall from '@/assets/images/icon_tabbar.png'
 import cancle from '@/assets/images/cancle.png'
-import { getCall, getRandom, getTaskHistory, updateOutboundName, getCallStatus, getTaskStatisticsDaily, getCallscancle } from '@/api/api'
+import { getCall, getRandom, getTaskHistory, updateOutboundName, getCallStatus, getRank, getCallscancle } from '@/api/api'
 import { transformText, queryObj } from '@/utils'
 import { Dialog, Toast } from 'we-vue'
 // import qs from 'qs'
@@ -341,7 +341,8 @@ export default {
       })
     },
     teskData () {
-      getTaskStatisticsDaily().then(res => {
+      let userId = localStorage.getItem('userId')
+      getRank(userId).then(res => {
         this.task = res.data
         let theTime = parseInt(res.data.dailyEffectiveDuration)
         let theTime1 = 0

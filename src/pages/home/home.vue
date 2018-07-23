@@ -42,7 +42,7 @@
           </wv-flex>
         </div>
         <div style="width: 5%">
-          <router-link to="/call">
+          <router-link :to="{path:'/call', params:{userId: userId}}">
             <p class="iconfont icon-fanhui icon_right"></p>
           </router-link>
         </div>
@@ -76,7 +76,8 @@ export default {
       name: '',
       statisGroup: {},
       percent: 60,
-      completeStatus: ''
+      completeStatus: '',
+      userId: ''
     }
   },
   mounted () {
@@ -90,6 +91,7 @@ export default {
       })
       getUser().then(res => {
         this.name = res.data.name
+        localStorage.setItem('userId', res.data.id)
         getCompleteStatus(res.data.id).then((res) => {
           this.completeStatus = res.data
           // console.log(this.completeStatus)

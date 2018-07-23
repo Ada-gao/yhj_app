@@ -28,7 +28,7 @@
   </div>
 </template>
 <script type="es6">
-import { requestLogin, getUser } from '../../api/api'
+import { requestLogin, getUsers } from '../../api/api'
 import thumbSmall from '../../assets/images/icon_tabbar.png'
 import { Dialog, Toast } from 'we-vue'
 
@@ -52,11 +52,21 @@ export default {
         })
       } else {
         requestLogin(loginParams).then(res => {
-          getUser().then((res) => {
-            console.log(res)
-          })
           localStorage.setItem('token', res.data.token)
-          this.$router.push({path: '/home'})
+          let user = localStorage.getItem('token')
+          if (user) {
+            getUsers().then((res) => {
+              console.log(res.data.authorities[0])
+              if (res.data.authorities[0].authority !== 'ROLE_SALE') {
+                Toast.text({
+                  duration: 1000,
+                  message: '该账号没有权限，请联系管理员！'
+                })
+              } else {
+                this.$router.push({path: '/home'})
+              }
+            })
+          }
         }).catch(() => {
           Dialog({message: '请检查账号或密码是否正确'})
         })
