@@ -1,0 +1,41 @@
+{
+    "android": {
+        "debug": {
+            "keystore": "yhj-debug-key.jks",
+            "storePassword": "yhj_debug_20180723!",
+            "alias": "yhj-debug-alias",
+            "password" : "yhj_debug_20180723!",
+            "keystoreType": "jks"
+        },
+        "release": {
+            "keystore": "yhj-release-key.jks",
+            "storePassword": "yhj_hybrid_20180723!",
+            "alias": "yhj-release-alias",
+            "password" : "yhj_hybrid_20180723!",
+            "keystoreType": "jks"
+        }
+    },
+
+  "ios": {
+    "debug": {
+      "codeSignIdentity": "iPhone Developer",
+      "developmentTeam": "5K64LCY2JG",
+      "packageType": "development",
+      "buildFlag": [
+        "EMBEDDED_CONTENT_CONTAINS_SWIFT = YES",
+        "ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES=NO",
+        "LD_RUNPATH_SEARCH_PATHS = \"@executable_path/Frameworks\""
+      ]
+    },
+    "release": {
+      "codeSignIdentity": "iPhone Developer",
+      "developmentTeam": "5K64LCY2JG",
+      "packageType": "app-store",
+      "buildFlag": [
+        "EMBEDDED_CONTENT_CONTAINS_SWIFT = YES",
+        "ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES=NO",
+        "LD_RUNPATH_SEARCH_PATHS = \"@executable_path/Frameworks\""
+      ]
+    }
+  }
+}
