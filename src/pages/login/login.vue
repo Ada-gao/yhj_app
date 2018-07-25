@@ -60,7 +60,7 @@ export default {
               if (res.data.authorities[0].authority !== 'ROLE_SALE') {
                 Toast.text({
                   duration: 1000,
-                  message: '该账号没有权限，请联系管理员！'
+                  message: '该账号没有权限!'
                 })
               } else {
                 this.$router.push({path: '/home'})

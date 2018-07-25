@@ -246,7 +246,6 @@ export default {
 
     Vue.cordova.backgroundMode.on('deactivate', () => { // 监听是否前台台运行
       // console.log('Now app is running in foreground.')
-      // alert('前台')
       if (this.callStatus === true) {
         this.details = false
         this.resultShow = true
@@ -642,9 +641,9 @@ export default {
     // width: 1em;
     // height: 1em;
     margin-right: .4em;
-    // border-radius: 50%;
-    // border: 1px solid #32CCBC;
-    // text-indent: .15em;
+    border-radius: 50%;
+    border: 1px solid #32CCBC;
+    text-indent: .15em;
     line-height: 1;
     // margin-right: 5px;
   }

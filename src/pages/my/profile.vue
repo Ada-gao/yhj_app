@@ -8,7 +8,7 @@
         <img :src="logo" alt="">
       </div>
       <p class="profile_name">{{dataInfrom.name}}</p>
-      <p class="profile_company">{{company.companyName}}</p>
+      <p class="profile_company">{{company}}</p>
     </div>
     <div style="background: #FFFFFF;margin-top: 0.4rem;height: 8.16rem">
      <wv-flex :gutter="10" style="width: 90%;margin:auto;border-bottom: 1px solid #D2D2D2">
@@ -116,8 +116,8 @@ export default {
           this.dataInfrom = res.data
           this.userId = this.dataInfrom.id
           getCompany().then((res) => {
-            this.company = res.data
             this.logo = process.env.BASE_API + '/file/' + res.data.logo
+            this.company = res.data.companyName
           })
           // getSales(this.userId).then((res) => {
           //   this.form = res.data

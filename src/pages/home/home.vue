@@ -14,7 +14,7 @@
           <div class="home_head">
             <div class="head_h">
               <div class="head_img">
-              <img :src="logo" alt="">
+              <img :src="logo_head" alt="">
               </div>
             </div>
             <div class="home_inform">
@@ -74,13 +74,13 @@ export default {
       thumbSmall,
       dateTime: '',
       form: {},
-      Belonged: {},
+      Belonged: '',
       name: '',
       statisGroup: {},
       percent: 60,
       completeStatus: '',
       userId: '',
-      logo: ''
+      logo_head: ''
     }
   },
   mounted () {
@@ -90,8 +90,8 @@ export default {
   methods: {
     getList () {
       getCompany().then(res => {
+        this.logo_head = process.env.BASE_API + '/file/' + res.data.logo
         this.Belonged = res.data.companyName
-        this.logo = process.env.BASE_API + '/file/' + res.data.logo
       })
       getUser().then(res => {
         this.name = res.data.name
