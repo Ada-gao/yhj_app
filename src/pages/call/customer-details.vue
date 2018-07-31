@@ -181,9 +181,9 @@ import company from '@/assets/images/hand.png'
 import phoneImg from '../../assets/images/phone.gif'
 import thumbSmall from '@/assets/images/icon_tabbar.png'
 import cancle from '@/assets/images/cancle.png'
-import { getCall, getRandom, getTaskHistory, updateOutboundName, getCallStatus, getRank, getCallscancle } from '@/api/api'
+import { getRandom, getTaskHistory, updateOutboundName, getCallStatus, getRank, getCallscancle } from '@/api/api'
 import { transformText, queryObj } from '@/utils'
-import { Dialog, Toast } from 'we-vue'
+import { Dialog } from 'we-vue'
 import Vue from 'vue'
 // import qs from 'qs'
 
@@ -265,20 +265,30 @@ export default {
   },
   methods: {
     startCall () {
-      getCall(this.form.outboundNameId).then(res => {
-        console.log(res)
-        this.callSid = res.data.callSid
-        if (this.callSid === null) {
-          Toast.fail({
-            duration: 2000,
-            message: '我可能走丢了,请稍等...'
-          })
-          this.details = false
-        } else {
-          this.details = true
-          this.callStatus = true
-        }
-      })
+      document.addEventListener('deviceready', onDeviceReady, false)
+      function onDeviceReady () {
+        // var dom = document.getElementById('deviceready')
+        window.plugins.sim.getSimInfo(function (res) {
+          alert('测试')
+          alert(JSON.stringify(res))
+        }, function () {
+          alert('error')
+        })
+      }
+      // getCall(this.form.outboundNameId).then(res => {
+      //   console.log(res)
+      //   this.callSid = res.data.callSid
+      //   if (this.callSid === null) {
+      //     Toast.fail({
+      //       duration: 2000,
+      //       message: '我可能走丢了,请稍等...'
+      //     })
+      //     this.details = false
+      //   } else {
+      //     this.details = true
+      //     this.callStatus = true
+      //   }
+      // })
     },
     getRandom () {
       // let createTime = parseTime(new Date(), '{y}-{m}-{d}')
