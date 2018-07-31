@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <wv-header title="问题反馈" :fixed="true" background-color="#32CCBC" class="x-header">
+    <wv-header title="问题反馈" background-color="#32CCBC" class="x-header">
       <div class="btn-back" slot="left">
         <i class="iconfont icon-fanhui" @click="$router.push('/profile')"></i>
       </div>

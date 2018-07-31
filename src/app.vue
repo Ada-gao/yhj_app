@@ -57,30 +57,30 @@ export default {
     color: #32CCBC;
   }
   .wv-content_nav{
-    position: absolute;
-    top: 50px;
+    position: fixed;
+    top: 1.9rem;
     left: 0;
     right: 0;
-    bottom: 58px;
+    bottom: 2.3rem;
     /* height: 18.2rem; */
     overflow: hidden;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
   }
-  .wv-content_profile{
-    position: absolute;
-    top: 1.6rem;
-    left: 0;
-    right: 0;
-    bottom: 51px;
-    /* height: 18.2rem; */
-    overflow: hidden;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
-  }
+  /*.wv-content_profile{*/
+    /*position: fixed;*/
+    /*top: 1.6rem;*/
+    /*left: 0;*/
+    /*right: 0;*/
+    /*bottom: 2rem;*/
+    /*!* height: 18.2rem; *!*/
+    /*overflow: hidden;*/
+    /*overflow-y: scroll;*/
+    /*-webkit-overflow-scrolling: touch;*/
+  /*}*/
   .wv-content{
     position: absolute;
-    top: 50px;
+    top: 1.9rem;
     left: 0;
     right: 0;
     bottom: 0;

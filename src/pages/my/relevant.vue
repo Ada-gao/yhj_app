@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <wv-header title="关于闪电呼" :fixed="true" background-color="#32CCBC">
+    <wv-header title="关于闪电呼" background-color="#32CCBC" class="x-header">
       <div class="btn-back" slot="left">
         <i class="iconfont icon-fanhui" @click="$router.push('/profile')"></i>
       </div>

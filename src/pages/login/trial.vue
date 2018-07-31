@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <wv-header class="x-header" title="申请体验" :fixed="true" background-color="white" style="color:#32CCBC;">
+    <wv-header class="x-header" title="申请体验" background-color="white" style="color:#32CCBC;">
       <div class="btn-back" slot="left">
         <i class="iconfont icon-fanhui" @click="$router.push('/')" style="color:#959292"></i>
       </div>

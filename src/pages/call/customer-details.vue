@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <wv-header :title="'任务完成('+task.dailyTaskCompleteCnt +'/'+ task.dailyTaskCnt+')'" :fixed="true" background-color="#32CCBC" class="x-header">
+    <wv-header :title="'任务完成('+task.dailyTaskCompleteCnt +'/'+ task.dailyTaskCnt+')'"  background-color="#32CCBC" class="x-header">
       <div class="btn-back" slot="left">
         <i class="iconfont icon-fanhui" @click="$router.push('/call')"></i>
       </div>
@@ -54,14 +54,19 @@
           <!--<textarea class="weui-cells" placeholder="" :rows="8" :show-counter="false"></textarea>-->
         </div>
       </div>
-      <div class="phone_button" @click="startCall">
+      <!--<div @click="times">计时<small>{{time2}}</small></div>-->
+      <a :href="'tel:' + form.phoneNo" v-show="phoneShow === false" class="phone_button" @click="times">
+        <small class="iconfont icon-waihuquerenxuanzhong" style="font-size: 100%;"></small>开始外呼
+      </a>
+      <div class="phone_button" v-show="phoneShow === true" @click="startCall">
         <small class="iconfont icon-waihuquerenxuanzhong" style="font-size: 100%;"></small>开始外呼
       </div>
     </div>
     <div class="Record" v-show="resultShow">
       <div class="Record_content">
         <div class="Record_title">外呼记录</div>
-        <p class="Record_time">通话时长：{{callTime}}</p>
+        <p class="Record_time" v-if="phoneShow === false">通话时长：{{callTime}}</p>
+        <p class="Record_time" v-if="phoneShow === true">通话时长：{{callTime}}</p>
         <div  style="margin: 87%;margin: 0 auto;border-bottom: 1px solid #eae8e8;height: 4.5rem">
           <wv-flex>
             <wv-flex-item>
@@ -219,7 +224,10 @@ export default {
       callStatus: false,
       callTime: {},
       pageNumber: '',
-      pages: 1
+      pages: 1,
+      phoneShow: true,
+      counts: '',
+      time1: ''
     }
   },
   created () {
@@ -232,6 +240,12 @@ export default {
       this.pages = 2
       this.form.lastCallResult = transformText(queryObj.callResult, this.form.lastCallResult)
       this.form.genderText = transformText(queryObj.gender, this.form.gender)
+      let phones = this.form.phoneNo.substring(4, 5)
+      if (phones === '*') {
+        this.phoneShow = true
+      } else {
+        this.phoneShow = false
+      }
     } else {
       this.getRandom()
     }
@@ -250,6 +264,10 @@ export default {
         this.details = false
         this.resultShow = true
         this.callDate()
+      } else if (this.phoneShow === false) {
+        this.details = false
+        this.resultShow = true
+        this.callDate()
       }
     })
     // document.addEventListener('deviceready', () => {
@@ -264,14 +282,38 @@ export default {
     // }, false)
   },
   methods: {
+    dateTime (time) {
+      let theTime = parseInt(time)
+      let theTime1 = 0
+      if (theTime > 60) {
+        theTime1 = parseInt(theTime / 60)
+        theTime = parseInt(theTime % 60)
+      }
+      var result = parseInt(theTime) + '秒'
+      if (theTime1 > 0) {
+        result = parseInt(theTime1) + '分' + result
+      }
+      return result
+      // this.callTime.duration
+    },
+    times () {
+      this.timer = setInterval(() => {
+        if (this.counts >= 60) {
+          this.time1++
+          this.counts = 1
+        }
+        this.counts++
+        this.callTime = this.time1 + ':' + this.counts
+      }, 1000)
+      this.history.actualCallStartDate = new Date()
+    },
     startCall () {
       getCall(this.form.outboundNameId).then(res => {
-        console.log(res)
         this.callSid = res.data.callSid
         if (this.callSid === null) {
           Toast.fail({
             duration: 2000,
-            message: '我可能走丢了,请稍等...'
+            message: '无法外呼，请联系管理员...'
           })
           this.details = false
         } else {
@@ -286,6 +328,12 @@ export default {
         this.form = res.data
         this.form.lastCallResult = transformText(queryObj.callResult, this.form.lastCallResult)
         this.form.genderText = transformText(queryObj.gender, this.form.gender)
+        let phones = this.form.phoneNo.substring(4, 5)
+        if (phones === '*') {
+          this.phoneShow = true
+        } else {
+          this.phoneShow = false
+        }
       }).catch(() => {
         this.form.lastCallDate = 0
         Dialog({message: '当前无任务分配'}).then(() => {
@@ -298,10 +346,8 @@ export default {
       this.resultShow = false
       this.history.outboundTaskId = this.form.taskId
       let _this = this
-      getCallStatus(this.callSid).then((res) => {
-        console.log(res)
-        _this.history.actualCallStartDate = res.data.start
-        _this.history.acutalCallEndDate = res.data.end
+      if (this.phoneShow === false) {
+        this.history.acutalCallEndDate = new Date()
         getTaskHistory(this.history).then(res => {
           let data = res.data
           _this.form.lastCallResult = transformText(queryObj.callResult, data.result)
@@ -315,21 +361,30 @@ export default {
           this.teskData()
           // console.log(_this.form.lastCallResult)
         })
-      })
+      } else {
+        getCallStatus(this.callSid).then((res) => {
+          console.log(res)
+          _this.history.actualCallStartDate = res.data.start
+          _this.history.acutalCallEndDate = res.data.end
+          getTaskHistory(this.history).then(res => {
+            let data = res.data
+            _this.form.lastCallResult = transformText(queryObj.callResult, data.result)
+            if (this.pages === 2) {
+              console.log(this.form.taskId)
+              this.form.lastCallResult = transformText(queryObj.callResult, this.form.lastCallResult)
+              this.form.genderText = transformText(queryObj.gender, this.form.gender)
+            } else {
+              this.getRandom()
+            }
+            this.teskData()
+            // console.log(_this.form.lastCallResult)
+          })
+        })
+      }
     },
     callDate () {
       getCallStatus(this.callSid).then((res) => {
-        let theTime = parseInt(res.data.duration)
-        let theTime1 = 0
-        if (theTime > 60) {
-          theTime1 = parseInt(theTime / 60)
-          theTime = parseInt(theTime % 60)
-        }
-        var result = parseInt(theTime) + '秒'
-        if (theTime1 > 0) {
-          result = parseInt(theTime1) + '分' + result
-        }
-        this.callTime = result
+        this.callTime = this.dateTime(res.data.duration)
         // this.callTime.duration
       })
     },
@@ -472,6 +527,7 @@ export default {
     text-align: center;
     line-height: 1.64rem;
     color: #FFFFFF ;
+    display: inherit;
   }
   .Record,.information,.details_loading{
     z-index: 501;

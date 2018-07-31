@@ -1,6 +1,6 @@
 <template>
   <div class="page" style="background: #F5F5F5;">
-    <wv-header title="首页" :fixed="true" background-color="#32CCBC" class="x-header">
+    <wv-header title="首页" background-color="#32CCBC" class="x-header">
       <div class="btn-back" slot="left">
       </div>
     </wv-header>
