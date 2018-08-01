@@ -1,8 +1,6 @@
 <template>
   <div class="page" style="background: #F5F5F5;">
     <wv-header title="首页" background-color="#32CCBC" class="x-header">
-      <div class="btn-back" slot="left">
-      </div>
     </wv-header>
     <div class="wv-content_nav x-wrapper">
       <div class="home_content" >
@@ -14,11 +12,11 @@
           <div class="home_head">
             <div class="head_h">
               <div class="head_img">
-              <img :src="logo_head" alt="">
+                <img :src="logo_head" alt="">
               </div>
             </div>
             <div class="home_inform">
-              <h5 class="home_company">{{Belonged}}</h5>
+              <h5 class="home_company">{{Belonged || '公司名称未设置'}}</h5>
               <h6 class="home_name">姓名：{{name}}</h6>
               <p class="home_state" v-if="completeStatus==false">状态：任务尚未完成，请继续努力</p>
               <p class="home_state" v-if="completeStatus==true">状态：任务已完成，请继续加油哦！</p>
@@ -66,12 +64,14 @@
 
 <script>
 import thumbSmall from '../../assets/images/icon_tabbar.png'
+import head from '@/assets/images/hand.png'
 import { getCompany, getUser, getStatisGroup, getCompleteStatus, getRank } from '@/api/api'
 // getTaskStatisticsDaily
 export default {
   data () {
     return {
       thumbSmall,
+      head,
       dateTime: '',
       form: {},
       Belonged: '',
@@ -90,8 +90,13 @@ export default {
   methods: {
     getList () {
       getCompany().then(res => {
-        this.logo_head = process.env.BASE_API + '/file/' + res.data.logo
-        this.Belonged = res.data.companyName
+        if (res.data.logo === '') {
+          this.logo_head = this.head
+          this.Belonged = res.data.companyName
+        } else {
+          this.logo_head = process.env.BASE_API + '/file/' + res.data.logo
+          this.Belonged = res.data.companyName
+        }
       })
       getUser().then(res => {
         this.name = res.data.name

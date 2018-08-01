@@ -71,6 +71,7 @@
 import { getUser, getCompany, getRank } from '../../api/api'
 // import { Dialog } from 'we-vue'
 import thumbSmall from '@/assets/images/icon_tabbar.png'
+import heads from '@/assets/images/hand.png'
 
 export default {
   data () {
@@ -81,6 +82,7 @@ export default {
       form: {},
       rank: {},
       thumbSmall,
+      heads,
       details: false,
       logo: ''
     }
@@ -116,8 +118,12 @@ export default {
           this.dataInfrom = res.data
           this.userId = this.dataInfrom.id
           getCompany().then((res) => {
-            this.logo = process.env.BASE_API + '/file/' + res.data.logo
-            this.company = res.data.companyName
+            if (res.data.logo === '') {
+              this.logo = this.heads
+            } else {
+              this.logo = process.env.BASE_API + '/file/' + res.data.logo
+              this.company = res.data.companyName
+            }
           })
           // getSales(this.userId).then((res) => {
           //   this.form = res.data

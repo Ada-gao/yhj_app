@@ -12,9 +12,9 @@
       <wv-flex :gutter="10">
         <wv-flex-item flex="3" style="margin-top: 0.272rem">
           <div class="placeholder details_left">
-            <p style="position: absolute;left: 19px;font-size: 0.56rem;color: #32CCBC;text-align: center;font-weight: 600" v-if="form.callCount">外呼
-              {{form.callCount}}次，最近外呼时间：
-              {{form.lastCallDate | moment('YYYY.MM.DD')}}</p>
+            <!--<p style="font-size: 0.56rem;color: #32CCBC;text-align: center;font-weight: 600;position: absolute;left: 19px;" v-if="form.callCount">外呼-->
+              <!--{{form.callCount}}次，最近外呼时间：-->
+              <!--{{form.lastCallDate | moment('YYYY.MM.DD')}}</p>-->
             <p style="width: 2.5rem;margin:auto;padding-top: 16px">
               <img :src="company" alt="" style="max-width: 100%">
             </p>
@@ -144,13 +144,13 @@
           <li>
             <p class="list_title">手机号：</p>
             <p class="list_word">
-              <input type="number" class="item-input" v-model="info.mobileNo">
+              <input class="item-input" v-model="info.mobileNo">
             </p>
           </li>
           <li>
             <p class="list_title">微信号：</p>
             <p class="list_word">
-              <input type="text" class="item-input" v-model="info.wechatNo">
+              <input class="item-input" v-model="info.wechatNo">
             </p>
           </li>
           <li>
@@ -186,9 +186,9 @@ import company from '@/assets/images/hand.png'
 import phoneImg from '../../assets/images/phone.gif'
 import thumbSmall from '@/assets/images/icon_tabbar.png'
 import cancle from '@/assets/images/cancle.png'
-import { getCall, getTaskHistory, updateOutboundName, getCallStatus, getRank, getCallscancle, getTaskList } from '@/api/api'
-import { transformText, queryObj, parseTime } from '@/utils'
-import { Toast, Dialog } from 'we-vue'
+import { getCall, getRandom, getTaskHistory, updateOutboundName, getCallStatus, getRank, getCallscancle } from '@/api/api'
+import { transformText, queryObj } from '@/utils'
+import { Dialog, Toast } from 'we-vue'
 import Vue from 'vue'
 // import qs from 'qs'
 
@@ -218,12 +218,6 @@ export default {
         outboundTaskId: ''
       },
       info: {},
-      listQuery1: {
-        pageIndex: 0,
-        pageSize: 10
-        // createTime: ''
-      },
-      createTime: parseTime(new Date(), '{y}-{m}-{d}'),
       callSid: '',
       duration: '',
       task: {},
@@ -236,20 +230,7 @@ export default {
     }
   },
   created () {
-    this.nextStepOptions = queryObj.nextStep
-    this.callResult = queryObj.callResult
-    this.form = this.$route.params
-    console.log(this.form)
-    this.phoneNumber = this.form.phoneNo
-    // this.pageNumber = this.$route.params.call
-    this.form.lastCallResult = transformText(queryObj.callResult, this.form.lastCallResult)
-    this.form.genderText = transformText(queryObj.gender, this.form.gender)
-    let phones = this.form.phoneNo.substring(4, 5)
-    if (phones === '*') {
-      this.phoneShow = true
-    } else {
-      this.phoneShow = false
-    }
+    this.getRandom()
     this.teskData()
   },
   mounted () {
@@ -258,7 +239,6 @@ export default {
     //   console.log('Now app is running in background.')
     //   alert('后台')
     // })
-
     Vue.cordova.backgroundMode.on('deactivate', () => { // 监听是否前台台运行
       // console.log('Now app is running in foreground.')
       if (this.callStatus === true) {
@@ -268,20 +248,9 @@ export default {
       } else if (this.phoneShow === false) {
         this.details = false
         this.resultShow = true
-        clearInterval(this.timer)
         this.callDate()
       }
     })
-    // document.addEventListener('deviceready', () => {
-    //   document.addEventListener('pause', () => {
-    //     if (this.callStatus === true) {
-    //       this.details = false
-    //       this.resultShow = true
-    //       this.callDate()
-    //     }
-    //     // alert('resume')
-    //   }, false)
-    // }, false)
   },
   methods: {
     dateTime (time) {
@@ -325,16 +294,22 @@ export default {
       })
     },
     getRandom () {
-      this.listQuery1.createTime = this.createTime
-      getTaskList('dnf', this.listQuery1).then((res) => {
-        console.log(res.data)
-        this.form = res.data.content[0]
+      // let createTime = parseTime(new Date(), '{y}-{m}-{d}')
+      getRandom().then(res => {
+        this.form = res.data
         this.phoneNumber = this.form.phoneNo
+        console.log(this.form)
         this.form.lastCallResult = transformText(queryObj.callResult, this.form.lastCallResult)
         this.form.genderText = transformText(queryObj.gender, this.form.gender)
+        let phones = this.form.phoneNo.substring(4, 5)
+        if (phones === '*') {
+          this.phoneShow = true
+        } else {
+          this.phoneShow = false
+        }
       }).catch(() => {
         this.form.lastCallDate = 0
-        Dialog({message: '当前无未完成任务'}).then(() => {
+        Dialog({message: '当前无任务分配'}).then(() => {
           this.$router.push({path: '/call'})
         })
       })
@@ -347,17 +322,8 @@ export default {
       if (this.phoneShow === false) {
         this.history.acutalCallEndDate = new Date()
         getTaskHistory(this.history).then(res => {
-          let data = res.data
-          _this.form.lastCallResult = transformText(queryObj.callResult, data.result)
-          if (this.pages === 2) {
-            console.log(this.form.taskId)
-            this.form.lastCallResult = transformText(queryObj.callResult, this.form.lastCallResult)
-            this.form.genderText = transformText(queryObj.gender, this.form.gender)
-          } else {
-            this.getRandom()
-          }
+          this.getRandom()
           this.teskData()
-          // console.log(_this.form.lastCallResult)
         })
       } else {
         getCallStatus(this.callSid).then((res) => {
@@ -365,13 +331,8 @@ export default {
           _this.history.actualCallStartDate = res.data.start
           _this.history.acutalCallEndDate = res.data.end
           getTaskHistory(this.history).then(res => {
-            let data = res.data
-            _this.form.lastCallResult = transformText(queryObj.callResult, data.result)
-            console.log(this.form.taskId)
-            this.form.lastCallResult = transformText(queryObj.callResult, this.form.lastCallResult)
-            this.form.genderText = transformText(queryObj.gender, this.form.gender)
+            this.getRandom()
             this.teskData()
-            // console.log(_this.form.lastCallResult)
           })
         })
       }
@@ -402,7 +363,7 @@ export default {
         this.form.contactName = data.contactName
         this.form.age = data.age
         this.form.gender = data.gender
-        this.form.genderText = transformText(queryObj.gender, this.form.gender)
+        // this.form.genderText = transformText(queryObj.gender, this.form.gender)
       })
     },
     teskData () {

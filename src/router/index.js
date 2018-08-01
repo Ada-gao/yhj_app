@@ -84,11 +84,23 @@ routes.push({
 })
 
 routes.push({
-  path: '/call/details-y',
-  component: resolve => require(['../pages/call/customer-details.vue'], resolve),
-  name: 'details-y',
+  path: '/call/customer-random',
+  component: resolve => require(['../pages/call/customer-random.vue'], resolve),
+  name: 'customer-random',
   meta: {
-    title: 'details-y',
+    title: 'customer-random',
+    description: '已呼客户',
+    requiresAuth: false,
+    tabShow: false
+  }
+})
+
+routes.push({
+  path: '/call/customer-details',
+  component: resolve => require(['../pages/call/customer-details.vue'], resolve),
+  name: 'customer-details',
+  meta: {
+    title: 'customer-details',
     description: '已呼客户',
     requiresAuth: false,
     tabShow: false

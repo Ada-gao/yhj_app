@@ -8,7 +8,7 @@
       </span>
         首页
       </wv-tabbar-item>
-      <wv-tabbar-item to="/call/details-y" :isOn="selected('/call/details-y')">
+      <wv-tabbar-item to="/call/customer-random" :isOn="selected('/call/details-y')">
       <span slot="icon" style="display: inline-block; position: relative;">
         <div class="iconfont icon-hujiaozhongxin weui-tabbar__label" style="font-size: 0.96rem;"></div>
         <!--<wv-badge style="position: absolute;top: 0;right: -6px;">3</wv-badge>-->
@@ -57,11 +57,11 @@ export default {
     color: #32CCBC;
   }
   .wv-content_nav{
-    position: fixed;
-    top: 1.9rem;
+    position: absolute;
+    top: 49px;
     left: 0;
     right: 0;
-    bottom: 2.3rem;
+    bottom: 56px;
     /* height: 18.2rem; */
     overflow: hidden;
     overflow-y: scroll;
@@ -80,7 +80,7 @@ export default {
   /*}*/
   .wv-content{
     position: absolute;
-    top: 1.9rem;
+    top: 49px;
     left: 0;
     right: 0;
     bottom: 0;
