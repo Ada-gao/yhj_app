@@ -52,9 +52,14 @@ export default {
 }
 </script>
 <style lang="scss">
-
+  .bgcolor{
+    background-color: #02B6DC!important;
+  }
+  .appcolor{
+    color:#02B6DC;
+  }
   .weui-tabbar__item.weui-bar__item_on .weui-tabbar__icon, .weui-tabbar__item.weui-bar__item_on .weui-tabbar__icon>i, .weui-tabbar__item.weui-bar__item_on .weui-tabbar__label{
-    color: #32CCBC;
+    color: #02B6DC;
   }
   .wv-content_nav{
     position: absolute;
@@ -99,5 +104,8 @@ export default {
     padding-bottom: constant(safe-area-inset-bottom);
     padding-bottom: env(safe-area-inset-bottom);
 
+  }
+  .icon{
+    font-size: 22px;
   }
 </style>

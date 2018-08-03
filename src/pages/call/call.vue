@@ -1,7 +1,7 @@
 <template>
   <div class="page">
-    <wv-header title="任务列表" background-color="#32CCBC" class="x-header">
-      <div class="btn-back" slot="left">
+    <wv-header title="任务列表" class="x-header bgcolor">
+      <div class="btn-back" slot="left" style="position: absolute;top: 7px;width: 20%;">
         <i class="iconfont icon-fanhui" @click="$router.push('/home')"></i>
       </div>
     </wv-header>
@@ -137,7 +137,6 @@ export default {
       })
     },
     loadMore1 () {
-      // console.log('这是未完成加载')
       this.busy = false
       this.listQuery1.pageIndex++
       this.getList1(true)
@@ -168,6 +167,7 @@ export default {
       // let today = parseTime(new Date(), '{y}-{m}-{d}')
       // if (this.createTime === today) return false
       this.listQuery1.pageIndex = 0
+      this.listQuery2.pageIndex = 0
       let day1 = new Date(this.createTime)
       day1.setDate(day1.getDate() + 1)
       this.createTime = parseTime(day1, '{y}-{m}-{d}')
@@ -176,6 +176,7 @@ export default {
     },
     getPrevday () {
       this.listQuery1.pageIndex = 0
+      this.listQuery2.pageIndex = 0
       let day1 = new Date(this.createTime)
       day1.setDate(day1.getDate() - 1)
       this.createTime = parseTime(day1, '{y}-{m}-{d}')
@@ -215,7 +216,7 @@ export default {
     padding-top: 0.8rem;
   }
   .icon_left{
-    color:#32CCBC;
+    color:#02B6DC;
     transform:rotate(180deg);
     -ms-transform:rotate(180deg);
     -moz-transform:rotate(180deg);
@@ -231,7 +232,7 @@ export default {
   .place{
     width: 22%;
     margin: 0 auto;
-    color: #32CCBC;
+    color: #02B6DC;
   }
   .call_nav{
     width: 66%;
@@ -254,7 +255,7 @@ export default {
     padding-bottom: 60px;
   }
   .active-tab {
-    background-color: #32CCBC!important;
+    background-color: #02B6DC!important;
     color: #FFFFFF!important;
   }
   .tab-item {

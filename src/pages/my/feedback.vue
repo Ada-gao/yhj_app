@@ -1,8 +1,8 @@
 <template>
   <div class="page">
-    <wv-header title="问题反馈" background-color="#32CCBC" class="x-header">
+    <wv-header title="问题反馈" class="x-header bgcolor">
       <div class="btn-back" slot="left">
-        <i class="iconfont icon-fanhui" @click="$router.push('/profile')"></i>
+        <i class="iconfont icon-fanhui icon" @click="$router.push('/profile')"></i>
       </div>
     </wv-header>
     <div class="wv-content x-wrapper">
@@ -20,7 +20,7 @@
         <img :src="topImg">
       </div>
     </div>
-    <div class="feedback_button" @click="onImgdata">提交</div>
+    <div class="feedback_button bgcolor" @click="onImgdata">提交</div>
     <wv-actionsheet :type="type" :actions="actions" cancel-text="取消" v-model="sheetVisible"/>
     </div>
   </div>
@@ -52,6 +52,32 @@ export default {
       this.type = type
       this.sheetVisible = true
     },
+    dataURLtoFile (imgData, filename) {
+      let arr = imgData.split(',')
+      let mime = arr[0].match(/:(.*?);/)[1]
+      let bstr = window.atob(arr[1])
+      let n = bstr.length
+      let u8arr = new Uint8Array(n)
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n)
+      }
+      let blob = new Blob([u8arr], {type: mime})
+      blob.lastModifiedDate = new Date()
+      blob.name = filename
+      return blob
+    },
+    upLoad (imageURI) {
+      let file = this.dataURLtoFile('data:image/jpeg;base64,' + imageURI, 'test.jpeg')
+      let formData = new FormData()
+      formData.append('file', file)
+      alert(formData)
+      alert(file)
+      postUpload(formData).then((res) => {
+        this.imgUrl.push(res.data)
+      }).catch((message) => {
+        alert(message)
+      })
+    },
     menuClick (key) {
       // console.log(`menu ${key} clicked`)
       let vm = this
@@ -82,32 +108,6 @@ export default {
       function cameraError (message) {
         alert('error to take picture:' + message)
       }
-    },
-    dataURLtoFile (imgData, filename) {
-      let arr = imgData.split(',')
-      let mime = arr[0].match(/:(.*?);/)[1]
-      let bstr = window.atob(arr[1])
-      let n = bstr.length
-      let u8arr = new Uint8Array(n)
-      while (n--) {
-        u8arr[n] = bstr.charCodeAt(n)
-      }
-      let blob = new Blob([u8arr], {type: mime})
-      blob.lastModifiedDate = new Date()
-      blob.name = filename
-      return blob
-    },
-    upLoad (imageURI) {
-      let file = this.dataURLtoFile('data:image/jpeg;base64,' + imageURI, 'test.jpeg')
-      let formData = new FormData()
-      formData.append('file', file)
-      alert(formData)
-      alert(file)
-      postUpload(formData).then((res) => {
-        this.imgUrl.push(res.data)
-      }).catch((message) => {
-        alert(message)
-      })
     },
     onImgdata () {
       if (this.content === '') {
@@ -221,7 +221,6 @@ export default {
     width: 87%;
     height: 1.6rem;
     line-height: 1.6rem;
-    background: #32CCBC;
     font-size: 0.64rem;
     text-align: center;
     border-radius: 0.1rem;

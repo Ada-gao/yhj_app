@@ -1,6 +1,6 @@
 <template>
   <div class="page" style="background: #F5F5F5;">
-    <wv-header title="首页" background-color="#32CCBC" class="x-header">
+    <wv-header title="首页" class="x-header bgcolor">
     </wv-header>
     <div class="wv-content_nav x-wrapper">
       <div class="home_content" >
@@ -28,15 +28,15 @@
         <div style="width: 95%">
           <wv-flex :gutter="10" style="width: 100%;">
             <wv-flex-item>
-              <div class="placeholder home_number">{{form.dailyTaskCnt || 0}}个</div>
+              <div class="placeholder home_number1">{{form.dailyTaskCnt || 0}}个</div>
               <div class="placeholder home_text">今日任务数</div>
             </wv-flex-item>
             <wv-flex-item>
-              <div class="placeholder home_number">{{form.dailyTaskCompleteCnt || 0}}个</div>
+              <div class="placeholder home_number2">{{form.dailyTaskCompleteCnt || 0}}个</div>
               <div class="placeholder home_text">今日完成数</div>
             </wv-flex-item>
             <wv-flex-item>
-              <div class="placeholder home_number">{{form.dailyEffectiveDuration}}</div>
+              <div class="placeholder home_number3">{{form.dailyEffectiveDuration}}</div>
               <div class="placeholder home_text">今日有效通话时长</div>
             </wv-flex-item>
           </wv-flex>
@@ -52,7 +52,7 @@
         <!-- <p class="progress_list"></p> -->
         <wv-progress :percent="item.percent" :show-clear="false" style="width: 95%; margin: 0 auto"/>
         <p style="font-size: 0.48rem;margin-top: 0.58rem;margin-left: 0.4rem;">
-          <small style="color: #32CCBC;font-size: 100%">
+          <small style="color: #02B6DC;font-size: 100%">
             {{item.totalTaskCompleteCnt}}</small>/{{item.totalTaskCnt}}
         </p>
         <p class="progress_time">任务计划完成时间：{{item.taskEndDate | moment('YYYY.MM.DD')}}</p>
@@ -90,7 +90,7 @@ export default {
   methods: {
     getList () {
       getCompany().then(res => {
-        if (res.data.logo === '') {
+        if (res.data.logo === '' || res.data.logo === null) {
           this.logo_head = this.head
           this.Belonged = res.data.companyName
         } else {
@@ -197,16 +197,16 @@ export default {
     float: left;
   }
   .head_img{
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2rem;
+    height: 2rem;
     /*background-color: #1aad19;*/
     border-radius: 50%;
     box-shadow:rgba(238, 233, 233, 0.34) 0px 0px 0px 5px;
-    margin: 0.6rem auto;
+    margin: 0.9rem auto;
   }
   .head_img>img{
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2rem;
+    height: 2rem;
     max-width: 100%;
     border-radius: 50%;
     /*border-radius: 50%;*/
@@ -233,12 +233,20 @@ export default {
     height: 4.82rem;
     background: #FFFFFF;
   }
-  .home_number{
+  .home_number1,.home_number2,.home_number3{
     font-size: 0.64rem;
-    color: #02A2D1;
     text-align: center;
     margin-top: 1.32rem;
     margin-bottom: 0.66rem;
+  }
+  .home_number1{
+    color: #F7CD89;
+  }
+  .home_number2{
+    color: #CC3232;
+  }
+  .home_number3{
+    color: #02A2D1;
   }
   .home_text{
     font-size: 0.52rem;
@@ -260,7 +268,7 @@ export default {
   .progress_list{
     width: 90%;
     margin:0.78rem auto 0;
-    background:#32CCBC;
+    /*background:#32CCBC;*/
     height: 0.5rem;
     border-radius: 10px;
   }
@@ -285,7 +293,7 @@ export default {
     border-radius: 10px!important;
   }
   .weui-progress__inner-bar {
-    background-color: #32CCBC!important;
+    background-color: #02B6DC!important;
     height: 0.5rem!important;
     border-radius: 10px!important;
   }

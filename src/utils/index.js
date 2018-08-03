@@ -63,3 +63,17 @@ let queryObj = {
   ]
 }
 export { queryObj }
+
+export function timeDate (time) {
+  let theTime = parseInt(time)
+  let theTime1 = 0
+  if (theTime > 60) {
+    theTime1 = parseInt(theTime / 60)
+    theTime = parseInt(theTime % 60)
+  }
+  var result = parseInt(theTime) + '秒'
+  if (theTime1 > 0) {
+    result = parseInt(theTime1) + '分' + result
+  }
+  return result
+}
