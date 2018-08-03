@@ -383,6 +383,7 @@ export default {
             console.log(this.form.taskId)
             this.form.lastCallResult = transformText(queryObj.callResult, this.form.lastCallResult)
             this.form.genderText = transformText(queryObj.gender, this.form.gender)
+            this.getRandom()
             this.teskData()
             // console.log(_this.form.lastCallResult)
           })

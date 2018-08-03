@@ -360,7 +360,7 @@ export default {
         this.form.contactName = data.contactName
         this.form.age = data.age
         this.form.gender = data.gender
-        // this.form.genderText = transformText(queryObj.gender, this.form.gender)
+        this.form.genderText = transformText(queryObj.gender, this.form.gender)
       })
     },
     teskData () {
@@ -394,6 +394,28 @@ export default {
 }
 </script>
 <style lang="scss">
+  .main{
+    display: inline-block;
+  }
+  .main input{
+    display: none;
+  }
+  .test{
+    box-sizing: border-box;
+    position: relative;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #02B6DC;
+    border-radius: 50%;
+    float: left;
+    margin: 4px 10px 0;
+    padding: 2px;
+    background-clip: content-box;
+  }
+  input:checked + span {
+    background: #02B6DC;
+  }
   .weui-toast{
     min-height: 5em;
   }
