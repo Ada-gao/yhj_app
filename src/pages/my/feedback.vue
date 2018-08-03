@@ -52,37 +52,6 @@ export default {
       this.type = type
       this.sheetVisible = true
     },
-    menuClick (key) {
-      // console.log(`menu ${key} clicked`)
-      let vm = this
-      let sourceType = Vue.cordova.camera.PictureSourceType.CAMERA
-      if (key === 'PHOTOLIBRARY') {
-        sourceType = Vue.cordova.camera.PictureSourceType.PHOTOLIBRARY
-      }
-      let cameraOptions = {
-        quality: 100,
-        sourceType: sourceType,
-        allowEdit: true,
-        destinationType: navigator.camera.DestinationType.DATA_URL,
-        saveToPhotoAlbum: false,
-        encodingType: navigator.camera.EncodingType.JPEG
-      }
-      Vue.cordova.camera.getPicture(cameraSuccess, cameraError, cameraOptions)
-      function cameraSuccess (imageURI) {
-        if (vm.imgList.length >= 5) {
-          Toast.text({
-            duration: 1000,
-            message: '最多只能上传5张图片'
-          })
-        } else {
-          vm.imgList.push('data:image/jpeg;base64,' + imageURI)
-          vm.upLoad(imageURI)
-        }
-      }
-      function cameraError (message) {
-        alert('error to take picture:' + message)
-      }
-    },
     dataURLtoFile (imgData, filename) {
       let arr = imgData.split(',')
       let mime = arr[0].match(/:(.*?);/)[1]
@@ -108,6 +77,38 @@ export default {
       }).catch((message) => {
         alert(message)
       })
+    },
+    menuClick (key) {
+      // console.log(`menu ${key} clicked`)
+      // let vm = this
+      let sourceType = Vue.cordova.camera.PictureSourceType.CAMERA
+      if (key === 'PHOTOLIBRARY') {
+        sourceType = Vue.cordova.camera.PictureSourceType.PHOTOLIBRARY
+      }
+      let cameraOptions = {
+        quality: 100,
+        sourceType: sourceType,
+        allowEdit: true,
+        destinationType: navigator.camera.DestinationType.DATA_URL,
+        saveToPhotoAlbum: false,
+        encodingType: navigator.camera.EncodingType.JPEG
+      }
+      Vue.cordova.camera.getPicture(cameraSuccess, cameraError, cameraOptions)
+      function cameraSuccess (imageURI) {
+        alert('')
+        // if (vm.imgList.length >= 5) {
+        //   Toast.text({
+        //     duration: 1000,
+        //     message: '最多只能上传5张图片'
+        //   })
+        // } else {
+        //   vm.imgList.push('data:image/jpeg;base64,' + imageURI)
+        //   vm.upLoad(imageURI)
+        // }
+      }
+      function cameraError (message) {
+        alert('error to take picture:' + message)
+      }
     },
     onImgdata () {
       if (this.content === '') {
