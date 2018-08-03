@@ -1,8 +1,8 @@
 <template>
   <div class="page">
-    <wv-header :title="'任务完成('+task.dailyTaskCompleteCnt +'/'+ task.dailyTaskCnt+')'"  background-color="#32CCBC" class="x-header">
+    <wv-header :title="'任务完成('+task.dailyTaskCompleteCnt +'/'+ task.dailyTaskCnt+')'" class="x-header bgcolor">
       <div class="btn-back" slot="left">
-        <i class="iconfont icon-fanhui" @click="$router.push('/call')"></i>
+        <i class="iconfont icon-fanhui icon" @click="$router.push('/call')"></i>
       </div>
       <div class="btn-menu" slot="right">
         <p style="font-size: 0.56rem">{{task.dailyEffectiveDuration}}</p>
@@ -55,10 +55,10 @@
         </div>
       </div>
       <!--<div @click="times">计时<small>{{time2}}</small></div>-->
-      <a :href="'tel:' + phoneNumber" v-show="phoneShow === false" class="phone_button" @click="times">
+      <a :href="'tel:' + phoneNumber" v-show="phoneShow === false" class="phone_button bgcolor" @click="times">
         <small class="iconfont icon-waihuquerenxuanzhong" style="font-size: 100%;"></small>开始外呼
       </a>
-      <div class="phone_button" v-show="phoneShow === true" @click="startCall">
+      <div class="phone_button bgcolor" v-show="phoneShow === true" @click="startCall">
         <small class="iconfont icon-waihuquerenxuanzhong" style="font-size: 100%;"></small>开始外呼
       </div>
     </div>
@@ -102,7 +102,7 @@
           </wv-flex>
         </div>
         <div class="word">
-          <p @click="changeInfo">编辑</p>
+          <p @click="changeInfo" class="bgcolor">编辑</p>
         </div>
         <wv-flex>
           <wv-flex-item>
@@ -115,7 +115,7 @@
         </wv-flex>
         <p style="font-size: 0.56rem;padding-left: 0.98rem;margin-top: 1.42rem">备注：</p>
         <textarea v-model="history.common" rows="5" placeholder="" class="Result_tex"></textarea>
-        <div class="Result_button" @click="submitCall">提交信息</div>
+        <div class="Result_button bgcolor" @click="submitCall">提交信息</div>
       </div>
     </div>
     <div class="information" v-show="inform">
@@ -131,14 +131,22 @@
           <li>
             <p class="list_title">性别：</p>
             <div class="list_word">
-              <div class="female">
-                <input type="radio" name="gender" value="LADY" v-model="info.gender"/>
-                <label for="female">女</label>
-              </div>
-              <div class="male">
-                <input type="radio" name="gender" value="GENTLEMAN" v-model="info.gender"/>
-                <label for="male">男</label>
-              </div>
+              <!--<div class="female">-->
+                <!--<input type="radio" name="gender" value="LADY" v-model="info.gender"/>-->
+                <!--<label for="female">女</label>-->
+              <!--</div>-->
+              <!--<div class="male">-->
+                <!--<input type="radio" name="gender" value="GENTLEMAN" v-model="info.gender"/>-->
+                <!--<label for="male">男</label>-->
+              <!--</div>-->
+              <label for="male" class="main">
+                <input type="radio" name="gender" id="male" value="GENTLEMAN" v-model="info.gender">男
+                <span class="test"></span>
+              </label>
+              <label for="female" class="main">
+                <input type="radio" name="gender" id="female" value="LADY" v-model="info.gender">女
+                <span class="test"></span>
+              </label>
             </div>
           </li>
           <li>
@@ -160,7 +168,7 @@
             </p>
           </li>
         </ul>
-        <div class="information_button" @click="updateInfo">保存</div>
+        <div class="information_button bgcolor" @click="updateInfo">保存</div>
       </div>
     </div>
     <div class="details_loading" v-show="details" style="background-color: #191919">
@@ -187,7 +195,7 @@ import phoneImg from '../../assets/images/phone.gif'
 import thumbSmall from '@/assets/images/icon_tabbar.png'
 import cancle from '@/assets/images/cancle.png'
 import { getCall, getRandom, getTaskHistory, updateOutboundName, getCallStatus, getRank, getCallscancle } from '@/api/api'
-import { transformText, queryObj } from '@/utils'
+import { transformText, queryObj, timeDate } from '@/utils'
 import { Dialog, Toast } from 'we-vue'
 import Vue from 'vue'
 // import qs from 'qs'
@@ -230,6 +238,8 @@ export default {
     }
   },
   created () {
+    this.nextStepOptions = queryObj.nextStep
+    this.callResult = queryObj.callResult
     this.getRandom()
     this.teskData()
   },
@@ -248,27 +258,15 @@ export default {
       } else if (this.phoneShow === false) {
         this.details = false
         this.resultShow = true
+        clearInterval(this.timeInterval)
+        this.history.acutalCallEndDate = new Date()
         this.callDate()
       }
     })
   },
   methods: {
-    dateTime (time) {
-      let theTime = parseInt(time)
-      let theTime1 = 0
-      if (theTime > 60) {
-        theTime1 = parseInt(theTime / 60)
-        theTime = parseInt(theTime % 60)
-      }
-      var result = parseInt(theTime) + '秒'
-      if (theTime1 > 0) {
-        result = parseInt(theTime1) + '分' + result
-      }
-      return result
-      // this.callTime.duration
-    },
     times () {
-      this.timer = setInterval(() => {
+      this.timeInterval = setInterval(() => {
         if (this.counts >= 60) {
           this.time1++
           this.counts = 1
@@ -320,7 +318,6 @@ export default {
       this.history.outboundTaskId = this.form.taskId
       let _this = this
       if (this.phoneShow === false) {
-        this.history.acutalCallEndDate = new Date()
         getTaskHistory(this.history).then(res => {
           this.getRandom()
           this.teskData()
@@ -339,7 +336,7 @@ export default {
     },
     callDate () {
       getCallStatus(this.callSid).then((res) => {
-        this.callTime = this.dateTime(res.data.duration)
+        this.callTime = timeDate(res.data.duration)
         // this.callTime.duration
       })
     },
@@ -349,8 +346,6 @@ export default {
       this.info = this.form
     },
     updateInfo () {
-      this.inform = false
-      this.resultShow = true
       let params = {
         contactName: this.info.contactName,
         gender: this.info.gender,
@@ -359,6 +354,8 @@ export default {
         age: this.info.age
       }
       updateOutboundName(this.info.outboundNameId, params).then(res => {
+        this.inform = false
+        this.resultShow = true
         let data = res.data
         this.form.contactName = data.contactName
         this.form.age = data.age
@@ -421,10 +418,10 @@ export default {
     border-radius: 0.1rem;
   }
   .inform{
-    width: 50%;
+    width: 57%;
     font-size: 0.56rem;
-    /*padding-left: 3.38rem;*/
-    margin: 0.42rem auto 0;
+    /* padding-left: 3.38rem; */
+    margin: 0.42rem 29% 0;
   }
   .photo_img{
     width: 0.88rem;
@@ -478,7 +475,6 @@ export default {
     width: 90%;
     margin: 0.76rem auto 0;
     height: 1.64rem;
-    background: #32CCBC ;
     border-radius: 0.2rem;
     font-size: 0.62rem;
     text-align: center;
@@ -499,7 +495,7 @@ export default {
     position: fixed;
     z-index: 501;
     width: 87%;
-    max-width: 300px;
+    max-width: 317px;
     top: 50%;
     left: 50%;
     -webkit-transform: translate(-50%,-50%);
@@ -555,7 +551,7 @@ export default {
     width: 100%;
     text-align: center;
     font-size: 0.6rem;
-    color: #32CCBC;
+    color: #02B6DC;
     margin-top: 0.36rem;
   }
   .Result_select{
@@ -564,6 +560,7 @@ export default {
     // height: 0.8rem;
     // border-radius: 0.2rem;
     outline: none;
+    -webkit-appearance: none;
   }
   .word{
     width: 100%;
@@ -576,7 +573,6 @@ export default {
     width: 2rem;
     line-height: 1rem;
     font-size: 0.56rem;
-    background: #32CCBC ;
     color: #FFFFFF;
     text-align: center;
     border-radius: 0.2rem;
@@ -600,7 +596,6 @@ export default {
     height: 1.6rem;
     margin: 1.26rem auto 0;
     line-height:1.6rem;
-    background: #32CCBC;
     font-size: 0.56rem;
     text-align: center;
     border-radius: 0.2rem;
@@ -626,6 +621,8 @@ export default {
     height: 0.8rem;
     border-radius: 0.2rem;
     outline: none;
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: rgba(0,0,0,0)
   }
   .list_title{
     width: 30%;
@@ -639,41 +636,40 @@ export default {
     width: 87%;
     height: 1.6rem;
     line-height: 1.6rem;
-    background: #32CCBC;
     font-size: 0.64rem;
     text-align: center;
     border-radius: 0.1rem;
     color: #ffffff;
     margin: 1rem auto 0;
   }
-  input[type="radio"] {
-    // content: "\a0"; /*不换行空格*/
-    // display: inline-block;
-    // vertical-align: middle;
-    font-size: 14px;
-    // width: 1em;
-    // height: 1em;
-    margin-right: .4em;
-    border-radius: 50%;
-    border: 1px solid #32CCBC;
-    text-indent: .15em;
-    line-height: 1;
-    // margin-right: 5px;
-  }
-  input[type="radio"]:checked {
-    background-color: #32CCBC;
-    background-clip: content-box;
-    padding: .2em;
-  }
-  input[type="radio"] {
-    // position: absolute;
-    clip: rect(0, 0, 0, 0);
-  }
-  .female,.male{
-    // float: left;
-    width: 40%;
-    display: inline-block;
-  }
+  /*input[type="radio"] {*/
+    /*// content: "\a0"; !*不换行空格*!*/
+    /*// display: inline-block;*/
+    /*// vertical-align: middle;*/
+    /*font-size: 14px;*/
+    /*// width: 1em;*/
+    /*// height: 1em;*/
+    /*margin-right: .4em;*/
+    /*border-radius: 50%;*/
+    /*border: 1px solid #32CCBC;*/
+    /*text-indent: .15em;*/
+    /*line-height: 1;*/
+    /*// margin-right: 5px;*/
+  /*}*/
+  /*input[type="radio"]:checked {*/
+    /*background-color: #32CCBC;*/
+    /*background-clip: content-box;*/
+    /*padding: .2em;*/
+  /*}*/
+  /*input[type="radio"] {*/
+    /*// position: absolute;*/
+    /*clip: rect(0, 0, 0, 0);*/
+  /*}*/
+  /*.female,.male{*/
+    /*// float: left;*/
+    /*width: 40%;*/
+    /*display: inline-block;*/
+  /*}*/
   .phone_cancle{
     width: 18%;
     margin: 20% auto;

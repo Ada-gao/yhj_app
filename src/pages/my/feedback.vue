@@ -1,8 +1,8 @@
 <template>
   <div class="page">
-    <wv-header title="问题反馈" background-color="#32CCBC" class="x-header">
+    <wv-header title="问题反馈" class="x-header bgcolor">
       <div class="btn-back" slot="left">
-        <i class="iconfont icon-fanhui" @click="$router.push('/profile')"></i>
+        <i class="iconfont icon-fanhui icon" @click="$router.push('/profile')"></i>
       </div>
     </wv-header>
     <div class="wv-content x-wrapper">
@@ -20,7 +20,7 @@
         <img :src="topImg">
       </div>
     </div>
-    <div class="feedback_button" @click="onImgdata">提交</div>
+    <div class="feedback_button bgcolor" @click="onImgdata">提交</div>
     <wv-actionsheet :type="type" :actions="actions" cancel-text="取消" v-model="sheetVisible"/>
     </div>
   </div>
@@ -79,8 +79,7 @@ export default {
       })
     },
     menuClick (key) {
-      // console.log(`menu ${key} clicked`)
-      // let vm = this
+      let vm = this
       let sourceType = Vue.cordova.camera.PictureSourceType.CAMERA
       if (key === 'PHOTOLIBRARY') {
         sourceType = Vue.cordova.camera.PictureSourceType.PHOTOLIBRARY
@@ -95,16 +94,15 @@ export default {
       }
       Vue.cordova.camera.getPicture(cameraSuccess, cameraError, cameraOptions)
       function cameraSuccess (imageURI) {
-        alert('')
-        // if (vm.imgList.length >= 5) {
-        //   Toast.text({
-        //     duration: 1000,
-        //     message: '最多只能上传5张图片'
-        //   })
-        // } else {
-        //   vm.imgList.push('data:image/jpeg;base64,' + imageURI)
-        //   vm.upLoad(imageURI)
-        // }
+        if (vm.imgList.length >= 5) {
+          Toast.text({
+            duration: 1000,
+            message: '最多只能上传5张图片'
+          })
+        } else {
+          vm.imgList.push('data:image/jpeg;base64,' + imageURI)
+          vm.upLoad(imageURI)
+        }
       }
       function cameraError (message) {
         alert('error to take picture:' + message)
@@ -222,7 +220,6 @@ export default {
     width: 87%;
     height: 1.6rem;
     line-height: 1.6rem;
-    background: #32CCBC;
     font-size: 0.64rem;
     text-align: center;
     border-radius: 0.1rem;

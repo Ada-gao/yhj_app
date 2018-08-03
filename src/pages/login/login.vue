@@ -5,8 +5,8 @@
         <i class="iconfont icon-tonghuashijian"></i>
       </div>
     </div>
-    <p class="title_one">闪电呼</p>
-    <p class="title_two">快如闪电，一击即中!</p>
+    <p class="title_one appcolor">闪电呼</p>
+    <p class="title_two appcolor">快如闪电，一击即中!</p>
     <!--<wv-group>-->
       <!--<wv-input placeholder="请输入账号" v-model="account"></wv-input>-->
       <!--<wv-input placeholder="请输入密码" v-model="password"></wv-input>-->
@@ -18,10 +18,10 @@
     <div class="user_login" style="margin-top: 4.4%">
       <i class="iconfont icon-suotou-moren" style="color: #CECECE;float: left;font-size: 26px;clear: both"></i>
       <input :type="inputType" class="pass_input" placeholder="请输入密码" v-model="password"/>
-      <i v-if="asee==true" class="iconfont icon-biyan" style="color: #32CCBC;float: right;font-size: 26px" @click="iconSee"></i>
-      <i v-if="asee==false" class="iconfont icon-zhengyan" style="color: #32CCBC;float: right;font-size: 26px" @click="iconSee"></i>
+      <i v-if="asee==true" class="iconfont icon-biyan" style="color: #02B6DC;float: right;font-size: 26px" @click="iconSee"></i>
+      <i v-if="asee==false" class="iconfont icon-zhengyan" style="color: #02B6DC;float: right;font-size: 26px" @click="iconSee"></i>
     </div>
-    <div class="land" @click="login">
+    <div class="land bgcolor" @click="login">
         登录
       </div>
     <div class="login_Application" @click="$router.push('/login/trial')">申请体验</div>
@@ -112,7 +112,6 @@ export default {
     color: white;
     text-align: center;
     line-height: 1.76rem;
-    background: #32CCBC;
     border-radius: 0.2rem;
     margin: 13% auto;
     font-size: 20px;
@@ -134,9 +133,11 @@ export default {
     margin: 0 auto;
   }
   .login_Application{
+    position: fixed;
+    bottom: 2.7rem;
     width: 100%;
     font-size: 17px;
-    color: #A3A3A3;
+    color: #02B6DC;
     text-align: center;
     font-family: PingFangSC-Regular;
   }
@@ -149,6 +150,7 @@ export default {
     outline:none;
     background: #ffffff;
     outline: none;
+    -webkit-tap-highlight-color: rgba(0,0,0,0)
   }
   .pass_input{
     height: 1.5rem;
@@ -158,6 +160,7 @@ export default {
     width: 73%;
     outline:none;
     background: #ffffff;
+    -webkit-tap-highlight-color: rgba(0,0,0,0)
   }
   .user_login>div{
     float: left;
@@ -165,7 +168,7 @@ export default {
   .logo_img{
     position: relative;
     height: 2.4rem;
-    border: 0.04rem solid #32CCBC;
+    border: 0.04rem solid #02B6DC;
     border-radius: 50%;
   }
   .icon-tonghuashijian{
@@ -173,7 +176,7 @@ export default {
     top: -7px;
     left: 8px;
     font-size: 1.9rem;
-    color: #32CCBC;
+    color: #02B6DC;
   }
  .weui-toast_text .weui-toast__content[data-v-4af60de0]{
    font-size: .6em;

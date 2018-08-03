@@ -1,8 +1,8 @@
 <template>
   <div class="page">
-    <wv-header class="x-header" title="申请体验" background-color="white" style="color:#32CCBC;">
+    <wv-header class="x-header" title="申请体验" background-color="white" style="color:#02B6DC;">
       <div class="btn-back" slot="left">
-        <i class="iconfont icon-fanhui" @click="$router.push('/')" style="color:#959292"></i>
+        <i class="iconfont icon-fanhui icon" @click="$router.push('/')" style="color:#959292"></i>
       </div>
     </wv-header>
     <div class="wv-content x-wrapper" style="background-color: #ffffff">
@@ -25,7 +25,8 @@
       </wv-flex-item>
     </wv-flex>
     <p style="font-size: 0.6rem;margin: 1.18rem auto 0;width: 87%">公司信息</p>
-    <input type="text" placeholder="公司名称" class="trial_company" v-model="companyName">
+    <!--<input type="text" placeholder="公司名称" class="trial_company" v-model="companyName">-->
+      <wv-input type="text" placeholder="公司名称" class="verification" v-model="companyName"></wv-input>
     <v-distpicker hide-area @province="onChangeProvince" @city="onChangeCity"></v-distpicker>
     <wv-flex :gutter="10" style="width: 96%;margin: 0 auto;">
       <wv-flex-item @click.native="industryPickerShow = true">
@@ -40,14 +41,16 @@
       </wv-flex-item>
     </wv-flex>
     <p style="font-size: 0.6rem;margin: 1.18rem auto 0;width: 87%">联系人信息</p>
-    <input type="text" placeholder="联系人姓名" class="trial_company" v-model="contact">
+    <!--<input type="text" placeholder="联系人姓名" class="trial_company" v-model="contact">-->
+      <wv-input type="text" placeholder="联系人姓名" class="verification" v-model="contact"></wv-input>
     <wv-input placeholder="请输入手机号" class="verification" v-model="mobile">
-      <button v-show="show" class="weui-vcode-btn" slot="ft" @click="trialVerification">获取验证码</button>
+      <button v-show="show" class="weui-vcode-btn" slot="ft" @click="trialVerification" style="font-size: 0.6rem!important;">获取验证码</button>
       <button v-show="!show" class="weui-vcode-btn" slot="ft">{{count}}s</button>
     </wv-input>
-    <input type="tel" placeholder="请输入验证码" class="trial_company" v-model="verification">
+    <!--<input type="tel" placeholder="请输入验证码" class="trial_company" v-model="verification">-->
+      <wv-input type="tel" placeholder="请输入验证码" class="verification" v-model="verification"></wv-input>
     <p class="trial_footer">请如实填写申请信息，我们将于1个工作日内与您取得联系</p>
-    <div class="trial_button" @click="trialApply">申请体验</div>
+    <div class="trial_button bgcolor" @click="trialApply">申请体验</div>
     <wv-picker
       :visible.sync="industryPickerShow"
       v-model="industryType"
@@ -250,7 +253,7 @@ export default {
     font-size: 0.7rem;
   }
   .weui-vcode-btn{
-    color: #32CCBC;
+    color: #02B6DC;
   }
   .trial_title{
     width: 80%;
@@ -261,7 +264,7 @@ export default {
     margin: 0 auto;
     width: 1.32rem;
     font-size: 1.32rem;
-    color: #32CCBC;
+    color: #02B6DC;
   }
   .trial_text{
     font-size: 0.48rem;
@@ -288,6 +291,7 @@ export default {
     height: 1.2rem;
     font-size: 0.5rem;
     padding: 0 0 0 0.2rem;
+    outline: none
   }
   .weui-vcode-btn, .weui-vcode-img{
     height: 0.5rem;
@@ -303,7 +307,6 @@ export default {
     width: 90%;
     margin: 1.2rem auto 0;
     height: 1.76rem;
-    background: #32CCBC;
     color: white;
     text-align: center;
     line-height: 1.76rem;
@@ -324,5 +327,7 @@ export default {
     height: 1.2rem!important;
     margin-left: 0.8rem!important;
     outline: none!important;
+    background-color: white!important;
+    -webkit-appearance: none;
   }
 </style>

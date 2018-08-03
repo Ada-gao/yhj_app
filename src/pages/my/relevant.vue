@@ -1,8 +1,8 @@
 <template>
   <div class="page">
-    <wv-header title="关于闪电呼" background-color="#32CCBC" class="x-header">
+    <wv-header title="关于闪电呼" class="x-header bgcolor">
       <div class="btn-back" slot="left">
-        <i class="iconfont icon-fanhui" @click="$router.push('/profile')"></i>
+        <i class="iconfont icon-fanhui icon" @click="$router.push('/profile')"></i>
       </div>
     </wv-header>
     <div class="wv-content x-wrapper">

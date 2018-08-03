@@ -11,11 +11,10 @@ axios.interceptors.request.use(config => {
 })
 
 axios.interceptors.response.use(response => {
-  // console.log(response.config.url)
   return response
 }, error => {
   // console.log(error.response.config.url)
-  // console.log(error.response)
+  console.log(error)
   if (error.response && error.response.status === 401) {
     localStorage.removeItem('token')
     this.$toast.text('你的身份信息已失效，请重新输入密码登录。')
