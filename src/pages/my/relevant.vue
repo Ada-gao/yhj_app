@@ -6,7 +6,7 @@
       </div>
     </wv-header>
     <div class="wv-content x-wrapper">
-      <div style="width: 3.14rem;margin: 0 auto;padding-top: 4.8rem">
+      <div style="width: 3.14rem;margin: 0 auto;padding-top: 4rem">
         <img :src="logoImg" style="max-width: 100%">
       </div>
     <p class="relevant_edition" style="margin-top: 1.18rem">客户端版本号：1.0</p>

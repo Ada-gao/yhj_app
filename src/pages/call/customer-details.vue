@@ -196,7 +196,7 @@ import thumbSmall from '@/assets/images/icon_tabbar.png'
 import cancle from '@/assets/images/cancle.png'
 import { getCall, getTaskHistory, updateOutboundName, getCallStatus, getRank, getCallscancle, getTaskList } from '@/api/api'
 import { transformText, queryObj, parseTime } from '@/utils'
-import { Toast, Dialog } from 'we-vue'
+import { Toast } from 'we-vue'
 import Vue from 'vue'
 // import qs from 'qs'
 
@@ -347,9 +347,6 @@ export default {
         }
       }).catch(() => {
         this.form.lastCallDate = 0
-        Dialog({message: '当前无未完成任务'}).then(() => {
-          this.$router.push({path: '/call'})
-        })
       })
     },
     submitCall () {
@@ -362,13 +359,10 @@ export default {
         getTaskHistory(this.history).then(res => {
           let data = res.data
           _this.form.lastCallResult = transformText(queryObj.callResult, data.result)
-          if (this.pages === 2) {
-            console.log(this.form.taskId)
-            this.form.lastCallResult = transformText(queryObj.callResult, this.form.lastCallResult)
-            this.form.genderText = transformText(queryObj.gender, this.form.gender)
-          } else {
-            this.getRandom()
-          }
+          console.log(this.form.taskId)
+          this.form.lastCallResult = transformText(queryObj.callResult, this.form.lastCallResult)
+          this.form.genderText = transformText(queryObj.gender, this.form.gender)
+          this.getRandom()
           this.teskData()
           // console.log(_this.form.lastCallResult)
         })
