@@ -135,69 +135,70 @@ export default {
   },
 
   mounted () {
+    let _that = this
     this.actions = [
       {
         name: '拍摄新照片',
         key: 'menu1',
         method: () => {
-          // let cameraOptions = {
-          //   quality: 50,
-          //   sourceType: 1,
-          //   allowEdit: true,
-          //   targetWidth: 80,
-          //   targetHeight: 80,
-          //   destinationType: navigator.camera.DestinationType.DATA_URL,
-          //   saveToPhotoAlbum: false,
-          //   encodingType: navigator.camera.EncodingType.JPEG
-          // }
-          // Vue.cordova.camera.getPicture(cameraSuccess, cameraError, cameraOptions)
-          // function cameraSuccess (imgData) {
-          //   if (_that.imgList.length >= 5) {
-          //     Toast.text({
-          //       duration: 1000,
-          //       message: '最多只能上传5张图片'
-          //     })
-          //   } else {
-          //     _that.imgList.push('data:image/jpeg;base64,' + imgData)
-          //     _that.upLoad(imgData)
-          //   }
-          // }
-          // function cameraError () {
-          //   Toast.text({
-          //     duration: 1000,
-          //     message: '上传失败，请稍后重试...'
-          //   })
-          // }
-          this.menuClick('CAMERA')
+          document.addEventListener('deviceready', function () {
+            let cameraOptions = {
+              quality: 50,
+              destinationType: navigator.camera.DestinationType.DATA_URL,
+              sourceType: 1,
+              allowEdit: true,
+              encodingType: navigator.camera.EncodingType.JPEG,
+              targetWidth: 80,
+              targetHeight: 80,
+              correctOrientation: true
+            }
+            navigator.camera.getPicture(cameraSuccess, cameraError, cameraOptions)
+            function cameraSuccess (imgData) {
+              if (_that.imgList.length >= 5) {
+                Toast.text({
+                  duration: 1000,
+                  message: '最多只能上传5张图片'
+                })
+              } else {
+                _that.imgList.push('data:image/jpeg;base64,' + imgData)
+                _that.upLoad(imgData)
+              }
+            }
+            function cameraError () {
+            }
+          }, false)
+          // this.menuClick('CAMERA')
         }
       },
       {
         name: '从手机相册选择',
         key: 'menu2',
         method: () => {
-          // let cameraOptions = {
-          //   destinationType: navigator.camera.DestinationType.DATA_URL,
-          //   sourceType: 0,
-          //   quality: 50,
-          //   allowEdit: true,
-          //   targetWidth: 80,
-          //   targetHeight: 80
-          // }
-          // Vue.cordova.camera.getPicture(cameraSuccess, cameraError, cameraOptions)
-          // function cameraSuccess (imgData) {
-          //   if (_that.imgList.length >= 5) {
-          //     Toast.text({
-          //       duration: 1000,
-          //       message: '最多只能上传5张图片'
-          //     })
-          //   } else {
-          //     _that.imgList.push('data:image/jpeg;base64,' + imgData)
-          //     _that.upLoad(imgData)
-          //   }
-          // }
-          // function cameraError () {
-          // }
-          this.menuClick('PHOTOLIBRARY')
+          document.addEventListener('deviceready', function () {
+            let cameraOptions = {
+              destinationType: navigator.camera.DestinationType.DATA_URL,
+              sourceType: 0,
+              quality: 50,
+              allowEdit: true,
+              targetWidth: 80,
+              targetHeight: 80
+            }
+            navigator.camera.getPicture(cameraSuccess, cameraError, cameraOptions)
+            function cameraSuccess (imgData) {
+              if (_that.imgList.length >= 5) {
+                Toast.text({
+                  duration: 1000,
+                  message: '最多只能上传5张图片'
+                })
+              } else {
+                _that.imgList.push('data:image/jpeg;base64,' + imgData)
+                _that.upLoad(imgData)
+              }
+            }
+            function cameraError () {
+            }
+          }, false)
+          // this.menuClick('PHOTOLIBRARY')
         }
       }
     ]
