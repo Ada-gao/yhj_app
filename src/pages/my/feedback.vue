@@ -70,10 +70,9 @@ export default {
       let file = this.dataURLtoFile('data:image/jpeg;base64,' + imageURI, 'test.jpeg')
       let formData = new FormData()
       formData.append('file', file)
-      alert(formData)
-      alert(file)
       postUpload(formData).then((res) => {
         this.imgUrl.push(res.data)
+        this.imgList.push('data:image/jpeg;base64,' + imageURI)
       }).catch((message) => {
         alert(message)
       })
@@ -85,7 +84,7 @@ export default {
         sourceType = Vue.cordova.camera.PictureSourceType.PHOTOLIBRARY
       }
       let cameraOptions = {
-        quality: 100,
+        quality: 50,
         sourceType: sourceType,
         allowEdit: true,
         destinationType: navigator.camera.DestinationType.DATA_URL,
@@ -100,7 +99,6 @@ export default {
             message: '最多只能上传5张图片'
           })
         } else {
-          vm.imgList.push('data:image/jpeg;base64,' + imageURI)
           vm.upLoad(imageURI)
         }
       }
@@ -121,7 +119,6 @@ export default {
               duration: 1000,
               message: '提交成功'
             })
-            alert(this.imgUrl)
             this.$router.push({path: '/profile'})
           }
         }).catch(() => {
@@ -135,70 +132,19 @@ export default {
   },
 
   mounted () {
-    let _that = this
     this.actions = [
       {
         name: '拍摄新照片',
         key: 'menu1',
         method: () => {
-          document.addEventListener('deviceready', function () {
-            let cameraOptions = {
-              quality: 50,
-              destinationType: navigator.camera.DestinationType.DATA_URL,
-              sourceType: 1,
-              allowEdit: true,
-              encodingType: navigator.camera.EncodingType.JPEG,
-              targetWidth: 80,
-              targetHeight: 80,
-              correctOrientation: true
-            }
-            navigator.camera.getPicture(cameraSuccess, cameraError, cameraOptions)
-            function cameraSuccess (imgData) {
-              if (_that.imgList.length >= 5) {
-                Toast.text({
-                  duration: 1000,
-                  message: '最多只能上传5张图片'
-                })
-              } else {
-                _that.imgList.push('data:image/jpeg;base64,' + imgData)
-                _that.upLoad(imgData)
-              }
-            }
-            function cameraError () {
-            }
-          }, false)
-          // this.menuClick('CAMERA')
+          this.menuClick('CAMERA')
         }
       },
       {
         name: '从手机相册选择',
         key: 'menu2',
         method: () => {
-          document.addEventListener('deviceready', function () {
-            let cameraOptions = {
-              destinationType: navigator.camera.DestinationType.DATA_URL,
-              sourceType: 0,
-              quality: 50,
-              allowEdit: true,
-              targetWidth: 80,
-              targetHeight: 80
-            }
-            navigator.camera.getPicture(cameraSuccess, cameraError, cameraOptions)
-            function cameraSuccess (imgData) {
-              if (_that.imgList.length >= 5) {
-                Toast.text({
-                  duration: 1000,
-                  message: '最多只能上传5张图片'
-                })
-              } else {
-                _that.imgList.push('data:image/jpeg;base64,' + imgData)
-                _that.upLoad(imgData)
-              }
-            }
-            function cameraError () {
-            }
-          }, false)
-          // this.menuClick('PHOTOLIBRARY')
+          this.menuClick('PHOTOLIBRARY')
         }
       }
     ]

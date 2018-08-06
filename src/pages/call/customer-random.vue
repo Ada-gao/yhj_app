@@ -185,6 +185,16 @@
       </div>
       <!--<p class="details_content">正在连接 请稍等...</p>-->
     </div>
+    <div class="details_return" v-show="detailsreturn">
+      <div class="detail_contents">
+        <div style="height: 4rem;line-height: 4rem;font-size: 18px;color: #333333;">当前无任务分配</div>
+        <wv-flex>
+          <wv-flex-item>
+            <div class="placeholder button_outs bgcolor" @click="buttoneturn">确 定</div>
+          </wv-flex-item>
+        </wv-flex>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -196,7 +206,7 @@ import thumbSmall from '@/assets/images/icon_tabbar.png'
 import cancle from '@/assets/images/cancle.png'
 import { getCall, getRandom, getTaskHistory, updateOutboundName, getCallStatus, getRank, getCallscancle } from '@/api/api'
 import { transformText, queryObj, timeDate } from '@/utils'
-import { Dialog, Toast } from 'we-vue'
+import { Toast } from 'we-vue'
 import Vue from 'vue'
 // import qs from 'qs'
 
@@ -212,6 +222,7 @@ export default {
       resultShow: false,
       inform: false,
       details: false,
+      detailsreturn: false,
       selected: '',
       from: '13053108821',
       to: '13661876489',
@@ -307,9 +318,7 @@ export default {
         }
       }).catch(() => {
         this.form.lastCallDate = 0
-        Dialog({message: '当前无任务分配'}).then(() => {
-          this.$router.push({path: '/call'})
-        })
+        this.detailsreturn = true
       })
     },
     submitCall () {
@@ -360,7 +369,7 @@ export default {
         this.form.contactName = data.contactName
         this.form.age = data.age
         this.form.gender = data.gender
-        // this.form.genderText = transformText(queryObj.gender, this.form.gender)
+        this.form.genderText = transformText(queryObj.gender, this.form.gender)
       })
     },
     teskData () {
@@ -389,11 +398,37 @@ export default {
       getCallscancle(this.callSid).then(() => {
         this.details = false
       })
+    },
+    buttoneturn () {
+      this.detailsreturn = false
+      this.$router.replace({path: '/call'})
     }
   }
 }
 </script>
 <style lang="scss">
+  .main{
+    display: inline-block;
+  }
+  .main input{
+    display: none;
+  }
+  .test{
+    box-sizing: border-box;
+    position: relative;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #02B6DC;
+    border-radius: 50%;
+    float: left;
+    margin: 4px 10px 0;
+    padding: 2px;
+    background-clip: content-box;
+  }
+  input:checked + span {
+    background: #02B6DC;
+  }
   .weui-toast{
     min-height: 5em;
   }
@@ -642,34 +677,40 @@ export default {
     color: #ffffff;
     margin: 1rem auto 0;
   }
-  /*input[type="radio"] {*/
-    /*// content: "\a0"; !*不换行空格*!*/
-    /*// display: inline-block;*/
-    /*// vertical-align: middle;*/
-    /*font-size: 14px;*/
-    /*// width: 1em;*/
-    /*// height: 1em;*/
-    /*margin-right: .4em;*/
-    /*border-radius: 50%;*/
-    /*border: 1px solid #32CCBC;*/
-    /*text-indent: .15em;*/
-    /*line-height: 1;*/
-    /*// margin-right: 5px;*/
-  /*}*/
-  /*input[type="radio"]:checked {*/
-    /*background-color: #32CCBC;*/
-    /*background-clip: content-box;*/
-    /*padding: .2em;*/
-  /*}*/
-  /*input[type="radio"] {*/
-    /*// position: absolute;*/
-    /*clip: rect(0, 0, 0, 0);*/
-  /*}*/
-  /*.female,.male{*/
-    /*// float: left;*/
-    /*width: 40%;*/
-    /*display: inline-block;*/
-  /*}*/
+  .button_outs{
+    color: #F0F0F0;
+    width: 38%;
+    margin: 0 auto;
+    border-radius: 4px;
+    font-size: 17px;
+    height: 1.61rem;
+    line-height: 1.61rem;
+  }
+  .details_return{
+    z-index: 501;
+    position: fixed;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.61);
+  }
+  .detail_contents{
+    position: fixed;
+    z-index: 501;
+    width: 73%;
+    max-width: 300px;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    overflow: hidden;
+    height: 6.9rem;
+    text-align: center;
+    background: #ffffff;
+    border-radius: 0.2rem;
+    font-size: 0.8rem;
+  }
   .phone_cancle{
     width: 18%;
     margin: 20% auto;

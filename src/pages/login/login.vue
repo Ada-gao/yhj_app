@@ -133,8 +133,8 @@ export default {
     margin: 0 auto;
   }
   .login_Application{
-    position: fixed;
-    bottom: 2.7rem;
+    /*position: fixed;*/
+    margin-top: 2.7rem;
     width: 100%;
     font-size: 17px;
     color: #02B6DC;
