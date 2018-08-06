@@ -79,7 +79,6 @@ export default {
       })
     },
     menuClick (key) {
-      // console.log(`menu ${key} clicked`)
       let vm = this
       let sourceType = Vue.cordova.camera.PictureSourceType.CAMERA
       if (key === 'PHOTOLIBRARY') {
