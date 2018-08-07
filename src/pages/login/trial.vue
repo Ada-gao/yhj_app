@@ -124,6 +124,9 @@ export default {
     },
     // 提交申请体验
     trialApply () {
+      if (this.companyProvince === '台湾省') {
+        this.companyCity = '台湾'
+      }
       let params = {
         companyName: this.companyName,
         companyProvince: this.companyProvince,

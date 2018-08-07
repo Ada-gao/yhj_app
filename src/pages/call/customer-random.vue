@@ -125,7 +125,7 @@
           <li>
             <p class="list_title">姓名：</p>
             <p class="list_word">
-              <input class="item-input" v-model="info.contactName">
+              <input class="item-input" v-model="info.contactName" maxlength="12">
             </p>
           </li>
           <li>
@@ -152,7 +152,7 @@
           <li>
             <p class="list_title">手机号：</p>
             <p class="list_word">
-              <input class="item-input" v-model="info.mobileNo">
+              <input class="item-input" v-model="info.mobileNo" maxlength="11" type="tel">
             </p>
           </li>
           <li>
@@ -229,6 +229,7 @@ export default {
       form: {},
       nextStepOptions: [],
       callResult: [],
+      ageValue: [],
       history: {
         result: 'FOLLOW',
         status: 'CALL_AGAIN',
@@ -307,7 +308,6 @@ export default {
       getRandom().then(res => {
         this.form = res.data
         this.phoneNumber = this.form.phoneNo
-        console.log(this.form)
         this.form.lastCallResult = transformText(queryObj.callResult, this.form.lastCallResult)
         this.form.genderText = transformText(queryObj.gender, this.form.gender)
         let phones = this.form.phoneNo.substring(4, 5)
