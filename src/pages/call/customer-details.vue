@@ -267,7 +267,7 @@ export default {
     // })
 
     Vue.cordova.backgroundMode.on('deactivate', () => { // 监听是否前台台运行
-      // console.log('Now app is running in foreground.')
+      console.log('Now app is running in foreground.前台运行')
       if (this.callStatus === true) {
         this.details = false
         this.resultShow = true
