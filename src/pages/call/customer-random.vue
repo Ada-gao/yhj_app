@@ -678,7 +678,7 @@ export default {
     color: #ffffff;
     margin: 1rem auto 0;
   }
-  .button_outs{
+  /*.button_outs{
     color: #F0F0F0;
     width: 38%;
     margin: 0 auto;
@@ -711,7 +711,7 @@ export default {
     background: #ffffff;
     border-radius: 0.2rem;
     font-size: 0.8rem;
-  }
+  }*/
   .phone_cancle{
     width: 18%;
     margin: 20% auto;

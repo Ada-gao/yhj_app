@@ -263,7 +263,7 @@ export default {
     // console.log('customer-detail vue page mounted.')
     // Vue.cordova.backgroundMode.on('activate', () => { // 监听是否后台运行
     //   console.log('Now app is running in background.')
-    //   alert('后台')
+    //   // alert('后台')
     // })
 
     Vue.cordova.backgroundMode.on('deactivate', () => { // 监听是否前台台运行
@@ -355,6 +355,7 @@ export default {
       this.history.outboundTaskId = this.form.taskId
       let _this = this
       this.counts = 0
+      this.callDate()
       if (this.phoneShow === false) {
         // this.history.acutalCallEndDate = new Date()
         getTaskHistory(this.history).then(res => {

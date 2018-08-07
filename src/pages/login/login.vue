@@ -25,17 +25,28 @@
         登录
       </div>
     <div class="login_Application" @click="$router.push('/login/trial')">申请体验</div>
+    <div class="details_return" v-show="detailsreturn">
+      <div class="detail_contents">
+        <div style="height: 4rem;line-height: 4rem;font-size: 18px;color: #333333;">请检查账号或密码是否有误</div>
+        <wv-flex>
+          <wv-flex-item>
+            <div class="placeholder button_outs bgcolor" @click="buttoneturn">确 定</div>
+          </wv-flex-item>
+        </wv-flex>
+      </div>
+    </div>
   </div>
 </template>
 <script type="es6">
 import { requestLogin, getUsers } from '../../api/api'
 import thumbSmall from '../../assets/images/icon_tabbar.png'
-import { Dialog, Toast } from 'we-vue'
+import { Toast } from 'we-vue'
 
 export default {
   data () {
     return {
       thumbSmall,
+      detailsreturn: false,
       account: '',
       password: '',
       asee: true,
@@ -68,7 +79,7 @@ export default {
             })
           }
         }).catch(() => {
-          Dialog({message: '请检查账号或密码是否正确'})
+          this.detailsreturn = true
         })
       }
     },
@@ -80,6 +91,9 @@ export default {
         this.asee = true
         this.inputType = 'password'
       }
+    },
+    buttoneturn () {
+      this.detailsreturn = false
     }
   }
 }
