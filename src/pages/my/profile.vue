@@ -120,6 +120,7 @@ export default {
           getCompany().then((res) => {
             if (res.data.logo === '' || res.data.logo === null) {
               this.logo = this.heads
+              this.company = res.data.companyName
             } else {
               this.logo = process.env.BASE_API + '/file/' + res.data.logo
               this.company = res.data.companyName

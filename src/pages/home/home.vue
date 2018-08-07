@@ -93,6 +93,7 @@ export default {
         if (res.data.logo === '' || res.data.logo === null) {
           this.logo_head = this.head
           this.Belonged = res.data.companyName
+          this.Belonged = res.data.companyName
         } else {
           this.logo_head = process.env.BASE_API + '/file/' + res.data.logo
           this.Belonged = res.data.companyName

@@ -354,6 +354,7 @@ export default {
       this.resultShow = false
       this.history.outboundTaskId = this.form.taskId
       let _this = this
+      this.counts = 0
       if (this.phoneShow === false) {
         // this.history.acutalCallEndDate = new Date()
         getTaskHistory(this.history).then(res => {
