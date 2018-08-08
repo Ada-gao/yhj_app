@@ -186,7 +186,7 @@ export default {
   .feedback_uploadimg{
     float: left;
     width: 20%;
-    margin-right: 0.2rem;
+    margin-right: 0.5rem;
   }
   .feedback_upload>img{
     max-width: 100%;

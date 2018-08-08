@@ -36,7 +36,7 @@
               <div class="placeholder home_text">今日完成数</div>
             </wv-flex-item>
             <wv-flex-item>
-              <div class="placeholder home_number3">{{form.dailyEffectiveDuration}}</div>
+              <div class="placeholder home_number3">{{form.dailyEffectiveDuration || '00分00秒'}}</div>
               <div class="placeholder home_text">今日有效通话时长</div>
             </wv-flex-item>
           </wv-flex>
@@ -66,6 +66,7 @@
 import thumbSmall from '../../assets/images/icon_tabbar.png'
 import head from '@/assets/images/hand.png'
 import { getCompany, getUser, getStatisGroup, getCompleteStatus, getRank } from '@/api/api'
+import { timeDate } from '@/utils'
 // getTaskStatisticsDaily
 export default {
   data () {
@@ -108,21 +109,7 @@ export default {
         })
         getRank(res.data.id).then(res => {
           this.form = res.data
-          if (!this.form.dailyEffectiveDuration) {
-            this.form.dailyEffectiveDuration = '00分00秒'
-          } else {
-            let theTime = parseInt(res.data.dailyEffectiveDuration)
-            let theTime1 = 0
-            if (theTime > 60) {
-              theTime1 = parseInt(theTime / 60)
-              theTime = parseInt(theTime % 60)
-            }
-            var result = parseInt(theTime) + '秒'
-            if (theTime1 > 0) {
-              result = parseInt(theTime1) + '分' + result
-            }
-            this.form.dailyEffectiveDuration = result
-          }
+          this.form.dailyEffectiveDuration = timeDate(res.data.dailyEffectiveDuration)
         })
       })
       getStatisGroup().then(res => {
