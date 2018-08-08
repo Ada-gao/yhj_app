@@ -120,6 +120,9 @@ export default {
       this.companyProvince = province.value
     },
     onChangeCity (city) {
+      if (this.companyProvince === '台湾省') {
+        city.value = '台湾'
+      }
       this.companyCity = city.value
     },
     // 提交申请体验

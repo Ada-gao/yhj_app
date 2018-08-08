@@ -38,7 +38,7 @@ export const install = function (Vue, options, cb) {
     function onBackKeyDown () {
       // console.log(this.$router.currentRoute.path)
       let url = (location.href).split('#')[1]
-      if (url === '/home' || url === '/profile' || url === '/call' || url === '/login') {
+      if (url === '/home' || url === '/profile' || url === '/login') {
         if (navigator.app) {
           Dialog({
             title: '温馨提示',

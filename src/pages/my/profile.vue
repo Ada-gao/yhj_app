@@ -72,7 +72,7 @@ import { getUser, getCompany, getRank } from '../../api/api'
 // import { Dialog } from 'we-vue'
 import thumbSmall from '@/assets/images/icon_tabbar.png'
 import heads from '@/assets/images/hand.png'
-
+import { timeDate } from '@/utils'
 export default {
   data () {
     return {
@@ -152,7 +152,8 @@ export default {
               this.form = res.data
             }
             if (this.form.totalDuration !== '' || this.form.totalDuration !== 0) {
-              this.form.totalDuration = parseInt(this.form.totalDuration / 60)
+              this.form.totalDuration = timeDate(this.form.totalDuration)
+              // this.form.totalDuration = parseInt(this.form.totalDuration / 60)
               // this.form.totalDuration = tota.toFixed(1)
             }
             // console.log(this.rank)

@@ -2,7 +2,7 @@
   <div class="page">
     <wv-header title="任务列表" class="x-header bgcolor">
       <div class="btn-back" slot="left" style="position: absolute;top: 7px;width: 20%;">
-        <i class="iconfont icon-fanhui" @click="$router.push('/home')"></i>
+        <i class="iconfont icon-fanhui" @click="$router.push('/home')" style="font-size: 27px"></i>
       </div>
     </wv-header>
     <div class=" wv-content x-wrapper">

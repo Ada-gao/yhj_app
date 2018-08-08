@@ -53,9 +53,9 @@ let queryObj = {
     {label: '进一步跟进', value: 'FOLLOW'}
   ],
   nextStep: [
-    {label: '复打', value: 'CALL_AGAIN'},
-    {label: '放弃', value: 'GIVE_UP'},
-    {label: '跟进', value: 'FLLOW'}
+    {label: '再次外呼', value: 'CALL_AGAIN'},
+    {label: '放弃外呼', value: 'GIVE_UP'},
+    {label: '继续跟进', value: 'FLLOW'}
   ],
   gender: [
     {label: '男', value: 'GENTLEMAN'},
