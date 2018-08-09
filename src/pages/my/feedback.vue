@@ -1,8 +1,8 @@
 <template>
   <div class="page">
     <wv-header title="问题反馈" class="x-header bgcolor">
-      <div class="btn-back" slot="left">
-        <i class="iconfont icon-fanhui icon" @click="$router.push('/profile')"></i>
+      <div class="btn-back" slot="left" style="position: absolute;top: 7px;left: 0;width: 20%;">
+        <i class="iconfont icon-fanhui size_i" @click="$router.push('/profile')"></i>
       </div>
     </wv-header>
     <div class="wv-content x-wrapper">
@@ -186,6 +186,7 @@ export default {
   .feedback_uploadimg{
     float: left;
     width: 20%;
+    height: 3.2rem;
     margin-right: 0.5rem;
   }
   .feedback_upload>img{

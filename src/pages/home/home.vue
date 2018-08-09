@@ -96,7 +96,7 @@ export default {
           this.Belonged = res.data.companyName
           this.Belonged = res.data.companyName
         } else {
-          this.logo_head = process.env.BASE_API + '/file/' + res.data.logo
+          this.logo_head = process.env.BASE_API + '/file?fileUuid=' + res.data.logo
           this.Belonged = res.data.companyName
         }
       })

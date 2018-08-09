@@ -1,8 +1,8 @@
 <template>
   <div class="page">
     <wv-header :title="'任务完成('+task.dailyTaskCompleteCnt +'/'+ task.dailyTaskCnt+')'" class="x-header bgcolor">
-      <div class="btn-back" slot="left">
-        <i class="iconfont icon-fanhui icon" @click="$router.push('/call')"></i>
+      <div class="btn-back" slot="left" style="position: absolute;top: 7px;left: 0;width: 20%;">
+        <i class="iconfont icon-fanhui size_i" @click="$router.push('/call')"></i>
       </div>
       <div class="btn-menu" slot="right">
         <p style="font-size: 0.56rem">{{task.dailyEffectiveDuration}}</p>

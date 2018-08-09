@@ -105,9 +105,6 @@ export default {
     padding-bottom: env(safe-area-inset-bottom);
 
   }
-  .icon{
-    font-size: 22px;
-  }
   .button_outs{
     color: #F0F0F0;
     width: 38%;
@@ -141,5 +138,9 @@ export default {
     background: #ffffff;
     border-radius: 0.2rem;
     font-size: 0.8rem;
+  }
+  .size_i{
+    font-size: 22px;
+    margin-left: 0.2rem;
   }
 </style>
