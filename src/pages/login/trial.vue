@@ -117,9 +117,11 @@ export default {
   },
   methods: {
     onChangeProvince (province) {
+      // console.log(province)
       this.companyProvince = province.value
     },
     onChangeCity (city) {
+      // console.log(city)
       if (this.companyProvince === '台湾省') {
         city.value = '台湾'
       }

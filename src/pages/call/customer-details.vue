@@ -55,7 +55,7 @@
         </div>
       </div>
       <!--<div @click="times">计时<small>{{time2}}</small></div>-->
-      <a :href="'tel:' + form.phoneNo" v-show="phoneShow === false" class="phone_button bgcolor" @click="times">
+      <a :href="'tel:' + form.phoneNo" v-show="phoneShow === false" class="phone_button bgcolor" @click="phoneTimes">
         <small class="iconfont icon-waihuquerenxuanzhong" style="font-size: 100%;"></small>开始外呼
       </a>
       <div class="phone_button bgcolor" v-show="phoneShow === true" @click="startCall">
@@ -106,7 +106,7 @@
         </div>
         <wv-flex>
           <wv-flex-item>
-            <div class="placeholder" style="line-height: 2.5rem;text-align: center">{{form.contactName}}</div>
+            <div class="placeholder head_name">{{form.contactName}}</div>
           </wv-flex-item>
           <wv-flex-item>
             <div class="placeholder Result_inform ">年龄：<small>{{form.age}}</small></div>
@@ -125,7 +125,7 @@
           <li>
             <p class="list_title">姓名：</p>
             <p class="list_word">
-              <input class="item-input" v-model="info.contactName">
+              <input class="item-input" v-model="info.contactName" maxlength="12">
             </p>
           </li>
           <li>
@@ -152,7 +152,7 @@
           <li>
             <p class="list_title">手机号：</p>
             <p class="list_word">
-              <input type="number" class="item-input" v-model="info.mobileNo">
+              <input type="tel" class="item-input" v-model="info.mobileNo" maxlength="11">
             </p>
           </li>
           <li>
@@ -195,7 +195,7 @@ import phoneImg from '../../assets/images/phone.gif'
 import thumbSmall from '@/assets/images/icon_tabbar.png'
 import cancle from '@/assets/images/cancle.png'
 import { getCall, getTaskHistory, updateOutboundName, getCallStatus, getRank, getCallscancle, getTaskList } from '@/api/api'
-import { transformText, queryObj, parseTime } from '@/utils'
+import { transformText, queryObj, parseTime, timeDate } from '@/utils'
 import { Toast } from 'we-vue'
 import Vue from 'vue'
 // import qs from 'qs'
@@ -235,12 +235,18 @@ export default {
       callSid: '',
       duration: '',
       task: {},
-      callStatus: false,
+      // callStatus: false,
       callTime: {},
       phoneNumber: '',
       phoneShow: true,
-      counts: '',
-      time1: ''
+      time1: '',
+      time2: '',
+      time3: '',
+      time4: '',
+      minutes: '',
+      seconds: ''
+      // counts: 0,
+      // time1: 0
     }
   },
   created () {
@@ -260,62 +266,52 @@ export default {
     this.teskData()
   },
   mounted () {
-    // console.log('customer-detail vue page mounted.')
-    // Vue.cordova.backgroundMode.on('activate', () => { // 监听是否后台运行
-    //   console.log('Now app is running in background.')
-    //   // alert('后台')
-    // })
-
-    Vue.cordova.backgroundMode.on('deactivate', () => { // 监听是否前台台运行
-      console.log('Now app is running in foreground.前台运行')
-      if (this.callStatus === true) {
-        this.details = false
-        this.resultShow = true
-        this.callDate()
-      } else if (this.phoneShow === false) {
-        this.details = false
-        this.resultShow = true
-        clearInterval(this.timeInterval)
-        this.history.acutalCallEndDate = new Date()
-        this.callDate()
-      }
-    })
-    // document.addEventListener('deviceready', () => {
-    //   document.addEventListener('pause', () => {
-    //     if (this.callStatus === true) {
-    //       this.details = false
-    //       this.resultShow = true
-    //       this.callDate()
-    //     }
-    //     // alert('resume')
-    //   }, false)
-    // }, false)
+    let devicePlatform = Vue.cordova.device.platform
+    if (devicePlatform === 'Android') {
+      // alert('安卓')
+      //     /* 监听电话状态（1空闲、2响铃、3通话） */
+      window.CallListener.addListener((state) => {
+        if (state === 1) {
+          if (this.phoneShow === false) {
+            this.details = false
+            this.resultShow = true
+            /* 获取通话时长（单位秒） */
+            window.CallListener.getCallInfo((info) => {
+              // alert('电话状态：' + state + '，通话时长：' + info.duration + '，开始时间：' + info.startDate + '，结束时间：' + info.endDate)
+              this.callTime = timeDate(info.duration)
+              this.history.actualCallStartDate = info.startDate
+              this.history.acutalCallEndDate = info.endDate
+            }, '13661876489')
+          } else {
+            this.callDate()
+          }
+        } else {
+          Toast.text({
+            duration: 3000,
+            message: '电话状态：' + state
+          })
+        }
+      })
+    } else if (devicePlatform === 'ios') {
+      Vue.cordova.backgroundMode.on('deactivate', () => { // 监听是否前台台运行
+        // console.log('Now app is running in foreground.')
+        if (this.callStatus === true) {
+          this.details = false
+          this.resultShow = true
+          this.callDate()
+        } else if (this.phoneShow === false) {
+          this.details = false
+          this.resultShow = true
+          clearInterval(this.timeInterval)
+          this.history.acutalCallEndDate = new Date()
+          this.callDate()
+        }
+      })
+    }
   },
   methods: {
-    dateTime (time) {
-      let theTime = parseInt(time)
-      let theTime1 = 0
-      if (theTime > 60) {
-        theTime1 = parseInt(theTime / 60)
-        theTime = parseInt(theTime % 60)
-      }
-      var result = parseInt(theTime) + '秒'
-      if (theTime1 > 0) {
-        result = parseInt(theTime1) + '分' + result
-      }
-      return result
-      // this.callTime.duration
-    },
-    times () {
-      this.timeInterval = setInterval(() => {
-        if (this.counts >= 60) {
-          this.time1++
-          this.counts = 1
-        }
-        this.counts++
-        this.callTime = this.time1 + ':' + this.counts
-      }, 1000)
-      this.history.actualCallStartDate = new Date()
+    phoneTimes () {
+      this.conversationState = true
     },
     startCall () {
       getCall(this.form.outboundNameId).then(res => {
@@ -328,7 +324,7 @@ export default {
           this.details = false
         } else {
           this.details = true
-          this.callStatus = true
+          // this.callStatus = true
         }
       })
     },
@@ -350,46 +346,41 @@ export default {
       })
     },
     submitCall () {
-      this.callStatus = false
+      // this.callStatus = false
       this.resultShow = false
       this.history.outboundTaskId = this.form.taskId
       let _this = this
-      this.counts = 0
-      this.callDate()
       if (this.phoneShow === false) {
-        // this.history.acutalCallEndDate = new Date()
         getTaskHistory(this.history).then(res => {
-          let data = res.data
-          _this.form.lastCallResult = transformText(queryObj.callResult, data.result)
-          console.log(this.form.taskId)
-          this.form.lastCallResult = transformText(queryObj.callResult, this.form.lastCallResult)
-          this.form.genderText = transformText(queryObj.gender, this.form.gender)
-          this.getRandom()
-          this.teskData()
+          // let data = res.data
+          // _this.form.lastCallResult = transformText(queryObj.callResult, data.result)
+          // this.form.lastCallResult = transformText(queryObj.callResult, this.form.lastCallResult)
+          // this.form.genderText = transformText(queryObj.gender, this.form.gender)
           // console.log(_this.form.lastCallResult)
         })
       } else {
         getCallStatus(this.callSid).then((res) => {
-          console.log(res)
           _this.history.actualCallStartDate = res.data.start
           _this.history.acutalCallEndDate = res.data.end
           getTaskHistory(this.history).then(res => {
-            let data = res.data
-            _this.form.lastCallResult = transformText(queryObj.callResult, data.result)
-            console.log(this.form.taskId)
-            this.form.lastCallResult = transformText(queryObj.callResult, this.form.lastCallResult)
-            this.form.genderText = transformText(queryObj.gender, this.form.gender)
-            this.getRandom()
-            this.teskData()
+            // let data = res.data
+            // _this.form.lastCallResult = transformText(queryObj.callResult, data.result)
+            // this.form.lastCallResult = transformText(queryObj.callResult, this.form.lastCallResult)
+            // this.form.genderText = transformText(queryObj.gender, this.form.gender)
+            // this.getRandom()
+            // this.teskData()
             // console.log(_this.form.lastCallResult)
           })
         })
       }
+      this.getRandom()
+      this.teskData()
     },
     callDate () {
       getCallStatus(this.callSid).then((res) => {
-        this.callTime = this.dateTime(res.data.duration)
-        // this.callTime.duration
+        this.details = false
+        this.resultShow = true
+        this.callTime = timeDate(res.data.duration)
       })
     },
     changeInfo () {
@@ -419,17 +410,17 @@ export default {
       let userId = localStorage.getItem('userId')
       getRank(userId).then(res => {
         this.task = res.data
-        let theTime = parseInt(res.data.dailyEffectiveDuration)
-        let theTime1 = 0
-        if (theTime > 60) {
-          theTime1 = parseInt(theTime / 60)
-          theTime = parseInt(theTime % 60)
-        }
-        let result = parseInt(theTime)
-        if (theTime1 > 0) {
-          result = parseInt(theTime1) + ':' + result
-        }
-        this.task.dailyEffectiveDuration = result
+        // let theTime = parseInt(res.data.dailyEffectiveDuration)
+        // let theTime1 = 0
+        // if (theTime > 60) {
+        //   theTime1 = parseInt(theTime / 60)
+        //   theTime = parseInt(theTime % 60)
+        // }
+        // let result = parseInt(theTime)
+        // if (theTime1 > 0) {
+        //   result = parseInt(theTime1) + ':' + result
+        // }
+        this.task.dailyEffectiveDuration = timeDate(res.data.dailyEffectiveDuration)
         // if (this.task.dailyTaskCompleteCnt)
       }).catch((res) => {
         this.task.dailyTaskCompleteCnt = 0
@@ -763,5 +754,14 @@ export default {
     text-align: center;
     color: #dee2ed;
     font-size: 17px;
+  }
+  .head_name{
+    text-align: center;
+    width: 5rem;
+    margin: 0 auto;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    overflow: hidden;
   }
 </style>

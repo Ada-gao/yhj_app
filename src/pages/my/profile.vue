@@ -13,7 +13,7 @@
     <div style="background: #FFFFFF;margin-top: 0.4rem;height: 8.16rem">
      <wv-flex :gutter="10" style="width: 90%;margin:auto;border-bottom: 1px solid #D2D2D2">
        <wv-flex-item>
-         <div class="placeholder task_number1">{{form.totalDuration || 0}}分</div>
+         <div class="placeholder task_number1">{{form.totalDuration || 0 +'分'}}</div>
          <!--<div class="placeholder task_number1" v-if="form.totalDuration === null || form.totalDuration === ''">0分</div>-->
          <div class="placeholder task_text">总通话时长</div>
        </wv-flex-item>

@@ -55,7 +55,7 @@
         </div>
       </div>
       <!--<div @click="times">计时<small>{{time2}}</small></div>-->
-      <a :href="'tel:' + phoneNumber" v-show="phoneShow === false" class="phone_button bgcolor" @click="times">
+      <a :href="'tel:' + phoneNumber" v-show="phoneShow === false" class="phone_button bgcolor" @click="phoneTimes">
         <small class="iconfont icon-waihuquerenxuanzhong" style="font-size: 100%;"></small>开始外呼
       </a>
       <div class="phone_button bgcolor" v-show="phoneShow === true" @click="startCall">
@@ -106,7 +106,7 @@
         </div>
         <wv-flex>
           <wv-flex-item>
-            <div class="placeholder" style="line-height: 2.5rem;text-align: center">{{form.contactName}}</div>
+            <div class="placeholder head_name">{{form.contactName}}</div>
           </wv-flex-item>
           <wv-flex-item>
             <div class="placeholder Result_inform ">年龄：<small>{{form.age}}</small></div>
@@ -207,6 +207,7 @@ import cancle from '@/assets/images/cancle.png'
 import { getCall, getRandom, getTaskHistory, updateOutboundName, getCallStatus, getRank, getCallscancle } from '@/api/api'
 import { transformText, queryObj, timeDate } from '@/utils'
 import { Toast } from 'we-vue'
+// import { CallListener } from '@CallListener'
 import Vue from 'vue'
 // import qs from 'qs'
 
@@ -224,8 +225,8 @@ export default {
       details: false,
       detailsreturn: false,
       selected: '',
-      from: '13053108821',
-      to: '13661876489',
+      // from: '13053108821',
+      // to: '13661876489',
       form: {},
       nextStepOptions: [],
       callResult: [],
@@ -241,12 +242,13 @@ export default {
       callSid: '',
       duration: '',
       task: {},
-      callStatus: false,
+      // callStatus: false,
       callTime: {},
       phoneNumber: '',
       phoneShow: true,
       counts: '',
-      time1: ''
+      time1: '',
+      conversationState: false
     }
   },
   created () {
@@ -256,39 +258,59 @@ export default {
     this.teskData()
   },
   mounted () {
-    // console.log('customer-detail vue page mounted.')
-    // Vue.cordova.backgroundMode.on('activate', () => { // 监听是否后台运行
-    //   console.log('Now app is running in background.')
-    //   alert('后台')
-    // })
-    Vue.cordova.backgroundMode.on('deactivate', () => { // 监听是否前台台运行
-      // console.log('Now app is running in foreground.')
-      if (this.callStatus === true) {
-        this.details = false
-        this.resultShow = true
-        this.callDate()
-      } else if (this.phoneShow === false) {
-        this.details = false
-        this.resultShow = true
-        clearInterval(this.timeInterval)
-        this.history.acutalCallEndDate = new Date()
-        this.callDate()
-      }
-    })
+    let devicePlatform = Vue.cordova.device.platform
+    if (devicePlatform === 'Android') {
+      //     /* 监听电话状态（1空闲、2响铃、3通话） */
+      window.CallListener.addListener((state) => {
+        if (state === 3) {
+          if (this.phoneShow === false) {
+          }
+        } else if (state === 1) {
+          if (this.phoneShow === false) {
+            this.details = false
+            this.resultShow = true
+            /* 获取通话时长（单位秒） */
+            window.CallListener.getCallInfo((info) => {
+              // alert('电话状态：' + state + '，通话时长：' + info.duration + '，开始时间：' + info.startDate + '，结束时间：' + info.endDate)
+              this.callTime = timeDate(info.duration)
+              this.history.actualCallStartDate = info.startDate
+              this.history.acutalCallEndDate = info.endDate
+            }, '13661876489')
+          } else {
+            this.callDate()
+            this.details = false
+            this.resultShow = true
+          }
+        } else {
+          Toast.text({
+            duration: 3000,
+            message: '电话状态：' + state
+          })
+        }
+      })
+    } else if (devicePlatform === 'ios') {
+      Vue.cordova.backgroundMode.on('deactivate', () => { // 监听是否前台台运行
+        // console.log('Now app is running in foreground.')
+        if (this.callStatus === true) {
+          this.details = false
+          this.resultShow = true
+          this.callDate()
+        } else if (this.phoneShow === false) {
+          this.details = false
+          this.resultShow = true
+          clearInterval(this.timeInterval)
+          this.history.acutalCallEndDate = new Date()
+          this.callDate()
+        }
+      })
+    }
   },
   methods: {
-    times () {
-      this.timeInterval = setInterval(() => {
-        if (this.counts >= 60) {
-          this.time1++
-          this.counts = 1
-        }
-        this.counts++
-        this.callTime = this.time1 + ':' + this.counts
-      }, 1000)
-      this.history.actualCallStartDate = new Date()
+    phoneTimes () {
+      this.conversationState = true
     },
     startCall () {
+      this.conversationState = true
       getCall(this.form.outboundNameId).then(res => {
         this.callSid = res.data.callSid
         if (this.callSid === null) {
@@ -299,7 +321,8 @@ export default {
           this.details = false
         } else {
           this.details = true
-          this.callStatus = true
+          // this.callStatus = true
+          // alert(this.callStatus)
         }
       })
     },
@@ -322,31 +345,30 @@ export default {
       })
     },
     submitCall () {
-      this.callStatus = false
+      this.conversationState = false
+      // this.callStatus = false
       this.resultShow = false
       this.history.outboundTaskId = this.form.taskId
       let _this = this
       this.counts = 0
       if (this.phoneShow === false) {
         getTaskHistory(this.history).then(res => {
-          this.getRandom()
-          this.teskData()
         })
       } else {
         getCallStatus(this.callSid).then((res) => {
-          console.log(res)
           _this.history.actualCallStartDate = res.data.start
           _this.history.acutalCallEndDate = res.data.end
           getTaskHistory(this.history).then(res => {
-            this.getRandom()
-            this.teskData()
           })
         })
       }
+      this.getRandom()
+      this.teskData()
     },
     callDate () {
       getCallStatus(this.callSid).then((res) => {
         this.callTime = timeDate(res.data.duration)
+        // alert(this.callTime)
         // this.callTime.duration
       })
     },
@@ -377,17 +399,17 @@ export default {
       let userId = localStorage.getItem('userId')
       getRank(userId).then(res => {
         this.task = res.data
-        let theTime = parseInt(res.data.dailyEffectiveDuration)
-        let theTime1 = 0
-        if (theTime > 60) {
-          theTime1 = parseInt(theTime / 60)
-          theTime = parseInt(theTime % 60)
-        }
-        let result = parseInt(theTime)
-        if (theTime1 > 0) {
-          result = parseInt(theTime1) + ':' + result
-        }
-        this.task.dailyEffectiveDuration = result
+        // let theTime = parseInt(res.data.dailyEffectiveDuration)
+        // let theTime1 = 0
+        // if (theTime > 60) {
+        //   theTime1 = parseInt(theTime / 60)
+        //   theTime = parseInt(theTime % 60)
+        // }
+        // let result = parseInt(theTime)
+        // if (theTime1 > 0) {
+        //   result = parseInt(theTime1) + ':' + result
+        // }
+        this.task.dailyEffectiveDuration = this.timeDate(res.data.dailyEffectiveDuration)
         // if (this.task.dailyTaskCompleteCnt)
       }).catch((res) => {
         this.task.dailyTaskCompleteCnt = 0
@@ -727,5 +749,14 @@ export default {
     text-align: center;
     color: #dee2ed;
     font-size: 17px;
+  }
+  .head_name{
+    text-align: center;
+    width: 5rem;
+    margin: 0 auto;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    overflow: hidden;
   }
 </style>

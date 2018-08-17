@@ -14,7 +14,7 @@
     <div style="width: 88%;height: 3rem;margin: 1rem auto;">
       <div class="feedback_uploadimg" v-for="item in imgList" :key="item.id">
          <!---->
-        <img :src="item" style="border-radius: 4px;max-width: 100%"/>
+        <img :src="item" style="border-radius: 4px;max-width: 100%;height: 3rem;"/>
       </div>
       <div @click="showActionsheet('ios')" class="feedback_upload">
         <img :src="topImg">
@@ -74,7 +74,6 @@ export default {
         this.imgUrl.push(res.data)
         this.imgList.push('data:image/jpeg;base64,' + imageURI)
       }).catch((message) => {
-        alert(message)
       })
     },
     menuClick (key) {
@@ -88,7 +87,7 @@ export default {
         sourceType: sourceType,
         allowEdit: true,
         destinationType: navigator.camera.DestinationType.DATA_URL,
-        saveToPhotoAlbum: false,
+        saveToPhotoAlbum: true,
         encodingType: navigator.camera.EncodingType.JPEG
       }
       Vue.cordova.camera.getPicture(cameraSuccess, cameraError, cameraOptions)
@@ -119,7 +118,9 @@ export default {
               duration: 1000,
               message: '提交成功'
             })
-            this.$router.push({path: '/profile'})
+            setTimeout(() => {
+              this.$router.push({path: '/profile'})
+            }, 1500)
           }
         }).catch(() => {
           Toast.text({

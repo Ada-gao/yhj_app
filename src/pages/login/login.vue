@@ -112,12 +112,10 @@ export default {
     text-align: center;
     font-size: 20px;
     font-size: 0.64rem;
-    color: #A3A3A3 ;
   }
   .title_two{
     text-align: center;
     font-size: 0.64rem;
-    color: #A3A3A3 ;
     margin-top: 0.48rem;
   }
   .land{
