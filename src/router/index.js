@@ -108,6 +108,30 @@ routes.push({
 })
 
 routes.push({
+  path: '/call/call-record',
+  component: resolve => require(['../pages/call/call-record.vue'], resolve),
+  name: 'call-record',
+  meta: {
+    title: 'call-record',
+    description: '外呼记录-拨打',
+    requiresAuth: false,
+    tabShow: false
+  }
+})
+
+routes.push({
+  path: '/call/call-details',
+  component: resolve => require(['../pages/call/call-details.vue'], resolve),
+  name: 'call-details',
+  meta: {
+    title: 'call-details',
+    description: '外呼记录-详情',
+    requiresAuth: false,
+    tabShow: false
+  }
+})
+
+routes.push({
   path: '/my/feedback',
   component: resolve => require(['../pages/my/feedback.vue'], resolve),
   name: 'feedback',

@@ -1,45 +1,54 @@
 <template>
-  <div class="page" style="background: #FFFFFF;position: absolute;top: 0;left: 0;right: 0;bottom: 0">
-    <div class="LOGO">
-      <div class="logo_img">
-        <i class="iconfont icon-tonghuashijian"></i>
+  <div class="page" style="background: #858585">
+    <div style="width: 100%">
+      <img :src="thumbSmall" style="max-width: 100%">
+    </div>
+    <div class="login_content">
+      <div class="user_login user_user">
+      <i class="iconfont icon-zhanghao" style="color: #CECECE;float: left;font-size: 26px"></i>
+      <input class="user_input" placeholder="请输入账号" v-model="account" autocapitalize="off" autocorrect="off"/>
       </div>
-    </div>
-    <p class="title_one appcolor">闪电呼</p>
-    <p class="title_two appcolor">快如闪电，一击即中!</p>
-    <!--<wv-group>-->
-      <!--<wv-input placeholder="请输入账号" v-model="account"></wv-input>-->
-      <!--<wv-input placeholder="请输入密码" v-model="password"></wv-input>-->
-    <!--</wv-group>-->
-    <div class="user_login" style="margin-top: 8.5%">
-      <i class="iconfont icon-geren11" style="color: #CECECE;float: left;font-size: 26px"></i>
-        <input class="user_input" placeholder="请输入账号" v-model="account" autocapitalize="off" autocorrect="off"/>
-    </div>
-    <div class="user_login" style="margin-top: 4.4%">
-      <i class="iconfont icon-suotou-moren" style="color: #CECECE;float: left;font-size: 26px;clear: both"></i>
+      <div class="user_login" style="margin-top: 4.4%">
+      <i class="iconfont icon-mima" style="color: #CECECE;float: left;font-size: 26px;clear: both"></i>
       <input :type="inputType" class="pass_input" placeholder="请输入密码" v-model="password"/>
-      <i v-if="asee==true" class="iconfont icon-biyan" style="color: #02B6DC;float: right;font-size: 26px" @click="iconSee"></i>
-      <i v-if="asee==false" class="iconfont icon-zhengyan" style="color: #02B6DC;float: right;font-size: 26px" @click="iconSee"></i>
-    </div>
-    <div class="land bgcolor" @click="login">
-        登录
+      <i v-if="asee==true" class="iconfont icon-yincang" style="color: #DADADA;float: right;font-size: 26px" @click="iconSee"></i>
+      <i v-if="asee==false" class="iconfont icon-yincang1" style="color:#DADADA;float: right;font-size: 26px" @click="iconSee"></i>
       </div>
-    <div class="login_Application" @click="$router.push('/login/trial')">申请体验</div>
-    <div class="details_return" v-show="detailsreturn">
-      <div class="detail_contents">
-        <div style="height: 4rem;line-height: 4rem;font-size: 18px;color: #333333;">请检查账号或密码是否有误</div>
-        <wv-flex>
-          <wv-flex-item>
-            <div class="placeholder button_outs bgcolor" @click="buttoneturn">确 定</div>
-          </wv-flex-item>
-        </wv-flex>
+      <div class="land" @click="login">
+      登录
       </div>
+      <div class="login_Application" @click="$router.push('/login/trial')">申请体验</div>
     </div>
+    <!--<div class="LOGO">-->
+      <!--<div class="logo_img">-->
+        <!--<i class="iconfont icon-tonghuashijian"></i>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<p class="title_one appcolor">闪电呼</p>-->
+    <!--<p class="title_two appcolor">快如闪电，一击即中!</p>-->
+    <!--&lt;!&ndash;<wv-group>&ndash;&gt;-->
+      <!--&lt;!&ndash;<wv-input placeholder="请输入账号" v-model="account"></wv-input>&ndash;&gt;-->
+      <!--&lt;!&ndash;<wv-input placeholder="请输入密码" v-model="password"></wv-input>&ndash;&gt;-->
+    <!--&lt;!&ndash;</wv-group>&ndash;&gt;-->
+    <!--<div class="user_login" style="margin-top: 8.5%">-->
+      <!--<i class="iconfont icon-geren11" style="color: #CECECE;float: left;font-size: 26px"></i>-->
+        <!--<input class="user_input" placeholder="请输入账号" v-model="account" autocapitalize="off" autocorrect="off"/>-->
+    <!--</div>-->
+    <!--<div class="user_login" style="margin-top: 4.4%">-->
+      <!--<i class="iconfont icon-suotou-moren" style="color: #CECECE;float: left;font-size: 26px;clear: both"></i>-->
+      <!--<input :type="inputType" class="pass_input" placeholder="请输入密码" v-model="password"/>-->
+      <!--<i v-if="asee==true" class="iconfont icon-biyan" style="color: #02B6DC;float: right;font-size: 26px" @click="iconSee"></i>-->
+      <!--<i v-if="asee==false" class="iconfont icon-zhengyan" style="color: #02B6DC;float: right;font-size: 26px" @click="iconSee"></i>-->
+    <!--</div>-->
+    <!--<div class="land bgcolor" @click="login">-->
+        <!--登录-->
+      <!--</div>-->
+    <!--<div class="login_Application" @click="$router.push('/login/trial')">申请体验</div>-->
   </div>
 </template>
-<script type="es6">
+<script>
 import { requestLogin, getUsers } from '../../api/api'
-import thumbSmall from '../../assets/images/icon_tabbar.png'
+import thumbSmall from '../../assets/images/background image.jpg'
 import { Toast } from 'we-vue'
 
 export default {
@@ -79,7 +88,10 @@ export default {
             })
           }
         }).catch(() => {
-          this.detailsreturn = true
+          Toast.text({
+            duration: 1000,
+            message: '请检查账号或密码是否有误'
+          })
         })
       }
     },
@@ -91,14 +103,29 @@ export default {
         this.asee = true
         this.inputType = 'password'
       }
-    },
-    buttoneturn () {
-      this.detailsreturn = false
     }
   }
 }
 </script>
 <style lang="scss">
+  .login_content{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    background: #00000066;
+  }
+  .login_title{
+    font-size: 30px;
+    color: #EAEAEA;
+    margin-top: 293px;
+  }
+  .user_user{
+    padding-top: 492px;
+  }
+
  .LOGO{
    width: 2.6rem;
    height: 2.6rem;
@@ -119,14 +146,15 @@ export default {
     margin-top: 0.48rem;
   }
   .land{
-    width: 13rem;
-    height: 1.76rem;
-    color: white;
+    width: 90%;
+    height: 88px;
+    color: #FFFFFF;;
     text-align: center;
-    line-height: 1.76rem;
-    border-radius: 0.2rem;
-    margin: 13% auto;
-    font-size: 20px;
+    line-height: 88px;
+    border-radius: 4px;
+    margin: 100px auto 0;
+    font-size: 36px;
+    background: #3772E5;
   }
   .icon_user{
     width: 8%;
@@ -146,33 +174,38 @@ export default {
   }
   .login_Application{
     /*position: fixed;*/
-    margin-top: 2.7rem;
-    width: 100%;
-    font-size: 17px;
-    color: #02B6DC;
-    text-align: center;
+    margin: 277px auto 0;
+    width: 90%;
+    font-size: 28px;
+    color: #DADADA;
+    text-align: right;
     font-family: PingFangSC-Regular;
   }
   .user_input{
-    height: 1.5rem;
-    font-size: 0.6rem;
+    height: 80px;
+    font-size: 32px;
     border: 0;
-    margin-left: 0.5rem;
+    margin-left: 24px;
     width: 80%;
-    outline:none;
-    background: #ffffff;
+    background: rgba(140, 140, 140, 0);
     outline: none;
-    -webkit-tap-highlight-color: rgba(0,0,0,0)
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    color: #fff;
   }
   .pass_input{
-    height: 1.5rem;
-    font-size: 0.6rem;
+    height: 80px;
+    font-size: 32px;
     border: 0;
-    margin-left: 0.5rem;
+    margin-left: 24px;
     width: 73%;
     outline:none;
-    background: #ffffff;
-    -webkit-tap-highlight-color: rgba(0,0,0,0)
+    background: rgba(140, 140, 140, 0);
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    color: #fff;
+  }
+  input::-webkit-input-placeholder{
+    color: #fff;
+    font-size: 32px;
   }
   .user_login>div{
     float: left;

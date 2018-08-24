@@ -1,26 +1,35 @@
 <template>
   <div class="page">
     <wv-header title="问题反馈" class="x-header bgcolor">
-      <div class="btn-back" slot="left" style="position: absolute;top: 7px;left: 0;width: 20%;">
-        <i class="iconfont icon-fanhui size_i" @click="$router.push('/profile')"></i>
+      <div class="btn-back header_left" slot="left" style="position: absolute;top: 7px;left: 0;width: 20%;">
+        <i class="iconfont icon-fanhui size_i" @click="$router.push('/profile')">返回</i>
       </div>
     </wv-header>
-    <div class="wv-content x-wrapper">
-    <div class="feedback_content">
-      <p style="font-size: 0.6rem;padding-left: 1rem;margin-top: 1rem">问题反馈:</p>
-      <textarea rows="5" v-model="content" placeholder="请描述在使用过程中，在什么页面，什么功能上遇到的问题，字数不少于10个字，谢谢！" class="feedback_tex"></textarea>
-    </div>
-    <!--<div class="feedback_img">上传</div>-->
-    <div style="width: 88%;height: 3rem;margin: 1rem auto;">
-      <div class="feedback_uploadimg" v-for="item in imgList" :key="item.id">
-         <!---->
-        <img :src="item" style="border-radius: 4px;max-width: 100%;height: 3rem;"/>
+    <div class="x-wrapper">
+      <div class="feedback_content">
+        <textarea rows="5" v-model="content" placeholder="请输入您要反馈的问题...." class="feedback_tex"></textarea>
+        <div class="feedback_imglist">
+          <p class="feedback_img" v-for="item in imgList" :key="item.id">
+            <img :src="item">
+          </p>
+          <p class="feedback_add iconfont icon-tianjia" @click="showActionsheet('ios')"></p>
+        </div>
       </div>
-      <div @click="showActionsheet('ios')" class="feedback_upload">
-        <img :src="topImg">
-      </div>
-    </div>
-    <div class="feedback_button bgcolor" @click="onImgdata">提交</div>
+    <!--<div class="feedback_content">-->
+      <!--<p style="font-size: 0.6rem;padding-left: 1rem;margin-top: 1rem">问题反馈:</p>-->
+      <!--<textarea rows="5" v-model="content" placeholder="请描述在使用过程中，在什么页面，什么功能上遇到的问题，字数不少于10个字，谢谢！" class="feedback_tex"></textarea>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;<div class="feedback_img">上传</div>&ndash;&gt;-->
+    <!--<div style="width: 88%;height: 3rem;margin: 1rem auto;">-->
+      <!--<div class="feedback_uploadimg" v-for="item in imgList" :key="item.id">-->
+         <!--&lt;!&ndash;&ndash;&gt;-->
+        <!--<img :src="item" style="border-radius: 4px;max-width: 100%;height: 3rem;"/>-->
+      <!--</div>-->
+      <!--<div @click="showActionsheet('ios')" class="feedback_upload">-->
+        <!--<img :src="topImg">-->
+      <!--</div>-->
+    <!--</div>-->
+    <div class="feedback_button" @click="onImgdata">提交</div>
     <wv-actionsheet :type="type" :actions="actions" cancel-text="取消" v-model="sheetVisible"/>
     </div>
   </div>
@@ -153,47 +162,79 @@ export default {
 }
 </script>
 <style lang="scss">
-.feedback_tex{
-  width: 84%;
-  margin: 0.3rem auto;
-  display: inherit;
-  border: 1px solid #818080;
-  border-radius: 0.2rem;
-  padding: .3rem;
-  line-height: 1rem;
-  background-color: whitesmoke;
-  outline: none;
-}
-  .feedback_button{
-    width: 87%;
-    height: 1.6rem;
-    line-height: 1.6rem;
-    font-size: 0.64rem;
+  .feedback_content{
+    width: 100%;
+    height: 500px;
+    background-color: #ffffff;
+    margin-top: 100px;
+    box-shadow: 6px 4px 20px rgba(219,219,219,0.3);
+  }
+  .feedback_tex{
+    width: 84%;
+    margin:0 auto;
+    display: inherit;
+    border: 0px solid;
+    padding: .3rem;
+    line-height: 28px;
+    background-color: #ffffff;
+    outline: none;
+  }
+  .feedback_add{
+    width: 150px;
+    height: 150px;
+    border: 1px solid gainsboro;
     text-align: center;
-    border-radius: 0.1rem;
-    color: #ffffff;
-    margin: 5rem auto 0;
+    line-height: 150px;
+    font-size: 50px;
+    color: gainsboro;
   }
   .feedback_img{
-    width: 2rem;
-    height: 2rem;
-    background-color: #ffffff;
+    width: 150px;
+    height: 150px;
   }
-  .feedback_upload{
-    width: 3.46rem;
-    height: 3.16rem;
-    float: left;
-  }
-  .feedback_uploadimg{
-    float: left;
-    width: 20%;
-    height: 3.2rem;
-    margin-right: 0.5rem;
-  }
-  .feedback_upload>img{
+  .feedback_img>img{
     max-width: 100%;
   }
-  .weui-toast_text .weui-toast__content[data-v-4af60de0]{
-    font-size: .6em;
+  .feedback_imglist{
+    width: 87%;
+    margin: 0 auto;
   }
+  .feedback_imglist>p{
+    float: left;
+    margin: 5px;
+  }
+  .feedback_button{
+    width: 87%;
+    height: 90px;
+    line-height: 90px;
+    font-size: 28px;
+    text-align: center;
+    border-radius: 6px;
+    color: #ffffff;
+    margin: 60px auto 0;
+    background: linear-gradient(to right, #5d90f4 , #2f6be2);
+    box-shadow: 0px 7px 29px 1px rgba(13,67,173,0.5);
+  }
+  /*.feedback_img{*/
+    /*width: 2rem;*/
+    /*height: 2rem;*/
+    /*background-color: #ffffff;*/
+  /*}*/
+  /*.feedback_upload{*/
+    /*width: 3.46rem;*/
+    /*height: 3.16rem;*/
+    /*float: left;*/
+  /*}*/
+  /*.feedback_uploadimg{*/
+    /*float: left;*/
+    /*width: 20%;*/
+    /*height: 3.2rem;*/
+    /*margin-right: 0.5rem;*/
+  /*}*/
+  /*.feedback_upload>img{*/
+    /*max-width: 100%;*/
+  /*}*/
+  /*.weui-toast_text .weui-toast__content[data-v-4af60de0]{*/
+    /*font-size: .6em;*/
+  /*}*/
 </style>

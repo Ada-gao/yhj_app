@@ -1,28 +1,28 @@
 <template>
   <div id="app">
-    <wv-tabbar v-show="tabShow" :fixed="true" style="background: #FFFFFF">
-      <wv-tabbar-item to="/home" :isOn="selected('/home')">
-      <span slot="icon" style="display: inline-block; position: relative;">
-        <div class="iconfont icon-shouye weui-tabbar__label" style="font-size: 0.92rem;"></div>
-        <!--<wv-badge is-dot style="position: absolute;top: -2px;right: -13px;">8</wv-badge>-->
-      </span>
-        首页
-      </wv-tabbar-item>
-      <wv-tabbar-item to="/call/customer-random" :isOn="selected('/call/details-y')">
-      <span slot="icon" style="display: inline-block; position: relative;">
-        <div class="iconfont icon-hujiaozhongxin weui-tabbar__label" style="font-size: 0.96rem;"></div>
-        <!--<wv-badge style="position: absolute;top: 0;right: -6px;">3</wv-badge>-->
-      </span>
-        开始外呼
-      </wv-tabbar-item>
-      <wv-tabbar-item to="/profile" :isOn="selected('/profile')">
-        <span slot="icon" style="display: inline-block; position: relative;">
-        <div class="iconfont icon-wode weui-tabbar__label" style="font-size: 0.92rem;"></div>
-        <!--<wv-badge style="position: absolute;top: 0;right: -6px;">3</wv-badge>-->
-      </span>
-        我的
-      </wv-tabbar-item>
-    </wv-tabbar>
+    <!--<wv-tabbar v-show="tabShow" :fixed="true" style="background: #FFFFFF">-->
+      <!--<wv-tabbar-item to="/home" :isOn="selected('/home')">-->
+      <!--<span slot="icon" style="display: inline-block; position: relative;">-->
+        <!--<div class="iconfont icon-shouye weui-tabbar__label" style="font-size: 0.92rem;"></div>-->
+        <!--&lt;!&ndash;<wv-badge is-dot style="position: absolute;top: -2px;right: -13px;">8</wv-badge>&ndash;&gt;-->
+      <!--</span>-->
+        <!--首页-->
+      <!--</wv-tabbar-item>-->
+      <!--<wv-tabbar-item to="/call/customer-random" :isOn="selected('/call/details-y')">-->
+      <!--<span slot="icon" style="display: inline-block; position: relative;">-->
+        <!--<div class="iconfont icon-hujiaozhongxin weui-tabbar__label" style="font-size: 0.96rem;"></div>-->
+        <!--&lt;!&ndash;<wv-badge style="position: absolute;top: 0;right: -6px;">3</wv-badge>&ndash;&gt;-->
+      <!--</span>-->
+        <!--开始外呼-->
+      <!--</wv-tabbar-item>-->
+      <!--<wv-tabbar-item to="/profile" :isOn="selected('/profile')">-->
+        <!--<span slot="icon" style="display: inline-block; position: relative;">-->
+        <!--<div class="iconfont icon-wode weui-tabbar__label" style="font-size: 0.92rem;"></div>-->
+        <!--&lt;!&ndash;<wv-badge style="position: absolute;top: 0;right: -6px;">3</wv-badge>&ndash;&gt;-->
+      <!--</span>-->
+        <!--我的-->
+      <!--</wv-tabbar-item>-->
+    <!--</wv-tabbar>-->
     <transition :name="$root.transitionName">
       <router-view/>
     </transition>
@@ -52,11 +52,19 @@ export default {
 }
 </script>
 <style lang="scss">
-  .bgcolor{
-    background-color: #02B6DC!important;
+  .bgcolor{  //导航颜色
+    background-color: #ffffff!important;
   }
-  .appcolor{
+  .appcolor{ //字体颜色
     color:#02B6DC;
+  }
+  .pagebgcolor{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ffffff;
   }
   .weui-tabbar__item.weui-bar__item_on .weui-tabbar__icon, .weui-tabbar__item.weui-bar__item_on .weui-tabbar__icon>i, .weui-tabbar__item.weui-bar__item_on .weui-tabbar__label{
     color: #02B6DC;
@@ -83,6 +91,14 @@ export default {
     /*overflow-y: scroll;*/
     /*-webkit-overflow-scrolling: touch;*/
   /*}*/
+  .wv-header[data-v-a5b8d5b6]{
+    height: 80px!important;
+    line-height: 80px!important;
+  }
+  .wv-header .wv-header-title[data-v-a5b8d5b6]{
+    color: #000000;
+    font-size: 36px;
+  }
   .wv-content{
     position: absolute;
     top: 49px;
@@ -140,7 +156,13 @@ export default {
     font-size: 0.8rem;
   }
   .size_i{
-    font-size: 22px;
+    font-size: 40px;
     margin-left: 0.2rem;
+    color:#000000!important;
+  }
+  .size_c{
+    font-size: 40px;
+    margin-left: 0.2rem;
+    color:#ffffff!important;
   }
 </style>

@@ -1,54 +1,81 @@
 <template>
   <div class="page">
     <wv-header title="我的" class="x-header bgcolor">
+      <div class="btn-back header_left" slot="left">
+        <i class="iconfont icon-fanhui size_i" @click="$router.push('/home')"></i>返回
+      </div>
     </wv-header>
-    <div class="wv-content_nav x-wrapper">
+    <div class="x-wrapper">
     <div class="profile_content bgcolor">
       <div class="profile_head">
         <img :src="logo" alt="">
       </div>
       <p class="profile_name">{{dataInfrom.name}}</p>
       <p class="profile_company">{{company}}</p>
+      <wv-flex :gutter="10" style="width: 90%;margin:auto;border-bottom: 0.5px solid rgba(233,233,233,1)">
+        <wv-flex-item>
+          <div class="placeholder task_number">{{form.totalDuration || 0 +'分'}}</div>
+          <!--<div class="placeholder task_number1" v-if="form.totalDuration === null || form.totalDuration === ''">0分</div>-->
+          <div class="placeholder task_text">总通话时长</div>
+        </wv-flex-item>
+        <wv-flex-item>
+          <div class="placeholder task_number" v-if="form.totalTaskCompleteCnt !== null">{{form.totalTaskCompleteCnt}}个</div>
+          <div class="placeholder task_number" v-if="form.totalTaskCompleteCnt === null">0个</div>
+          <div class="placeholder task_text">总任务完成数</div>
+        </wv-flex-item>
+        <wv-flex-item>
+          <div class="placeholder task_number">{{form.avgDuration || 0}}秒</div>
+          <!--<div class="placeholder task_number3" v-if="form.avgDuration ===null">0秒</div>-->
+          <div class="placeholder task_text">平均通话时长</div>
+        </wv-flex-item>
+      </wv-flex>
+      <wv-flex :gutter="10">
+        <wv-flex-item style="border-left: 1px solid grey">
+          <div class="placeholder" style="border-right: 0.5px solid rgba(233,233,233,1)">
+            <div class="placeholder progress_number1">{{form.rate || 0}}%</div>
+            <div class="placeholder progress_text">外呼完成率</div>
+          </div>
+        </wv-flex-item>
+        <wv-flex-item>
+          <div class="placeholder">
+            <div class="placeholder progress_number2">第{{form.rank}}名</div>
+            <div class="placeholder progress_text">今日团队排名</div>
+          </div>
+        </wv-flex-item>
+      </wv-flex>
     </div>
-    <div style="background: #FFFFFF;margin-top: 0.4rem;height: 8.16rem">
-     <wv-flex :gutter="10" style="width: 90%;margin:auto;border-bottom: 1px solid #D2D2D2">
-       <wv-flex-item>
-         <div class="placeholder task_number1">{{form.totalDuration || 0 +'分'}}</div>
-         <!--<div class="placeholder task_number1" v-if="form.totalDuration === null || form.totalDuration === ''">0分</div>-->
-         <div class="placeholder task_text">总通话时长</div>
-       </wv-flex-item>
-       <wv-flex-item>
-        <div class="placeholder task_number2" v-if="form.totalTaskCompleteCnt !== null">{{form.totalTaskCompleteCnt}}个</div>
-        <div class="placeholder task_number2" v-if="form.totalTaskCompleteCnt === null">0个</div>
-        <div class="placeholder task_text">总任务完成数</div>
-       </wv-flex-item>
-       <wv-flex-item>
-         <div class="placeholder task_number3">{{form.avgDuration || 0}}秒</div>
-         <!--<div class="placeholder task_number3" v-if="form.avgDuration ===null">0秒</div>-->
-         <div class="placeholder task_text">平均通话时长</div>
-       </wv-flex-item>
-     </wv-flex>
-     <wv-flex :gutter="10">
-       <wv-flex-item style="border-left: 1px solid grey">
-         <div class="placeholder" style="border-right: 1px solid #979797">
-           <div class="placeholder progress_number1">{{form.rate || 0}}%</div>
-           <div class="placeholder progress_text">外呼完成率</div>
+    <!--<div style="background: #FFFFFF;margin-top: 0.4rem;height: 8.16rem">-->
+    <!--</div>-->
+    <!--<div style="margin-top: 0.4rem;background: #FFFFFF">-->
+      <!--<wv-cell title="问题反馈" value="" is-link to="/my/feedback" style="font-size: 0.56rem"></wv-cell>-->
+      <!--<wv-cell title="关于闪电呼" value="" is-link to="/my/relevant" style="font-size: 0.56rem"></wv-cell>-->
+    <!--</div>-->
+      <!--<wv-group>-->
+        <!--<wv-cell title="问题反馈" is-link to="/my/feedback">-->
+          <!--<img :src="wenti" alt="" slot="icon" class="cell-icon">-->
+        <!--</wv-cell>-->
+        <!--<wv-cell title="关于闪电呼" is-link to="/my/relevant">-->
+          <!--<img :src="guanyu" alt="" slot="icon" class="cell-icon">-->
+        <!--</wv-cell>-->
+      <!--</wv-group>-->
+      <div class="profile_list">
+        <div style="border-bottom: 0.5px solid #E9E9E9">
+          <router-link :to="{path:'/my/feedback'}">
+          <p class="iconfont icon-wenti profile_nav" style="color: #eccb05;width: 10%;font-size: 20px"></p>
+          <p class="profile_nav" style="color: rgba(50,50,50,1);">问题反馈</p>
+          <p class="iconfont icon-fanhui profile_nav profile_icon" style="color: #DBDBDB;width: 10%;float: right"></p>
+          </router-link>
         </div>
-       </wv-flex-item>
-       <wv-flex-item>
-         <div class="placeholder">
-           <div class="placeholder progress_number2">第{{form.rank}}名</div>
-           <div class="placeholder progress_text">今日团队排名</div>
-         </div>
-       </wv-flex-item>
-     </wv-flex>
-    </div>
-    <div style="margin-top: 0.4rem;background: #FFFFFF">
-      <wv-cell title="问题反馈" value="" is-link to="/my/feedback" style="font-size: 0.56rem"></wv-cell>
-      <wv-cell title="关于闪电呼" value="" is-link to="/my/relevant" style="font-size: 0.56rem"></wv-cell>
-    </div>
+        <div>
+          <router-link :to="{path:'/my/relevant'}">
+          <p class="iconfont icon-guanyu profile_nav" style="color: #4482d6;width: 10%;font-size: 20px"></p>
+          <p class="profile_nav" style="color: rgba(50,50,50,1);">关于闪电呼</p>
+          <p class="iconfont icon-fanhui profile_nav profile_icon" style="color:#DBDBDB;width: 10%;float: right"></p>
+          </router-link>
+        </div>
+      </div>
     <!--<router-link to="/login">-->
-      <div class="button_return bgcolor" @click="showDialog">退出登录</div>
+      <div class="button_return bgcolor" @click="showDialog">退出</div>
     <!--</router-link>-->
     </div>
     <div class="details_return" v-show="details">
@@ -70,7 +97,8 @@
 <script>
 import { getUser, getCompany, getRank } from '../../api/api'
 // import { Dialog } from 'we-vue'
-import thumbSmall from '@/assets/images/icon_tabbar.png'
+import wenti from '@/assets/images/profile_wenti.png'
+import guanyu from '@/assets/images/profile_guanyu.png'
 import heads from '@/assets/images/hand.png'
 import { timeDate } from '@/utils'
 
@@ -82,13 +110,15 @@ export default {
       company: '',
       form: {},
       rank: {},
-      thumbSmall,
+      wenti,
+      guanyu,
       heads,
       details: false,
       logo: ''
     }
   },
   mounted () {
+    alert(123)
     this.userData()
   },
   methods: {
@@ -168,6 +198,19 @@ export default {
 </script>
 
 <style lang="scss">
+  .weui-cell{
+    padding: 30px 40px !important;
+    font-size: 28px;
+    color: rgba(50,50,50,1);
+  }
+  .header_left{
+    position: absolute;
+    top: 17px;
+    left: 0;
+    width: 20%;
+    color: #000000;
+    font-size: 30px;
+  }
   .button_out{
     color: #F0F0F0;
     width: 59%;
@@ -203,18 +246,19 @@ export default {
     font-size: 0.8rem;
   }
   .wv-header .wv-header-title[data-v-a5b8d5b6]{
-    font-size: 0.72rem;
+    font-size:36px;
+    color: #000000;
   }
   .profile_content{
     width: 100%;
-    height: 6.28rem;
+    height: 760px;
     /*background-color: #32CCBC;*/
-    padding-top: 2%;
+    padding-top: 89px;
     /*margin-top: 2rem;*/
   }
   .profile_head{
-    width: 3rem;
-    height: 3rem;
+    width: 170px;
+    height: 170px;
     // background: rebeccapurple;
     margin: 0 auto;
     border-radius: 50%;
@@ -222,75 +266,97 @@ export default {
     overflow: hidden;
     background-color: #ffffff;
     img {
-      width: 3rem;
-      height: 3rem;
+      width: 170px;
+      height: 170px;
     }
   }
   .profile_name{
     width: 100%;
-    height: 1rem;
-    font-size: 0.72rem;
-    color: #FFFFFF;
+    height: 34px;
+    font-size: 36px;
+    color: rgba(50,50,50,1);
     text-align: center;
-    margin-top: 0.48rem;
+    margin-top: 40px;
   }
   .profile_company{
     width: 100%;
-    height: 0.74rem;
-    font-size: 0.52rem;
-    color: #FFFFFF;
+    height: 23px;
+    font-size: 24px;
+    color: rgba(156,156,156,1);
     text-align: center;
-    margin-top: 0.48rem;
+    margin-top: 20px;
   }
   /*.placeholder{*/
     /*text-align: center;*/
   /*}*/
-  .task_number1,.task_number2,.task_number3{
-    font-size: 0.64rem;
-    /*color: #02A2D1;*/
+  .task_number{
+    font-size: 36px;
+    color: rgba(58,116,230,1);
     margin-top: 1.02rem;
     text-align: center;
   }
-  .task_number1{
-    color:#F7CD89
-  }
-  .task_number2{
-    color:#CC3232
-  }
-  .task_number3{
-    color:#02A2D1
-  }
   .task_text{
-    font-size: 0.52rem;
-    margin-top: 0.66rem;
-    margin-bottom: 0.83rem;
+    font-size: 24px;
+    /*margin-top: 19px;*/
+    margin-bottom: 60px;
     text-align: center;
+    color:rgba(156,156,156,1)
   }
   .progress_number1,.progress_number2{
-    font-size: 0.6rem;
-    margin-top: 1.07rem;
+    font-size: 36px;
+    margin-top: 60px;
     text-align: center;
   }
   .progress_number1{
-    color: #0E02DC;
+    color: rgba(119,209,96,1);
   }
   .progress_number2{
-    color: #D0021B;
+    color: rgba(243,104,88,1);
   }
   .progress_text{
-    font-size: 0.52rem;
-    margin-bottom: 1.12rem;
+    font-size: 24px;
+    /*margin-bottom: 60px;*/
+    color:rgba(156,156,156,1);
     text-align: center;
     /*margin-bottom: 1.12rem;*/
   }
   .button_return{
-    width: 90%;
-    height: 1.6rem;
-    font-size: 0.64rem;
-    color: #FFFFFF;
-    margin: 0.5rem auto 0;
-    border-radius: 0.2rem;
+    width: 100%;
+    height: 98px;
+    font-size: 32px;
+    color: rgba(58,116,230,1);
+    margin: 30px auto 0;
     text-align: center;
-    line-height: 1.6rem;
+    line-height: 98px;
+  }
+  .profile_list{
+    height: 240px;
+    width: 100%;
+    background-color: #FFFFFF;
+    margin-top: 30px;
+  }
+  .profile_list>div{
+    width: 90%;
+    height: 120px;
+    line-height: 120px;
+    background-color: #FFFFFF;
+    margin: 0 auto;
+    /*padding: 50%;*/
+  }
+  .profile_list>div>p{
+    /*height: 48px;*/
+    /*line-height: 48px;*/
+  }
+  .profile_nav{
+    float: left;
+  }
+  .profile_icon{
+    /*line-height: 4.82rem;*/
+    color:#32CCBC;
+    transform:rotate(180deg);
+    -ms-transform:rotate(180deg);
+    -moz-transform:rotate(180deg);
+    -webkit-transform:rotate(180deg);
+    -o-transform:rotate(180deg);
   }
 </style>

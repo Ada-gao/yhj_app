@@ -1,38 +1,24 @@
 <template>
-  <div class="page">
+  <div class="page pagebgcolor">
     <wv-header title="关于闪电呼" class="x-header bgcolor">
-      <div class="btn-back" slot="left" style="position: absolute;top: 7px;left: 0;width: 20%;">
-        <i class="iconfont icon-fanhui icon size_i" @click="$router.push('/profile')"></i>
+      <div class="btn-back header_left" slot="left" style="position: absolute;top: 7px;left: 0;width: 20%;">
+        <i class="iconfont icon-fanhui icon size_i" @click="$router.push('/profile')">返回</i>
       </div>
     </wv-header>
-    <div class="wv-content x-wrapper">
-      <div style="width: 3.14rem;margin: 0 auto;padding-top: 4rem">
+    <div class="x-wrapper">
+      <div class="relevant_logo">
         <img :src="logoImg" style="max-width: 100%">
       </div>
-    <p class="relevant_edition" style="margin-top: 1.18rem">客户端版本号：1.0</p>
-    <p class="relevant_edition">版权所有：上海数赟科技有限公司</p>
-    <wv-footer style="font-size: 0.56rem" class="footer-demo" text="Copyright © 2018 ShuYun.All Rights Reserved"/>
-    <wv-group style="margin-top: 1.86rem">
-      <wv-cell title="微信公众号" value="gh_374030c43f3c" is-link v-clipboard:copy="message"
-               v-clipboard:success="onCopy">
-      </wv-cell>
-    </wv-group>
-    </div>
-    <div class="details_return" v-show="detailsreturn">
-      <div class="detail_contents">
-        <div style="height: 2rem;line-height: 2rem;font-size: 18px;color: #333333;">微信公众号已复制</div>
-        <div style="font-size: 0.56rem;color: #9c9ca0;">点击微信-通讯录-公众号-添加<br/>在搜索栏中粘贴公众号，搜索关注“数赟科技”</div>
-        <wv-flex>
-          <wv-flex-item>
-            <div class="placeholder button_outs bgcolor" @click="buttoneturn">确 定</div>
-          </wv-flex-item>
-        </wv-flex>
-      </div>
+      <p class="app_name">闪电呼</p>
+      <p class="app_edition">客户端版本号：1.0</p>
+      <p class="company">版权所有：上海数赟科技有限公司</p>
+      <p class="app_txt">Copyright © 2018 suxiang.All Rights Reserved</p>
+      <p class="app_weixin">微信公众号：gh_374030c43f3c<small style="font-size: 100%;color: #306ce2;" v-clipboard:copy="message">一键复制</small></p>
     </div>
   </div>
 </template>
 <script>
-import logoImg from '../../assets/images/LOGO_.png'
+import logoImg from '../../assets/images/lo.png'
 // import { Dialog } from 'we-vue'
 export default {
   data () {
@@ -58,6 +44,47 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+  .relevant_logo{
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    padding-top: 217px;
+  }
+  .app_name{
+    width: 100%;
+    text-align: center;
+    font-size: 36px;
+    margin-top: 39px;
+  }
+  .app_edition{
+    width: 100%;
+    text-align: center;
+    font-size: 26px;
+    color: #868686;
+    margin-top: 18px;
+  }
+  .company{
+    margin-top: 544px;
+    width: 100%;
+    text-align: center;
+    font-size: 28px;
+    color: #3e3e3e;
+  }
+  .app_txt{
+    width: 100%;
+    text-align: center;
+    color: #868686;
+    font-size: 24px;
+    margin-top: 18px;
+  }
+  .app_weixin{
+    width: 100%;
+    text-align: center;
+    font-size: 28px;
+    color: #3e3e3e;
+    margin-top: 29px;
+  }
+
   .relevant_edition{
     text-align: center;
     font-size: 0.72rem;

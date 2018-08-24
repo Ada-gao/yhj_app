@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <wv-header class="x-header" title="申请体验" background-color="white" style="color:#02B6DC;">
-      <div class="btn-back" slot="left" style="position: absolute;top: 7px;left: 0;width: 20%;">
+      <div class="btn-back header_left" slot="left" style="position: absolute;top: 7px;left: 0;width: 20%;">
         <i class="iconfont icon-fanhui size_i" @click="$router.push('/')" style="color:#959292"></i>
       </div>
     </wv-header>

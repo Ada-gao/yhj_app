@@ -1,11 +1,11 @@
 <template>
   <div class="page">
     <wv-header title="任务列表" class="x-header bgcolor">
-      <div class="btn-back" slot="left" style="position: absolute;top: 7px;left: 0;width: 20%;" @click="$router.push('/home')">
-        <i class="iconfont icon-fanhui size_i"></i>
+      <div class="btn-back header_left" slot="left" @click="$router.push('/home')">
+        <i class="iconfont icon-fanhui size_i"></i>返回
       </div>
     </wv-header>
-    <div class=" wv-content x-wrapper">
+    <div class="x-wrapper">
       <div class="call_content">
         <div class="call_time">
           <wv-flex :gutter="10">
@@ -26,30 +26,38 @@
         </div>
       </div>
       <div class="page-infinite-wrapper" v-show="content==='notFinish'">
-        <wv-group title="">
-          <wv-cell-swipe :title="item.contactName" is-link
-                         v-for="(item, index) in hList"
-                         :key="index"
-                         :to="{name: 'customer-details', params: item}">
-          </wv-cell-swipe>
-          <div v-infinite-scroll="loadMore1" infinite-scroll-disabled="busy" infinite-scroll-distance="50">
-          </div>
-        </wv-group>
+        <div class="call_list" v-for="(item, index) in hList" :key="index" @click="todetails(item)">
+          <p class="call_left">{{item.contactName}}</p>
+          <p class="call_cont">继续拨打</p>
+          <p class="iconfont icon-fanhui call_right icon_left" style="color: #e9e9e9;font-size: 19px"></p>
+        </div>
+         <!--<wv-cell-swipe :title="item.contactName" is-link-->
+                        <!--v-for="(item, index) in hList"-->
+                        <!--:key="index"-->
+                        <!--:to="{name: 'customer-details', params: item}">-->
+         <!--</wv-cell-swipe>-->
+         <div v-infinite-scroll="loadMore1" infinite-scroll-disabled="busy" infinite-scroll-distance="50">
+         </div>
         <p class="loading-tips" v-show="floading" style="text-align: center">
           <wv-spinner type="snake" color="#444" :size="24"></wv-spinner>
         </p>
       </div>
-
       <div class="page-infinite-wrapper" v-show="content==='finish'">
-        <wv-group title="">
-          <wv-cell-swipe :title="item.contactName" is-link
-                         v-for="(item, index) in fList"
-                         :key="index"
-                         :to="{name: 'customer-details', params: item}">
-          </wv-cell-swipe>
-          <div v-infinite-scroll="loadMore2" infinite-scroll-disabled="busy2" infinite-scroll-distance="50">
-          </div>
-        </wv-group>
+        <div class="call_list" v-for="(item, index) in fList" :key="index" @click="todetails(item)">
+          <p class="call_left">{{item.contactName}}</p>
+          <p class="call_cont">继续拨打</p>
+          <p class="iconfont icon-fanhui call_right icon_left" style="color: #e9e9e9;font-size: 19px"></p>
+        </div>
+        <div v-infinite-scroll="loadMore2" infinite-scroll-disabled="busy2" infinite-scroll-distance="50"></div>
+        <!--<wv-group title="">-->
+          <!--<wv-cell-swipe :title="item.contactName" is-link-->
+                         <!--v-for="(item, index) in fList"-->
+                         <!--:key="index"-->
+                         <!--:to="{name: 'customer-details', params: item}">-->
+          <!--</wv-cell-swipe>-->
+          <!--<div v-infinite-scroll="loadMore2" infinite-scroll-disabled="busy2" infinite-scroll-distance="50">-->
+          <!--</div>-->
+        <!--</wv-group>-->
         <p class="loading-tips" v-show="floading" style="text-align: center">
           <wv-spinner type="snake" color="#444" :size="24"></wv-spinner>
         </p>
@@ -110,13 +118,12 @@ export default {
           this.handTotal = res.data.totalElements
         }
         this.floading = false
+        console.log(this.hList)
       })
     },
     getList2 (flag, type) {
       // console.log('这是已完成')
       this.floading = true
-      console.log('type: ' + type)
-      console.log('this.type: ' + this.type)
       // type = type || this.type
       this.listQuery2.createTime = this.createTime
       getTaskList('finish', this.listQuery2).then(res => {
@@ -182,6 +189,9 @@ export default {
       this.createTime = parseTime(day1, '{y}-{m}-{d}')
       this.getList1()
       this.getList2()
+    },
+    todetails (item) {
+      this.$router.push({name: 'customer-details', params: item})
     }
   },
   created () {
@@ -204,16 +214,40 @@ export default {
 </script>
 
 <style lang="scss">
-  // .call_content{
-  /*margin-top: 2rem;*/
-  // }
+  .call_content{
+   padding-top: 80px;
+  }
   .call_time{
-    height: 4.24rem;
+    height: 190px;
     width: 100%;
     background: #FFFFFF;
+    padding-top: 70px;
     /*position: absolute;*/
     /*top: 1.8rem;*/
-    padding-top: 0.8rem;
+  }
+  .call_list{
+    clear: both;
+    width: 78%;
+    height: 93px;
+    margin: 0 auto;
+    border-bottom: 1px solid rgba(233,233,233,1);
+  }
+  .call_list>p{
+    height: 93px;
+    line-height: 93px;
+    float: left;
+  }
+  .call_left{
+    width: 70%;
+    font-size: 32px;
+    overflow: hidden;
+  }
+  .call_cont{
+    width: 20%;
+    font-size: 26px;
+  }
+  .call_right{
+    width: 10%;
   }
   .icon_left{
     color:#02B6DC;
@@ -224,8 +258,8 @@ export default {
     -o-transform:rotate(180deg);
   }
   .call_year{
-    font-size: 0.56rem;
-    font-weight: bold;
+    font-size: 32px;
+    /*font-weight: bold;*/
     text-align: center;
     font-family: sans-serif;
   }
@@ -235,27 +269,28 @@ export default {
     color: #02B6DC;
   }
   .call_nav{
-    width: 66%;
-    height: 1.064rem;
-    margin: 1.16rem auto 0;
-    border: 1px solid gainsboro;
+    width: 77%;
+    height: 64px;
+    margin: 59px auto 0;
+    border: 2px solid #e9e9e9;
     border-radius: 4px;
     color: gray;
   }
   .call_nav>p{
     width: 50%;
     text-align: center;
-    font-size: 0.48rem;
+    font-size: 28px;
     float: left;
     border-radius: 3px;
-    height: 1.064rem;
-    line-height: 1.064rem;
+    height: 63px;
+    line-height: 63px;
   }
   .page-infinite-wrapper {
     padding-bottom: 60px;
+    background: #ffffff;
   }
   .active-tab {
-    background-color: #02B6DC!important;
+    background: linear-gradient(to right, #5d90f4 , #2f6be2)!important;
     color: #FFFFFF!important;
   }
   .tab-item {

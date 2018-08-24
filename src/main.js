@@ -9,6 +9,7 @@ import './assets/iconfont/iconfont.css'
 import router from './router'
 import FastClick from 'fastclick'
 import VueCordova from './vue-cordova/index'
+import 'lib-flexible/flexible'
 import VueClipboard from 'vue-clipboard2'
 
 Vue.config.productionTip = false
