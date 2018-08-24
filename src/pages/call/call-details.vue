@@ -10,116 +10,111 @@
       </div>
       <div class="details_list">
         <p class="details_left"><small style="font-size: 100%;color: red;">*</small> 外呼结果</p>
-        <wv-cell class="details_cont" :value="results | pickerValueFilter" @click.native="resultsPickerShow = true" />
+        <wv-cell class="details_cont" :value="results.label"  @click.native="resultsPickerShow = true" />
         <!--<wv-cell :value="ticket | pickerValueFilter" @click.native="ticketPickerShow = true" />-->
         <p class="iconfont icon-fanhui details_right"></p>
       </div>
       <div class="details_list">
         <p class="details_left"><small style="font-size: 100%;color: red;">*</small> 下一步行动计划</p>
-        <wv-cell class="details_cont" :value="action | pickerValueFilter" @click.native="actionPickerShow = true" />
+        <wv-cell class="details_cont" :value="action.label" @click.native="actionPickerShow = true" />
         <p class="iconfont icon-fanhui details_right"></p>
       </div>
     </div>
-    <div class="record_info">
-      <p class="infor_title">客户信息</p>
-      <div class="info_list">
-        <p class="info_left">姓名</p>
-        <input class="info_cont" placeholder="蓝色妖姬">
-        <p class="iconfont icon-fanhui info_right"></p>
-      </div>
-      <div class="info_list">
-        <p class="info_left">电话</p>
-        <input class="info_cont" placeholder="13661876489">
-        <p class="iconfont icon-fanhui info_right"></p>
-      </div>
-      <div class="info_list">
-        <p class="info_left">微信</p>
-        <input class="info_cont" placeholder="2446075450">
-        <p class="iconfont icon-fanhui info_right"></p>
-      </div>
-      <div class="info_list">
-        <p class="info_left">备注</p>
-        <input class="info_cont" placeholder="有意向购买产品">
-        <p class="iconfont icon-fanhui info_right"></p>
-      </div>
-    </div>
-    <div class="details_button">
+    <!--<div class="record_info">-->
+      <!--<p class="infor_title">客户信息</p>-->
+      <!--<div class="info_list">-->
+        <!--<p class="info_left">姓名</p>-->
+        <!--<input class="info_cont" :placeholder="form.contactName" v-model="form.contactName">-->
+        <!--<p class="iconfont icon-fanhui info_right"></p>-->
+      <!--</div>-->
+      <!--<div class="info_list">-->
+        <!--<p class="info_left">电话</p>-->
+        <!--<input class="info_cont" :placeholder="form.phoneNo" v-model="form.phoneNo">-->
+        <!--<p class="iconfont icon-fanhui info_right"></p>-->
+      <!--</div>-->
+      <!--<div class="info_list">-->
+        <!--<p class="info_left">微信</p>-->
+        <!--<input class="info_cont" :placeholder="form.wechatNo" v-model="form.wechatNo">-->
+        <!--<p class="iconfont icon-fanhui info_right"></p>-->
+      <!--</div>-->
+      <!--<div>-->
+        <!--<p class="info_left" style="margin-top: 10px">备注</p>-->
+        <!--<textarea rows="5" :placeholder="form.common" class="record_txt" v-model="form.common"></textarea>-->
+      <!--</div>-->
+    <!--</div>-->
+    <div class="details_button" @click="submitCall">
       提交
     </div>
     <wv-picker
       :visible.sync="resultsPickerShow"
-      v-model="results"
       :columns="resultsColumns"
+      value-key="label"
       @confirm="confirmResults"
     />
     <wv-picker
       :visible.sync="actionPickerShow"
-      v-model="action"
       :columns="actionColumns"
+      value-key="label"
       @confirm="confirmAction"
     />
   </div>
 </template>
 
 <script>
+import { getTaskHistory } from '@/api/api'
 export default {
   data () {
     return {
-      resultsValue: [],
       actionValue: [],
       resultsPickerShow: false,
       actionPickerShow: false,
-      results: ['汽车票'],
+      results: [{label: '进一步跟进', value: 'BUSYING'}],
       action: ['继续拨打'],
       resultsColumns: [
         {
           values: [
-            '汽车票',
-            '飞机票',
-            '火车票',
-            '轮船票',
-            '其它'
-          ],
-          label: [
-            'BUSYING'
-          ],
-          defaultIndex: 2
+            {label: '占线', value: 'BUSYING'},
+            {label: '未外呼', value: 'NOT_CALL'},
+            {label: '无人接听', value: 'NO_ANSWER'},
+            {label: '无意向拒绝', value: 'REFUSE'},
+            {label: '进一步跟进', value: 'FOLLOW'}
+          ]
         }
       ],
       actionColumns: [
         {
           values: [
-            '汽车票',
-            '飞机票',
-            '火车票',
-            '轮船票',
-            '其它'
-          ],
-          label: [
-            'BUSYING'
-          ],
-          defaultIndex: 2
+            {label: '再次外呼', value: 'CALL_AGAIN'},
+            {label: '放弃外呼', value: 'GIVE_UP'},
+            {label: '继续跟进', value: 'FLLOW'}
+          ]
         }
-      ]
+      ],
+      history: {
+        actualCallStartDate: '',
+        acutalCallEndDate: '',
+        outboundTaskId: ''
+      }
     }
+  },
+  created () {
+    this.form = this.$route.query.form
+    // alert('电话状态：' + this.form + '，通话时长：' + this.form.duration + '，开始时间：' + this.form.startDate + '，结束时间：' + this.form.endDate)
   },
   methods: {
     confirmResults (picker) {
-      this.ticket = picker.getValues()
-      console.log(picker)
+      this.results = picker.getValues()[0]
+      console.log(this.results)
     },
     confirmAction (picker) {
-      this.action = picker.getValues()
+      this.action = picker.getValues()[0]
       console.log(picker)
-    }
-  },
-  filters: {
-    pickerValueFilter (val) {
-      if (Array.isArray(val)) {
-        return val.toString()
-      } else {
-        return '请选择'
-      }
+    },
+    submitCall () {
+      // let _this = this
+      this.history.outboundTaskId = this.form.taskId
+      getTaskHistory(this.history).then(res => {
+      })
     }
   }
 }
@@ -139,6 +134,18 @@ export default {
     height: 93px;
     line-height: 93px;
     font-size: 32px;
+  }
+  .record_txt{
+    width: 100%;
+    margin: 0 auto;
+    border: 2px solid #e9e9e9;
+    border-radius: 6px;
+    outline: none;
+  }
+  .info_lists{
+    width: 86%;
+    margin: 0 auto;
+    font-size: 28px;
   }
   .details_list{
     width: 86%;

@@ -101,7 +101,7 @@ export default {
   }
   .wv-content{
     position: absolute;
-    top: 49px;
+    top: 80px;
     left: 0;
     right: 0;
     bottom: 0;

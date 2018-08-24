@@ -2,43 +2,76 @@
   <div class="page">
     <wv-header title="外呼记录" class="x-header" background-color="#FFFFFF">
     </wv-header>
-    <div class="x-wrapper">
+    <div class="wv-content x-wrapper">
       <div class="record_info">
         <p class="infor_title">客户信息</p>
         <div class="info_list">
           <p class="info_left">姓名</p>
-          <input class="info_cont" placeholder="蓝色妖姬">
+          <input class="info_cont" :placeholder="form.contactName" v-model="form.contactName">
           <p class="iconfont icon-fanhui info_right"></p>
         </div>
         <div class="info_list">
           <p class="info_left">电话</p>
-          <input class="info_cont" placeholder="13661876489">
+          <input class="info_cont" :placeholder="form.phoneNo" v-model="form.phoneNo">
           <p class="iconfont icon-fanhui info_right"></p>
         </div>
         <div class="info_list">
           <p class="info_left">微信</p>
-          <input class="info_cont" placeholder="2446075450">
+          <input class="info_cont" :placeholder="form.wechatNo" v-model="form.wechatNo">
           <p class="iconfont icon-fanhui info_right"></p>
         </div>
-        <div class="info_list">
-          <p class="info_left">备注</p>
-          <input class="info_cont" placeholder="有意向购买产品">
-          <p class="iconfont icon-fanhui info_right"></p>
+        <div class="info_lists">
+          <p class="info_left" style="margin-top: 10px">备注</p>
+          <textarea rows="5" :placeholder="form.common" class="record_txt" v-model="form.common"></textarea>
         </div>
       </div>
       <div class="info_text">
         <div class="info_txt">外呼话术</div>
-        <div class="info_html"></div>
+        <div class="info_html" v-html="form.salesTalk">{{form.salesTalk}}}</div>
       </div>
     </div>
   </div>
 </template>
-
 <script>
+import Vue from 'vue'
 export default {
   data () {
     return {
-
+      callid: '',
+      form: {},
+      phoneShow: ''
+    }
+  },
+  created () {
+    this.form = this.$route.query.form
+    this.callid = this.$route.query.callId
+    let phones = this.form.phoneNo.substring(4, 5)
+    if (phones === '*') {
+      this.phoneShow = true
+    } else {
+      this.phoneShow = false
+    }
+    // this.callid = this.$route.params.callid
+    // alert(this.callid)
+  },
+  mounted () {
+    let devicePlatform = Vue.cordova.device.platform
+    if (devicePlatform === 'Android') {
+      window.CallListener.addListener((state) => {
+        if (state === 1) {
+          if (this.phoneShow === false) {
+            window.CallListener.getCallInfo((info) => {
+              this.$router.push({path: '/call/call-details', query: {form: this.form, callTime: info}})
+              // alert('电话状态：' + state + '，通话时长：' + info.duration + '，开始时间：' + info.startDate + '，结束时间：' + info.endDate)
+              // this.callTime = timeDate(info.duration)
+              // this.history.actualCallStartDate = info.startDate
+              // this.history.acutalCallEndDate = info.endDate
+            }, this.form.phoneNo)
+          } else {
+            this.$router.push({path: '/call/call-details'})
+          }
+        }
+      })
     }
   }
 }
@@ -47,9 +80,9 @@ export default {
 <style lang="scss">
 .record_info{
   width: 100%;
-  height: 570px;
+  height: 860px;
   background: #ffffff;
-  margin-top: 100px;
+  margin-top: 20px;
   box-shadow: 6px 4px 20px rgba(219,219,219,0.3);
 }
   .infor_title{
@@ -64,6 +97,18 @@ export default {
     margin: 0 auto;
     border-bottom: 1px solid #e9e9e9;
     height: 109px;
+  }
+  .record_txt{
+    width: 100%;
+    margin: 0 auto;
+    border: 2px solid #e9e9e9;
+    border-radius: 6px;
+    outline: none;
+  }
+  .info_lists{
+    width: 86%;
+    margin: 0 auto;
+    font-size: 28px;
   }
 .info_list>p,.info_cont{
   float: left;
@@ -80,6 +125,7 @@ export default {
     text-align: right;
     color: #000000;
     outline: none;
+    border: 0;
     -webkit-tap-highlight-color: rgba(0,0,0,0)
   }
   .info_right{

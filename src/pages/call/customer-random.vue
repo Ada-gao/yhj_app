@@ -32,7 +32,7 @@
               <div class="placeholder random_nav cr">{{form.source}}</div>
             </wv-flex-item>
           </wv-flex>
-          <a :href="'tel:' + phoneNumber" v-show="phoneShow === false" class="random_button bgcolor" @click="phoneTimes">-->
+          <a :href="'tel:' + phoneNumber" v-show="phoneShow === false" class="random_button bgcolor" @click="phoneTimes">
             <small class="iconfont icon-hujiao" style="font-size: 100%;"></small>立即拨打
           </a>
           <div class="random_button" v-show="phoneShow === true" @click="startCall">
@@ -321,13 +321,15 @@ export default {
   },
   mounted () {
     let devicePlatform = Vue.cordova.device.platform
-    alert(devicePlatform)
     if (devicePlatform === 'Android') {
       //     /* 监听电话状态（1空闲、2响铃、3通话） */
       window.CallListener.addListener((state) => {
         if (state === 3) {
-          // alert(this.callSid)
-          alert(123)
+          if (this.phoneShow === false) {
+            this.$router.push({path: '/call/call-record', query: {form: this.form}})
+          } else {
+            this.$router.push({path: '/call/call-record', query: {form: this.form, callId: this.callSid}})
+          }
         }
         // else if (state === 1) {
         //   if (this.phoneShow === false) {
