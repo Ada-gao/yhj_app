@@ -28,7 +28,7 @@
         <!--</div>-->
       <!--</div>-->
       <div class="home_progress">
-        <wv-progress  :show-clear="false" style="width: 95%; margin: 0 auto"/>
+        <wv-progress :show-clear="false" style="width: 95%; margin: 0 auto"/>
       </div>
       <div class="home_nav">
           <wv-flex :gutter="10" style="width: 100%;">

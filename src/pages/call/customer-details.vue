@@ -301,24 +301,18 @@ export default {
       callTime: {},
       phoneNumber: '',
       phoneShow: true,
-      time1: '',
-      time2: '',
-      time3: '',
-      time4: '',
-      minutes: '',
       seconds: ''
       // counts: 0,
       // time1: 0
     }
   },
   created () {
-    this.nextStepOptions = queryObj.nextStep
-    this.callResult = queryObj.callResult
+    // this.nextStepOptions = queryObj.nextStep
+    // this.callResult = queryObj.callResult
     this.form = this.$route.params
-    console.log(this.form)
     // this.pageNumber = this.$route.params.call
-    this.form.lastCallResult = transformText(queryObj.callResult, this.form.lastCallResult)
-    this.form.genderText = transformText(queryObj.gender, this.form.gender)
+    // this.form.lastCallResult = transformText(queryObj.callResult, this.form.lastCallResult)
+    // this.form.genderText = transformText(queryObj.gender, this.form.gender)
     let phones = this.form.phoneNo.substring(4, 5)
     if (phones === '*') {
       this.phoneShow = true
@@ -333,20 +327,25 @@ export default {
       // alert('安卓')
       //     /* 监听电话状态（1空闲、2响铃、3通话） */
       window.CallListener.addListener((state) => {
-        if (state === 1) {
+        if (state === 3) {
           if (this.phoneShow === false) {
-            this.details = false
-            this.resultShow = true
-            /* 获取通话时长（单位秒） */
-            window.CallListener.getCallInfo((info) => {
-              // alert('电话状态：' + state + '，通话时长：' + info.duration + '，开始时间：' + info.startDate + '，结束时间：' + info.endDate)
-              this.callTime = timeDate(info.duration)
-              this.history.actualCallStartDate = info.startDate
-              this.history.acutalCallEndDate = info.endDate
-            }, '13661876489')
+            this.$router.push({path: '/call/call-record', query: {form: this.form}})
           } else {
-            this.callDate()
+            this.$router.push({path: '/call/call-record', query: {form: this.form, callId: this.callSid}})
           }
+          // if (this.phoneShow === false) {
+          //   this.details = false
+          //   this.resultShow = true
+          //   /* 获取通话时长（单位秒） */
+          //   window.CallListener.getCallInfo((info) => {
+          //     // alert('电话状态：' + state + '，通话时长：' + info.duration + '，开始时间：' + info.startDate + '，结束时间：' + info.endDate)
+          //     this.callTime = timeDate(info.duration)
+          //     this.history.actualCallStartDate = info.startDate
+          //     this.history.acutalCallEndDate = info.endDate
+          //   }, this.form.phoneNo)
+          // } else {
+          //   this.callDate()
+          // }
         } else {
           Toast.text({
             duration: 3000,

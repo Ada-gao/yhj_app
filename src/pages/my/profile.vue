@@ -75,28 +75,28 @@
         </div>
       </div>
     <!--<router-link to="/login">-->
-      <div class="button_return bgcolor" @click="showDialog">退出</div>
+      <div class="button_return bgcolor" @click="showDialog('ios')">退出</div>
     <!--</router-link>-->
     </div>
-    <div class="details_return" v-show="details">
-      <div class="detail_content">
-        <div style="height: 4rem;line-height: 4rem;font-size: 18px;color: #333333;">您确定要退出吗？</div>
-        <wv-flex>
-          <wv-flex-item>
-            <div class="placeholder button_out bgcolor" @click="buttoneturn">确 定</div>
-          </wv-flex-item>
-          <wv-flex-item>
-            <div class="placeholder button_out bgcolor" @click="buttoncancel">取 消</div>
-          </wv-flex-item>
-        </wv-flex>
-      </div>
-    </div>
+    <!--<div class="details_return" v-show="details">-->
+      <!--<div class="detail_content">-->
+        <!--<div style="height: 4rem;line-height: 4rem;font-size: 18px;color: #333333;">您确定要退出吗？</div>-->
+        <!--<wv-flex>-->
+          <!--<wv-flex-item>-->
+            <!--<div class="placeholder button_out bgcolor" @click="buttoneturn">确 定</div>-->
+          <!--</wv-flex-item>-->
+          <!--<wv-flex-item>-->
+            <!--<div class="placeholder button_out bgcolor" @click="buttoncancel">取 消</div>-->
+          <!--</wv-flex-item>-->
+        <!--</wv-flex>-->
+      <!--</div>-->
+    <!--</div>-->
   </div>
 </template>
 
 <script>
 import { getUser, getCompany, getRank } from '../../api/api'
-// import { Dialog } from 'we-vue'
+import { Dialog } from 'we-vue'
 import wenti from '@/assets/images/profile_wenti.png'
 import guanyu from '@/assets/images/profile_guanyu.png'
 import heads from '@/assets/images/hand.png'
@@ -118,22 +118,21 @@ export default {
     }
   },
   mounted () {
-    alert(123)
     this.userData()
   },
   methods: {
-    showDialog () {
-      this.details = true
-      // Dialog({
-      //   title: title,
-      //   message: '您确定要退出吗？',
-      //   skin,
-      //   showCancelButton: true
-      // }).then(() => {
-      //   this.$router.replace({path: '/login'})
-      //   localStorage.removeItem('token')
-      // }).catch(() => {
-      // })
+    showDialog (skin) {
+      // this.details = true
+      Dialog({
+        title: '温馨提示',
+        message: '您确定要退出吗？',
+        skin,
+        showCancelButton: true
+      }).then(() => {
+        this.$router.replace({path: '/login'})
+        localStorage.removeItem('token')
+      }).catch(() => {
+      })
     },
     buttoneturn () {
       this.$router.replace({path: '/login'})

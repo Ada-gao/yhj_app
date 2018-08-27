@@ -68,7 +68,7 @@ export default {
               // this.history.acutalCallEndDate = info.endDate
             }, this.form.phoneNo)
           } else {
-            this.$router.push({path: '/call/call-details'})
+            this.$router.push({path: '/call/call-details', query: {callId: this.callid}})
           }
         }
       })

@@ -5,7 +5,7 @@
     <div class="details_record">
       <div class="details_list">
         <p class="details_left"><small style="font-size: 100%;color: #ffffff;">*</small>通话时长</p>
-        <p class="details_cont">2分21秒</p>
+        <p class="details_cont">{{callTimes}}</p>
         <p class="details_right"></p>
       </div>
       <div class="details_list">
@@ -61,10 +61,14 @@
 </template>
 
 <script>
-import { getTaskHistory } from '@/api/api'
+import { getTaskHistory, getCallStatus } from '@/api/api'
+import { timeDate } from '@/utils'
 export default {
   data () {
     return {
+      callTime: '',
+      callTimes: '',
+      callId: '',
       actionValue: [],
       resultsPickerShow: false,
       actionPickerShow: false,
@@ -91,6 +95,8 @@ export default {
         }
       ],
       history: {
+        result: '',
+        status: '',
         actualCallStartDate: '',
         acutalCallEndDate: '',
         outboundTaskId: ''
@@ -99,21 +105,35 @@ export default {
   },
   created () {
     this.form = this.$route.query.form
+    let phones = this.form.phoneNo.substring(4, 5)
+    if (phones === '*') {
+      this.callId = this.$route.query.callId
+      getCallStatus(this.callId).then((res) => {
+        this.callTime = res.data
+        this.callTimes = timeDate(this.callTime.duration)
+      })
+    } else {
+      this.callTime = this.$route.query.callTime
+      this.callTimes = timeDate(this.callTime.duration)
+    }
     // alert('电话状态：' + this.form + '，通话时长：' + this.form.duration + '，开始时间：' + this.form.startDate + '，结束时间：' + this.form.endDate)
   },
   methods: {
     confirmResults (picker) {
       this.results = picker.getValues()[0]
-      console.log(this.results)
+      this.history.result = this.results.value
     },
     confirmAction (picker) {
       this.action = picker.getValues()[0]
-      console.log(picker)
+      this.history.status = this.action.value
     },
     submitCall () {
       // let _this = this
+      this.history.actualCallStartDate = this.callTime.startDate
+      this.history.acutalCallEndDate = this.callTime.endDate
       this.history.outboundTaskId = this.form.taskId
       getTaskHistory(this.history).then(res => {
+        this.$router.push({path: '/call/call-record'})
       })
     }
   }
