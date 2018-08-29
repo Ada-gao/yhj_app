@@ -15,24 +15,33 @@
           <p class="random_list"><small class="random_txt">客户姓名：</small><small>{{form.contactName}}</small></p>
           <p class="random_list"><small class="random_txt">客户电话：</small><small>{{form.phoneNo}}</small></p>
           <hr class="hr">
-          <wv-flex :gutter="10" style="width: 100%;">
-            <wv-flex-item>
-              <div class="placeholder random_nav random_pro">外呼状态</div>
-              <div class="placeholder random_nav iconfont icon-boda1"></div>
-              <div class="placeholder random_nav co">未外呼</div>
-            </wv-flex-item>
-            <wv-flex-item>
-              <div class="placeholder random_nav random_pro">产品名称</div>
-              <div class="placeholder random_nav iconfont icon-chanpin"></div>
-              <div class="placeholder random_nav cr">{{form.productName}}</div>
-            </wv-flex-item>
-            <wv-flex-item>
-              <div class="placeholder random_nav random_pro">线索来源</div>
-              <div class="placeholder random_nav iconfont icon-xiansuo1"></div>
-              <div class="placeholder random_nav cr">{{form.source}}</div>
-            </wv-flex-item>
-          </wv-flex>
-          <a :href="'tel:' + phoneNumber" v-show="phoneShow === false" class="random_button bgcolor" @click="phoneTimes">-->
+          <div class="details_navs">
+            <wv-flex :gutter="10" class="details_nav">
+              <wv-flex-item>
+                <div class="placeholder random_nav random_pro">外呼状态</div>
+                <div class="placeholder random_nav iconfont icon-boda1" v-if="form.lastCallResult === NOT_CALL"></div>
+                <div class="placeholder random_nav iconfont icon-jujue" v-if="form.lastCallResult === NOT_EXIST"></div>
+                <div class="placeholder random_nav iconfont icon-boda" v-if="form.lastCallResult === UNCONNECTED"></div>
+                <div class="placeholder random_nav iconfont icon-boda" v-if="form.lastCallResult === CONNECTED"></div>
+                <div class="placeholder random_nav co" v-if="form.lastCallResult === NOT_CALL">未外呼</div>
+                <div class="placeholder random_nav co" v-if="form.lastCallResult === NOT_EXIST">空号</div>
+                <div class="placeholder random_nav co" v-if="form.lastCallResult === UNCONNECTED">未接通</div>
+                <div class="placeholder random_nav cr" v-if="form.lastCallResult === CONNECTED">已接通</div>
+              </wv-flex-item>
+              <wv-flex-item>
+                <div class="placeholder random_nav random_pro">产品名称</div>
+                <div class="placeholder random_nav iconfont icon-chanpin"></div>
+                <div class="placeholder random_nav cr">{{form.productName}}</div>
+              </wv-flex-item>
+              <wv-flex-item>
+                <div class="placeholder random_nav random_pro">线索来源</div>
+                <div class="placeholder random_nav iconfont icon-xiansuo1"></div>
+                <div class="placeholder random_nav cr">{{form.source}}</div>
+              </wv-flex-item>
+            </wv-flex>
+          </div>
+          <div class="details_state">最近外呼次数：{{form.callCount}}次 &nbsp;&nbsp;最近一次外呼时间：{{form.lastCallDate}}</div>
+          <a :href="'tel:' + phoneNumber" v-show="phoneShow === false" class="random_button bgcolor" @click="phoneTimes">
             <small class="iconfont icon-hujiao" style="font-size: 100%;"></small>立即拨打
           </a>
           <div class="random_button" v-show="phoneShow === true" @click="startCall">
@@ -310,6 +319,7 @@ export default {
     // this.nextStepOptions = queryObj.nextStep
     // this.callResult = queryObj.callResult
     this.form = this.$route.params
+    this.form.lastCallDate = parseTime(this.form.lastCallDate, '{y}-{m}-{d}')
     // this.pageNumber = this.$route.params.call
     // this.form.lastCallResult = transformText(queryObj.callResult, this.form.lastCallResult)
     // this.form.genderText = transformText(queryObj.gender, this.form.gender)
@@ -498,6 +508,10 @@ export default {
 }
 </script>
 <style lang="scss">
+  .details_nav{
+    width: 100%;
+    height: 120px;
+  }
   .random_content{
     position: absolute;
     top:327px;
@@ -508,7 +522,7 @@ export default {
     position: relative;
     width: 95%;
     margin: auto;
-    height: 546px;
+    /*height: 546px;*/
     background-color: white;
     border-radius: 6px;
   }
@@ -528,6 +542,10 @@ export default {
     text-align: center;
     font-size: 24px;
   }
+  .details_navs{
+    width: 100%;
+    height: 170px;
+  }
   .random_pro{
     color:#939393;
   }
@@ -546,8 +564,8 @@ export default {
     border: 1px solid #e9e9e9!important;
   }
   .random_button{
-    position: absolute;
-    bottom: 0 ;
+    /*position: absolute;*/
+    /*bottom: 0 ;*/
     width: 100%;
     height: 98px;
     background: linear-gradient(to right, #5d90f4 , #2f6be2);
@@ -853,34 +871,7 @@ export default {
     color: #ffffff;
     margin: 1rem auto 0;
   }
-  /*input[type="radio"] {*/
-    /*// content: "\a0"; !*不换行空格*!*/
-    /*// display: inline-block;*/
-    /*// vertical-align: middle;*/
-    /*font-size: 14px;*/
-    /*// width: 1em;*/
-    /*// height: 1em;*/
-    /*margin-right: .4em;*/
-    /*border-radius: 50%;*/
-    /*border: 1px solid #32CCBC;*/
-    /*text-indent: .15em;*/
-    /*line-height: 1;*/
-    /*// margin-right: 5px;*/
-  /*}*/
-  /*input[type="radio"]:checked {*/
-    /*background-color: #32CCBC;*/
-    /*background-clip: content-box;*/
-    /*padding: .2em;*/
-  /*}*/
-  /*input[type="radio"] {*/
-    /*// position: absolute;*/
-    /*clip: rect(0, 0, 0, 0);*/
-  /*}*/
-  /*.female,.male{*/
-    /*// float: left;*/
-    /*width: 40%;*/
-    /*display: inline-block;*/
-  /*}*/
+
   .phone_cancle{
     width: 18%;
     margin: 20% auto;
@@ -905,5 +896,11 @@ export default {
     text-overflow: ellipsis;
     -o-text-overflow: ellipsis;
     overflow: hidden;
+  }
+  .details_state{
+    width: 86%;
+    margin: 10px auto 39px;
+    font-size: 25px;
+    color: #2F6BE2;
   }
 </style>

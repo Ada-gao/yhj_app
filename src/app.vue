@@ -88,17 +88,17 @@ export default {
     color: #000000;
     font-size: 30px;
   }
-  /*.wv-content_profile{*/
-    /*position: fixed;*/
-    /*top: 1.6rem;*/
-    /*left: 0;*/
-    /*right: 0;*/
-    /*bottom: 2rem;*/
-    /*!* height: 18.2rem; *!*/
-    /*overflow: hidden;*/
-    /*overflow-y: scroll;*/
-    /*-webkit-overflow-scrolling: touch;*/
-  /*}*/
+  .wv-content_profile{
+    position: fixed;
+    top: 80px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* height: 18.2rem; */
+    overflow: hidden;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+  }
   .wv-header[data-v-a5b8d5b6]{
     height: 80px!important;
     line-height: 80px!important;

@@ -508,7 +508,7 @@ export default {
     position: relative;
     width: 95%;
     margin: auto;
-    height: 546px;
+    /*height: 546px;*/
     background-color: white;
     border-radius: 6px;
   }

@@ -2,61 +2,63 @@
   <div class="page">
     <wv-header title="外呼记录" class="x-header" background-color="#FFFFFF">
     </wv-header>
-    <div class="details_record">
-      <div class="details_list">
-        <p class="details_left"><small style="font-size: 100%;color: #ffffff;">*</small>通话时长</p>
-        <p class="details_cont">{{callTimes}}</p>
-        <p class="details_right"></p>
+    <div class="wv-content x-wrapper">
+      <div class="details_record">
+        <div class="details_list">
+          <p class="details_left"><small style="font-size: 100%;color: #ffffff;">*</small>通话时长</p>
+          <p class="details_cont">{{callTimes}}</p>
+          <p class="details_right"></p>
+        </div>
+        <div class="details_list">
+          <p class="details_left"><small style="font-size: 100%;color: red;">*</small> 外呼结果</p>
+          <wv-cell class="details_cont" :value="results.label"  @click.native="resultsPickerShow = true" />
+          <!--<wv-cell :value="ticket | pickerValueFilter" @click.native="ticketPickerShow = true" />-->
+          <p class="iconfont icon-fanhui details_right"></p>
+        </div>
+        <div class="details_list">
+          <p class="details_left"><small style="font-size: 100%;color: red;">*</small> 下一步行动计划</p>
+          <wv-cell class="details_cont" :value="action.label" @click.native="actionPickerShow = true" />
+          <p class="iconfont icon-fanhui details_right"></p>
+        </div>
       </div>
-      <div class="details_list">
-        <p class="details_left"><small style="font-size: 100%;color: red;">*</small> 外呼结果</p>
-        <wv-cell class="details_cont" :value="results.label"  @click.native="resultsPickerShow = true" />
-        <!--<wv-cell :value="ticket | pickerValueFilter" @click.native="ticketPickerShow = true" />-->
-        <p class="iconfont icon-fanhui details_right"></p>
+      <div class="details_info">
+        <p class="infor_title">客户信息</p>
+        <div class="info_list">
+          <p class="info_left">姓名</p>
+          <input class="info_cont" :placeholder="form.contactName" v-model="form.contactName">
+          <p class="iconfont icon-fanhui info_right"></p>
+        </div>
+        <div class="info_list">
+          <p class="info_left">电话</p>
+          <input class="info_cont" :placeholder="form.phoneNo" v-model="form.phoneNo">
+          <p class="iconfont icon-fanhui info_right"></p>
+        </div>
+        <div class="info_list">
+          <p class="info_left">微信</p>
+          <input class="info_cont" :placeholder="form.wechatNo" v-model="form.wechatNo">
+          <p class="iconfont icon-fanhui info_right"></p>
+        </div>
+        <div class="info_lists">
+          <p class="info_left" style="margin-top: 10px">备注</p>
+          <textarea rows="5" :placeholder="form.common" class="record_txt" v-model="form.common"></textarea>
+        </div>
       </div>
-      <div class="details_list">
-        <p class="details_left"><small style="font-size: 100%;color: red;">*</small> 下一步行动计划</p>
-        <wv-cell class="details_cont" :value="action.label" @click.native="actionPickerShow = true" />
-        <p class="iconfont icon-fanhui details_right"></p>
+      <div class="details_button" @click="submitCall">
+        提交
       </div>
+      <wv-picker
+        :visible.sync="resultsPickerShow"
+        :columns="resultsColumns"
+        value-key="label"
+        @confirm="confirmResults"
+      />
+      <wv-picker
+        :visible.sync="actionPickerShow"
+        :columns="actionColumns"
+        value-key="label"
+        @confirm="confirmAction"
+      />
     </div>
-    <div class="details_info">
-      <p class="infor_title">客户信息</p>
-      <div class="info_list">
-        <p class="info_left">姓名</p>
-        <input class="info_cont" :placeholder="form.contactName" v-model="form.contactName">
-        <p class="iconfont icon-fanhui info_right"></p>
-      </div>
-      <div class="info_list">
-        <p class="info_left">电话</p>
-        <input class="info_cont" :placeholder="form.phoneNo" v-model="form.phoneNo">
-        <p class="iconfont icon-fanhui info_right"></p>
-      </div>
-      <div class="info_list">
-        <p class="info_left">微信</p>
-        <input class="info_cont" :placeholder="form.wechatNo" v-model="form.wechatNo">
-        <p class="iconfont icon-fanhui info_right"></p>
-      </div>
-      <div class="info_lists">
-        <p class="info_left" style="margin-top: 10px">备注</p>
-        <textarea rows="5" :placeholder="form.common" class="record_txt" v-model="form.common"></textarea>
-      </div>
-    </div>
-    <div class="details_button" @click="submitCall">
-      提交
-    </div>
-    <wv-picker
-      :visible.sync="resultsPickerShow"
-      :columns="resultsColumns"
-      value-key="label"
-      @confirm="confirmResults"
-    />
-    <wv-picker
-      :visible.sync="actionPickerShow"
-      :columns="actionColumns"
-      value-key="label"
-      @confirm="confirmAction"
-    />
   </div>
 </template>
 
@@ -73,16 +75,15 @@ export default {
       actionValue: [],
       resultsPickerShow: false,
       actionPickerShow: false,
-      results: [{label: '进一步跟进', value: 'BUSYING'}],
-      action: ['继续拨打'],
+      results: [],
+      action: [],
       resultsColumns: [
         {
           values: [
-            {label: '占线', value: 'BUSYING'},
             {label: '未外呼', value: 'NOT_CALL'},
-            {label: '无人接听', value: 'NO_ANSWER'},
-            {label: '无意向拒绝', value: 'REFUSE'},
-            {label: '进一步跟进', value: 'FOLLOW'}
+            {label: '空号', value: 'NOT_EXIST'},
+            {label: '未接通', value: 'UNCONNECTED'},
+            {label: '已接通', value: 'CONNECTED'}
           ]
         }
       ],

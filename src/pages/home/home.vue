@@ -5,7 +5,7 @@
         <i class="iconfont icon-wode" @click="$router.push('/profile')"></i>
       </div>
     </wv-header>
-    <div class="x-wrapper">
+    <div class="wv-content x-wrapper">
       <!--<div class="home_content" >-->
         <!--<div class="home_header">-->
           <!--<div class="home_time">-->
@@ -88,14 +88,21 @@
       <!--<wv-footer class="footer-demo footer_status" text="——已加载全部——"></wv-footer>-->
     </div>
     <div class="home_complete" v-show="complete">
-      <div class="complete_content"></div>
+      <div class="complete_content">
+        <div class="task_img">
+          <img :src="task">
+        </div>
+        <p class="task_title">今天的任务已完成！</p>
+        <p class="task_txt">请继续加油哦</p>
+        <div class="task_buttom" @click="task"> 知道了</div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import thumbSmall from '../../assets/images/icon_tabbar.png'
-import head from '@/assets/images/hand.png'
+import task from '@/assets/images/task.png'
 import { getCompany, getUser, getStatisGroup, getCompleteStatus, getRank } from '@/api/api'
 import { timeDate } from '@/utils'
 // getTaskStatisticsDaily
@@ -103,8 +110,7 @@ export default {
   data () {
     return {
       thumbSmall,
-      head,
-      dateTime: '',
+      task,
       form: {},
       Belonged: '',
       name: '',
@@ -117,7 +123,6 @@ export default {
     }
   },
   mounted () {
-    this.time()
     this.getList()
   },
   methods: {
@@ -159,21 +164,21 @@ export default {
     selected (route) {
       return this.$router.currentRoute.path === route
     },
-    time () {
-      var nowdate = new Date()
-      var y = nowdate.getFullYear()
-      var m = nowdate.getMonth() + 1
-      var d = nowdate.getDate()
-      var my = nowdate.getDay()
-      var weekday = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
-      if (m < 10) {
-        m = '0' + m
-      }
-      if (d < 10) {
-        d = '0' + d
-      }
-      this.dateTime = y + '年' + m + '月' + d + '日' + weekday[my]
-    },
+    // time () {
+    //   var nowdate = new Date()
+    //   var y = nowdate.getFullYear()
+    //   var m = nowdate.getMonth() + 1
+    //   var d = nowdate.getDate()
+    //   var my = nowdate.getDay()
+    //   var weekday = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
+    //   if (m < 10) {
+    //     m = '0' + m
+    //   }
+    //   if (d < 10) {
+    //     d = '0' + d
+    //   }
+    //   this.dateTime = y + '年' + m + '月' + d + '日' + weekday[my]
+    // },
     callphone () {
       this.$router.push({path: '/call/customer-random'})
     }
@@ -182,6 +187,9 @@ export default {
     title () {
       return this.$route.meta.title
     }
+  },
+  task () {
+    this.complete = false
   }
 }
 </script>
@@ -307,7 +315,7 @@ export default {
     float: left;
   }
   .home_progress{
-    padding-top: 80px;
+    padding-top: 10px;
     /*height: 4.82rem;*/
     /*background: #FFFFFF;*/
     /*margin-top: 0.4rem;*/
@@ -369,5 +377,35 @@ export default {
     height: 706px;
     background: #ffffff;
     border-radius: 12px;
+  }
+  .task_img{
+    width: 40%;
+    margin: 40px auto 20px;
+  }
+  .task_img>img{
+    max-width: 100%;
+  }
+  .task_title{
+    color: #316DE3;
+    font-size: 36px;
+    text-align: center;
+  }
+  .task_txt{
+    text-align: center;
+    color: #909090;
+    font-size: 26px;
+    margin: 39px auto 86px;
+  }
+  .task_buttom{
+    width: 80%;
+    margin: 0 auto;
+    height: 98px;
+    line-height: 98px;
+    color: #ffffff;
+    text-align: center;
+    font-size: 36px;
+    border-radius:12px;
+    box-shadow:0px 7px 29px 1px rgba(13,67,173,0.5);
+    background: linear-gradient(to right, #5d90f4 , #2f6be2);
   }
 </style>

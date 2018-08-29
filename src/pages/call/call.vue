@@ -5,7 +5,7 @@
         <i class="iconfont icon-fanhui size_i"></i>返回
       </div>
     </wv-header>
-    <div class="x-wrapper">
+    <div class="wv-content x-wrapper">
       <div class="call_content">
         <div class="call_time">
           <wv-flex :gutter="10">
@@ -214,9 +214,9 @@ export default {
 </script>
 
 <style lang="scss">
-  .call_content{
-   padding-top: 80px;
-  }
+  /*.call_content{*/
+   /*padding-top: 80px;*/
+  /*}*/
   .call_time{
     height: 190px;
     width: 100%;

@@ -5,7 +5,7 @@
         <i class="iconfont icon-fanhui size_i"></i>返回
       </div>
     </wv-header>
-    <div class="x-wrapper">
+    <div class="wv-content x-wrapper">
     <div class="profile_content bgcolor">
       <div class="profile_head">
         <img :src="logo" alt="">
@@ -61,14 +61,14 @@
       <div class="profile_list">
         <div style="border-bottom: 0.5px solid #E9E9E9">
           <router-link :to="{path:'/my/feedback'}">
-          <p class="iconfont icon-wenti profile_nav" style="color: #eccb05;width: 10%;font-size: 45px"></p>
+          <p class="iconfont icon-wenti profile_nav profile_wenti"></p>
           <p class="profile_nav" style="color: rgba(50,50,50,1);">问题反馈</p>
           <p class="iconfont icon-fanhui profile_nav profile_icon" style="color: #DBDBDB;width: 10%;float: right"></p>
           </router-link>
         </div>
         <div>
           <router-link :to="{path:'/my/relevant'}">
-          <p class="iconfont icon-guanyu profile_nav" style="color: #4482d6;width: 10%;font-size: 45px"></p>
+          <p class="iconfont icon-guanyu profile_nav profile_guan"></p>
           <p class="profile_nav" style="color: rgba(50,50,50,1);">关于闪电呼</p>
           <p class="iconfont icon-fanhui profile_nav profile_icon" style="color:#DBDBDB;width: 10%;float: right"></p>
           </router-link>
@@ -242,9 +242,9 @@ export default {
   }
   .profile_content{
     width: 100%;
-    height: 760px;
+    /*height: 760px;*/
     /*background-color: #32CCBC;*/
-    padding-top: 89px;
+    padding-top: 10px;
     /*margin-top: 2rem;*/
   }
   .profile_head{
@@ -349,5 +349,15 @@ export default {
     -moz-transform:rotate(180deg);
     -webkit-transform:rotate(180deg);
     -o-transform:rotate(180deg);
+  }
+  .profile_wenti {
+    color: #eccb05;
+    width: 10%;
+    font-size: 45px
+  }
+  .profile_guan{
+    color: #4482d6;
+    width: 10%;
+    font-size: 45px
   }
 </style>

@@ -5,7 +5,7 @@
         <i class="iconfont icon-fanhui size_i" @click="$router.push('/')" style="color:#959292"></i>
       </div>
     </wv-header>
-    <div class="x-wrapper">
+    <div class="wv-content x-wrapper">
       <div class="trial_nav bgcolor">
         <div class="trial_title">
           我们提供免费体验活动，您可以在此提交申请。申
@@ -48,6 +48,7 @@
             </div>
           </wv-flex-item>
       </div>
+      <div></div>
       <div class="trial_verification bgcolor">
         <p class="company_title">联系人信息</p>
         <div class="info_list">
@@ -387,6 +388,7 @@ export default {
   }
   .input_size{
     font-size: 28px;
+    border: 0 !important;
     outline: none;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
   }
