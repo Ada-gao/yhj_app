@@ -266,7 +266,8 @@ export default {
   .place{
     width: 22%;
     margin: 0 auto;
-    color: #02B6DC;
+    color: #2f6be2;
+    font-size: 33px;
   }
   .call_nav{
     width: 77%;

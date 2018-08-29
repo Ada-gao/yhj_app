@@ -80,6 +80,14 @@ export default {
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
   }
+  .header_left{
+    position: absolute;
+    top: 20px;
+    left: 0;
+    width: 20%;
+    color: #000000;
+    font-size: 30px;
+  }
   /*.wv-content_profile{*/
     /*position: fixed;*/
     /*top: 1.6rem;*/
@@ -156,13 +164,13 @@ export default {
     font-size: 0.8rem;
   }
   .size_i{
-    font-size: 40px;
-    margin-left: 0.2rem;
+    font-size: 40px!important;
+    margin-left: 34px;
     color:#000000!important;
   }
   .size_c{
-    font-size: 40px;
-    margin-left: 0.2rem;
+    font-size: 40px!important;
+    margin-left: 34px;
     color:#ffffff!important;
   }
   .icon_right{

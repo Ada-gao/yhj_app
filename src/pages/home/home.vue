@@ -1,7 +1,7 @@
 <template>
   <div class="page" style="background: #ffffff;position: absolute">
     <wv-header title="首页" class="x-header" background-color="#FFFFFF">
-      <div class="btn-back header_left" slot="left">
+      <div class="btn-back header_homeleft" slot="left">
         <i class="iconfont icon-wode" @click="$router.push('/profile')"></i>
       </div>
     </wv-header>
@@ -232,7 +232,7 @@ export default {
     text-align: center;
     margin-bottom: 79px;
   }
-  .header_left{
+  .header_homeleft{
     position: absolute;
     top: 30px;
     left: 39px;

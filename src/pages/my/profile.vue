@@ -1,8 +1,8 @@
 <template>
   <div class="page">
     <wv-header title="我的" class="x-header bgcolor">
-      <div class="btn-back profile_left" slot="left">
-        <i class="iconfont icon-fanhui size_i" @click="$router.push('/home')"></i>返回
+      <div class="btn-back header_left" slot="left" @click="$router.push('/home')">
+        <i class="iconfont icon-fanhui size_i"></i>返回
       </div>
     </wv-header>
     <div class="x-wrapper">
@@ -201,14 +201,6 @@ export default {
     padding: 30px 40px !important;
     font-size: 28px;
     color: rgba(50,50,50,1);
-  }
-  .profile_left{
-    position: absolute;
-    top: 17px;
-    left: 0;
-    width: 20%;
-    color: #000000;
-    font-size: 30px;
   }
   .button_out{
     color: #F0F0F0;
