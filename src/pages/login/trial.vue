@@ -5,52 +5,92 @@
         <i class="iconfont icon-fanhui size_i" @click="$router.push('/')" style="color:#959292"></i>
       </div>
     </wv-header>
-    <div class="wv-content x-wrapper" style="background-color: #ffffff">
-    <div class="trial_title">
-      我们提供免费体验活动，您可以在此提交申请。申
-      请成功后，将由我们专属服务人员为你安排预约。
-    </div>
-    <wv-flex :gutter="10" style="margin-top: 0.6rem">
-      <wv-flex-item>
-        <div class="placeholder trial_icon iconfont icon-chanpinzhanshi"></div>
-        <div class="placeholder trial_text">产品展示</div>
-      </wv-flex-item>
-      <wv-flex-item>
-        <div class="placeholder trial_icon iconfont icon-chanpinpeizhi"></div>
-        <div class="placeholder trial_text">产品配置</div>
-      </wv-flex-item>
-      <wv-flex-item>
-        <div class="placeholder trial_icon iconfont icon-mianfeitiyan"></div>
-        <div class="placeholder trial_text">免费体检</div>
-      </wv-flex-item>
-    </wv-flex>
-    <p style="font-size: 0.6rem;margin: 1.18rem auto 0;width: 87%">公司信息</p>
-    <!--<input type="text" placeholder="公司名称" class="trial_company" v-model="companyName">-->
-      <wv-input type="text" placeholder="公司名称" class="verification" v-model="companyName"></wv-input>
-    <v-distpicker hide-area @province="onChangeProvince" @city="onChangeCity"></v-distpicker>
-    <wv-flex :gutter="10" style="width: 96%;margin: 0 auto;">
-      <wv-flex-item @click.native="industryPickerShow = true">
-        <div class="placeholder">
-          <input class="trial_company weui-input" placeholder="所属行业" :value="industryType | pickerValueFilter" onfocus="this.blur();" />
-          <!--<input type="text" placeholder="所在地" class="trial_company" >-->
+    <div class="x-wrapper">
+      <div class="trial_nav bgcolor">
+        <div class="trial_title">
+          我们提供免费体验活动，您可以在此提交申请。申
+          请成功后，将由我们专属服务人员为你安排预约。
         </div>
-      </wv-flex-item>
-      <wv-flex-item @click.native="scalePickerShow = true">
-        <div class="placeholder"></div>
-        <input class="trial_company weui-input" placeholder="公司规模" :value="scales | pickerValueFilter" onfocus="this.blur();" />
-      </wv-flex-item>
-    </wv-flex>
-    <p style="font-size: 0.6rem;margin: 1.18rem auto 0;width: 87%">联系人信息</p>
-    <!--<input type="text" placeholder="联系人姓名" class="trial_company" v-model="contact">-->
-      <wv-input type="text" placeholder="联系人姓名" class="verification" v-model="contact"></wv-input>
-    <wv-input placeholder="请输入手机号" class="verification" v-model="mobile">
-      <button v-show="show" class="weui-vcode-btn" slot="ft" @click="trialVerification" style="font-size: 0.6rem!important;">获取验证码</button>
-      <button v-show="!show" class="weui-vcode-btn" slot="ft">{{count}}s</button>
-    </wv-input>
-    <!--<input type="tel" placeholder="请输入验证码" class="trial_company" v-model="verification">-->
-      <wv-input type="tel" placeholder="请输入验证码" class="verification" v-model="verification"></wv-input>
-    <p class="trial_footer">请如实填写申请信息，我们将于1个工作日内与您取得联系</p>
-    <div class="trial_button bgcolor" @click="trialApply">申请体验</div>
+        <wv-flex :gutter="10">
+          <wv-flex-item>
+            <div class="placeholder trial_icon iconfont icon-chanpinzhanshi"></div>
+            <div class="placeholder trial_text">产品展示</div>
+          </wv-flex-item>
+          <wv-flex-item>
+            <div class="placeholder trial_icon iconfont icon-chanpinpeizhi"></div>
+            <div class="placeholder trial_text">产品配置</div>
+          </wv-flex-item>
+          <wv-flex-item>
+            <div class="placeholder trial_icon iconfont icon-mianfei"></div>
+            <div class="placeholder trial_text">免费体检</div>
+          </wv-flex-item>
+        </wv-flex>
+      </div>
+      <div class="trial_info bgcolor">
+        <p class="company_title">公司信息</p>
+        <div class="info_list">
+          <input placeholder="请输入公司名称" class="input_size" v-model="companyName" />
+          <p class="iconfont icon-fanhui icon_right info_icon"></p>
+        </div>
+        <div class="info_list">
+          <wv-cell title="请选择公司所在地" is-link :value="address | pickerValueFilter" @click.native="addressPickerShow = true" />
+        </div>
+        <wv-flex-item @click.native="industryPickerShow = true">
+        <div class="placeholder info_list">
+          <input class="weui-input input_size" placeholder="请输入所属行业" :value="industryType | pickerValueFilter" onfocus="this.blur();" />
+          <p class="iconfont icon-fanhui icon_right info_icon"></p>
+        </div>
+        </wv-flex-item>
+          <wv-flex-item @click.native="scalePickerShow = true" >
+            <div class="placeholder info_list">
+              <input class="weui-input input_size" placeholder="请输入公司规模" :value="scales | pickerValueFilter" onfocus="this.blur();"/>
+              <p class="iconfont icon-fanhui icon_right info_icon"></p>
+            </div>
+          </wv-flex-item>
+      </div>
+      <div class="trial_verification bgcolor">
+        <p class="company_title">联系人信息</p>
+        <div class="info_list">
+          <input placeholder="请输入联系人姓名" class="input_size" v-model="contact" />
+          <p class="iconfont icon-fanhui icon_right info_icon"></p>
+        </div>
+        <div class="info_list">
+          <input type="tel" placeholder="请输入联系人电话" class="input_size" v-model="mobile" />
+          <p class="iconfont icon-fanhui icon_right info_icon"></p>
+        </div>
+        <div class="info_lists">
+          <input type="tel" placeholder="输入验证码" class="input_size" v-model="verification" />
+          <button v-show="show" class="weui-vcode-btn" slot="ft" @click="trialVerification">获取验证码</button>
+          <button v-show="!show" class="weui-vcode-btn" slot="ft">{{count}}s</button>
+        </div>
+      </div>
+    <!---->
+    <!--&lt;!&ndash;<input type="text" placeholder="公司名称" class="trial_company" v-model="companyName">&ndash;&gt;-->
+      <!--<wv-input type="text" placeholder="公司名称" class="verification" v-model="companyName"></wv-input>-->
+    <!--<v-distpicker hide-area @province="onChangeProvince" @city="onChangeCity"></v-distpicker>-->
+    <!--<wv-flex :gutter="10" style="width: 96%;margin: 0 auto;">-->
+      <!--<wv-flex-item @click.native="industryPickerShow = true">-->
+        <!--<div class="placeholder">-->
+          <!--<input class="trial_company weui-input" placeholder="所属行业" :value="industryType | pickerValueFilter" onfocus="this.blur();" />-->
+          <!--&lt;!&ndash;<input type="text" placeholder="所在地" class="trial_company" >&ndash;&gt;-->
+        <!--</div>-->
+      <!--</wv-flex-item>-->
+      <!--<wv-flex-item @click.native="scalePickerShow = true">-->
+        <!--<div class="placeholder"></div>-->
+        <!--<input class="trial_company weui-input" placeholder="公司规模" :value="scales | pickerValueFilter" onfocus="this.blur();" />-->
+      <!--</wv-flex-item>-->
+    <!--</wv-flex>-->
+    <!--<p style="font-size: 0.6rem;margin: 1.18rem auto 0;width: 87%">联系人信息</p>-->
+    <!--&lt;!&ndash;<input type="text" placeholder="联系人姓名" class="trial_company" v-model="contact">&ndash;&gt;-->
+      <!--<wv-input type="text" placeholder="联系人姓名" class="verification" v-model="contact"></wv-input>-->
+    <!--<wv-input placeholder="请输入手机号" class="verification" v-model="mobile">-->
+      <!--<button v-show="show" class="weui-vcode-btn" slot="ft" @click="trialVerification" style="font-size: 0.6rem!important;">获取验证码</button>-->
+      <!--<button v-show="!show" class="weui-vcode-btn" slot="ft">{{count}}s</button>-->
+    <!--</wv-input>-->
+    <!--&lt;!&ndash;<input type="tel" placeholder="请输入验证码" class="trial_company" v-model="verification">&ndash;&gt;-->
+      <!--<wv-input type="tel" placeholder="请输入验证码" class="verification" v-model="verification"></wv-input>-->
+    <!--<p class="trial_footer">请如实填写申请信息，我们将于1个工作日内与您取得联系</p>-->
+    <div class="trial_button" @click="trialApply">申请体验</div>
     <wv-picker
       :visible.sync="industryPickerShow"
       v-model="industryType"
@@ -63,6 +103,15 @@
       :columns="scaleColumns"
       @confirm="confirmScale"
     />
+      <wv-picker
+        :visible.sync="addressPickerShow"
+        v-model="address"
+        ref="addressPicker"
+        :columns="addressColumns"
+        :visible-item-count="5"
+        @change="onAddressChange"
+        @confirm="confirmAddress"
+      />
     </div>
   </div>
 </template>
@@ -70,6 +119,19 @@
 import VDistpicker from 'v-distpicker'
 import { Toast } from 'we-vue'
 import { postTrial, postVerification, getIndustry, getOrg, postVerify } from '../../api/api'
+import chinaAreaData from 'china-area-data'
+const provinces = Object.values(chinaAreaData[86])
+// 获取某一省下的市
+const getCities = (province) => {
+  let provinceCode
+  for (let i in chinaAreaData[86]) {
+    if (province === chinaAreaData[86][i]) {
+      provinceCode = i
+      break
+    }
+  }
+  return typeof chinaAreaData[provinceCode] === 'object' ? Object.values(chinaAreaData[provinceCode]) : []
+}
 
 export default {
   components: { VDistpicker },
@@ -90,8 +152,10 @@ export default {
       scaleValue: [],
       industryPickerShow: false,
       scalePickerShow: false,
+      addressPickerShow: false,
       industryType: [''],
       scales: [''],
+      address: [],
       fruit: [{name: 'Apple', age: 1}],
       industryColumns: [
         {
@@ -108,6 +172,14 @@ export default {
           ],
           defaultIndex: 2
         }
+      ],
+      addressColumns: [
+        {
+          values: provinces
+        },
+        {
+          values: getCities()
+        }
       ]
     }
   },
@@ -116,22 +188,18 @@ export default {
     this.Scale()
   },
   methods: {
-    onChangeProvince (province) {
-      // console.log(province)
-      this.companyProvince = province.value
-    },
-    onChangeCity (city) {
-      // console.log(city)
-      if (this.companyProvince === '台湾省') {
-        city.value = '台湾'
+    onAddressChange (picker, addressValues, slotIndex) {
+      if (slotIndex === 0) {
+        const cities = getCities(addressValues[0])
+        picker.setColumnValues(1, cities)
       }
-      this.companyCity = city.value
     },
-    // 提交申请体验
+    confirmAddress (picker) {
+      this.address = picker.getValues()
+      this.companyProvince = this.address[0]
+      this.companyCity = this.address[1]
+    },
     trialApply () {
-      if (this.companyProvince === '台湾省') {
-        this.companyCity = '台湾'
-      }
       let params = {
         companyName: this.companyName,
         companyProvince: this.companyProvince,
@@ -253,89 +321,119 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .wv-header .wv-header-title[data-v-a5b8d5b6]{
     font-size: 0.65rem;
   }
-  .weui-toast_text .weui-toast__content[data-v-4af60de0]{
-    font-size: 0.7rem;
+  .weui-cell{
+    padding: 0 !important;
   }
+  /*.weui-toast_text .weui-toast__content[data-v-4af60de0]{*/
+    /*font-size: 0.7rem;*/
+  /*}*/
   .weui-vcode-btn{
-    color: #02B6DC;
+    width: 20%;
+    height: 48px;
+    line-height: 48px;
+    border: 1px solid #3772E5;
+    color: #3772E5;
+    margin-top: 33px;
+    border-radius: 6px;
+  }
+  .trial_nav{
+    width: 100%;
+    height: 282px;
+    margin-top: 80px;
   }
   .trial_title{
-    width: 80%;
+    width: 85%;
     margin:auto;
-    font-size: 13px;
+    font-size: 28px;
   }
   .trial_icon{
     margin: 0 auto;
-    width: 1.32rem;
-    font-size: 1.32rem;
-    color: #02B6DC;
+    width: 33%;
+    font-size: 75px;
+    color: #3772E5;
   }
   .trial_text{
-    font-size: 0.48rem;
+    font-size: 24px;
     text-align: center;
   }
-  .trial_company{
-    width: 87%;
-    margin: 0.42rem auto 0;
-    display: block;
-    height: 1.2rem;
-    border-radius: 0.2rem;
-    border: 1px solid gainsboro;
-    padding-left: 0.2rem;
-    outline:none;
-    font-size: 0.48rem;
-    background: white;
+  .trial_info{
+    width: 100%;
+    height: 550px;
+    margin-top: 20px;
   }
-  .verification{
-    width: 87%;
-    margin: 0.4rem auto 0;
-    border-radius: 0.2rem;
-    border: 1px solid gainsboro;
-    background: white;
-    height: 1.2rem;
-    font-size: 0.5rem;
-    padding: 0 0 0 0.2rem;
-    outline: none
+  .company_title{
+    font-size: 32px;
+    padding: 40px 0 0 41px;
   }
-  .weui-vcode-btn, .weui-vcode-img{
-    height: 0.5rem;
-    line-height: 0.5rem;
+  .info_list,.info_lists{
+    width: 85%;
+    height: 109px;
+    margin: 0 auto;
+    border-bottom: 0.5px solid #E9E9E9;
+    line-height: 109px;
   }
-  .trial_footer{
-    font-size: 0.50rem;
-    color: #666666;
-    text-align: center;
-    margin-top: 0.44rem;
+  .info_lists>button{
+    float: left;
+  }
+  .info_lists>input{
+    display: inline-block;
+    float: left;
+    width: 77%;
+    height: 101px;
+  }
+  .input_size{
+    font-size: 28px;
+    outline: none;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+  }
+  input::-webkit-input-placeholder{
+    color: #E9E9E9;
+  }
+  .info_list>input{
+    display: inline-block;
+    float: left;
+    width: 88%;
+    height: 101px;
+  }
+  .info_list>p{
+    float: left;
+    width: 10%;
+  }
+  .info_icon{
+    font-size: 30px;
+    color: #E9E9E9;
+  }
+  .trial_verification{
+    width: 100%;
+    height: 440px;
+    margin-top: 20px;
+    box-shadow:6px 4px 20px rgba(219,219,219,0.3)
   }
   .trial_button{
     width: 90%;
-    margin: 1.2rem auto 0;
-    height: 1.76rem;
+    margin: 40px auto 39px;
+    height: 88px;
     color: white;
     text-align: center;
-    line-height: 1.76rem;
-    font-size: 0.72rem;
-    border-radius: 0.2rem;
-  }
-  .distpicker-address-wrapper{
-    width: 100%;
-    margin: 0 auto;
-  }
-  .trial_Prompt{
-    font-size: 0.8rem;
+    line-height: 88px;
+    font-size: 36px;
+    border-radius: 6px;
+    background: linear-gradient(to right, #5d90f4 , #2f6be2);
+    box-shadow:0px 7px 29px 1px rgba(13,67,173,0.3);
   }
   .distpicker-address-wrapper select{
     padding: 0!important;
-    width: 41% !important;
-    font-size: 0.56rem!important;
-    height: 1.2rem!important;
-    margin-left: 0.8rem!important;
+    width: 49% !important;
+    font-size: 28px!important;
+    height: 101px!important;
     outline: none!important;
     background-color: white!important;
     -webkit-appearance: none;
+    border: 0!important;
+    border-bottom: 1px solid #E9E9E9!important;
   }
 </style>

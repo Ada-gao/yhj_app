@@ -2,7 +2,7 @@
   <div class="page" style="background: #ffffff;position: absolute">
     <wv-header title="首页" class="x-header" background-color="#FFFFFF">
       <div class="btn-back header_left" slot="left">
-        <i class="iconfont icon-wode" @click="$router.push('/profile')" style="font-size: 27px"></i>
+        <i class="iconfont icon-wode" @click="$router.push('/profile')"></i>
       </div>
     </wv-header>
     <div class="x-wrapper">
@@ -28,7 +28,7 @@
         <!--</div>-->
       <!--</div>-->
       <div class="home_progress">
-        <wv-progress :show-clear="false" style="width: 95%; margin: 0 auto"/>
+        <wv-progress :percent="percent" :show-clear="false" style="width: 85%; margin: 30px auto 0"/>
       </div>
       <div class="home_nav">
           <wv-flex :gutter="10" style="width: 100%;">
@@ -52,7 +52,7 @@
         <!--</div>-->
       </div>
       <div class="swiper_page">
-        <div style="width:28090000px;" v-for="item in statisGroup" :key="item.taskGroupId">
+        <div style="width:28090000px;" v-for="item in statisGroup" :key="item.taskGroupId" @click="$router.push('/call')">
           <div class="home_list">
             <div class="progress_title">
               <p style="width: 90%">{{item.productName}}</p>
@@ -109,7 +109,7 @@ export default {
       Belonged: '',
       name: '',
       statisGroup: {},
-      percent: 60,
+      percent: '',
       completeStatus: '',
       userId: '',
       logo_head: '',
@@ -142,6 +142,7 @@ export default {
         getRank(res.data.id).then(res => {
           this.form = res.data
           this.form.dailyEffectiveDuration = timeDate(res.data.dailyEffectiveDuration)
+          this.percent = this.form.dailyTaskCompleteCnt * 100 / this.form.dailyTaskCnt
         })
       })
       getStatisGroup().then(res => {
@@ -186,6 +187,9 @@ export default {
 </script>
 
 <style lang="scss">
+  .icon-wode{
+    font-size: 57px;
+  }
   .wv-header .left[data-v-a5b8d5b6],.wv-header .wv-header-title[data-v-a5b8d5b6] {
     font-size: 36px;
     color: rgba(0, 0, 0, 1);
@@ -283,7 +287,7 @@ export default {
   /*}*/
   .home_nav{
     height: 80px;
-    padding-top: 80px;
+    padding-top: 57px;
     /*background: #FFFFFF;*/
   }
   .home_number{
@@ -333,15 +337,16 @@ export default {
     width: 75%;
     margin: 60px auto;
   }
-  /*.weui-progress__bar {*/
-    /*height: 0.5rem!important;*/
-    /*border-radius: 10px!important;*/
-  /*}*/
-  /*.weui-progress__inner-bar {*/
-    /*background-color: #02B6DC!important;*/
-    /*height: 0.5rem!important;*/
-    /*border-radius: 10px!important;*/
-  /*}*/
+  .weui-progress__bar {
+    height: 16px!important;
+    border-radius: 10px!important;
+    background-color: #3570e4!important;
+  }
+  .weui-progress__inner-bar {
+    background-color: #ebebeb!important;
+    height: 16px!important;
+    border-radius: 10px!important;
+  }
   .home_complete{
     z-index: 501;
     position: fixed;

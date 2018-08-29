@@ -39,12 +39,14 @@ export default {
     return {
       callid: '',
       form: {},
-      phoneShow: ''
+      phoneShow: '',
+      value: ''
     }
   },
   created () {
     this.form = this.$route.query.form
     this.callid = this.$route.query.callId
+    this.value = this.$route.query.value
     let phones = this.form.phoneNo.substring(4, 5)
     if (phones === '*') {
       this.phoneShow = true
@@ -61,14 +63,14 @@ export default {
         if (state === 1) {
           if (this.phoneShow === false) {
             window.CallListener.getCallInfo((info) => {
-              this.$router.push({path: '/call/call-details', query: {form: this.form, callTime: info}})
+              this.$router.push({path: '/call/call-details', query: {form: this.form, callTime: info, value: this.value}})
               // alert('电话状态：' + state + '，通话时长：' + info.duration + '，开始时间：' + info.startDate + '，结束时间：' + info.endDate)
               // this.callTime = timeDate(info.duration)
               // this.history.actualCallStartDate = info.startDate
               // this.history.acutalCallEndDate = info.endDate
             }, this.form.phoneNo)
           } else {
-            this.$router.push({path: '/call/call-details', query: {callId: this.callid}})
+            this.$router.push({path: '/call/call-details', query: {callId: this.callid, value: this.value}})
           }
         }
       })

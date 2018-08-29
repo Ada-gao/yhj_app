@@ -5,14 +5,14 @@
     </div>
     <div class="login_content">
       <div class="user_login user_user">
-      <i class="iconfont icon-zhanghao" style="color: #CECECE;float: left;font-size: 26px"></i>
+      <i class="iconfont icon-zhanghao login_icon"></i>
       <input class="user_input" placeholder="请输入账号" v-model="account" autocapitalize="off" autocorrect="off"/>
       </div>
       <div class="user_login" style="margin-top: 4.4%">
-      <i class="iconfont icon-mima" style="color: #CECECE;float: left;font-size: 26px;clear: both"></i>
+      <i class="iconfont icon-mima login_icon"></i>
       <input :type="inputType" class="pass_input" placeholder="请输入密码" v-model="password"/>
-      <i v-if="asee==true" class="iconfont icon-yincang" style="color: #DADADA;float: right;font-size: 26px" @click="iconSee"></i>
-      <i v-if="asee==false" class="iconfont icon-yincang1" style="color:#DADADA;float: right;font-size: 26px" @click="iconSee"></i>
+      <i v-if="asee==true" class="iconfont icon-yincang login_iconright" @click="iconSee"></i>
+      <i v-if="asee==false" class="iconfont icon-yincang1 login_iconright" @click="iconSee"></i>
       </div>
       <div class="land" @click="login">
       登录
@@ -164,6 +164,16 @@ export default {
   .icon_user>img{
     max-width: 100%;
   }
+  .login_iconright{
+    color: #DADADA;
+    float: right;
+    font-size: 30px
+  }
+  .login_icon{
+    color: #CECECE;
+    float: left;
+    font-size: 40px
+  }
   /*.weui-cell{*/
     /*padding: 10px 7px!important;*/
   /*}*/
@@ -204,8 +214,9 @@ export default {
     color: #fff;
   }
   input::-webkit-input-placeholder{
-    color: #fff;
     font-size: 32px;
+    color: #DADADA;
+    font-weight: 100;
   }
   .user_login>div{
     float: left;

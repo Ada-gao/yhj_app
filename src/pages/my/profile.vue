@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <wv-header title="我的" class="x-header bgcolor">
-      <div class="btn-back header_left" slot="left">
+      <div class="btn-back profile_left" slot="left">
         <i class="iconfont icon-fanhui size_i" @click="$router.push('/home')"></i>返回
       </div>
     </wv-header>
@@ -61,14 +61,14 @@
       <div class="profile_list">
         <div style="border-bottom: 0.5px solid #E9E9E9">
           <router-link :to="{path:'/my/feedback'}">
-          <p class="iconfont icon-wenti profile_nav" style="color: #eccb05;width: 10%;font-size: 20px"></p>
+          <p class="iconfont icon-wenti profile_nav" style="color: #eccb05;width: 10%;font-size: 45px"></p>
           <p class="profile_nav" style="color: rgba(50,50,50,1);">问题反馈</p>
           <p class="iconfont icon-fanhui profile_nav profile_icon" style="color: #DBDBDB;width: 10%;float: right"></p>
           </router-link>
         </div>
         <div>
           <router-link :to="{path:'/my/relevant'}">
-          <p class="iconfont icon-guanyu profile_nav" style="color: #4482d6;width: 10%;font-size: 20px"></p>
+          <p class="iconfont icon-guanyu profile_nav" style="color: #4482d6;width: 10%;font-size: 45px"></p>
           <p class="profile_nav" style="color: rgba(50,50,50,1);">关于闪电呼</p>
           <p class="iconfont icon-fanhui profile_nav profile_icon" style="color:#DBDBDB;width: 10%;float: right"></p>
           </router-link>
@@ -202,7 +202,7 @@ export default {
     font-size: 28px;
     color: rgba(50,50,50,1);
   }
-  .header_left{
+  .profile_left{
     position: absolute;
     top: 17px;
     left: 0;

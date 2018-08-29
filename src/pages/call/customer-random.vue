@@ -326,9 +326,9 @@ export default {
       window.CallListener.addListener((state) => {
         if (state === 3) {
           if (this.phoneShow === false) {
-            this.$router.push({path: '/call/call-record', query: {form: this.form}})
+            this.$router.push({path: '/call/call-record', query: {form: this.form, value: 'random'}})
           } else {
-            this.$router.push({path: '/call/call-record', query: {form: this.form, callId: this.callSid}})
+            this.$router.push({path: '/call/call-record', query: {form: this.form, callId: this.callSid, value: 'random'}})
           }
         }
         // else if (state === 1) {

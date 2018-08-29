@@ -256,7 +256,7 @@ import company from '@/assets/images/hand.png'
 import phoneImg from '../../assets/images/phone.gif'
 import thumbSmall from '@/assets/images/icon_tabbar.png'
 import cancle from '@/assets/images/cancle.png'
-import { getCall, getTaskHistory, updateOutboundName, getCallStatus, getRank, getCallscancle, getTaskList } from '@/api/api'
+import { getCall, getTaskHistory, updateOutboundName, getCallStatus, getCallscancle, getTaskList } from '@/api/api'
 import { transformText, queryObj, parseTime, timeDate } from '@/utils'
 import { Toast } from 'we-vue'
 import Vue from 'vue'
@@ -319,7 +319,7 @@ export default {
     } else {
       this.phoneShow = false
     }
-    this.teskData()
+    // this.teskData()
   },
   mounted () {
     let devicePlatform = Vue.cordova.device.platform
@@ -329,9 +329,9 @@ export default {
       window.CallListener.addListener((state) => {
         if (state === 3) {
           if (this.phoneShow === false) {
-            this.$router.push({path: '/call/call-record', query: {form: this.form}})
+            this.$router.push({path: '/call/call-record', query: {form: this.form, value: 'details'}})
           } else {
-            this.$router.push({path: '/call/call-record', query: {form: this.form, callId: this.callSid}})
+            this.$router.push({path: '/call/call-record', query: {form: this.form, callId: this.callSid, value: 'details'}})
           }
           // if (this.phoneShow === false) {
           //   this.details = false
@@ -467,28 +467,28 @@ export default {
         this.form.genderText = transformText(queryObj.gender, this.form.gender)
       })
     },
-    teskData () {
-      let userId = localStorage.getItem('userId')
-      getRank(userId).then(res => {
-        this.task = res.data
-        // let theTime = parseInt(res.data.dailyEffectiveDuration)
-        // let theTime1 = 0
-        // if (theTime > 60) {
-        //   theTime1 = parseInt(theTime / 60)
-        //   theTime = parseInt(theTime % 60)
-        // }
-        // let result = parseInt(theTime)
-        // if (theTime1 > 0) {
-        //   result = parseInt(theTime1) + ':' + result
-        // }
-        this.task.dailyEffectiveDuration = timeDate(res.data.dailyEffectiveDuration)
-        // if (this.task.dailyTaskCompleteCnt)
-      }).catch((res) => {
-        this.task.dailyTaskCompleteCnt = 0
-        this.task.dailyTaskCnt = 0
-        this.dailyEffectiveDuration = 0
-      })
-    },
+    // teskData () {
+    //   let userId = localStorage.getItem('userId')
+    //   getRank(userId).then(res => {
+    //     this.task = res.data
+    //     // let theTime = parseInt(res.data.dailyEffectiveDuration)
+    //     // let theTime1 = 0
+    //     // if (theTime > 60) {
+    //     //   theTime1 = parseInt(theTime / 60)
+    //     //   theTime = parseInt(theTime % 60)
+    //     // }
+    //     // let result = parseInt(theTime)
+    //     // if (theTime1 > 0) {
+    //     //   result = parseInt(theTime1) + ':' + result
+    //     // }
+    //     this.task.dailyEffectiveDuration = timeDate(res.data.dailyEffectiveDuration)
+    //     // if (this.task.dailyTaskCompleteCnt)
+    //   }).catch((res) => {
+    //     this.task.dailyTaskCompleteCnt = 0
+    //     this.task.dailyTaskCnt = 0
+    //     this.dailyEffectiveDuration = 0
+    //   })
+    // },
     callsCancle () {
       getCallscancle(this.callSid).then(() => {
         this.details = false

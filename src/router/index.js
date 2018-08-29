@@ -70,6 +70,17 @@ routes.push({
     tabShow: false
   }
 })
+// routes.push({
+//   path: '/login/trial',
+//   component: resolve => require(['../pages/examples/picker.vue'], resolve),
+//   name: 'trial',
+//   meta: {
+//     title: '申请试用',
+//     description: '试用',
+//     requiresAuth: false,
+//     tabShow: false
+//   }
+// })
 
 routes.push({
   path: '/my/relevant',

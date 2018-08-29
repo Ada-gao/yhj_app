@@ -97,7 +97,7 @@ export default {
   }
   .wv-header .wv-header-title[data-v-a5b8d5b6]{
     color: #000000;
-    font-size: 36px;
+    font-size: 36px!important;
   }
   .wv-content{
     position: absolute;
@@ -164,5 +164,12 @@ export default {
     font-size: 40px;
     margin-left: 0.2rem;
     color:#ffffff!important;
+  }
+  .icon_right{
+    transform:rotate(180deg);
+    -ms-transform:rotate(180deg);
+    -moz-transform:rotate(180deg);
+    -webkit-transform:rotate(180deg);
+    -o-transform:rotate(180deg);
   }
 </style>

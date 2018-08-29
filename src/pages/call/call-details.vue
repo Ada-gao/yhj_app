@@ -20,28 +20,28 @@
         <p class="iconfont icon-fanhui details_right"></p>
       </div>
     </div>
-    <!--<div class="record_info">-->
-      <!--<p class="infor_title">客户信息</p>-->
-      <!--<div class="info_list">-->
-        <!--<p class="info_left">姓名</p>-->
-        <!--<input class="info_cont" :placeholder="form.contactName" v-model="form.contactName">-->
-        <!--<p class="iconfont icon-fanhui info_right"></p>-->
-      <!--</div>-->
-      <!--<div class="info_list">-->
-        <!--<p class="info_left">电话</p>-->
-        <!--<input class="info_cont" :placeholder="form.phoneNo" v-model="form.phoneNo">-->
-        <!--<p class="iconfont icon-fanhui info_right"></p>-->
-      <!--</div>-->
-      <!--<div class="info_list">-->
-        <!--<p class="info_left">微信</p>-->
-        <!--<input class="info_cont" :placeholder="form.wechatNo" v-model="form.wechatNo">-->
-        <!--<p class="iconfont icon-fanhui info_right"></p>-->
-      <!--</div>-->
-      <!--<div>-->
-        <!--<p class="info_left" style="margin-top: 10px">备注</p>-->
-        <!--<textarea rows="5" :placeholder="form.common" class="record_txt" v-model="form.common"></textarea>-->
-      <!--</div>-->
-    <!--</div>-->
+    <div class="details_info">
+      <p class="infor_title">客户信息</p>
+      <div class="info_list">
+        <p class="info_left">姓名</p>
+        <input class="info_cont" :placeholder="form.contactName" v-model="form.contactName">
+        <p class="iconfont icon-fanhui info_right"></p>
+      </div>
+      <div class="info_list">
+        <p class="info_left">电话</p>
+        <input class="info_cont" :placeholder="form.phoneNo" v-model="form.phoneNo">
+        <p class="iconfont icon-fanhui info_right"></p>
+      </div>
+      <div class="info_list">
+        <p class="info_left">微信</p>
+        <input class="info_cont" :placeholder="form.wechatNo" v-model="form.wechatNo">
+        <p class="iconfont icon-fanhui info_right"></p>
+      </div>
+      <div class="info_lists">
+        <p class="info_left" style="margin-top: 10px">备注</p>
+        <textarea rows="5" :placeholder="form.common" class="record_txt" v-model="form.common"></textarea>
+      </div>
+    </div>
     <div class="details_button" @click="submitCall">
       提交
     </div>
@@ -61,11 +61,12 @@
 </template>
 
 <script>
-import { getTaskHistory, getCallStatus } from '@/api/api'
+import { getTaskHistory, getCallStatus, updateOutboundName, getTaskList } from '@/api/api'
 import { timeDate } from '@/utils'
 export default {
   data () {
     return {
+      value: '',
       callTime: '',
       callTimes: '',
       callId: '',
@@ -95,8 +96,8 @@ export default {
         }
       ],
       history: {
-        result: '',
-        status: '',
+        result: 'NOT_CALL',
+        status: 'CALL_AGAIN',
         actualCallStartDate: '',
         acutalCallEndDate: '',
         outboundTaskId: ''
@@ -105,6 +106,7 @@ export default {
   },
   created () {
     this.form = this.$route.query.form
+    this.value = this.$route.query.value
     let phones = this.form.phoneNo.substring(4, 5)
     if (phones === '*') {
       this.callId = this.$route.query.callId
@@ -115,6 +117,7 @@ export default {
     } else {
       this.callTime = this.$route.query.callTime
       this.callTimes = timeDate(this.callTime.duration)
+      // alert('电话状态：' + this.callTime + '，通话时长：' + this.callTime.duration + '，开始时间：' + this.callTime.start + '，结束时间：' + this.callTime.end)
     }
     // alert('电话状态：' + this.form + '，通话时长：' + this.form.duration + '，开始时间：' + this.form.startDate + '，结束时间：' + this.form.endDate)
   },
@@ -129,11 +132,31 @@ export default {
     },
     submitCall () {
       // let _this = this
-      this.history.actualCallStartDate = this.callTime.startDate
-      this.history.acutalCallEndDate = this.callTime.endDate
+      let params = {
+        contactName: this.form.contactName,
+        gender: this.form.gender,
+        mobileNo: this.form.mobileNo,
+        wechatNo: this.form.wechatNo,
+        age: this.form.age,
+        common: ''
+      }
+      this.history.actualCallStartDate = new Date(this.callTime.start)
+      this.history.acutalCallEndDate = new Date(this.callTime.end)
       this.history.outboundTaskId = this.form.taskId
       getTaskHistory(this.history).then(res => {
-        this.$router.push({path: '/call/call-record'})
+        this.$router.push({path: '/home'})
+      }).catch(() => {
+        alert('外呼结果保存失败')
+      })
+      updateOutboundName(this.form.outboundNameId, params).then(res => {
+        if (this.value === 'random') {
+          this.$router.push({path: '/call/customer-random'})
+        } else if (this.value === 'details') {
+          getTaskList('dnf', this.listQuery1).then(res => {
+            let data = res.data.content[0]
+            this.$router.push({name: 'customer-details', params: data})
+          })
+        }
       })
     }
   }
@@ -204,9 +227,9 @@ export default {
   input::-webkit-input-placeholder{
     color: #000000;
   }
-  .record_info{
+  .details_info{
     width: 100%;
-    height: 570px;
+    height: 670px;
     background: #ffffff;
     margin-top: 30px;
     box-shadow: 6px 4px 20px rgba(219,219,219,0.3);
