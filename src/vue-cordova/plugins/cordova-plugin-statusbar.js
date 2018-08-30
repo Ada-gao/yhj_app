@@ -8,9 +8,10 @@ export const install = function (Vue, options, cb) {
       // eslint-disable-next-line
       return cb(false)
     }
-    // pass through the camera object
+    // pass through the StatusBar object
     Vue.cordova.statusBar = StatusBar
-
+    // StatusBar.hide()
+    console.log(StatusBar)
     // eslint-disable-next-line
     return cb(true)
   }, false)
