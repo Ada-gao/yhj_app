@@ -56,14 +56,14 @@ img {
 
 .is-iOS .x-header {
   position: fixed;
-  top: 0.69rem!important; // iOs 10 or lower
+  top: 1px!important; // iOs 10 or lower
   top: env(safe-area-inset-top)!important; // iOs 11+ (feature)
   top: constant(safe-area-inset-top); // iOs 11
 }
 
 .is-iOS .x-wrapper {
   //position: absolute;
-  top: 0.69rem!important; // iOs 10 or lower 3.15rem
+  top: 1px!important; // iOs 10 or lower 3.15rem
   top: constant(safe-area-inset-top); // iOs 11
   top: env(safe-area-inset-top)!important; // iOs 11+ (feature)
   padding-top: 50px;
@@ -74,10 +74,11 @@ img {
 .is-iOS .page::after {
   content: '';
   width: 100%;
-  height: 0.69rem!important;
+  height: 1px!important;
   height: env(safe-area-inset-top)!important;
   height: constant(safe-area-inset-top)!important;
   background-color: #ffffff;
+  color: #000000!important;
   position: absolute;
   top: 0;
 }

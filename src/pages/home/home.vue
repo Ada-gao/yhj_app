@@ -69,6 +69,10 @@
               </wv-flex-item>
             </wv-flex>
             <p class="progress_time">任务计划完成时间：{{item.taskEndDate | moment('YYYY.MM.DD')}}</p>
+            <div class="task_list">
+              <p></p>
+              <p></p>
+            </div>
           </div>
         </div>
       </div>

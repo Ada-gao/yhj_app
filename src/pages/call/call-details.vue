@@ -7,7 +7,6 @@
         <div class="details_list">
           <p class="details_left"><small style="font-size: 100%;color: #ffffff;">*</small>通话时长</p>
           <p class="details_cont">{{callTimes}}</p>
-          <p class="details_right"></p>
         </div>
         <div class="details_list">
           <p class="details_left"><small style="font-size: 100%;color: red;">*</small> 外呼结果</p>
@@ -21,28 +20,28 @@
           <p class="iconfont icon-fanhui details_right"></p>
         </div>
       </div>
-      <div class="details_info">
-        <p class="infor_title">客户信息</p>
-        <div class="info_list">
-          <p class="info_left">姓名</p>
-          <input class="info_cont" :placeholder="form.contactName" v-model="form.contactName">
-          <p class="iconfont icon-fanhui info_right"></p>
-        </div>
-        <div class="info_list">
-          <p class="info_left">电话</p>
-          <input class="info_cont" :placeholder="form.phoneNo" v-model="form.phoneNo">
-          <p class="iconfont icon-fanhui info_right"></p>
-        </div>
-        <div class="info_list">
-          <p class="info_left">微信</p>
-          <input class="info_cont" :placeholder="form.wechatNo" v-model="form.wechatNo">
-          <p class="iconfont icon-fanhui info_right"></p>
-        </div>
-        <div class="info_lists">
-          <p class="info_left" style="margin-top: 10px">备注</p>
-          <textarea rows="5" :placeholder="form.common" class="record_txt" v-model="form.common"></textarea>
-        </div>
-      </div>
+      <!--<div class="details_info">-->
+        <!--<p class="infor_title">客户信息</p>-->
+        <!--<div class="info_list">-->
+          <!--<p class="info_left">姓名</p>-->
+          <!--<input class="info_cont" :placeholder="form.contactName" v-model="form.contactName">-->
+          <!--<p class="iconfont icon-fanhui info_right"></p>-->
+        <!--</div>-->
+        <!--<div class="info_list">-->
+          <!--<p class="info_left">电话</p>-->
+          <!--<input class="info_cont" :placeholder="form.phoneNo" v-model="form.phoneNo">-->
+          <!--<p class="iconfont icon-fanhui info_right"></p>-->
+        <!--</div>-->
+        <!--<div class="info_list">-->
+          <!--<p class="info_left">微信</p>-->
+          <!--<input class="info_cont" :placeholder="form.wechatNo" v-model="form.wechatNo">-->
+          <!--<p class="iconfont icon-fanhui info_right"></p>-->
+        <!--</div>-->
+        <!--<div class="info_lists">-->
+          <!--<p class="info_left" style="margin-top: 10px">备注</p>-->
+          <!--<textarea rows="5" :placeholder="form.common" class="record_txt" v-model="form.common"></textarea>-->
+        <!--</div>-->
+      <!--</div>-->
       <div class="details_button" @click="submitCall">
         提交
       </div>
@@ -169,7 +168,7 @@ export default {
     width: 100%;
     height: 370px;
     background: #ffffff;
-    margin-top: 100px;
+    margin-top: 20px;
     box-shadow: 6px 4px 20px rgba(219,219,219,0.3);
   }
   .details_title{
@@ -197,23 +196,28 @@ export default {
     border-bottom: 1px solid #e9e9e9;
     height: 109px;
   }
-  .details_list>p,.details_cont{
+  .details_list>p{
+    height: 107px;
+    line-height: 107px;
     float: left;
-    height: 93px;
-    line-height: 93px;
   }
   .details_left{
     font-size: 28px;
     width: 34%;
     color: #323232;
+    height: 107px;
+    line-height: 107px;
   }
   .details_cont{
     width: 58%;
+    float: left;
+    height: 107px;
     text-align: right;
     color: #000000;
     outline: none;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
     padding: 0!important;
+    border: 0!important;
   }
   .details_right{
     color:#e9e9e9;

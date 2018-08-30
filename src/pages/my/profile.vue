@@ -244,14 +244,14 @@ export default {
     width: 100%;
     /*height: 760px;*/
     /*background-color: #32CCBC;*/
-    padding-top: 10px;
+    padding-top: 35px;
     /*margin-top: 2rem;*/
   }
   .profile_head{
     width: 170px;
     height: 170px;
     // background: rebeccapurple;
-    margin: 0 auto;
+    margin: auto;
     border-radius: 50%;
     box-shadow:rgba(238, 233, 233, 0.34) 0px 0px 0px 5px;
     overflow: hidden;

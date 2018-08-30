@@ -90,7 +90,7 @@ export default {
   }
   .wv-content_profile{
     position: fixed;
-    top: 80px;
+    top: 85px;
     left: 0;
     right: 0;
     bottom: 0;

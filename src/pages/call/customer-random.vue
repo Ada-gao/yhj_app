@@ -1,17 +1,17 @@
 <template>
   <div class="page">
-    <wv-header class="x-header" style="background-color: #ffffff00">
-    <div class="btn-back header_left" slot="left" style="position: absolute;top: 7px;left: 0;width: 20%;">
+    <wv-header class="x-header" style="background-color: rgba(33, 41, 44, 0)">
+    <div class="btn-back header_left" slot="left">
     <i class="iconfont icon-fanhui size_c" @click="$router.push('/call')">返回</i>
     </div>
     </wv-header>
-    <div class="x-wrapper">
-      <div>
-        <img :src="photoImg" style="max-width: 100%">
+    <div style="width: 100%">
+      <div class="random_bgimg" >
+        <!--<img :src="photoImg">-->
       </div>
       <div class="random_content">
         <div class="random_top">
-          <p class="random_list random_one"><small class="random_txt">任务名称：</small><small>{{form.productName}}</small></p>
+          <p class="random_list random_one"><small class="random_txt">任务名称：</small><small>{{form.taskName}}</small></p>
           <p class="random_list"><small class="random_txt">客户姓名：</small><small>{{form.contactName}}</small></p>
           <p class="random_list"><small class="random_txt">客户电话：</small><small>{{form.phoneNo}}</small></p>
           <hr class="hr">
@@ -499,16 +499,25 @@ export default {
 </script>
 <style lang="scss">
   .random_content{
-    position: absolute;
+    position: fixed;
     top:327px;
     width: 100%;
     /*margin: auto;*/
+  }
+  .random_bgimg{
+    width: 100%;
+    height: 420px;
+    background: url('../../assets/images/callimg.png') center center no-repeat;
+    background-size: cover;
+  }
+  .random_bgimg>img{
+    max-width: 100%;
   }
   .random_top{
     position: relative;
     width: 95%;
     margin: auto;
-    /*height: 546px;*/
+    height: 546px;
     background-color: white;
     border-radius: 6px;
   }
@@ -568,7 +577,6 @@ export default {
     width: 6px;
     height: 30px;
     background-color: #2f6be2;
-    margin-top: 15px;
   }
   .random_title{
     height: 30px;

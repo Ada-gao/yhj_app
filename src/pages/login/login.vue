@@ -1,8 +1,6 @@
 <template>
   <div class="page" style="background: #858585">
-    <div style="width: 100%">
-      <img :src="thumbSmall" style="max-width: 100%">
-    </div>
+    <div class="login_bgimg"></div>
     <div class="login_content">
       <div class="user_login user_user">
       <i class="iconfont icon-zhanghao login_icon"></i>
@@ -48,13 +46,12 @@
 </template>
 <script>
 import { requestLogin, getUsers } from '../../api/api'
-import thumbSmall from '../../assets/images/background image.jpg'
+// import thumbSmall from '../../assets/images/background image.jpg'
 import { Toast } from 'we-vue'
 
 export default {
   data () {
     return {
-      thumbSmall,
       detailsreturn: false,
       account: '',
       password: '',
@@ -108,6 +105,14 @@ export default {
 }
 </script>
 <style lang="scss">
+  .login_bgimg{
+    width: 100%;
+    background: url('../../assets/images/bgimage.jpg') center center no-repeat;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+  }
   .login_content{
     position: absolute;
     top: 0;
@@ -184,7 +189,7 @@ export default {
   }
   .login_Application{
     /*position: fixed;*/
-    margin: 277px auto 0;
+    margin: 180px auto 0;
     width: 90%;
     font-size: 28px;
     color: #DADADA;
