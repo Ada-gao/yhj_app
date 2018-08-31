@@ -30,16 +30,16 @@
         </wv-flex-item>
       </wv-flex>
       <wv-flex :gutter="10">
-        <wv-flex-item style="border-left: 1px solid grey">
+        <wv-flex-item style="border-left: 1px solid grey" class="profile_progress">
           <div class="placeholder" style="border-right: 0.5px solid rgba(233,233,233,1)">
-            <div class="placeholder progress_number1">{{form.rate || 0}}%</div>
-            <div class="placeholder progress_text">外呼完成率</div>
+            <div class="progress_number1">{{form.rate || 0}}%</div>
+            <div class="progress_text">外呼完成率</div>
           </div>
         </wv-flex-item>
-        <wv-flex-item>
+        <wv-flex-item class="profile_progress">
           <div class="placeholder">
-            <div class="placeholder progress_number2">第{{form.rank}}名</div>
-            <div class="placeholder progress_text">今日团队排名</div>
+            <div class="progress_number2">第{{form.rank}}名</div>
+            <div class="progress_text">今日团队排名</div>
           </div>
         </wv-flex-item>
       </wv-flex>
@@ -277,6 +277,9 @@ export default {
     text-align: center;
     margin-top: 20px;
   }
+  .profile_progress{
+    margin: 61px 0;
+  }
   /*.placeholder{*/
     /*text-align: center;*/
   /*}*/
@@ -295,7 +298,7 @@ export default {
   }
   .progress_number1,.progress_number2{
     font-size: 36px;
-    margin-top: 60px;
+    /*margin: 63px 0;*/
     text-align: center;
   }
   .progress_number1{

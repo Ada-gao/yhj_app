@@ -260,14 +260,11 @@
   </div>
 </template>
 <script>
-import photoImg from '@/assets/images/callimg.png'
-import photoImg1 from '@/assets/images/phone_random.png'
 import company from '@/assets/images/hand.png'
 import phoneImg from '../../assets/images/phone.gif'
-import thumbSmall from '@/assets/images/icon_tabbar.png'
 import cancle from '@/assets/images/cancle.png'
-import { getCall, getRandom, getTaskHistory, updateOutboundName, getCallStatus, getCallscancle } from '@/api/api'
-import { transformText, queryObj, timeDate } from '@/utils'
+import { getCall, getCallscancle } from '@/api/api'
+// import { transformText, queryObj, timeDate } from '@/utils'
 import { Toast } from 'we-vue'
 // import { CallListener } from '@CallListener'
 import Vue from 'vue'
@@ -276,48 +273,26 @@ import Vue from 'vue'
 export default {
   data () {
     return {
-      photoImg,
-      photoImg1,
       company,
-      thumbSmall,
       phoneImg,
       cancle,
-      resultShow: false,
-      inform: false,
       details: false,
       detailsreturn: false,
-      selected: '',
-      // from: '13053108821',
-      // to: '13661876489',
       form: {},
-      nextStepOptions: [],
-      callResult: [],
-      ageValue: [],
-      history: {
-        result: 'FOLLOW',
-        status: 'CALL_AGAIN',
-        actualCallStartDate: '',
-        acutalCallEndDate: '',
-        outboundTaskId: ''
-      },
-      info: {},
+      // nextStepOptions: [],
+      // callResult: [],
       callSid: '',
-      duration: '',
-      task: {},
       // callStatus: false,
-      callTime: {},
       phoneNumber: '',
       phoneShow: true,
-      counts: '',
-      time1: '',
       conversationState: false
     }
   },
   created () {
     // this.nextStepOptions = queryObj.nextStep
     // this.callResult = queryObj.callResult
-    this.getRandom()
     // this.teskData()
+    this.form = this.$route.query.form
   },
   mounted () {
     let devicePlatform = Vue.cordova.device.platform
@@ -330,6 +305,8 @@ export default {
           } else {
             this.$router.push({path: '/call/call-record', query: {form: this.form, callId: this.callSid, value: 'random'}})
           }
+        } else if (state === 2) {
+          this.details = false
         }
         // else if (state === 1) {
         //   if (this.phoneShow === false) {
@@ -387,82 +364,77 @@ export default {
             message: '无法外呼，请联系管理员...'
           })
           this.details = false
-        } else {
-          this.details = false
-          // this.callStatus = true
-          // alert(this.callStatus)
         }
       })
     },
     getRandom () {
       // let createTime = parseTime(new Date(), '{y}-{m}-{d}')
-      getRandom().then(res => {
-        this.form = res.data
-        this.phoneNumber = this.form.phoneNo
-        this.form.lastCallResult = transformText(queryObj.callResult, this.form.lastCallResult)
-        this.form.genderText = transformText(queryObj.gender, this.form.gender)
-        let phones = this.form.phoneNo.substring(4, 5)
-        if (phones === '*') {
-          this.phoneShow = true
-        } else {
-          this.phoneShow = false
-        }
-      }).catch(() => {
-        this.form.lastCallDate = 0
-        this.detailsreturn = true
-      })
+      // getRandom().then(res => {
+      //   this.form = res.data
+      //   this.phoneNumber = this.form.phoneNo
+      //   // this.form.lastCallResult = transformText(queryObj.callResult, this.form.lastCallResult)
+      //   // this.form.genderText = transformText(queryObj.gender, this.form.gender)
+      //   let phones = this.form.phoneNo.substring(4, 5)
+      //   if (phones === '*') {
+      //     this.phoneShow = true
+      //   } else {
+      //     this.phoneShow = false
+      //   }
+      // }).catch(() => {
+      //   this.detailsreturn = true
+      // })
     },
-    submitCall () {
-      this.conversationState = false
-      // this.callStatus = false
-      this.resultShow = false
-      this.history.outboundTaskId = this.form.taskId
-      let _this = this
-      this.counts = 0
-      if (this.phoneShow === false) {
-        getTaskHistory(this.history).then(res => {
-        })
-      } else {
-        getCallStatus(this.callSid).then((res) => {
-          _this.history.actualCallStartDate = res.data.start
-          _this.history.acutalCallEndDate = res.data.end
-          getTaskHistory(this.history).then(res => {
-          })
-        })
-      }
-      this.getRandom()
-      // this.teskData()
-    },
-    callDate () {
-      getCallStatus(this.callSid).then((res) => {
-        this.callTime = timeDate(res.data.duration)
-        // alert(this.callTime)
-        // this.callTime.duration
-      })
-    },
-    changeInfo () {
-      this.inform = true
-      this.resultShow = false
-      this.info = this.form
-    },
-    updateInfo () {
-      let params = {
-        contactName: this.info.contactName,
-        gender: this.info.gender,
-        mobileNo: this.info.mobileNo,
-        wechatNo: this.info.wechatNo,
-        age: this.info.age
-      }
-      updateOutboundName(this.info.outboundNameId, params).then(res => {
-        this.inform = false
-        this.resultShow = true
-        let data = res.data
-        this.form.contactName = data.contactName
-        this.form.age = data.age
-        this.form.gender = data.gender
-        this.form.genderText = transformText(queryObj.gender, this.form.gender)
-      })
-    },
+    // submitCall () {
+    //   this.conversationState = false
+    //   // this.callStatus = false
+    //   this.resultShow = false
+    //   this.history.outboundTaskId = this.form.taskId
+    //   let _this = this
+    //   this.counts = 0
+    //   if (this.phoneShow === false) {
+    //     getTaskHistory(this.history).then(res => {
+    //     })
+    //   } else {
+    //     getCallStatus(this.callSid).then((res) => {
+    //       _this.history.actualCallStartDate = res.data.start
+    //       _this.history.acutalCallEndDate = res.data.end
+    //       getTaskHistory(this.history).then(res => {
+    //       })
+    //     })
+    //   }
+    //   this.getRandom()
+    //   // this.teskData()
+    // },
+    // callDate () {
+    //   getCallStatus(this.callSid).then((res) => {
+    //     this.callTime = timeDate(res.data.duration)
+    //     // alert(this.callTime)
+    //     // this.callTime.duration
+    //   })
+    // },
+    // changeInfo () {
+    //   this.inform = true
+    //   this.resultShow = false
+    //   this.info = this.form
+    // },
+    // updateInfo () {
+    //   let params = {
+    //     contactName: this.info.contactName,
+    //     gender: this.info.gender,
+    //     mobileNo: this.info.mobileNo,
+    //     wechatNo: this.info.wechatNo,
+    //     age: this.info.age
+    //   }
+    //   updateOutboundName(this.info.outboundNameId, params).then(res => {
+    //     this.inform = false
+    //     this.resultShow = true
+    //     let data = res.data
+    //     this.form.contactName = data.contactName
+    //     this.form.age = data.age
+    //     this.form.gender = data.gender
+    //     this.form.genderText = transformText(queryObj.gender, this.form.gender)
+    //   })
+    // },
     // teskData () {
     //   let userId = localStorage.getItem('userId')
     //   getRank(userId).then(res => {

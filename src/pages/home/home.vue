@@ -61,11 +61,11 @@
             <wv-flex :gutter="10" style="width: 88%;margin: 0.5rem auto 0;border-bottom: 1px solid rgba(216, 216, 216, 0.2)">
               <wv-flex-item>
                 <div class="placeholder progress_number">{{item.totalTaskCnt}}<small style="font-size: 50%">个</small></div>
-                <div class="placeholder progress_text">客户总数</div>
+                <div class="placeholder progress_txt">客户总数</div>
               </wv-flex-item>
               <wv-flex-item>
-                <div class="placeholder progress_number">{{item.totalTaskCompleteCnt }}个</div>
-                <div class="placeholder progress_text">剩余未呼</div>
+                <div class="placeholder progress_number">{{item.totalTaskCnt - item.totalTaskCompleteCnt}}<small style="font-size: 50%">个</small></div>
+                <div class="placeholder progress_txt">剩余未呼</div>
               </wv-flex-item>
             </wv-flex>
             <p class="progress_time">任务计划完成时间：{{item.taskEndDate | moment('YYYY.MM.DD')}}</p>
@@ -76,7 +76,7 @@
           </div>
         </div>
       </div>
-      <div class="phone_button bgcolor" @click="$router.push('/call/customer-random')">
+      <div class="phone_button bgcolor" @click="callphone">
         <small class="iconfont icon-hujiao" style="font-size: 100%;"></small>开始外呼
       </div>
       <!--<div class="home_progress" v-for="item in statisGroup" :key="item.taskGroupId">-->
@@ -107,7 +107,7 @@
 <script>
 import thumbSmall from '../../assets/images/icon_tabbar.png'
 import task from '@/assets/images/task.png'
-import { getCompany, getUser, getStatisGroup, getCompleteStatus, getRank } from '@/api/api'
+import { getCompany, getUser, getStatisGroup, getCompleteStatus, getRank, getRandom } from '@/api/api'
 import { timeDate } from '@/utils'
 // getTaskStatisticsDaily
 export default {
@@ -123,7 +123,8 @@ export default {
       completeStatus: '',
       userId: '',
       logo_head: '',
-      complete: false
+      complete: false,
+      Leftover: 0
     }
   },
   mounted () {
@@ -184,7 +185,10 @@ export default {
     //   this.dateTime = y + '年' + m + '月' + d + '日' + weekday[my]
     // },
     callphone () {
-      this.$router.push({path: '/call/customer-random'})
+      getRandom().then(res => {
+        let randomData = res.data
+        this.$router.push({path: '/call/customer-random', query: {form: randomData}})
+      })
     }
   },
   computed: {
@@ -238,7 +242,7 @@ export default {
     color: #222222;
     text-align: center;
   }
-  .progress_text{
+  .progress_txt{
     font-size: 28px;
     color: #9c9c9c;
     text-align: center;

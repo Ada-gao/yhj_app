@@ -70,7 +70,7 @@ export default {
               // this.history.acutalCallEndDate = info.endDate
             }, this.form.phoneNo)
           } else {
-            this.$router.push({path: '/call/call-details', query: {callId: this.callid, value: this.value}})
+            this.$router.push({path: '/call/call-details', query: {form: this.form, callId: this.callid, value: this.value}})
           }
         }
       })
@@ -82,7 +82,7 @@ export default {
 <style lang="scss">
 .record_info{
   width: 100%;
-  height: 860px;
+  height: 660px;
   background: #ffffff;
   margin-top: 20px;
   box-shadow: 6px 4px 20px rgba(219,219,219,0.3);
