@@ -54,7 +54,7 @@ exports.cssLoaders = function (options) {
     if (options.extract) {
       return ExtractTextPlugin.extract({
         use: loaders,
-        // publicPath: '../../', //fixed image in css
+        publicPath: '../../', //fixed image in css
         fallback: 'vue-style-loader'
       })
     } else {
