@@ -17,11 +17,11 @@
             <wv-flex :gutter="10" class="details_nav">
               <wv-flex-item>
                 <div class="placeholder random_nav random_pro">外呼状态</div>
-                <div class="placeholder random_nav iconfont icon-boda1" v-if="form.lastCallResult === NOT_CALL"></div>
+                <div class="placeholder random_nav iconfont icon-boda1" v-if="form.lastCallResult === NOT_CALL || form.lastCallResult === null"></div>
                 <div class="placeholder random_nav iconfont icon-jujue" v-if="form.lastCallResult === NOT_EXIST"></div>
                 <div class="placeholder random_nav iconfont icon-boda" v-if="form.lastCallResult === UNCONNECTED"></div>
                 <div class="placeholder random_nav iconfont icon-boda" v-if="form.lastCallResult === CONNECTED"></div>
-                <div class="placeholder random_nav co" v-if="form.lastCallResult === NOT_CALL">未外呼</div>
+                <div class="placeholder random_nav co" v-if="form.lastCallResult === NOT_CALL || form.lastCallResult === null">未外呼</div>
                 <div class="placeholder random_nav co" v-if="form.lastCallResult === NOT_EXIST">空号</div>
                 <div class="placeholder random_nav co" v-if="form.lastCallResult === UNCONNECTED">未接通</div>
                 <div class="placeholder random_nav cr" v-if="form.lastCallResult === CONNECTED">已接通</div>
@@ -257,14 +257,11 @@
   </div>
 </template>
 <script>
-import photoImg from '@/assets/images/callimg.png'
-import photoImg1 from '@/assets/images/phone_random.png'
 import company from '@/assets/images/hand.png'
 import phoneImg from '../../assets/images/phone.gif'
-import thumbSmall from '@/assets/images/icon_tabbar.png'
 import cancle from '@/assets/images/cancle.png'
-import { getCall, getTaskHistory, updateOutboundName, getCallStatus, getCallscancle, getTaskList } from '@/api/api'
-import { transformText, queryObj, parseTime, timeDate } from '@/utils'
+import { getCall, getCallscancle } from '@/api/api'
+import { parseTime } from '@/utils'
 import { Toast } from 'we-vue'
 import Vue from 'vue'
 // import qs from 'qs'
@@ -272,29 +269,12 @@ import Vue from 'vue'
 export default {
   data () {
     return {
-      photoImg,
-      photoImg1,
       company,
-      thumbSmall,
       phoneImg,
       cancle,
       resultShow: false,
-      inform: false,
       details: false,
-      selected: '',
-      // from: '13053108821',
-      // to: '13661876489',
       form: {},
-      nextStepOptions: [],
-      callResult: [],
-      history: {
-        result: 'FOLLOW',
-        status: 'CALL_AGAIN',
-        actualCallStartDate: '',
-        acutalCallEndDate: '',
-        outboundTaskId: ''
-      },
-      info: {},
       listQuery1: {
         pageIndex: 0,
         pageSize: 10
@@ -302,7 +282,6 @@ export default {
       },
       createTime: parseTime(new Date(), '{y}-{m}-{d}'),
       callSid: '',
-      duration: '',
       task: {},
       // callStatus: false,
       callTime: {},
@@ -314,13 +293,8 @@ export default {
     }
   },
   created () {
-    // this.nextStepOptions = queryObj.nextStep
-    // this.callResult = queryObj.callResult
     this.form = this.$route.params
     this.form.lastCallDate = parseTime(this.form.lastCallDate, '{y}-{m}-{d}')
-    // this.pageNumber = this.$route.params.call
-    // this.form.lastCallResult = transformText(queryObj.callResult, this.form.lastCallResult)
-    // this.form.genderText = transformText(queryObj.gender, this.form.gender)
     let phones = this.form.phoneNo.substring(4, 5)
     if (phones === '*') {
       this.phoneShow = true
@@ -332,7 +306,6 @@ export default {
   mounted () {
     let devicePlatform = Vue.cordova.device.platform
     if (devicePlatform === 'Android') {
-      // alert('安卓')
       //     /* 监听电话状态（1空闲、2响铃、3通话） */
       window.CallListener.addListener((state) => {
         if (state === 3) {
@@ -354,35 +327,33 @@ export default {
           // } else {
           //   this.callDate()
           // }
-        } else {
-          Toast.text({
-            duration: 3000,
-            message: '电话状态：' + state
-          })
+        } else if (state === 2) {
+          this.details = false
         }
       })
     } else if (devicePlatform === 'ios') {
-      Vue.cordova.backgroundMode.on('deactivate', () => { // 监听是否前台台运行
-        // console.log('Now app is running in foreground.')
-        if (this.callStatus === true) {
-          this.details = false
-          this.resultShow = true
-          this.callDate()
-        } else if (this.phoneShow === false) {
-          this.details = false
-          this.resultShow = true
-          clearInterval(this.timeInterval)
-          this.history.acutalCallEndDate = new Date()
-          this.callDate()
-        }
-      })
+      // Vue.cordova.backgroundMode.on('deactivate', () => { // 监听是否前台台运行
+      //   // console.log('Now app is running in foreground.')
+      //   if (this.callStatus === true) {
+      //     this.details = false
+      //     this.resultShow = true
+      //     this.callDate()
+      //   } else if (this.phoneShow === false) {
+      //     this.details = false
+      //     this.resultShow = true
+      //     clearInterval(this.timeInterval)
+      //     this.history.acutalCallEndDate = new Date()
+      //     this.callDate()
+      //   }
+      // })
     }
   },
   methods: {
     phoneTimes () {
-      this.conversationState = true
+      // this.conversationState = true
     },
     startCall () {
+      this.details = true
       getCall(this.form.outboundNameId).then(res => {
         this.callSid = res.data.callSid
         if (this.callSid === null) {
@@ -391,90 +362,27 @@ export default {
             message: '无法外呼，请联系管理员...'
           })
           this.details = false
-        } else {
-          this.details = true
-          // this.callStatus = true
         }
       })
     },
-    getRandom () {
-      this.listQuery1.createTime = this.createTime
-      getTaskList('dnf', this.listQuery1).then((res) => {
-        console.log(res.data)
-        this.form = res.data.content[0]
-        this.form.lastCallResult = transformText(queryObj.callResult, this.form.lastCallResult)
-        this.form.genderText = transformText(queryObj.gender, this.form.gender)
-        let phones = this.form.phoneNo.substring(4, 5)
-        if (phones === '*') {
-          this.phoneShow = true
-        } else {
-          this.phoneShow = false
-        }
-      }).catch(() => {
-        this.form.lastCallDate = 0
-      })
-    },
-    submitCall () {
-      // this.callStatus = false
-      this.resultShow = false
-      this.history.outboundTaskId = this.form.taskId
-      let _this = this
-      if (this.phoneShow === false) {
-        getTaskHistory(this.history).then(res => {
-          // let data = res.data
-          // _this.form.lastCallResult = transformText(queryObj.callResult, data.result)
-          // this.form.lastCallResult = transformText(queryObj.callResult, this.form.lastCallResult)
-          // this.form.genderText = transformText(queryObj.gender, this.form.gender)
-          // console.log(_this.form.lastCallResult)
-        })
-      } else {
-        getCallStatus(this.callSid).then((res) => {
-          _this.history.actualCallStartDate = res.data.start
-          _this.history.acutalCallEndDate = res.data.end
-          getTaskHistory(this.history).then(res => {
-            // let data = res.data
-            // _this.form.lastCallResult = transformText(queryObj.callResult, data.result)
-            // this.form.lastCallResult = transformText(queryObj.callResult, this.form.lastCallResult)
-            // this.form.genderText = transformText(queryObj.gender, this.form.gender)
-            // this.getRandom()
-            // this.teskData()
-            // console.log(_this.form.lastCallResult)
-          })
-        })
-      }
-      this.getRandom()
-      this.teskData()
-    },
-    callDate () {
-      getCallStatus(this.callSid).then((res) => {
-        this.details = false
-        this.resultShow = true
-        this.callTime = timeDate(res.data.duration)
-      })
-    },
-    changeInfo () {
-      this.inform = true
-      this.resultShow = false
-      this.info = this.form
-    },
-    updateInfo () {
-      let params = {
-        contactName: this.info.contactName,
-        gender: this.info.gender,
-        mobileNo: this.info.mobileNo,
-        wechatNo: this.info.wechatNo,
-        age: this.info.age
-      }
-      updateOutboundName(this.info.outboundNameId, params).then(res => {
-        this.inform = false
-        this.resultShow = true
-        let data = res.data
-        this.form.contactName = data.contactName
-        this.form.age = data.age
-        this.form.gender = data.gender
-        this.form.genderText = transformText(queryObj.gender, this.form.gender)
-      })
-    },
+    // updateInfo () {
+    //   let params = {
+    //     contactName: this.info.contactName,
+    //     gender: this.info.gender,
+    //     mobileNo: this.info.mobileNo,
+    //     wechatNo: this.info.wechatNo,
+    //     age: this.info.age
+    //   }
+    //   updateOutboundName(this.info.outboundNameId, params).then(res => {
+    //     this.inform = false
+    //     this.resultShow = true
+    //     let data = res.data
+    //     this.form.contactName = data.contactName
+    //     this.form.age = data.age
+    //     this.form.gender = data.gender
+    //     this.form.genderText = transformText(queryObj.gender, this.form.gender)
+    //   })
+    // },
     // teskData () {
     //   let userId = localStorage.getItem('userId')
     //   getRank(userId).then(res => {

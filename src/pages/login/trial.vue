@@ -344,7 +344,7 @@ export default {
   .trial_nav{
     width: 100%;
     height: 282px;
-    margin-top: 80px;
+    padding-top: 80px;
   }
   .trial_title{
     width: 85%;

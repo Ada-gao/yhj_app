@@ -5,43 +5,43 @@
     <div class="wv-content x-wrapper">
       <div class="details_record">
         <div class="details_list">
-          <p class="details_left"><small style="font-size: 100%;color: #ffffff;">*</small>通话时长</p>
+          <p class="result_left"><small style="font-size: 100%;color: #ffffff;">*</small>通话时长</p>
           <p class="details_cont">{{callTimes}}</p>
         </div>
         <div class="details_list">
-          <p class="details_left"><small style="font-size: 100%;color: red;">*</small> 外呼结果</p>
+          <p class="result_left"><small style="font-size: 100%;color: red;">*</small> 外呼结果</p>
           <wv-cell class="details_cont" :value="results.label"  @click.native="resultsPickerShow = true" />
           <!--<wv-cell :value="ticket | pickerValueFilter" @click.native="ticketPickerShow = true" />-->
-          <p class="iconfont icon-fanhui details_right"></p>
+          <p class="iconfont icon-fanhui result_right"></p>
         </div>
         <div class="details_list">
-          <p class="details_left"><small style="font-size: 100%;color: red;">*</small> 下一步行动计划</p>
+          <p class="result_left"><small style="font-size: 100%;color: red;">*</small> 下一步行动计划</p>
           <wv-cell class="details_cont" :value="action.label" @click.native="actionPickerShow = true" />
-          <p class="iconfont icon-fanhui details_right"></p>
+          <p class="iconfont icon-fanhui result_right"></p>
         </div>
       </div>
-      <!--<div class="details_info">-->
-        <!--<p class="infor_title">客户信息</p>-->
-        <!--<div class="info_list">-->
-          <!--<p class="info_left">姓名</p>-->
-          <!--<input class="info_cont" :placeholder="form.contactName" v-model="form.contactName">-->
-          <!--<p class="iconfont icon-fanhui info_right"></p>-->
-        <!--</div>-->
-        <!--<div class="info_list">-->
-          <!--<p class="info_left">电话</p>-->
-          <!--<input class="info_cont" :placeholder="form.phoneNo" v-model="form.phoneNo">-->
-          <!--<p class="iconfont icon-fanhui info_right"></p>-->
-        <!--</div>-->
-        <!--<div class="info_list">-->
-          <!--<p class="info_left">微信</p>-->
-          <!--<input class="info_cont" :placeholder="form.wechatNo" v-model="form.wechatNo">-->
-          <!--<p class="iconfont icon-fanhui info_right"></p>-->
-        <!--</div>-->
-        <!--<div class="info_lists">-->
-          <!--<p class="info_left" style="margin-top: 10px">备注</p>-->
-          <!--<textarea rows="5" :placeholder="form.common" class="record_txt" v-model="form.common"></textarea>-->
-        <!--</div>-->
-      <!--</div>-->
+      <div class="details_info">
+        <p class="infor_title">客户信息</p>
+        <div class="info_list">
+          <p class="info_left">姓名</p>
+          <input class="info_cont" :placeholder="form.contactName" v-model="form.contactName">
+          <p class="iconfont icon-fanhui info_right"></p>
+        </div>
+        <div class="info_list">
+          <p class="info_left">电话</p>
+          <input class="info_cont" :placeholder="form.phoneNo" v-model="form.phoneNo">
+          <p class="iconfont icon-fanhui info_right"></p>
+        </div>
+        <div class="info_list">
+          <p class="info_left">微信</p>
+          <input class="info_cont" :placeholder="form.wechatNo" v-model="form.wechatNo">
+          <p class="iconfont icon-fanhui info_right"></p>
+        </div>
+        <div class="info_lists">
+          <p class="info_left" style="margin-top: 10px">备注</p>
+          <textarea rows="5" :placeholder="form.common" class="record_txt" v-model="form.common"></textarea>
+        </div>
+      </div>
       <div class="details_button" @click="submitCall">
         提交
       </div>
@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { getTaskHistory, getCallStatus, updateOutboundName, getTaskList } from '@/api/api'
+import { getTaskHistory, getCallStatus, updateOutboundName, getTaskList, getRandom } from '@/api/api'
 import { timeDate } from '@/utils'
 export default {
   data () {
@@ -113,6 +113,8 @@ export default {
       getCallStatus(this.callId).then((res) => {
         this.callTime = res.data
         this.callTimes = timeDate(this.callTime.duration)
+      }).catch(() => {
+        alert('call时间获取')
       })
     } else {
       this.callTime = this.$route.query.callTime
@@ -150,7 +152,10 @@ export default {
       })
       updateOutboundName(this.form.outboundNameId, params).then(res => {
         if (this.value === 'random') {
-          this.$router.push({path: '/call/customer-random'})
+          getRandom().then(res => {
+            let randomData = res.data
+            this.$router.push({path: '/call/customer-random', query: {form: randomData}})
+          })
         } else if (this.value === 'details') {
           getTaskList('dnf', this.listQuery1).then(res => {
             let data = res.data.content[0]
@@ -195,23 +200,24 @@ export default {
     margin: 0 auto;
     border-bottom: 1px solid #e9e9e9;
     height: 109px;
+    clear: both;
   }
   .details_list>p{
-    height: 107px;
-    line-height: 107px;
+    height: 109px;
+    line-height: 109px;
     float: left;
   }
-  .details_left{
+  .result_left{
     font-size: 28px;
     width: 34%;
     color: #323232;
-    height: 107px;
-    line-height: 107px;
+    height: 109px;
+    line-height: 109px;
   }
   .details_cont{
     width: 58%;
     float: left;
-    height: 107px;
+    height: 109px;
     text-align: right;
     color: #000000;
     outline: none;
@@ -219,7 +225,7 @@ export default {
     padding: 0!important;
     border: 0!important;
   }
-  .details_right{
+  .result_right{
     color:#e9e9e9;
     font-size: 39px;
     width: 6%;
@@ -293,5 +299,8 @@ export default {
   }
   .weui-cell__ft{
     color: #000000!important;
+  }
+  .weui-cell:before{
+    border: 0!important;
   }
 </style>
