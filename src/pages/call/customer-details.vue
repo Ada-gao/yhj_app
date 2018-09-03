@@ -702,18 +702,18 @@ export default {
     margin: 0 auto;
     padding: 0.2rem 0;
   }
-  .phone_button{
-    width: 90%;
-    margin: 0.76rem auto 0;
-    height: 1.64rem;
-    /*background: #32CCBC ;*/
-    border-radius: 0.2rem;
-    font-size: 0.62rem;
-    text-align: center;
-    line-height: 1.64rem;
-    color: #FFFFFF ;
-    display: inherit;
-  }
+  // .phone_button{
+  //   width: 82%;
+  //   margin: 0.76rem auto 0;
+  //   // height: 1.64rem;
+  //   /*background: #32CCBC ;*/
+  //   border-radius: 0.2rem;
+  //   font-size: 0.62rem;
+  //   text-align: center;
+  //   // line-height: 1.64rem;
+  //   color: #FFFFFF ;
+  //   display: inherit;
+  // }
   .Record,.information,.details_loading{
     z-index: 501;
     position: fixed;

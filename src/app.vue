@@ -82,11 +82,11 @@ export default {
   }
   .header_left{
     position: absolute;
-    top: 20px;
+    top: 62px;
     left: 0;
     width: 20%;
     color: #000000;
-    font-size: 30px;
+    font-size: 26px;
   }
   .wv-content_profile{
     position: fixed;
@@ -100,8 +100,10 @@ export default {
     -webkit-overflow-scrolling: touch;
   }
   .wv-header[data-v-a5b8d5b6]{
-    height: 80px!important;
-    line-height: 80px!important;
+    height: 96px!important;
+    line-height: 96px!important;
+    padding: 0;
+    box-sizing: content-box;
   }
   .wv-header .wv-header-title[data-v-a5b8d5b6]{
     color: #000000;
@@ -109,7 +111,7 @@ export default {
   }
   .wv-content{
     position: absolute;
-    top: 80px;
+    top: 96px;
     left: 0;
     right: 0;
     bottom: 0;
@@ -164,12 +166,12 @@ export default {
     font-size: 0.8rem;
   }
   .size_i{
-    font-size: 40px!important;
+    font-size: 26px!important;
     margin-left: 34px;
     color:#000000!important;
   }
   .size_c{
-    font-size: 40px!important;
+    font-size: 26px!important;
     margin-left: 34px;
     color:#ffffff!important;
   }

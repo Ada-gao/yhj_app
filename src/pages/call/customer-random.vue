@@ -1,11 +1,11 @@
 <template>
-  <div class="page">
+  <div class="page customer_random">
     <wv-header class="x-header" style="background-color: rgba(33, 41, 44, 0)">
-    <div class="btn-back header_left" slot="left">
-    <i class="iconfont icon-fanhui size_c" @click="$router.push('/call')">返回</i>
-    </div>
+      <div class="btn-back header_left" slot="left">
+        <i class="iconfont icon-fanhui size_c" @click="$router.push('/call')">返回</i>
+      </div>
     </wv-header>
-    <div style="width: 100%">
+    <div class="x-wrapper" style="width: 100%">
       <div class="random_bgimg" >
         <!--<img :src="photoImg">-->
       </div>
@@ -687,17 +687,17 @@ export default {
     margin: 0 auto;
     padding: 0.2rem 0;
   }
-  .phone_button{
-    width: 90%;
-    margin: 0.76rem auto 0;
-    height: 1.64rem;
-    border-radius: 0.2rem;
-    font-size: 0.62rem;
-    text-align: center;
-    line-height: 1.64rem;
-    color: #FFFFFF ;
-    display: inherit;
-  }
+  // .phone_button{
+  //   width: 90%;
+  //   margin: 0.76rem auto 0;
+  //   height: 1.64rem;
+  //   border-radius: 0.2rem;
+  //   font-size: 0.62rem;
+  //   text-align: center;
+  //   line-height: 1.64rem;
+  //   color: #FFFFFF ;
+  //   display: inherit;
+  // }
   .Record,.information,.details_loading{
     z-index: 501;
     position: fixed;

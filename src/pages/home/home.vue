@@ -200,7 +200,7 @@ export default {
 
 <style lang="scss">
   .icon-wode{
-    font-size: 57px;
+    font-size: 48px;
   }
   .wv-header .left[data-v-a5b8d5b6],.wv-header .wv-header-title[data-v-a5b8d5b6] {
     font-size: 36px;
@@ -246,8 +246,8 @@ export default {
   }
   .header_homeleft{
     position: absolute;
-    top: 30px;
-    left: 39px;
+    top: 60px;
+    left: 40px;
     width: 20%;
     color: #000000;
     font-size: 26px;
@@ -277,11 +277,11 @@ export default {
     background-color: #ffffff;
   }
   .phone_button{
-    width: 90%;
+    width: 82%;
     height: 98px;
     background: linear-gradient(to right, #5d90f4 , #2f6be2);
     border-radius: 12px;
-    font-size: 36px;
+    font-size: 34px;
     text-align: center;
     line-height: 98px;
     color: #FFFFFF ;
