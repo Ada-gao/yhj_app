@@ -11,12 +11,15 @@ import FastClick from 'fastclick'
 import VueCordova from './vue-cordova/index'
 import 'lib-flexible/flexible'
 import VueClipboard from 'vue-clipboard2'
+import MintUI from 'mint-ui'
+import 'mint-ui/lib/style.css'
 
 Vue.config.productionTip = false
 Vue.config.devtools = true
 Vue.config.debug = true
 
 Vue.use(WeVue)
+Vue.use(MintUI)
 Vue.component('v-distpicker', VDistpicker)
 Vue.use(VueClipboard)
 

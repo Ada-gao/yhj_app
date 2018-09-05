@@ -82,9 +82,10 @@ export default {
   }
   .header_left{
     position: absolute;
-    top: 62px;
+    top: 50%;
     left: 0;
-    width: 20%;
+    // transform: translateY(-50%);
+    // width: 20%;
     color: #000000;
     font-size: 26px;
   }
