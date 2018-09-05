@@ -1,6 +1,6 @@
 <template>
   <div class="page" style="background: #ffffff;position: absolute">
-    <wv-header title="首页" class="x-header" background-color="#FFFFFF">
+    <wv-header title="闪电呼" class="x-header" background-color="#FFFFFF">
       <div class="btn-back header_homeleft" slot="left">
         <i class="iconfont icon-wode" @click="$router.push('/profile')"></i>
       </div>
@@ -52,13 +52,28 @@
         <!--</div>-->
       </div>
       <div class="swiper_page">
+        <div v-if="!statisGroup.length" class="home_list default_list">
+          <i class="iconfont icon-zanwushuju"></i>
+          <p class="def_text1">暂无任务</p>
+          <p class="def_text2">请联系管理员给您分配任务</p>
+        </div>
         <div style="width:28090000px;" v-for="item in statisGroup" :key="item.taskGroupId" @click="$router.push('/call')">
           <div class="home_list">
             <div class="progress_title">
               <p style="width: 90%">{{item.productName}}</p>
               <p class="iconfont icon-huadong" style=" color:#E9E9E9"></p>
             </div>
-            <wv-flex :gutter="10" style="width: 88%;margin: 0.5rem auto 0;border-bottom: 1px solid rgba(216, 216, 216, 0.2)">
+            <div class="flex_list">
+              <div class="flex_item" style="text-align: left;">
+                <div class="placeholder progress_number">{{item.totalTaskCnt}}<small style="font-size: 50%">个</small></div>
+                <div class="placeholder progress_txt">客户总数</div>
+              </div>
+              <div class="flex_item" style="text-align: right;">
+                <div class="placeholder progress_number">{{item.totalTaskCnt - item.totalTaskCompleteCnt}}<small style="font-size: 50%">个</small></div>
+                <div class="placeholder progress_txt">剩余未呼</div>
+              </div>
+            </div>
+            <!-- <wv-flex :gutter="10" style="width: 88%;margin: 0.5rem auto 0;border-bottom: 1px solid rgba(216, 216, 216, 0.2)">
               <wv-flex-item>
                 <div class="placeholder progress_number">{{item.totalTaskCnt}}<small style="font-size: 50%">个</small></div>
                 <div class="placeholder progress_txt">客户总数</div>
@@ -67,11 +82,13 @@
                 <div class="placeholder progress_number">{{item.totalTaskCnt - item.totalTaskCompleteCnt}}<small style="font-size: 50%">个</small></div>
                 <div class="placeholder progress_txt">剩余未呼</div>
               </wv-flex-item>
-            </wv-flex>
-            <p class="progress_time">任务计划完成时间：{{item.taskEndDate | moment('YYYY.MM.DD')}}</p>
-            <div class="task_list">
-              <p></p>
-              <p></p>
+            </wv-flex> -->
+            <div style="color: #9C9C9C;" class="task_list">
+              <p class="progress_time">计划完成时间：{{item.taskEndDate | moment('YYYY.MM.DD')}}</p>
+              <p class="task_to">
+                <span>点击查看任务列表</span>
+                <i class="iconfont icon-fanhui" style="font-size: 34px;" @click="$router.push('/call')"></i>
+              </p>
             </div>
           </div>
         </div>
@@ -118,7 +135,7 @@ export default {
       form: {},
       Belonged: '',
       name: '',
-      statisGroup: {},
+      statisGroup: [],
       percent: '',
       completeStatus: '',
       userId: '',
@@ -156,7 +173,7 @@ export default {
         })
       })
       getStatisGroup().then(res => {
-        this.statisGroup = res.data
+        this.statisGroup = res.data || []
         this.statisGroup.forEach(item => {
           item.percent = item.totalTaskCompleteCnt * 100 / item.totalTaskCnt
           // console.log(item.percent)
@@ -221,11 +238,32 @@ export default {
     margin:3px 30px 0 3px;
     border-radius: 12px;
     box-shadow: 6px 4px 20px rgba(169, 169, 169, 0.4);
+    padding-left: 60px;
+    padding-right: 60px;
+    box-sizing: border-box;
   }
   .home_list>li{
     float: left;
     list-style: none;
     width: 100%;
+  }
+  .default_list {
+    text-align: center;
+    font-weight: 100;
+    .iconfont {
+      font-size: 204px;
+      color: #f2f2f2;
+      margin-top: 117px;
+      display: inline-block;
+    }
+    .def_text1 {
+      color: #c2c2c2;
+      font-size: 32px;
+    }
+    .def_text2 {
+      color: #d3d3d3;
+      font-size: 24px;
+    }
   }
   .home_content{
     width: 100%;
@@ -246,7 +284,7 @@ export default {
     font-size: 28px;
     color: #9c9c9c;
     text-align: center;
-    margin-bottom: 79px;
+    // margin-bottom: 79px;
   }
   .header_homeleft{
     position: absolute;
@@ -329,15 +367,27 @@ export default {
     /*margin-top: 0.4rem;*/
   }
   .progress_title{
-    width: 90%;
+    // width: 90%;
     height: 170px;
     line-height: 170px;
-    margin: 0 auto;
+    box-sizing: border-box;
+    // margin: 0 auto;
     border-bottom: 0.5px solid rgba(111, 106, 106, 0.31);
     font-size: 32px;
   }
   .progress_title>p{
     float: left;
+  }
+  .flex_list {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #E9E9E9;
+    height: 258px;
+    box-sizing: border-box;
+    .flex_item {
+      margin-top: 44px;
+      margin-bottom: 44px;
+    }
   }
   .progress_list{
     width: 90%;
@@ -350,8 +400,26 @@ export default {
     font-size: 32px;
     color: #222222;
     font-weight: 200;
-    width: 75%;
-    margin: 60px auto;
+    margin-top: 60px;
+    // width: 75%;
+    // margin: 60px auto;
+  }
+  .task_list {
+    // display: flex;
+    // justify-content: space-between;
+    // height: 34px;
+    // line-height: 34px;
+    .task_to {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 55px;
+      span {
+        font-size: 24px;
+      }
+      i {
+        font-size: 58px;
+      }
+    }
   }
   .weui-progress__bar {
     height: 16px!important;
