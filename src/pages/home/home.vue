@@ -1,7 +1,7 @@
 <template>
   <div class="page" style="background: #ffffff;position: absolute">
     <wv-header title="闪电呼" class="x-header" background-color="#FFFFFF">
-      <div class="btn-back header_homeleft" slot="left">
+      <div class="btn-back header_left" slot="left" style="left: 40px;">
         <i class="iconfont icon-wode" @click="$router.push('/profile')"></i>
       </div>
     </wv-header>
@@ -286,14 +286,14 @@ export default {
     text-align: center;
     // margin-bottom: 79px;
   }
-  .header_homeleft{
-    position: absolute;
-    top: 60px;
-    left: 40px;
-    width: 20%;
-    color: #000000;
-    font-size: 26px;
-  }
+  // .header_homeleft{
+  //   position: absolute;
+  //   top: 60px;
+  //   left: 40px;
+  //   width: 20%;
+  //   color: #000000;
+  //   font-size: 26px;
+  // }
   .home_header{
     height: 5.42rem;
     width: 100%;

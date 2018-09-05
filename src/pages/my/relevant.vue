@@ -12,7 +12,7 @@
       <p class="app_name">闪电呼</p>
       <p class="app_edition">客户端版本号：1.0</p>
       <p class="company">版权所有：上海数赟科技有限公司</p>
-      <p class="app_txt">Copyright © 2018 suxiang.All Rights Reserved</p>
+      <p class="app_txt">Copyright © 2018 shuyun.All Rights Reserved</p>
       <p class="app_weixin">微信公众号：gh_374030c43f3c<small style="font-size: 100%;color: #306ce2;" v-clipboard:copy="message">一键复制</small></p>
     </div>
   </div>

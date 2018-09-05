@@ -61,16 +61,16 @@
       <div class="profile_list">
         <div style="border-bottom: 0.5px solid #E9E9E9">
           <router-link :to="{path:'/my/feedback'}">
-          <p class="iconfont icon-wenti profile_nav profile_wenti"></p>
-          <p class="profile_nav" style="color: rgba(50,50,50,1);">问题反馈</p>
-          <p class="iconfont icon-fanhui profile_nav profile_icon" style="color: #DBDBDB;width: 10%;float: right"></p>
+            <i class="iconfont icon-wenti profile_nav profile_wenti"></i>
+            <p class="profile_nav" style="color: rgba(50,50,50,1);">问题反馈</p>
+            <i class="iconfont icon-fanhui profile_icon" style="color: #DBDBDB;float: right"></i>
           </router-link>
         </div>
         <div>
           <router-link :to="{path:'/my/relevant'}">
-          <p class="iconfont icon-guanyu profile_nav profile_guan"></p>
-          <p class="profile_nav" style="color: rgba(50,50,50,1);">关于闪电呼</p>
-          <p class="iconfont icon-fanhui profile_nav profile_icon" style="color:#DBDBDB;width: 10%;float: right"></p>
+            <p class="iconfont icon-guanyu profile_nav profile_guan"></p>
+            <p class="profile_nav" style="color: rgba(50,50,50,1);">关于闪电呼</p>
+            <p class="iconfont icon-fanhui profile_icon" style="color:#DBDBDB;float: right"></p>
           </router-link>
         </div>
       </div>
@@ -165,9 +165,8 @@ export default {
           //   }
           // })
           getRank(this.userId).then((res) => {
-            console.log(res)
             this.form = res.data
-            this.form.avgDuration = this.form.avgDuration.toFixed(1)
+            this.form.avgDuration = this.form.avgDuration ? this.form.avgDuration.toFixed(1) : null
             if (this.form.totalTaskCompleteCnt === null || this.form.totalTaskCompleteCnt === 0) {
               this.form.rate = 0
             } else {
@@ -346,6 +345,7 @@ export default {
   }
   .profile_icon{
     /*line-height: 4.82rem;*/
+    font-size: 34px;
     color:#32CCBC;
     transform:rotate(180deg);
     -ms-transform:rotate(180deg);
