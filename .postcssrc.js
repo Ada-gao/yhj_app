@@ -12,7 +12,7 @@ module.exports = {
     "postcss-px-to-viewport": { 
       viewportWidth: 750,
       viewportHeight: 1334,
-      unitPrecision: 3,
+      unitPrecision: 3, // The decimal numbers to allow the REM units to grow to.
       viewportUnit: 'vw',
       selectorBlackList: ['.ignore', '.hairlines'],
       minPixelValue: 1,

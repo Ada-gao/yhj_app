@@ -38,7 +38,7 @@
         </wv-flex-item>
         <wv-flex-item class="profile_progress">
           <div class="placeholder">
-            <div class="progress_number2">第{{form.rank}}名</div>
+            <div class="progress_number2">第{{form.rank || ' '}}名</div>
             <div class="progress_text">今日团队排名</div>
           </div>
         </wv-flex-item>
@@ -60,7 +60,7 @@
       <!--</wv-group>-->
       <div class="profile_list">
         <div style="border-bottom: 0.5px solid #E9E9E9">
-          <router-link :to="{path:'/my/feedback'}">
+          <router-link class="clearfix" :to="{path:'/my/feedback'}">
             <i class="iconfont icon-wenti profile_nav profile_wenti"></i>
             <p class="profile_nav" style="color: rgba(50,50,50,1);">问题反馈</p>
             <i class="iconfont icon-fanhui profile_icon" style="color: #DBDBDB;float: right"></i>
@@ -288,6 +288,7 @@ export default {
     margin-top: 80px;
     // margin-top: 1.02rem;
     text-align: center;
+    font-weight: bold;
   }
   .task_text{
     font-size: 24px;
@@ -300,6 +301,7 @@ export default {
     font-size: 36px;
     /*margin: 63px 0;*/
     text-align: center;
+    font-weight: bold;
   }
   .progress_number1{
     color: rgba(119,209,96,1);

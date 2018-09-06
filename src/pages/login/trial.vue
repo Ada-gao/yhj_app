@@ -218,7 +218,6 @@ export default {
         orgSize: this.orgSize,
         status: 0
       }
-      console.log(params)
       if (this.mobile === '' || this.mobile.length < 11) {
         Toast({
           duration: 1000,
@@ -292,13 +291,11 @@ export default {
     },
     confirmIndustry (picker) {
       this.industryType = picker.getValues()
-      console.log(this.industryType)
       this.industry = this.industryType[0]
     },
     confirmScale (picker) {
       this.scales = picker.getValues()
       this.orgSize = this.scales[0]
-      console.log(this.scales)
     },
     // 获取行业
     Industry () {

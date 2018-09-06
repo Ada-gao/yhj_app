@@ -1,7 +1,7 @@
 <template>
   <div class="page" style="background: #ffffff;position: absolute">
     <wv-header title="闪电呼" class="x-header" background-color="#FFFFFF">
-      <div class="btn-back header_left" slot="left" style="left: 40px;">
+      <div class="btn-back header_left l40" slot="left">
         <i class="iconfont icon-wode" @click="$router.push('/profile')"></i>
       </div>
     </wv-header>
@@ -28,7 +28,7 @@
         <!--</div>-->
       <!--</div>-->
       <div class="home_progress">
-        <wv-progress :percent="percent" :show-clear="false" style="width: 85%; margin: 30px auto 0"/>
+        <my-progress :percent="percent" :show-clear="false" style="width: 85%; margin: 30px auto 0"></my-progress>
       </div>
       <div class="home_nav">
           <wv-flex :gutter="10" style="width: 100%;">
@@ -87,7 +87,7 @@
               <p class="progress_time">计划完成时间：{{item.taskEndDate | moment('YYYY.MM.DD')}}</p>
               <p class="task_to">
                 <span>点击查看任务列表</span>
-                <i class="iconfont icon-fanhui" style="font-size: 34px;" @click="$router.push('/call')"></i>
+                <i class="iconfont icon-gengduo" style="font-size: 18px;" @click="$router.push({name: 'call', params: {groupId: item.taskGroupId}})"></i>
               </p>
             </div>
           </div>
@@ -126,8 +126,12 @@ import thumbSmall from '../../assets/images/icon_tabbar.png'
 import task from '@/assets/images/task.png'
 import { getCompany, getUser, getStatisGroup, getCompleteStatus, getRank, getRandom } from '@/api/api'
 import { timeDate } from '@/utils'
+import MyProgress from '@/components/progress'
 // getTaskStatisticsDaily
 export default {
+  components: {
+    MyProgress
+  },
   data () {
     return {
       thumbSmall,
@@ -169,7 +173,8 @@ export default {
         getRank(res.data.id).then(res => {
           this.form = res.data
           this.form.dailyEffectiveDuration = timeDate(res.data.dailyEffectiveDuration)
-          this.percent = this.form.dailyTaskCompleteCnt * 100 / this.form.dailyTaskCnt
+          this.percent = 60
+          // this.percent = this.form.dailyTaskCompleteCnt * 100 / this.form.dailyTaskCnt
         })
       })
       getStatisGroup().then(res => {
@@ -237,7 +242,7 @@ export default {
     float:left;
     margin:3px 30px 0 3px;
     border-radius: 12px;
-    box-shadow: 6px 4px 20px rgba(169, 169, 169, 0.4);
+    box-shadow: 6px 3px 20px rgba(169, 169, 169, 0.4);
     padding-left: 60px;
     padding-right: 60px;
     box-sizing: border-box;
@@ -271,7 +276,7 @@ export default {
   .swiper_page{
     width:92%;
     height:715px;
-    margin:60px 0 0 60px;
+    margin:60px 0 0 64px;
     overflow:auto;
     -webkit-overflow-scrolling: touch
   }
@@ -410,14 +415,18 @@ export default {
     // height: 34px;
     // line-height: 34px;
     .task_to {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 55px;
+      // display: flex;
+      // justify-content: space-between;
+      margin-top: 38px;
+      position: relative;
       span {
         font-size: 24px;
       }
       i {
-        font-size: 58px;
+        font-size: 34px;
+        position: absolute;
+        top: -0;
+        right: 0;
       }
     }
   }
@@ -483,5 +492,8 @@ export default {
     border-radius:12px;
     box-shadow:0px 7px 29px 1px rgba(13,67,173,0.5);
     background: linear-gradient(to right, #5d90f4 , #2f6be2);
+  }
+  .l40 {
+    left: 40px;
   }
 </style>

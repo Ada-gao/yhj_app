@@ -157,6 +157,8 @@ export default {
             this.$router.push({path: '/call/customer-random', query: {form: randomData}})
           })
         } else if (this.value === 'details') {
+          // TODO
+          // listQuery1 参数来源？
           getTaskList('dnf', this.listQuery1).then(res => {
             let data = res.data.content[0]
             this.$router.push({name: 'customer-details', params: data})

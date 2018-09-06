@@ -84,7 +84,7 @@ export default {
     position: absolute;
     top: 50%;
     left: 0;
-    // transform: translateY(-50%);
+    transform: translateY(-50%);
     // width: 20%;
     color: #000000;
     font-size: 26px;

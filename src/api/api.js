@@ -50,7 +50,7 @@ export const getUser = () => axios.get('/app/me')
 // 个人任务完成统计
 export const getTaskStatistics = () => axios.get('/app/taskStatistics')
 // 获取任务列表
-export const getTaskList = (type, params) => axios.get('/app/tasks/' + type, { params: params })
+export const getTaskList = (groupId, params) => axios.get('/app/tasks/' + groupId, { params: params })
 // 开始外呼
 export const getCall = (id) => axios.post('/app/call/' + id)
 // 获取外呼时间

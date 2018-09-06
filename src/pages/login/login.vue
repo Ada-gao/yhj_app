@@ -2,7 +2,7 @@
   <div class="page" style="background: #858585">
     <div class="login_bgimg"></div>
     <div class="login_content">
-      <div class="user_login user_user">
+      <div class="user_login user_user ignore">
         <i class="iconfont icon-zhanghao login_icon"></i>
         <input class="user_input" placeholder="请输入账号" v-model="account" autocapitalize="off" autocorrect="off"/>
       </div>
@@ -131,6 +131,7 @@ export default {
     margin-top: 293px;
   }
   .user_user{
+    // padding-top: vw(492);
     padding-top: 492px;
   }
 //  .LOGO{
