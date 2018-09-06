@@ -133,26 +133,25 @@ export default {
   .user_user{
     padding-top: 492px;
   }
-
- .LOGO{
-   width: 2.6rem;
-   height: 2.6rem;
-   margin: 0 auto;
-   padding: 34% 0 0;
- }
-  .logo_img{
-    max-width: 100%;
-  }
-  .title_one{
-    text-align: center;
-    font-size: 20px;
-    font-size: 0.64rem;
-  }
-  .title_two{
-    text-align: center;
-    font-size: 0.64rem;
-    margin-top: 0.48rem;
-  }
+//  .LOGO{
+//    width: 2.6rem;
+//    height: 2.6rem;
+//    margin: 0 auto;
+//    padding: 34% 0 0;
+//  }
+//   .logo_img{
+//     max-width: 100%;
+//   }
+  // .title_one{
+  //   text-align: center;
+  //   font-size: 20px;
+  //   font-size: 0.64rem;
+  // }
+  // .title_two{
+  //   text-align: center;
+  //   font-size: 0.64rem;
+  //   margin-top: 0.48rem;
+  // }
   .land{
     width: 90%;
     height: 88px;
@@ -229,20 +228,20 @@ export default {
   .user_login>div{
     float: left;
   }
-  .logo_img{
-    position: relative;
-    height: 2.4rem;
-    border: 0.04rem solid #02B6DC;
-    border-radius: 50%;
-  }
-  .icon-tonghuashijian{
-    position: absolute;
-    top: -7px;
-    left: 8px;
-    font-size: 1.9rem;
-    color: #02B6DC;
-  }
- .weui-toast_text .weui-toast__content[data-v-4af60de0]{
-   font-size: .6em;
- }
+  // .logo_img{
+  //   position: relative;
+  //   height: 2.4rem;
+  //   border: 0.04rem solid #02B6DC;
+  //   border-radius: 50%;
+  // }
+  // .icon-tonghuashijian{
+  //   position: absolute;
+  //   top: -7px;
+  //   left: 8px;
+  //   font-size: 1.9rem;
+  //   color: #02B6DC;
+  // }
+   .weui-toast_text .weui-toast__content[data-v-4af60de0]{
+     font-size: 26px;
+   }
 </style>

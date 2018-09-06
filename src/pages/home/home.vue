@@ -294,30 +294,30 @@ export default {
   //   color: #000000;
   //   font-size: 26px;
   // }
-  .home_header{
-    height: 5.42rem;
-    width: 100%;
-    /*margin-top: 1.29rem;*/
-    margin-bottom: 0.06rem;
-    background: #FFFFFF;
-  }
+  // .home_header{
+  //   height: 5.42rem;
+  //   width: 100%;
+  //   /*margin-top: 1.29rem;*/
+  //   margin-bottom: 0.06rem;
+  //   background: #FFFFFF;
+  // }
   // .home_header>p{
   // }
-  .home_time{
-    height: 1.6rem;
-    font-size: 0.52rem;
-    line-height: 1.6rem;
-    border-bottom: 1px solid #D8D8D8;
-  }
-  .home_head{
-    height: 3.76rem;
-  }
-  .head_h{
-    width: 29%;
-    height: 100%;
-    text-align: center;
-    background-color: #ffffff;
-  }
+  // .home_time{
+  //   height: 1.6rem;
+  //   font-size: 0.52rem;
+  //   line-height: 1.6rem;
+  //   border-bottom: 1px solid #D8D8D8;
+  // }
+  // .home_head{
+  //   height: 3.76rem;
+  // }
+  // .head_h{
+  //   width: 29%;
+  //   height: 100%;
+  //   text-align: center;
+  //   background-color: #ffffff;
+  // }
   .phone_button{
     width: 82%;
     height: 98px;
@@ -389,13 +389,13 @@ export default {
       margin-bottom: 44px;
     }
   }
-  .progress_list{
-    width: 90%;
-    margin:0.78rem auto 0;
-    /*background:#32CCBC;*/
-    height: 0.5rem;
-    border-radius: 10px;
-  }
+  // .progress_list{
+  //   width: 90%;
+  //   margin:0.78rem auto 0;
+  //   /*background:#32CCBC;*/
+  //   height: 0.5rem;
+  //   border-radius: 10px;
+  // }
   .progress_time{
     font-size: 32px;
     color: #222222;
