@@ -2,7 +2,7 @@
   <div class="page customer_random">
     <wv-header class="x-header" style="background-color: rgba(33, 41, 44, 0)">
       <div class="btn-back header_left" slot="left">
-        <i class="iconfont icon-fanhui size_c" @click="$router.push('/call')">返回</i>
+        <i class="iconfont icon-fanhui size_c" @click="$router.push('/home')">返回</i>
       </div>
     </wv-header>
     <div class="x-wrapper" style="width: 100%">

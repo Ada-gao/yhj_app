@@ -21,8 +21,8 @@ routes.push({
   component: resolve => require(['../pages/home/home.vue'], resolve),
   name: 'home',
   meta: {
-    title: '首页',
-    description: '首页',
+    title: '闪电呼',
+    description: '闪电呼-首页',
     requiresAuth: true
   }
 })

@@ -98,7 +98,7 @@ export default {
         // createTime: ''
       },
       call: 1,
-      groupId: 0
+      groupId: undefined
     }
   },
   methods: {
@@ -197,7 +197,8 @@ export default {
   },
   created () {
     // console.log(this.createTime)
-    this.groupId = this.$route.params.groupId
+    console.log(this.$route)
+    this.groupId = this.$route.params ? this.$route.params.groupId : undefined
   },
   mounted () {
     this.getList1()

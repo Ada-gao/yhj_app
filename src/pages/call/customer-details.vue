@@ -352,7 +352,7 @@ export default {
     phoneTimes () {
       // this.conversationState = true
     },
-    startCall () {
+    startCall () { // 第三方呼叫平台
       this.details = true
       getCall(this.form.outboundNameId).then(res => {
         this.callSid = res.data.callSid

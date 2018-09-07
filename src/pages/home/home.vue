@@ -61,7 +61,7 @@
           <div class="home_list">
             <div class="progress_title">
               <p style="width: 90%">{{item.productName}}</p>
-              <p class="iconfont icon-huadong" style=" color:#E9E9E9"></p>
+              <p v-if="statisGroup.length > 1" class="iconfont icon-huadong" style=" color:#E9E9E9"></p>
             </div>
             <div class="flex_list">
               <div class="flex_item" style="text-align: left;">
@@ -87,7 +87,7 @@
               <p class="progress_time">计划完成时间：{{item.taskEndDate | moment('YYYY.MM.DD')}}</p>
               <p class="task_to">
                 <span>点击查看任务列表</span>
-                <i class="iconfont icon-gengduo" style="font-size: 18px;" @click="$router.push({name: 'call', params: {groupId: item.taskGroupId}})"></i>
+                <i class="iconfont icon-gengduo" style="font-size: 18px;" @click="getTaskList(item.taskGroupId)"></i>
               </p>
             </div>
           </div>
@@ -211,6 +211,10 @@ export default {
         let randomData = res.data
         this.$router.push({path: '/call/customer-random', query: {form: randomData}})
       })
+    },
+    getTaskList (groupId) {
+      console.log(groupId)
+      this.$router.push({name: 'call', params: {groupId}})
     }
   },
   computed: {

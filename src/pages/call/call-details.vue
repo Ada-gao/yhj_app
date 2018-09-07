@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { getTaskHistory, getCallStatus, updateOutboundName, getTaskList, getRandom } from '@/api/api'
+import { getTaskHistory, getCallStatus, updateOutboundName, getTaskList, getRandom, getCallMoney } from '@/api/api'
 import { timeDate } from '@/utils'
 export default {
   data () {
@@ -104,7 +104,8 @@ export default {
       }
     }
   },
-  created () {
+  created () { // 挂断电话后的行为
+    console.log(this.$route.query)
     this.form = this.$route.query.form
     this.value = this.$route.query.value
     let phones = this.form.phoneNo.substring(4, 5)
@@ -164,6 +165,19 @@ export default {
             this.$router.push({name: 'customer-details', params: data})
           })
         }
+      })
+    },
+    getCallHistory () {
+      let params = {
+        callType: this.form.phoneNo.indexOf('*') > -1 ? 'THIRD_PLATFORM' : 'NATIVE',
+        clientId: this.form.clientId,
+        clientName: this.form.contactName,
+        duration: this.callTime,
+        phoneNum: this.form.phoneNo,
+        saleId: localStorage.getItem('userId')
+      }
+      getCallMoney(params).then(res => {
+        console.log(res.data)
       })
     }
   }

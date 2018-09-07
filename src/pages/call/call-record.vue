@@ -55,6 +55,7 @@ export default {
     }
     // this.callid = this.$route.params.callid
     // alert(this.callid)
+    console.log(this.$route.query)
   },
   mounted () {
     let devicePlatform = Vue.cordova.device.platform
