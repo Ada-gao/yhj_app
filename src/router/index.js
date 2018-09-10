@@ -95,7 +95,7 @@ routes.push({
 })
 
 routes.push({
-  path: '/call/customer-random',
+  path: '/call/customer-random/:type/:groupId?', // 0: 列表详情进入; 1: 随机呼入
   component: resolve => require(['../pages/call/customer-random.vue'], resolve),
   name: 'customer-random',
   meta: {
@@ -106,6 +106,7 @@ routes.push({
   }
 })
 
+// 可弃用，已用参数处理
 routes.push({
   path: '/call/customer-details',
   component: resolve => require(['../pages/call/customer-details.vue'], resolve),

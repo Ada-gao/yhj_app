@@ -124,7 +124,7 @@
 <script>
 import thumbSmall from '../../assets/images/icon_tabbar.png'
 import task from '@/assets/images/task.png'
-import { getCompany, getUser, getStatisGroup, getCompleteStatus, getRank, getRandom } from '@/api/api'
+import { getCompany, getUser, getStatisGroup, getCompleteStatus, getRank } from '@/api/api'
 import { timeDate } from '@/utils'
 import MyProgress from '@/components/progress'
 // getTaskStatisticsDaily
@@ -207,10 +207,7 @@ export default {
     //   this.dateTime = y + '年' + m + '月' + d + '日' + weekday[my]
     // },
     callphone () {
-      getRandom().then(res => {
-        let randomData = res.data
-        this.$router.push({path: '/call/customer-random', query: {form: randomData}})
-      })
+      this.$router.push({path: '/call/customer-random/1'})
     },
     getTaskList (groupId) {
       console.log(groupId)

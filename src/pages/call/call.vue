@@ -192,17 +192,20 @@ export default {
       this.getList2()
     },
     todetails (item) {
-      this.$router.push({name: 'customer-details', params: item})
+      // this.$router.push({name: 'customer-details', params: item})
+      this.$router.push({path: '/call/customer-random/0/' + this.groupId, query: item})
     }
   },
   created () {
-    // console.log(this.createTime)
     console.log(this.$route)
     this.groupId = this.$route.params ? this.$route.params.groupId : undefined
+    console.log(this.groupId)
   },
   mounted () {
-    this.getList1()
-    this.getList2(false)
+    if (this.groupId) {
+      this.getList1()
+      this.getList2(false)
+    }
   },
   computed: {
     /*  filterResult () {

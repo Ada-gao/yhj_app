@@ -64,7 +64,7 @@ export const getHand = (fileUuid) => axios.get('/file/' + fileUuid)
 export const getSales = (userId) => axios.get('/task/statisBySales?userId=' + userId)
 // export const postFeedback = (img) => axios.post('/app')
 // 获取随机外呼
-export const getRandom = () => axios.get('/app/nextTask')
+export const getRandom = (params) => axios.get('/app/nextTask', {params})
 // 外呼中断
 export const getCallscancle = (callSid) => axios.get('/call/' + callSid)
 // 获取外呼记录
