@@ -293,6 +293,12 @@ export default {
     // this.callResult = queryObj.callResult
     // this.teskData()
     this.form = this.$route.query.form
+    let phones = this.form.phoneNo.substring(4, 5)
+    if (phones === '*') {
+      this.phoneShow = true
+    } else {
+      this.phoneShow = false
+    }
   },
   mounted () {
     let devicePlatform = Vue.cordova.device.platform
