@@ -10,7 +10,6 @@ module.exports = merge(prodEnv, {
 // module.exports = merge(prodEnv, {
 //   NODE_ENV: '"development"',
 //   BASE_API: '"http://47.99.32.117/api"'
-//
 // })
 
 // module.exports = merge(prodEnv, {

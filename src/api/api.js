@@ -50,7 +50,7 @@ export const getUser = () => axios.get('/app/me')
 // 个人任务完成统计
 export const getTaskStatistics = () => axios.get('/app/taskStatistics')
 // 获取任务列表
-export const getTaskList = (type, params) => axios.get('/app/tasks/' + type, { params: params })
+export const getTaskList = (groupId, params) => axios.get('/app/tasks/' + groupId, { params: params })
 // 开始外呼
 export const getCall = (id) => axios.post('/app/call/' + id)
 // 获取外呼时间
@@ -64,7 +64,7 @@ export const getHand = (fileUuid) => axios.get('/file/' + fileUuid)
 export const getSales = (userId) => axios.get('/task/statisBySales?userId=' + userId)
 // export const postFeedback = (img) => axios.post('/app')
 // 获取随机外呼
-export const getRandom = () => axios.get('/app/nextTask')
+export const getRandom = (params) => axios.get('/app/nextTask', {params})
 // 外呼中断
 export const getCallscancle = (callSid) => axios.get('/call/' + callSid)
 // 获取外呼记录
@@ -91,3 +91,5 @@ export const postUpload = (obj) => axios(
 export const getStatisGroup = () => axios.get('/task/statisGroup')
 // 获取任务完成状态
 export const getCompleteStatus = (userId) => axios.get('/task/saleDailyCompleteStatus?userId=' + userId)
+// 外呼扣费
+export const getCallMoney = (params) => axios.post('/call/call/recordCallHistory', params)

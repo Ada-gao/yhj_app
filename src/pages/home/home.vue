@@ -1,7 +1,7 @@
 <template>
   <div class="page" style="background: #ffffff;position: absolute">
-    <wv-header title="首页" class="x-header" background-color="#FFFFFF">
-      <div class="btn-back header_homeleft" slot="left">
+    <wv-header title="闪电呼" class="x-header" background-color="#FFFFFF">
+      <div class="btn-back header_left l40" slot="left">
         <i class="iconfont icon-wode" @click="$router.push('/profile')"></i>
       </div>
     </wv-header>
@@ -28,7 +28,7 @@
         <!--</div>-->
       <!--</div>-->
       <div class="home_progress">
-        <wv-progress :percent="percent" :show-clear="false" style="width: 85%; margin: 30px auto 0"/>
+        <my-progress :percent="percent" :show-clear="false" style="width: 85%; margin: 30px auto 0"></my-progress>
       </div>
       <div class="home_nav">
           <wv-flex :gutter="10" style="width: 100%;">
@@ -52,13 +52,28 @@
         <!--</div>-->
       </div>
       <div class="swiper_page">
+        <div v-if="!statisGroup.length" class="home_list default_list">
+          <i class="iconfont icon-zanwushuju"></i>
+          <p class="def_text1">暂无任务</p>
+          <p class="def_text2">请联系管理员给您分配任务</p>
+        </div>
         <div style="width:28090000px;" v-for="item in statisGroup" :key="item.taskGroupId" @click="$router.push('/call')">
           <div class="home_list">
             <div class="progress_title">
               <p style="width: 90%">{{item.productName}}</p>
-              <p class="iconfont icon-huadong" style=" color:#E9E9E9"></p>
+              <p v-if="statisGroup.length > 1" class="iconfont icon-huadong" style=" color:#E9E9E9"></p>
             </div>
-            <wv-flex :gutter="10" style="width: 88%;margin: 0.5rem auto 0;border-bottom: 1px solid rgba(216, 216, 216, 0.2)">
+            <div class="flex_list">
+              <div class="flex_item" style="text-align: left;">
+                <div class="placeholder progress_number">{{item.totalTaskCnt}}<small style="font-size: 50%">个</small></div>
+                <div class="placeholder progress_txt">客户总数</div>
+              </div>
+              <div class="flex_item" style="text-align: right;">
+                <div class="placeholder progress_number">{{item.totalTaskCnt - item.totalTaskCompleteCnt}}<small style="font-size: 50%">个</small></div>
+                <div class="placeholder progress_txt">剩余未呼</div>
+              </div>
+            </div>
+            <!-- <wv-flex :gutter="10" style="width: 88%;margin: 0.5rem auto 0;border-bottom: 1px solid rgba(216, 216, 216, 0.2)">
               <wv-flex-item>
                 <div class="placeholder progress_number">{{item.totalTaskCnt}}<small style="font-size: 50%">个</small></div>
                 <div class="placeholder progress_txt">客户总数</div>
@@ -67,11 +82,13 @@
                 <div class="placeholder progress_number">{{item.totalTaskCnt - item.totalTaskCompleteCnt}}<small style="font-size: 50%">个</small></div>
                 <div class="placeholder progress_txt">剩余未呼</div>
               </wv-flex-item>
-            </wv-flex>
-            <p class="progress_time">任务计划完成时间：{{item.taskEndDate | moment('YYYY.MM.DD')}}</p>
-            <div class="task_list">
-              <p></p>
-              <p></p>
+            </wv-flex> -->
+            <div style="color: #9C9C9C;" class="task_list">
+              <p class="progress_time">计划完成时间：{{item.taskEndDate | moment('YYYY.MM.DD')}}</p>
+              <p class="task_to">
+                <span>点击查看任务列表</span>
+                <i class="iconfont icon-gengduo" style="font-size: 18px;" @click="getTaskList(item.taskGroupId)"></i>
+              </p>
             </div>
           </div>
         </div>
@@ -107,10 +124,14 @@
 <script>
 import thumbSmall from '../../assets/images/icon_tabbar.png'
 import task from '@/assets/images/task.png'
-import { getCompany, getUser, getStatisGroup, getCompleteStatus, getRank, getRandom } from '@/api/api'
+import { getCompany, getUser, getStatisGroup, getCompleteStatus, getRank } from '@/api/api'
 import { timeDate } from '@/utils'
+import MyProgress from '@/components/progress'
 // getTaskStatisticsDaily
 export default {
+  components: {
+    MyProgress
+  },
   data () {
     return {
       thumbSmall,
@@ -118,7 +139,7 @@ export default {
       form: {},
       Belonged: '',
       name: '',
-      statisGroup: {},
+      statisGroup: [],
       percent: '',
       completeStatus: '',
       userId: '',
@@ -152,11 +173,12 @@ export default {
         getRank(res.data.id).then(res => {
           this.form = res.data
           this.form.dailyEffectiveDuration = timeDate(res.data.dailyEffectiveDuration)
-          this.percent = this.form.dailyTaskCompleteCnt * 100 / this.form.dailyTaskCnt
+          this.percent = 60
+          // this.percent = this.form.dailyTaskCompleteCnt * 100 / this.form.dailyTaskCnt
         })
       })
       getStatisGroup().then(res => {
-        this.statisGroup = res.data
+        this.statisGroup = res.data || []
         this.statisGroup.forEach(item => {
           item.percent = item.totalTaskCompleteCnt * 100 / item.totalTaskCnt
           // console.log(item.percent)
@@ -185,10 +207,11 @@ export default {
     //   this.dateTime = y + '年' + m + '月' + d + '日' + weekday[my]
     // },
     callphone () {
-      getRandom().then(res => {
-        let randomData = res.data
-        this.$router.push({path: '/call/customer-random', query: {form: randomData}})
-      })
+      this.$router.push({path: '/call/customer-random/1'})
+    },
+    getTaskList (groupId) {
+      console.log(groupId)
+      this.$router.push({name: 'call', params: {groupId}})
     }
   },
   computed: {
@@ -204,7 +227,7 @@ export default {
 
 <style lang="scss">
   .icon-wode{
-    font-size: 57px;
+    font-size: 48px;
   }
   .wv-header .left[data-v-a5b8d5b6],.wv-header .wv-header-title[data-v-a5b8d5b6] {
     font-size: 36px;
@@ -220,12 +243,33 @@ export default {
     float:left;
     margin:3px 30px 0 3px;
     border-radius: 12px;
-    box-shadow: 6px 4px 20px rgba(169, 169, 169, 0.4);
+    box-shadow: 6px 3px 20px rgba(169, 169, 169, 0.4);
+    padding-left: 60px;
+    padding-right: 60px;
+    box-sizing: border-box;
   }
   .home_list>li{
     float: left;
     list-style: none;
     width: 100%;
+  }
+  .default_list {
+    text-align: center;
+    font-weight: 100;
+    .iconfont {
+      font-size: 204px;
+      color: #f2f2f2;
+      margin-top: 117px;
+      display: inline-block;
+    }
+    .def_text1 {
+      color: #c2c2c2;
+      font-size: 32px;
+    }
+    .def_text2 {
+      color: #d3d3d3;
+      font-size: 24px;
+    }
   }
   .home_content{
     width: 100%;
@@ -233,7 +277,7 @@ export default {
   .swiper_page{
     width:92%;
     height:715px;
-    margin:60px 0 0 60px;
+    margin:60px 0 0 64px;
     overflow:auto;
     -webkit-overflow-scrolling: touch
   }
@@ -246,46 +290,46 @@ export default {
     font-size: 28px;
     color: #9c9c9c;
     text-align: center;
-    margin-bottom: 79px;
+    // margin-bottom: 79px;
   }
-  .header_homeleft{
-    position: absolute;
-    top: 30px;
-    left: 39px;
-    width: 20%;
-    color: #000000;
-    font-size: 26px;
-  }
-  .home_header{
-    height: 5.42rem;
-    width: 100%;
-    /*margin-top: 1.29rem;*/
-    margin-bottom: 0.06rem;
-    background: #FFFFFF;
-  }
+  // .header_homeleft{
+  //   position: absolute;
+  //   top: 60px;
+  //   left: 40px;
+  //   width: 20%;
+  //   color: #000000;
+  //   font-size: 26px;
+  // }
+  // .home_header{
+  //   height: 5.42rem;
+  //   width: 100%;
+  //   /*margin-top: 1.29rem;*/
+  //   margin-bottom: 0.06rem;
+  //   background: #FFFFFF;
+  // }
   // .home_header>p{
   // }
-  .home_time{
-    height: 1.6rem;
-    font-size: 0.52rem;
-    line-height: 1.6rem;
-    border-bottom: 1px solid #D8D8D8;
-  }
-  .home_head{
-    height: 3.76rem;
-  }
-  .head_h{
-    width: 29%;
-    height: 100%;
-    text-align: center;
-    background-color: #ffffff;
-  }
+  // .home_time{
+  //   height: 1.6rem;
+  //   font-size: 0.52rem;
+  //   line-height: 1.6rem;
+  //   border-bottom: 1px solid #D8D8D8;
+  // }
+  // .home_head{
+  //   height: 3.76rem;
+  // }
+  // .head_h{
+  //   width: 29%;
+  //   height: 100%;
+  //   text-align: center;
+  //   background-color: #ffffff;
+  // }
   .phone_button{
-    width: 90%;
+    width: 82%;
     height: 98px;
     background: linear-gradient(to right, #5d90f4 , #2f6be2);
     border-radius: 12px;
-    font-size: 36px;
+    font-size: 34px;
     text-align: center;
     line-height: 98px;
     color: #FFFFFF ;
@@ -329,29 +373,63 @@ export default {
     /*margin-top: 0.4rem;*/
   }
   .progress_title{
-    width: 90%;
+    // width: 90%;
     height: 170px;
     line-height: 170px;
-    margin: 0 auto;
+    box-sizing: border-box;
+    // margin: 0 auto;
     border-bottom: 0.5px solid rgba(111, 106, 106, 0.31);
     font-size: 32px;
   }
   .progress_title>p{
     float: left;
   }
-  .progress_list{
-    width: 90%;
-    margin:0.78rem auto 0;
-    /*background:#32CCBC;*/
-    height: 0.5rem;
-    border-radius: 10px;
+  .flex_list {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #E9E9E9;
+    height: 258px;
+    box-sizing: border-box;
+    .flex_item {
+      margin-top: 44px;
+      margin-bottom: 44px;
+    }
   }
+  // .progress_list{
+  //   width: 90%;
+  //   margin:0.78rem auto 0;
+  //   /*background:#32CCBC;*/
+  //   height: 0.5rem;
+  //   border-radius: 10px;
+  // }
   .progress_time{
     font-size: 32px;
     color: #222222;
     font-weight: 200;
-    width: 75%;
-    margin: 60px auto;
+    margin-top: 60px;
+    // width: 75%;
+    // margin: 60px auto;
+  }
+  .task_list {
+    // display: flex;
+    // justify-content: space-between;
+    // height: 34px;
+    // line-height: 34px;
+    .task_to {
+      // display: flex;
+      // justify-content: space-between;
+      margin-top: 38px;
+      position: relative;
+      span {
+        font-size: 24px;
+      }
+      i {
+        font-size: 34px;
+        position: absolute;
+        top: -0;
+        right: 0;
+      }
+    }
   }
   .weui-progress__bar {
     height: 16px!important;
@@ -415,5 +493,8 @@ export default {
     border-radius:12px;
     box-shadow:0px 7px 29px 1px rgba(13,67,173,0.5);
     background: linear-gradient(to right, #5d90f4 , #2f6be2);
+  }
+  .l40 {
+    left: 40px;
   }
 </style>

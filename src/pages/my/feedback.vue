@@ -1,13 +1,13 @@
 <template>
   <div class="page">
     <wv-header title="问题反馈" class="x-header bgcolor">
-      <div class="btn-back header_left" slot="left" style="position: absolute;top: 7px;left: 0;width: 20%;">
+      <div class="btn-back header_left" slot="left">
         <i class="iconfont icon-fanhui size_i" @click="$router.push('/profile')">返回</i>
       </div>
     </wv-header>
     <div class="x-wrapper">
       <div class="feedback_content">
-        <textarea rows="5" v-model="content" placeholder="请输入您要反馈的问题...." class="feedback_tex"></textarea>
+        <textarea class="feedback_tex" rows="5" v-model="content" placeholder="请输入您要反馈的问题...."></textarea>
         <div class="feedback_imglist">
           <p class="feedback_img" v-for="item in imgList" :key="item.id">
             <img :src="item">
@@ -168,16 +168,18 @@ export default {
     background-color: #ffffff;
     margin-top: 100px;
     box-shadow: 6px 4px 20px rgba(219,219,219,0.3);
+    padding: 46px 40px;
+    box-sizing: border-box;
   }
   .feedback_tex{
-    width: 84%;
-    margin:0 auto;
-    display: inherit;
+    width: 100%;
+    // margin:0 auto;
+    // display: inherit;
     border: 0px solid;
-    padding: .3rem;
     line-height: 28px;
     background-color: #ffffff;
     outline: none;
+    font-size: 28px;
   }
   .feedback_add{
     width: 150px;
@@ -194,10 +196,6 @@ export default {
   }
   .feedback_img>img{
     max-width: 100%;
-  }
-  .feedback_imglist{
-    width: 87%;
-    margin: 0 auto;
   }
   .feedback_imglist>p{
     float: left;

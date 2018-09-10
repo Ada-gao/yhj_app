@@ -19,8 +19,8 @@
           <div class="placeholder task_text">总通话时长</div>
         </wv-flex-item>
         <wv-flex-item>
-          <div class="placeholder task_number" v-if="form.totalTaskCompleteCnt !== null">{{form.totalTaskCompleteCnt}}个</div>
-          <div class="placeholder task_number" v-if="form.totalTaskCompleteCnt === null">0个</div>
+          <div class="placeholder task_number">{{form.totalTaskCompleteCnt || 0}}个</div>
+          <!-- <div class="placeholder task_number" v-if="form.totalTaskCompleteCnt === null">0个</div> -->
           <div class="placeholder task_text">总任务完成数</div>
         </wv-flex-item>
         <wv-flex-item>
@@ -38,7 +38,7 @@
         </wv-flex-item>
         <wv-flex-item class="profile_progress">
           <div class="placeholder">
-            <div class="progress_number2">第{{form.rank}}名</div>
+            <div class="progress_number2">第{{form.rank || ' '}}名</div>
             <div class="progress_text">今日团队排名</div>
           </div>
         </wv-flex-item>
@@ -60,17 +60,17 @@
       <!--</wv-group>-->
       <div class="profile_list">
         <div style="border-bottom: 0.5px solid #E9E9E9">
-          <router-link :to="{path:'/my/feedback'}">
-          <p class="iconfont icon-wenti profile_nav profile_wenti"></p>
-          <p class="profile_nav" style="color: rgba(50,50,50,1);">问题反馈</p>
-          <p class="iconfont icon-fanhui profile_nav profile_icon" style="color: #DBDBDB;width: 10%;float: right"></p>
+          <router-link class="clearfix" :to="{path:'/my/feedback'}">
+            <i class="iconfont icon-wenti profile_nav profile_wenti"></i>
+            <p class="profile_nav" style="color: rgba(50,50,50,1);">问题反馈</p>
+            <i class="iconfont icon-fanhui profile_icon" style="color: #DBDBDB;float: right"></i>
           </router-link>
         </div>
         <div>
           <router-link :to="{path:'/my/relevant'}">
-          <p class="iconfont icon-guanyu profile_nav profile_guan"></p>
-          <p class="profile_nav" style="color: rgba(50,50,50,1);">关于闪电呼</p>
-          <p class="iconfont icon-fanhui profile_nav profile_icon" style="color:#DBDBDB;width: 10%;float: right"></p>
+            <p class="iconfont icon-guanyu profile_nav profile_guan"></p>
+            <p class="profile_nav" style="color: rgba(50,50,50,1);">关于闪电呼</p>
+            <p class="iconfont icon-fanhui profile_icon" style="color:#DBDBDB;float: right"></p>
           </router-link>
         </div>
       </div>
@@ -165,9 +165,8 @@ export default {
           //   }
           // })
           getRank(this.userId).then((res) => {
-            console.log(res)
             this.form = res.data
-            this.form.avgDuration = this.form.avgDuration.toFixed(1)
+            this.form.avgDuration = this.form.avgDuration ? this.form.avgDuration.toFixed(1) : null
             if (this.form.totalTaskCompleteCnt === null || this.form.totalTaskCompleteCnt === 0) {
               this.form.rate = 0
             } else {
@@ -202,40 +201,40 @@ export default {
     font-size: 28px;
     color: rgba(50,50,50,1);
   }
-  .button_out{
-    color: #F0F0F0;
-    width: 59%;
-    margin: 0 auto;
-    border-radius: 4px;
-    font-size: 17px;
-    height: 1.61rem;
-    line-height: 1.61rem;
-  }
-  .details_return{
-    z-index: 501;
-    position: fixed;
-    top:0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.61);
-  }
-  .detail_content{
-    position: fixed;
-    z-index: 501;
-    width: 73%;
-    max-width: 300px;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%,-50%);
-    transform: translate(-50%,-50%);
-    overflow: hidden;
-    height: 6.9rem;
-    text-align: center;
-    background: #ffffff;
-    border-radius: 0.2rem;
-    font-size: 0.8rem;
-  }
+  // .button_out{
+  //   color: #F0F0F0;
+  //   width: 59%;
+  //   margin: 0 auto;
+  //   border-radius: 4px;
+  //   font-size: 17px;
+  //   height: 1.61rem;
+  //   line-height: 1.61rem;
+  // }
+  // .details_return{
+  //   z-index: 501;
+  //   position: fixed;
+  //   top:0;
+  //   left: 0;
+  //   right: 0;
+  //   bottom: 0;
+  //   background: rgba(0, 0, 0, 0.61);
+  // }
+  // .detail_content{
+  //   position: fixed;
+  //   z-index: 501;
+  //   width: 73%;
+  //   max-width: 300px;
+  //   top: 50%;
+  //   left: 50%;
+  //   -webkit-transform: translate(-50%,-50%);
+  //   transform: translate(-50%,-50%);
+  //   overflow: hidden;
+  //   height: 6.9rem;
+  //   text-align: center;
+  //   background: #ffffff;
+  //   border-radius: 0.2rem;
+  //   font-size: 0.8rem;
+  // }
   .wv-header .wv-header-title[data-v-a5b8d5b6]{
     font-size:36px;
     color: #000000;
@@ -286,8 +285,10 @@ export default {
   .task_number{
     font-size: 36px;
     color: rgba(58,116,230,1);
-    margin-top: 1.02rem;
+    margin-top: 80px;
+    // margin-top: 1.02rem;
     text-align: center;
+    font-weight: bold;
   }
   .task_text{
     font-size: 24px;
@@ -300,6 +301,7 @@ export default {
     font-size: 36px;
     /*margin: 63px 0;*/
     text-align: center;
+    font-weight: bold;
   }
   .progress_number1{
     color: rgba(119,209,96,1);
@@ -346,6 +348,7 @@ export default {
   }
   .profile_icon{
     /*line-height: 4.82rem;*/
+    font-size: 34px;
     color:#32CCBC;
     transform:rotate(180deg);
     -ms-transform:rotate(180deg);

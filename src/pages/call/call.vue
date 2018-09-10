@@ -87,15 +87,18 @@ export default {
       busy2: true,
       listQuery1: {
         pageIndex: 0,
-        pageSize: 10
+        pageSize: 10,
+        type: 'dnf'
         // createTime: ''
       },
       listQuery2: {
         pageIndex: 0,
-        pageSize: 10
+        pageSize: 10,
+        type: 'finish'
         // createTime: ''
       },
-      call: 1
+      call: 1,
+      groupId: undefined
     }
   },
   methods: {
@@ -103,7 +106,7 @@ export default {
       // console.log('这是未完成')
       this.floading = true
       this.listQuery1.createTime = this.createTime
-      getTaskList('dnf', this.listQuery1).then(res => {
+      getTaskList(this.groupId, this.listQuery1).then(res => {
         let data = res.data.content
         if (flag) {
           // 多次加载
@@ -118,15 +121,13 @@ export default {
           this.handTotal = res.data.totalElements
         }
         this.floading = false
-        console.log(this.hList)
       })
     },
-    getList2 (flag, type) {
-      // console.log('这是已完成')
+    getList2 (flag) {
       this.floading = true
       // type = type || this.type
       this.listQuery2.createTime = this.createTime
-      getTaskList('finish', this.listQuery2).then(res => {
+      getTaskList(this.groupId, this.listQuery2).then(res => {
         let data = res.data.content
         if (flag) {
           // 多次加载
@@ -191,15 +192,20 @@ export default {
       this.getList2()
     },
     todetails (item) {
-      this.$router.push({name: 'customer-details', params: item})
+      // this.$router.push({name: 'customer-details', params: item})
+      this.$router.push({path: '/call/customer-random/0/' + this.groupId, query: item})
     }
   },
   created () {
-    // console.log(this.createTime)
+    console.log(this.$route)
+    this.groupId = this.$route.params ? this.$route.params.groupId : undefined
+    console.log(this.groupId)
   },
   mounted () {
-    this.getList1()
-    this.getList2(false, 'finish')
+    if (this.groupId) {
+      this.getList1()
+      this.getList2(false)
+    }
   },
   computed: {
     /*  filterResult () {

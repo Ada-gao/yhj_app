@@ -82,11 +82,12 @@ export default {
   }
   .header_left{
     position: absolute;
-    top: 20px;
+    top: 50%;
     left: 0;
-    width: 20%;
+    transform: translateY(-50%);
+    // width: 20%;
     color: #000000;
-    font-size: 30px;
+    font-size: 26px;
   }
   .wv-content_profile{
     position: fixed;
@@ -100,8 +101,10 @@ export default {
     -webkit-overflow-scrolling: touch;
   }
   .wv-header[data-v-a5b8d5b6]{
-    height: 80px!important;
-    line-height: 80px!important;
+    height: 96px!important;
+    line-height: 96px!important;
+    padding: 0;
+    box-sizing: content-box;
   }
   .wv-header .wv-header-title[data-v-a5b8d5b6]{
     color: #000000;
@@ -109,7 +112,7 @@ export default {
   }
   .wv-content{
     position: absolute;
-    top: 80px;
+    top: 96px;
     left: 0;
     right: 0;
     bottom: 0;
@@ -129,47 +132,47 @@ export default {
     padding-bottom: env(safe-area-inset-bottom);
 
   }
-  .button_outs{
-    color: #F0F0F0;
-    width: 38%;
-    margin: 0 auto;
-    border-radius: 4px;
-    font-size: 17px;
-    height: 1.61rem;
-    line-height: 1.61rem;
-  }
-  .details_return{
-    z-index: 501;
-    position: fixed;
-    top:0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.61);
-  }
-  .detail_contents{
-    position: fixed;
-    z-index: 501;
-    width: 73%;
-    max-width: 300px;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%,-50%);
-    transform: translate(-50%,-50%);
-    overflow: hidden;
-    height: 6.9rem;
-    text-align: center;
-    background: #ffffff;
-    border-radius: 0.2rem;
-    font-size: 0.8rem;
-  }
+  // .button_outs{
+  //   color: #F0F0F0;
+  //   width: 38%;
+  //   margin: 0 auto;
+  //   border-radius: 4px;
+  //   font-size: 17px;
+  //   height: 1.61rem;
+  //   line-height: 1.61rem;
+  // }
+  // .details_return{
+  //   z-index: 501;
+  //   position: fixed;
+  //   top:0;
+  //   left: 0;
+  //   right: 0;
+  //   bottom: 0;
+  //   background: rgba(0, 0, 0, 0.61);
+  // }
+  // .detail_contents{
+  //   position: fixed;
+  //   z-index: 501;
+  //   width: 73%;
+  //   max-width: 300px;
+  //   top: 50%;
+  //   left: 50%;
+  //   -webkit-transform: translate(-50%,-50%);
+  //   transform: translate(-50%,-50%);
+  //   overflow: hidden;
+  //   height: 6.9rem;
+  //   text-align: center;
+  //   background: #ffffff;
+  //   border-radius: 0.2rem;
+  //   font-size: 0.8rem;
+  // }
   .size_i{
-    font-size: 40px!important;
+    font-size: 26px!important;
     margin-left: 34px;
     color:#000000!important;
   }
   .size_c{
-    font-size: 40px!important;
+    font-size: 26px!important;
     margin-left: 34px;
     color:#ffffff!important;
   }

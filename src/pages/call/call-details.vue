@@ -104,7 +104,8 @@ export default {
       }
     }
   },
-  created () {
+  created () { // 挂断电话后的行为
+    console.log(this.$route.query)
     this.form = this.$route.query.form
     this.value = this.$route.query.value
     let phones = this.form.phoneNo.substring(4, 5)
@@ -157,6 +158,8 @@ export default {
             this.$router.push({path: '/call/customer-random', query: {form: randomData}})
           })
         } else if (this.value === 'details') {
+          // TODO
+          // listQuery1 参数来源？
           getTaskList('dnf', this.listQuery1).then(res => {
             let data = res.data.content[0]
             this.$router.push({name: 'customer-details', params: data})

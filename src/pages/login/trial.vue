@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <wv-header class="x-header" title="申请体验" background-color="white" style="color:#02B6DC;">
-      <div class="btn-back header_left" slot="left" style="position: absolute;top: 7px;left: 0;width: 20%;">
+      <div class="btn-back header_left" slot="left">
         <i class="iconfont icon-fanhui size_i" @click="$router.push('/')" style="color:#959292"></i>
       </div>
     </wv-header>
@@ -30,23 +30,29 @@
         <p class="company_title">公司信息</p>
         <div class="info_list">
           <input placeholder="请输入公司名称" class="input_size" v-model="companyName" />
-          <p class="iconfont icon-fanhui icon_right info_icon"></p>
+          <!-- <p class="iconfont icon-fanhui icon_right info_icon"></p> -->
         </div>
-        <div class="info_list">
+        <!-- <div class="info_list">
           <wv-cell title="请选择公司所在地" is-link :value="address | pickerValueFilter" @click.native="addressPickerShow = true" />
-        </div>
-        <wv-flex-item @click.native="industryPickerShow = true">
-        <div class="placeholder info_list">
-          <input class="weui-input input_size" placeholder="请输入所属行业" :value="industryType | pickerValueFilter" onfocus="this.blur();" />
-          <p class="iconfont icon-fanhui icon_right info_icon"></p>
-        </div>
+        </div> -->
+        <wv-flex-item @click.native="addressPickerShow = true">
+          <div class="placeholder info_list">
+            <input class="weui-input input_size" placeholder="请选择公司所在地" :value="address | pickerValueFilter" onfocus="this.blur();" />
+            <p class="iconfont icon-fanhui icon_right info_icon"></p>
+          </div>
         </wv-flex-item>
-          <wv-flex-item @click.native="scalePickerShow = true" >
-            <div class="placeholder info_list">
-              <input class="weui-input input_size" placeholder="请输入公司规模" :value="scales | pickerValueFilter" onfocus="this.blur();"/>
-              <p class="iconfont icon-fanhui icon_right info_icon"></p>
-            </div>
-          </wv-flex-item>
+        <wv-flex-item @click.native="industryPickerShow = true">
+          <div class="placeholder info_list">
+            <input class="weui-input input_size" placeholder="请选择所属行业" :value="industryType | pickerValueFilter" onfocus="this.blur();" />
+            <p class="iconfont icon-fanhui icon_right info_icon"></p>
+          </div>
+        </wv-flex-item>
+        <wv-flex-item @click.native="scalePickerShow = true" >
+          <div class="placeholder info_list">
+            <input class="weui-input input_size" placeholder="请选择公司规模" :value="scales | pickerValueFilter" onfocus="this.blur();"/>
+            <p class="iconfont icon-fanhui icon_right info_icon"></p>
+          </div>
+        </wv-flex-item>
       </div>
       <div></div>
       <div class="trial_verification bgcolor">
@@ -212,7 +218,6 @@ export default {
         orgSize: this.orgSize,
         status: 0
       }
-      console.log(params)
       if (this.mobile === '' || this.mobile.length < 11) {
         Toast({
           duration: 1000,
@@ -286,13 +291,11 @@ export default {
     },
     confirmIndustry (picker) {
       this.industryType = picker.getValues()
-      console.log(this.industryType)
       this.industry = this.industryType[0]
     },
     confirmScale (picker) {
       this.scales = picker.getValues()
       this.orgSize = this.scales[0]
-      console.log(this.scales)
     },
     // 获取行业
     Industry () {
@@ -324,7 +327,8 @@ export default {
 
 <style lang="scss" scoped>
   .wv-header .wv-header-title[data-v-a5b8d5b6]{
-    font-size: 0.65rem;
+    font-size: 36px;
+    // font-size: 0.65rem;
   }
   .weui-cell{
     padding: 0 !important;
@@ -374,7 +378,7 @@ export default {
     width: 85%;
     height: 109px;
     margin: 0 auto;
-    border-bottom: 0.5px solid #E9E9E9;
+    border-bottom: 1px solid #E9E9E9; /*no*/
     line-height: 109px;
   }
   .info_lists>button{
@@ -385,6 +389,7 @@ export default {
     float: left;
     width: 77%;
     height: 101px;
+    line-height: 101px;
   }
   .input_size{
     font-size: 28px;
@@ -400,6 +405,7 @@ export default {
     float: left;
     width: 88%;
     height: 101px;
+    line-height: 101px;
   }
   .info_list>p{
     float: left;

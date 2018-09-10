@@ -2,15 +2,15 @@
   <div class="page" style="background: #858585">
     <div class="login_bgimg"></div>
     <div class="login_content">
-      <div class="user_login user_user">
-      <i class="iconfont icon-zhanghao login_icon"></i>
-      <input class="user_input" placeholder="请输入账号" v-model="account" autocapitalize="off" autocorrect="off"/>
+      <div class="user_login user_user ignore">
+        <i class="iconfont icon-zhanghao login_icon"></i>
+        <input class="user_input" placeholder="请输入账号" v-model="account" autocapitalize="off" autocorrect="off"/>
       </div>
       <div class="user_login" style="margin-top: 4.4%">
-      <i class="iconfont icon-mima login_icon"></i>
-      <input :type="inputType" class="pass_input" placeholder="请输入密码" v-model="password"/>
-      <i v-if="asee==true" class="iconfont icon-yincang login_iconright" @click="iconSee"></i>
-      <i v-if="asee==false" class="iconfont icon-yincang1 login_iconright" @click="iconSee"></i>
+        <i class="iconfont icon-mima login_icon"></i>
+        <input :type="inputType" class="pass_input" placeholder="请输入密码" v-model="password"/>
+        <i v-if="asee==true" class="iconfont icon-yincang login_iconright" @click="iconSee"></i>
+        <i v-if="asee==false" class="iconfont icon-yincang1 login_iconright" @click="iconSee"></i>
       </div>
       <div class="land" @click="login">
       登录
@@ -121,6 +121,9 @@ export default {
     bottom: 0;
     width: 100%;
     background: #00000066;
+    input::-webkit-input-placeholder {
+      color: #fff;
+    }
   }
   .login_title{
     font-size: 30px;
@@ -128,28 +131,28 @@ export default {
     margin-top: 293px;
   }
   .user_user{
+    // padding-top: vw(492);
     padding-top: 492px;
   }
-
- .LOGO{
-   width: 2.6rem;
-   height: 2.6rem;
-   margin: 0 auto;
-   padding: 34% 0 0;
- }
-  .logo_img{
-    max-width: 100%;
-  }
-  .title_one{
-    text-align: center;
-    font-size: 20px;
-    font-size: 0.64rem;
-  }
-  .title_two{
-    text-align: center;
-    font-size: 0.64rem;
-    margin-top: 0.48rem;
-  }
+//  .LOGO{
+//    width: 2.6rem;
+//    height: 2.6rem;
+//    margin: 0 auto;
+//    padding: 34% 0 0;
+//  }
+//   .logo_img{
+//     max-width: 100%;
+//   }
+  // .title_one{
+  //   text-align: center;
+  //   font-size: 20px;
+  //   font-size: 0.64rem;
+  // }
+  // .title_two{
+  //   text-align: center;
+  //   font-size: 0.64rem;
+  //   margin-top: 0.48rem;
+  // }
   .land{
     width: 90%;
     height: 88px;
@@ -171,12 +174,12 @@ export default {
   }
   .login_iconright{
     color: #DADADA;
-    float: right;
+    // float: right;
     font-size: 30px
   }
   .login_icon{
     color: #CECECE;
-    float: left;
+    // float: left;
     font-size: 40px
   }
   /*.weui-cell{*/
@@ -226,20 +229,20 @@ export default {
   .user_login>div{
     float: left;
   }
-  .logo_img{
-    position: relative;
-    height: 2.4rem;
-    border: 0.04rem solid #02B6DC;
-    border-radius: 50%;
-  }
-  .icon-tonghuashijian{
-    position: absolute;
-    top: -7px;
-    left: 8px;
-    font-size: 1.9rem;
-    color: #02B6DC;
-  }
- .weui-toast_text .weui-toast__content[data-v-4af60de0]{
-   font-size: .6em;
- }
+  // .logo_img{
+  //   position: relative;
+  //   height: 2.4rem;
+  //   border: 0.04rem solid #02B6DC;
+  //   border-radius: 50%;
+  // }
+  // .icon-tonghuashijian{
+  //   position: absolute;
+  //   top: -7px;
+  //   left: 8px;
+  //   font-size: 1.9rem;
+  //   color: #02B6DC;
+  // }
+   .weui-toast_text .weui-toast__content[data-v-4af60de0]{
+     font-size: 26px;
+   }
 </style>
