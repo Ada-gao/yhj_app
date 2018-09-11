@@ -7,6 +7,7 @@ export const install = function (Vue, options, cb) {
 
     // pass through the camera object
     Vue.cordova.camera = navigator.camera
+    console.log(navigator.camera)
 
     console.log('camera is ready..')
     // eslint-disable-next-line

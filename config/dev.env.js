@@ -9,7 +9,7 @@ module.exports = merge(prodEnv, {
 
 // module.exports = merge(prodEnv, {
 //   NODE_ENV: '"development"',
-//   BASE_API: '"http://47.99.32.117/api"'
+//   BASE_API: '"http://47.99.32.117:8080/api"'
 // })
 
 // module.exports = merge(prodEnv, {

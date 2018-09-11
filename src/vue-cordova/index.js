@@ -7,7 +7,8 @@ const pluginsList = [
   'cordova-plugin-file',
   'cordova-plugin-file-transfer',
   'cordova-plugin-statusbar',
-  'cordova-plugin-background-mode'
+  'cordova-plugin-background-mode',
+  'cordova-plugin-calllistener'
 ]
 
 exports.install = (Vue, options) => {
