@@ -8,12 +8,16 @@
 
 <script>
 import thumbSmall from './assets/images/icon_tabbar.png'
+import Vue from 'vue'
 
 export default {
   data () {
     return {
       thumbSmall,
-      tabShow: true
+      tabShow: true,
+      statusBarcolorPath: {
+        black: ['/call/customer-random', '/login']
+      }
     }
   },
   methods: {
@@ -24,6 +28,23 @@ export default {
   watch: {
     $route (to, from) {
       this.tabShow = to.meta.tabShow === undefined ? true : to.meta.tabShow
+      let str = ''
+      if (/[0-9]/.test(to.path)) {
+        const arr = to.path.split('/')
+        str = '/' + arr[1] + '/' + arr[2]
+      } else {
+        str = to.path
+      }
+      console.log(str)
+      console.log(this.statusBarcolorPath.black.indexOf(str))
+      if (this.statusBarcolorPath.black.indexOf(str) !== -1) {
+        // Vue.cordova.statusBar.overlaysWebView(false)
+        // Vue.cordova.statusBar.backgroundColorByHexString('') // 设置状态栏颜色
+        Vue.cordova.statusBar.hide()
+      } else {
+        Vue.cordova.statusBar.styleDefault()
+        Vue.cordova.statusBar.show()
+      }
     }
   }
 }
