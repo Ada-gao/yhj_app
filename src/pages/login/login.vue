@@ -12,9 +12,10 @@
         <i v-if="asee==true" class="iconfont icon-yincang login_iconright" @click="iconSee"></i>
         <i v-if="asee==false" class="iconfont icon-yincang1 login_iconright" @click="iconSee"></i>
       </div>
-      <div class="land" @click="login">
+      <!-- <div class="land" @click="login">
       登录
-      </div>
+      </div> -->
+      <wv-button class="land" @click="login" :is-loading="isLoading">登录</wv-button>
       <div class="login_Application" @click="$router.push('/login/trial')">申请体验</div>
     </div>
     <!--<div class="LOGO">-->
@@ -56,7 +57,8 @@ export default {
       account: '',
       password: '',
       asee: true,
-      inputType: 'password'
+      inputType: 'password',
+      isLoading: false
     }
   },
   methods: {
@@ -69,6 +71,7 @@ export default {
         })
       } else {
         requestLogin(loginParams).then(res => {
+          this.isLoading = true
           localStorage.setItem('token', res.data.token)
           let user = localStorage.getItem('token')
           if (user) {
@@ -81,6 +84,7 @@ export default {
                 })
               } else {
                 this.$router.push({path: '/home'})
+                this.isLoading = false
               }
             })
           }

@@ -90,7 +90,7 @@ export default {
       callSid: '',
       // callStatus: false,
       phoneNumber: '',
-      phoneShow: true,
+      phoneShow: false,
       conversationState: false,
       type: '',
       groupId: ''
