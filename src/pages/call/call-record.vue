@@ -33,7 +33,7 @@
   </div>
 </template>
 <script>
-import Vue from 'vue'
+// import Vue from 'vue'
 import { getCallMoney } from '@/api/api'
 export default {
   data () {
@@ -41,13 +41,14 @@ export default {
       callid: '',
       form: {},
       phoneShow: '',
-      value: ''
+      value: '',
+      groupId: undefined
     }
   },
   created () {
     this.form = this.$route.query.form
     this.callid = this.$route.query.callId
-    this.value = this.$route.query.value
+    this.groupId = this.$route.query.groupId
     let phones = this.form.phoneNo.substring(4, 5)
     if (phones === '*') {
       this.phoneShow = true
@@ -59,7 +60,7 @@ export default {
     console.log(this.$route.query)
   },
   mounted () {
-    let devicePlatform = Vue.cordova.device.platform
+    // let devicePlatform = Vue.cordova.device.platform
     // if (devicePlatform === 'Android') {
     //   window.CallListener.addListener((state) => {
     //     if (state === 1) {
@@ -77,19 +78,31 @@ export default {
     //     }
     //   })
     // }
-    window.CallListener.addListener((state) => {
-      if (state === 1) {
+
+    /* global CallListener */
+    // CallListener.addListener((state) => {
+    //   CallListener.getCallInfo((info) => {
+    //     this.$router.push({path: '/call/call-details', query: {form: this.form, callTime: info, groupId: this.groupId}})
+    //     // alert('电话状态：' + '，通话时长：' + info.duration + '，开始时间：' + info.start + '，结束时间：' + info.end)
+    //     // this.callTime = timeDate(info.duration)
+    //     // this.history.actualCallStartDate = info.startDate
+    //     // this.history.acutalCallEndDate = info.endDate
+    //   }, this.form.phoneNo)
+    // })
+    CallListener.addListener((state) => {
+      if (state === 1 || state === 6) {
         if (this.phoneShow === false) { // 原生通话
-          window.CallListener.getCallInfo((info) => {
-            this.$router.push({path: '/call/call-details', query: {form: this.form, callTime: info, value: this.value}})
-            alert('电话状态：' + state + '，通话时长：' + info.duration + '，开始时间：' + info.startDate + '，结束时间：' + info.endDate)
+          /* global CallListener */
+          CallListener.getCallInfo((info) => {
+            this.$router.push({path: '/call/call-details', query: {form: this.form, callTime: info, groupId: this.groupId}})
+            // alert('电话状态：' + state + '，通话时长：' + info.duration + '，开始时间：' + info.start + '，结束时间：' + info.end)
             // this.callTime = timeDate(info.duration)
             // this.history.actualCallStartDate = info.startDate
             // this.history.acutalCallEndDate = info.endDate
           }, this.form.phoneNo)
         } else {
           this.getCallHistory()
-          this.$router.push({path: '/call/call-details', query: {form: this.form, callId: this.callid, value: this.value}})
+          this.$router.push({path: '/call/call-details', query: {form: this.form, callId: this.callid}})
         }
       }
     })

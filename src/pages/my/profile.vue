@@ -8,7 +8,7 @@
     <div class="wv-content x-wrapper">
     <div class="profile_content bgcolor">
       <div class="profile_head">
-        <img :src="logo" alt="">
+        <img :src="heads" alt="">
       </div>
       <p class="profile_name">{{dataInfrom.name}}</p>
       <p class="profile_company">{{company}}</p>
@@ -67,7 +67,7 @@
           </router-link>
         </div>
         <div>
-          <router-link :to="{path:'/my/relevant'}">
+          <router-link class="clearfix" :to="{path:'/my/relevant'}">
             <p class="iconfont icon-guanyu profile_nav profile_guan"></p>
             <p class="profile_nav" style="color: rgba(50,50,50,1);">关于闪电呼</p>
             <p class="iconfont icon-fanhui profile_icon" style="color:#DBDBDB;float: right"></p>
@@ -99,7 +99,7 @@ import { getUser, getCompany, getRank } from '../../api/api'
 import { Dialog } from 'we-vue'
 import wenti from '@/assets/images/profile_wenti.png'
 import guanyu from '@/assets/images/profile_guanyu.png'
-import heads from '@/assets/images/hand.png'
+import heads from '@/assets/images/user_login.png'
 import { timeDate } from '@/utils'
 
 export default {
@@ -113,8 +113,7 @@ export default {
       wenti,
       guanyu,
       heads,
-      details: false,
-      logo: ''
+      details: false
     }
   },
   mounted () {
@@ -148,13 +147,7 @@ export default {
           this.dataInfrom = res.data
           this.userId = this.dataInfrom.id
           getCompany().then((res) => {
-            if (res.data.logo === '' || res.data.logo === null) {
-              this.logo = this.heads
-              this.company = res.data.companyName
-            } else {
-              this.logo = process.env.BASE_API + '/file?fileUuid=' + res.data.logo
-              this.company = res.data.companyName
-            }
+            this.company = res.data.companyName
           })
           // getSales(this.userId).then((res) => {
           //   this.form = res.data
@@ -251,10 +244,10 @@ export default {
     height: 170px;
     // background: rebeccapurple;
     margin: auto;
-    border-radius: 50%;
-    box-shadow:rgba(238, 233, 233, 0.34) 0px 0px 0px 5px;
-    overflow: hidden;
-    background-color: #ffffff;
+    /*border-radius: 50%;*/
+    /*box-shadow:rgba(238, 233, 233, 0.34) 0px 0px 0px 5px;*/
+    /*overflow: hidden;*/
+    /*background-color: #ffffff;*/
     img {
       width: 170px;
       height: 170px;
@@ -288,7 +281,7 @@ export default {
     margin-top: 80px;
     // margin-top: 1.02rem;
     text-align: center;
-    font-weight: bold;
+    /*font-weight: bold;*/
   }
   .task_text{
     font-size: 24px;
@@ -301,7 +294,7 @@ export default {
     font-size: 36px;
     /*margin: 63px 0;*/
     text-align: center;
-    font-weight: bold;
+    /*font-weight: bold;*/
   }
   .progress_number1{
     color: rgba(119,209,96,1);
@@ -357,12 +350,12 @@ export default {
     -o-transform:rotate(180deg);
   }
   .profile_wenti {
-    color: #eccb05;
+    color: #FFBE24;
     width: 10%;
     font-size: 45px
   }
   .profile_guan{
-    color: #4482d6;
+    color: #2F6BE2;
     width: 10%;
     font-size: 45px
   }

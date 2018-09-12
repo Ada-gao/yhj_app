@@ -30,11 +30,7 @@
         <p class="company_title">公司信息</p>
         <div class="info_list">
           <input placeholder="请输入公司名称" class="input_size" v-model="companyName" />
-          <!-- <p class="iconfont icon-fanhui icon_right info_icon"></p> -->
         </div>
-        <!-- <div class="info_list">
-          <wv-cell title="请选择公司所在地" is-link :value="address | pickerValueFilter" @click.native="addressPickerShow = true" />
-        </div> -->
         <wv-flex-item @click.native="addressPickerShow = true">
           <div class="placeholder info_list">
             <input class="weui-input input_size" placeholder="请选择公司所在地" :value="address | pickerValueFilter" onfocus="this.blur();" />
@@ -71,32 +67,6 @@
           <button v-show="!show" class="weui-vcode-btn" slot="ft">{{count}}s</button>
         </div>
       </div>
-    <!---->
-    <!--&lt;!&ndash;<input type="text" placeholder="公司名称" class="trial_company" v-model="companyName">&ndash;&gt;-->
-      <!--<wv-input type="text" placeholder="公司名称" class="verification" v-model="companyName"></wv-input>-->
-    <!--<v-distpicker hide-area @province="onChangeProvince" @city="onChangeCity"></v-distpicker>-->
-    <!--<wv-flex :gutter="10" style="width: 96%;margin: 0 auto;">-->
-      <!--<wv-flex-item @click.native="industryPickerShow = true">-->
-        <!--<div class="placeholder">-->
-          <!--<input class="trial_company weui-input" placeholder="所属行业" :value="industryType | pickerValueFilter" onfocus="this.blur();" />-->
-          <!--&lt;!&ndash;<input type="text" placeholder="所在地" class="trial_company" >&ndash;&gt;-->
-        <!--</div>-->
-      <!--</wv-flex-item>-->
-      <!--<wv-flex-item @click.native="scalePickerShow = true">-->
-        <!--<div class="placeholder"></div>-->
-        <!--<input class="trial_company weui-input" placeholder="公司规模" :value="scales | pickerValueFilter" onfocus="this.blur();" />-->
-      <!--</wv-flex-item>-->
-    <!--</wv-flex>-->
-    <!--<p style="font-size: 0.6rem;margin: 1.18rem auto 0;width: 87%">联系人信息</p>-->
-    <!--&lt;!&ndash;<input type="text" placeholder="联系人姓名" class="trial_company" v-model="contact">&ndash;&gt;-->
-      <!--<wv-input type="text" placeholder="联系人姓名" class="verification" v-model="contact"></wv-input>-->
-    <!--<wv-input placeholder="请输入手机号" class="verification" v-model="mobile">-->
-      <!--<button v-show="show" class="weui-vcode-btn" slot="ft" @click="trialVerification" style="font-size: 0.6rem!important;">获取验证码</button>-->
-      <!--<button v-show="!show" class="weui-vcode-btn" slot="ft">{{count}}s</button>-->
-    <!--</wv-input>-->
-    <!--&lt;!&ndash;<input type="tel" placeholder="请输入验证码" class="trial_company" v-model="verification">&ndash;&gt;-->
-      <!--<wv-input type="tel" placeholder="请输入验证码" class="verification" v-model="verification"></wv-input>-->
-    <!--<p class="trial_footer">请如实填写申请信息，我们将于1个工作日内与您取得联系</p>-->
     <div class="trial_button" @click="trialApply">申请体验</div>
     <wv-picker
       :visible.sync="industryPickerShow"
@@ -337,18 +307,19 @@ export default {
     /*font-size: 0.7rem;*/
   /*}*/
   .weui-vcode-btn{
-    width: 20%;
+    width: 29%;
     height: 48px;
     line-height: 48px;
     border: 1px solid #3772E5;
     color: #3772E5;
     margin-top: 33px;
     border-radius: 6px;
+    font-size: 28px;
   }
   .trial_nav{
     width: 100%;
     height: 282px;
-    padding-top: 80px;
+    padding-top: 39px;
   }
   .trial_title{
     width: 85%;
@@ -387,7 +358,7 @@ export default {
   .info_lists>input{
     display: inline-block;
     float: left;
-    width: 77%;
+    width: 69%;
     height: 101px;
     line-height: 101px;
   }

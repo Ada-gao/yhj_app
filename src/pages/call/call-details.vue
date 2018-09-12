@@ -67,7 +67,7 @@ import { timeDate } from '@/utils'
 export default {
   data () {
     return {
-      value: '',
+      groupId: undefined,
       callTime: '',
       callTimes: '',
       callId: '',
@@ -91,7 +91,7 @@ export default {
           values: [
             {label: '再次外呼', value: 'CALL_AGAIN'},
             {label: '放弃外呼', value: 'GIVE_UP'},
-            {label: '继续跟进', value: 'FLLOW'}
+            {label: '继续跟进', value: 'FOLLOW'}
           ]
         }
       ],
@@ -101,24 +101,33 @@ export default {
         actualCallStartDate: '',
         acutalCallEndDate: '',
         outboundTaskId: ''
+      },
+      listQuery1: {
+        pageIndex: 0,
+        pageSize: 3,
+        type: 'dnf',
+        createTime: sessionStorage.getItem('createTime')
+        // createTime: ''
       }
     }
   },
   created () { // 挂断电话后的行为
-    console.log(this.$route.query)
+    // console.log(this.$route.query)
     this.form = this.$route.query.form
-    this.value = this.$route.query.value
+    this.groupId = this.$route.query.groupId
     let phones = this.form.phoneNo.substring(4, 5)
     if (phones === '*') {
       this.callId = this.$route.query.callId
       getCallStatus(this.callId).then((res) => {
         this.callTime = res.data
+        // alert(this.callTime.start)
         this.callTimes = timeDate(this.callTime.duration)
       }).catch(() => {
         alert('call时间获取')
       })
     } else {
       this.callTime = this.$route.query.callTime
+      console.log(this.callTime.start)
       this.callTimes = timeDate(this.callTime.duration)
       // alert('电话状态：' + this.callTime + '，通话时长：' + this.callTime.duration + '，开始时间：' + this.callTime.start + '，结束时间：' + this.callTime.end)
     }
@@ -143,26 +152,39 @@ export default {
         age: this.form.age,
         common: ''
       }
-      this.history.actualCallStartDate = new Date(this.callTime.start)
-      this.history.acutalCallEndDate = new Date(this.callTime.end)
+      this.history.actualCallStartDate = new Date(this.callTime.start.replace(/-/g, '/'))
+      this.history.acutalCallEndDate = new Date(this.callTime.end.replace(/-/g, '/'))
       this.history.outboundTaskId = this.form.taskId
+      // console.log('开始时间' + this.callTime.start)
+      // console.log('结束时间' + this.history.acutalCallEndDate)
       getTaskHistory(this.history).then(res => {
-        this.$router.push({path: '/home'})
-      }).catch(() => {
-        alert('外呼结果保存失败')
+        this.customerInfor(params)
+      }).catch((error) => {
+        alert('开始时间' + this.history.actualCallStartDate + '结束时间' + this.history.acutalCallEndDate)
+        alert('外呼结果保存失败' + error)
       })
+    },
+    customerInfor (params) {
       updateOutboundName(this.form.outboundNameId, params).then(res => {
-        if (this.value === 'random') {
+        if (this.groupId === undefined) {
           getRandom().then(res => {
             let randomData = res.data
-            this.$router.push({path: '/call/customer-random', query: {form: randomData}})
+            this.$router.push({path: '/call/customer-random/1', query: randomData})
+          }).catch(() => {
+            this.$router.push({path: '/home'})
           })
-        } else if (this.value === 'details') {
+        } else {
           // TODO
           // listQuery1 参数来源？
-          getTaskList('dnf', this.listQuery1).then(res => {
+          getTaskList(this.groupId, this.listQuery1).then(res => {
             let data = res.data.content[0]
-            this.$router.push({name: 'customer-details', params: data})
+            if (!res.data.content[0]) {
+              this.$router.push({name: 'call', params: {groupId: this.groupId}})
+            } else {
+              this.$router.push({path: '/call/customer-random/0/' + this.groupId, query: data})
+            }
+          }).catch((error) => {
+            alert(error)
           })
         }
       })
@@ -292,7 +314,7 @@ export default {
     width: 90%;
     height: 88px;
     line-height: 88px;
-    margin: 100px auto 0;
+    margin: 70px auto 0;
     color: #ffffff;
     font-size: 36px;
     text-align: center;

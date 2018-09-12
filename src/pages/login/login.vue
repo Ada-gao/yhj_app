@@ -187,7 +187,7 @@ export default {
   /*}*/
   .user_login{
     width: 79%;
-    border-bottom: 1px solid #e5e3e3;
+    border-bottom: 1px solid #cecece;
     margin: 0 auto;
   }
   .login_Application{
@@ -223,7 +223,7 @@ export default {
   }
   input::-webkit-input-placeholder{
     font-size: 32px;
-    color: #DADADA;
+    color: #cecece;
     font-weight: 100;
   }
   .user_login>div{

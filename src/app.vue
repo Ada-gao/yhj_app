@@ -1,28 +1,5 @@
 <template>
   <div id="app">
-    <!--<wv-tabbar v-show="tabShow" :fixed="true" style="background: #FFFFFF">-->
-      <!--<wv-tabbar-item to="/home" :isOn="selected('/home')">-->
-      <!--<span slot="icon" style="display: inline-block; position: relative;">-->
-        <!--<div class="iconfont icon-shouye weui-tabbar__label" style="font-size: 0.92rem;"></div>-->
-        <!--&lt;!&ndash;<wv-badge is-dot style="position: absolute;top: -2px;right: -13px;">8</wv-badge>&ndash;&gt;-->
-      <!--</span>-->
-        <!--首页-->
-      <!--</wv-tabbar-item>-->
-      <!--<wv-tabbar-item to="/call/customer-random" :isOn="selected('/call/details-y')">-->
-      <!--<span slot="icon" style="display: inline-block; position: relative;">-->
-        <!--<div class="iconfont icon-hujiaozhongxin weui-tabbar__label" style="font-size: 0.96rem;"></div>-->
-        <!--&lt;!&ndash;<wv-badge style="position: absolute;top: 0;right: -6px;">3</wv-badge>&ndash;&gt;-->
-      <!--</span>-->
-        <!--开始外呼-->
-      <!--</wv-tabbar-item>-->
-      <!--<wv-tabbar-item to="/profile" :isOn="selected('/profile')">-->
-        <!--<span slot="icon" style="display: inline-block; position: relative;">-->
-        <!--<div class="iconfont icon-wode weui-tabbar__label" style="font-size: 0.92rem;"></div>-->
-        <!--&lt;!&ndash;<wv-badge style="position: absolute;top: 0;right: -6px;">3</wv-badge>&ndash;&gt;-->
-      <!--</span>-->
-        <!--我的-->
-      <!--</wv-tabbar-item>-->
-    <!--</wv-tabbar>-->
     <transition :name="$root.transitionName">
       <router-view/>
     </transition>

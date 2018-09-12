@@ -6,29 +6,8 @@
       </div>
     </wv-header>
     <div class="wv-content x-wrapper">
-      <!--<div class="home_content" >-->
-        <!--<div class="home_header">-->
-          <!--<div class="home_time">-->
-          <!--<p class="iconfont icon-rili" style="float: left;margin: 0 0.2rem"></p>-->
-          <!--<p>{{dateTime}}</p>-->
-          <!--</div>-->
-          <!--<div class="home_head">-->
-            <!--<div class="head_h">-->
-              <!--<div class="head_img">-->
-                <!--<img :src="logo_head" alt="">-->
-              <!--</div>-->
-            <!--</div>-->
-            <!--<div class="home_inform">-->
-              <!--<h5 class="home_company">{{Belonged || '公司名称未设置'}}</h5>-->
-              <!--<h6 class="home_name">姓名：{{name}}</h6>-->
-              <!--<p class="home_state" v-if="completeStatus==false">状态：任务尚未完成，请继续努力</p>-->
-              <!--<p class="home_state" v-if="completeStatus==true">状态：任务已完成，请继续加油哦！</p>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
       <div class="home_progress">
-        <my-progress :percent="percent" :show-clear="false" style="width: 85%; margin: 30px auto 0"></my-progress>
+        <my-progress :percent="percent" :show-clear="false"></my-progress>
       </div>
       <div class="home_nav">
           <wv-flex :gutter="10" style="width: 100%;">
@@ -57,7 +36,7 @@
           <p class="def_text1">暂无任务</p>
           <p class="def_text2">请联系管理员给您分配任务</p>
         </div>
-        <div style="width:28090000px;" v-for="item in statisGroup" :key="item.taskGroupId" @click="$router.push('/call')">
+        <div style="width:28090000px;" v-for="item in statisGroup" :key="item.taskGroupId">
           <div class="home_list">
             <div class="progress_title">
               <p style="width: 90%">{{item.productName}}</p>
@@ -73,21 +52,11 @@
                 <div class="placeholder progress_txt">剩余未呼</div>
               </div>
             </div>
-            <!-- <wv-flex :gutter="10" style="width: 88%;margin: 0.5rem auto 0;border-bottom: 1px solid rgba(216, 216, 216, 0.2)">
-              <wv-flex-item>
-                <div class="placeholder progress_number">{{item.totalTaskCnt}}<small style="font-size: 50%">个</small></div>
-                <div class="placeholder progress_txt">客户总数</div>
-              </wv-flex-item>
-              <wv-flex-item>
-                <div class="placeholder progress_number">{{item.totalTaskCnt - item.totalTaskCompleteCnt}}<small style="font-size: 50%">个</small></div>
-                <div class="placeholder progress_txt">剩余未呼</div>
-              </wv-flex-item>
-            </wv-flex> -->
-            <div style="color: #9C9C9C;" class="task_list">
+            <div style="color: #9C9C9C;" class="task_list" @click="getTaskList(item.taskGroupId)">
               <p class="progress_time">计划完成时间：{{item.taskEndDate | moment('YYYY.MM.DD')}}</p>
               <p class="task_to">
                 <span>点击查看任务列表</span>
-                <i class="iconfont icon-gengduo" style="font-size: 18px;" @click="getTaskList(item.taskGroupId)"></i>
+                <i class="iconfont icon-gengduo" style="font-size: 18px;"></i>
               </p>
             </div>
           </div>
@@ -96,17 +65,6 @@
       <div class="phone_button bgcolor" @click="callphone">
         <small class="iconfont icon-hujiao" style="font-size: 100%;"></small>开始外呼
       </div>
-      <!--<div class="home_progress" v-for="item in statisGroup" :key="item.taskGroupId">-->
-        <!--<p class="progress_title">{{item.productName}}</p>-->
-        <!--&lt;!&ndash; <p class="progress_list"></p> &ndash;&gt;-->
-        <!--<wv-progress :percent="item.percent" :show-clear="false" style="width: 95%; margin: 0 auto"/>-->
-        <!--<p style="font-size: 0.48rem;margin-top: 0.58rem;margin-left: 0.4rem;">-->
-          <!--<small style="color: #02B6DC;font-size: 100%">-->
-            <!--{{item.totalTaskCompleteCnt}}</small>/{{item.totalTaskCnt}}-->
-        <!--</p>-->
-        <!--<p class="progress_time">任务计划完成时间：{{item.taskEndDate | moment('YYYY.MM.DD')}}</p>-->
-      <!--</div>-->
-      <!--<wv-footer class="footer-demo footer_status" text="——已加载全部——"></wv-footer>-->
     </div>
     <div class="home_complete" v-show="complete">
       <div class="complete_content">
@@ -124,9 +82,10 @@
 <script>
 import thumbSmall from '../../assets/images/icon_tabbar.png'
 import task from '@/assets/images/task.png'
-import { getCompany, getUser, getStatisGroup, getCompleteStatus, getRank } from '@/api/api'
+import { getUser, getStatisGroup, getCompleteStatus, getRank, getRandom } from '@/api/api'
 import { timeDate } from '@/utils'
 import MyProgress from '@/components/progress'
+import { Toast } from 'we-vue'
 // getTaskStatisticsDaily
 export default {
   components: {
@@ -153,16 +112,6 @@ export default {
   },
   methods: {
     getList () {
-      getCompany().then(res => {
-        if (res.data.logo === '' || res.data.logo === null) {
-          this.logo_head = this.head
-          this.Belonged = res.data.companyName
-          this.Belonged = res.data.companyName
-        } else {
-          this.logo_head = process.env.BASE_API + '/file?fileUuid=' + res.data.logo
-          this.Belonged = res.data.companyName
-        }
-      })
       getUser().then(res => {
         this.name = res.data.name
         localStorage.setItem('userId', res.data.id)
@@ -173,7 +122,7 @@ export default {
         getRank(res.data.id).then(res => {
           this.form = res.data
           this.form.dailyEffectiveDuration = timeDate(res.data.dailyEffectiveDuration)
-          this.percent = 60
+          // this.percent = 60
           // this.percent = this.form.dailyTaskCompleteCnt * 100 / this.form.dailyTaskCnt
         })
       })
@@ -191,26 +140,20 @@ export default {
     selected (route) {
       return this.$router.currentRoute.path === route
     },
-    // time () {
-    //   var nowdate = new Date()
-    //   var y = nowdate.getFullYear()
-    //   var m = nowdate.getMonth() + 1
-    //   var d = nowdate.getDate()
-    //   var my = nowdate.getDay()
-    //   var weekday = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
-    //   if (m < 10) {
-    //     m = '0' + m
-    //   }
-    //   if (d < 10) {
-    //     d = '0' + d
-    //   }
-    //   this.dateTime = y + '年' + m + '月' + d + '日' + weekday[my]
-    // },
     callphone () {
-      this.$router.push({path: '/call/customer-random/1'})
+      getRandom().then(res => {
+        let randomData = res.data
+        this.$router.push({path: '/call/customer-random/1', query: randomData})
+      }).catch(() => {
+        Toast({
+          duration: 1000,
+          message: '当前无任务分配',
+          type: 'text'
+        })
+      })
+      // this.$router.push({path: '/call/customer-random/1'})
     },
     getTaskList (groupId) {
-      console.log(groupId)
       this.$router.push({name: 'call', params: {groupId}})
     }
   },
@@ -367,7 +310,10 @@ export default {
     float: left;
   }
   .home_progress{
-    padding-top: 10px;
+    width: 85%;
+    /*height: 20px;*/
+    margin: 20px auto 0
+    /*padding-top: 5px;*/
     /*height: 4.82rem;*/
     /*background: #FFFFFF;*/
     /*margin-top: 0.4rem;*/

@@ -32,7 +32,7 @@
               <div class="placeholder random_nav cr">{{form.source}}</div>
             </wv-flex-item>
           </wv-flex>
-          <a :href="'tel:' + phoneNumber" v-show="phoneShow === false" class="random_button bgcolor" @click="phoneTimes">
+          <a :href="'tel:' + form.phoneNo" v-show="phoneShow === false" class="random_button bgcolor" @click="phoneTimes">
             <small class="iconfont icon-hujiao" style="font-size: 100%;"></small>立即拨打
           </a>
           <div class="random_button" v-show="phoneShow === true" @click="startCall">
@@ -72,8 +72,8 @@ import cancle from '@/assets/images/cancle.png'
 import { getCall, getCallscancle, getRandom } from '@/api/api'
 // import { transformText, queryObj, timeDate } from '@/utils'
 import { Toast } from 'we-vue'
-// import { CallListener } from '@CallListener'
-import Vue from 'vue'
+// import CallListener from 'cordova-plugin-calllistener'
+// import Vue from 'vue'
 // import qs from 'qs'
 
 export default {
@@ -99,17 +99,17 @@ export default {
   created () {
     // this.nextStepOptions = queryObj.nextStep
     // this.callResult = queryObj.callResult
-    // this.teskData()
-    // this.form = this.$route.query.form
-    // let phones = this.form.phoneNo.substring(4, 5)
-    // if (phones === '*') {
-    //   this.phoneShow = true
-    // } else {
-    //   this.phoneShow = false
     this.type = this.$route.params.type
     this.groupId = this.$route.params.groupId
+    console.log('groupId' + this.groupId)
     if (Object.keys(this.$route.query).length) {
       this.form = this.$route.query
+      let phones = this.form.phoneNo.substring(4, 5)
+      if (phones === '*') {
+        this.phoneShow = true
+      } else {
+        this.phoneShow = false
+      }
     } else {
       this.getRandom(this.groupId)
     }
@@ -118,18 +118,20 @@ export default {
     // let devicePlatform = Vue.cordova.device.platform
     // if (devicePlatform !== 'Android') {
     //     /* 监听电话状态（1空闲、2响铃、3通话） */
-    window.CallListener.addListener((state) => {
+    // document.addEventListener('deviceready', () => {})
+    /* global CallListener */
+    CallListener.addListener((state) => {
+      console.log('state:' + state)
       if (state === 3) {
         if (this.phoneShow === false) {
-          this.$router.push({path: '/call/call-record', query: {form: this.form, value: 'random'}})
+          this.$router.push({path: '/call/call-record', query: {form: this.form, groupId: this.groupId}})
         } else {
-          this.$router.push({path: '/call/call-record', query: {form: this.form, callId: this.callSid, value: 'random'}})
+          this.$router.push({path: '/call/call-record', query: {form: this.form, callId: this.callSid, groupId: this.groupId}})
         }
       } else if (state === 2) {
         this.details = false
       }
     })
-    // }
   },
   methods: {
     phoneTimes () {

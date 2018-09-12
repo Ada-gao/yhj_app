@@ -192,6 +192,7 @@ export default {
       this.getList2()
     },
     todetails (item) {
+      sessionStorage.setItem('createTime', this.createTime)
       // this.$router.push({name: 'customer-details', params: item})
       this.$router.push({path: '/call/customer-random/0/' + this.groupId, query: item})
     }

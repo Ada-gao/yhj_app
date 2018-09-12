@@ -34,7 +34,7 @@
     </div>
   </div>
 </template>
-<script type="es6">
+<script>
 import topImg from '../../assets/images/top_img.png'
 // import Vue from 'vue'
 import { Toast } from 'we-vue'
