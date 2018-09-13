@@ -197,7 +197,7 @@ export default {
 <style lang="scss">
   .random_content{
     position: fixed;
-    top:327px;
+    top: 327px;
     width: 100%;
     /*margin: auto;*/
   }

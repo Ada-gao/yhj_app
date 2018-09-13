@@ -20,9 +20,27 @@ export default {
       }
     }
   },
+  created () {
+    this.isIphoneX()
+  },
   methods: {
     selected (route) {
       return this.$router.currentRoute.path === route
+    },
+    isIphoneX () {
+      const u = navigator.userAgent
+      const isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) // ios终端
+      if (isIOS) {
+        if (screen.height === 812 && screen.width === 375) {
+          // 是iphoneX
+          console.log('iphoneX')
+          const metaEl = document.querySelector('meta[name="viewport"]')
+          // console.log(metaEl)
+          metaEl.content = 'width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, viewport-fit=cover'
+        } else {
+          // 不是iphoneX
+        }
+      }
     }
   },
   watch: {
@@ -35,10 +53,10 @@ export default {
       } else {
         str = to.path
       }
-      console.log(str)
-      console.log(this.statusBarcolorPath.black.indexOf(str))
+      // console.log(str)
+      // console.log(this.statusBarcolorPath.black.indexOf(str))
       if (this.statusBarcolorPath.black.indexOf(str) !== -1) {
-        // Vue.cordova.statusBar.overlaysWebView(false)
+        // Vue.cordova.statusBar.overlaysWebView(true)
         // Vue.cordova.statusBar.backgroundColorByHexString('') // 设置状态栏颜色
         Vue.cordova.statusBar.hide()
       } else {

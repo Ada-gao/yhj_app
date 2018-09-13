@@ -1,4 +1,3 @@
-
 // list here all supported plugins
 const pluginsList = [
   'cordova-plugin-camera',
@@ -8,7 +7,8 @@ const pluginsList = [
   'cordova-plugin-file-transfer',
   'cordova-plugin-statusbar',
   'cordova-plugin-background-mode',
-  'cordova-plugin-calllistener'
+  'cordova-plugin-calllistener',
+  'jpush-phonegap-plugin'
 ]
 
 exports.install = (Vue, options) => {

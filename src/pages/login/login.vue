@@ -2,20 +2,22 @@
   <div class="page" style="background: #858585">
     <div class="login_bgimg"></div>
     <div class="login_content">
-      <div class="user_login user_user ignore">
-        <i class="iconfont icon-zhanghao login_icon"></i>
-        <input class="user_input" placeholder="请输入账号" v-model="account" autocapitalize="off" autocorrect="off"/>
+      <img class="logoImg" :src="logoSrc" alt="">
+      <!-- <img class="logoImg" src="@/assets/images/login_logo.png" alt=""> -->
+      <p class="logoText">快如闪电，一击即中</p>
+      <div class="user_account">
+        <div class="user_login user_user ignore">
+          <i class="iconfont icon-zhanghao login_icon"></i>
+          <input class="user_input" placeholder="请输入账号" v-model="account" autocapitalize="off" autocorrect="off"/>
+        </div>
+        <div class="user_login" style="margin-top: 4.4%">
+          <i class="iconfont icon-mima login_icon"></i>
+          <input :type="inputType" class="pass_input" placeholder="请输入密码" v-model="password"/>
+          <i v-if="asee==true" class="iconfont icon-yincang login_iconright" @click="iconSee"></i>
+          <i v-if="asee==false" class="iconfont icon-yincang1 login_iconright" @click="iconSee"></i>
+        </div>
+        <wv-button class="land" @click="login" :is-loading="isLoading">登录</wv-button>
       </div>
-      <div class="user_login" style="margin-top: 4.4%">
-        <i class="iconfont icon-mima login_icon"></i>
-        <input :type="inputType" class="pass_input" placeholder="请输入密码" v-model="password"/>
-        <i v-if="asee==true" class="iconfont icon-yincang login_iconright" @click="iconSee"></i>
-        <i v-if="asee==false" class="iconfont icon-yincang1 login_iconright" @click="iconSee"></i>
-      </div>
-      <!-- <div class="land" @click="login">
-      登录
-      </div> -->
-      <wv-button class="land" @click="login" :is-loading="isLoading">登录</wv-button>
       <div class="login_Application" @click="$router.push('/login/trial')">申请体验</div>
     </div>
     <!--<div class="LOGO">-->
@@ -48,6 +50,7 @@
 <script>
 import { requestLogin, getUsers } from '../../api/api'
 // import thumbSmall from '../../assets/images/background image.jpg'
+import logoSrc from '../../assets/images/login_logo.png'
 import { Toast } from 'we-vue'
 
 export default {
@@ -58,7 +61,9 @@ export default {
       password: '',
       asee: true,
       inputType: 'password',
-      isLoading: false
+      isLoading: false,
+      logoSrc,
+      logoSrc1: 'static/images/login_logo.png'
     }
   },
   methods: {
@@ -125,8 +130,22 @@ export default {
     bottom: 0;
     width: 100%;
     background: #00000066;
+    padding-left: 52px;
+    padding-right: 52px;
+    box-sizing: border-box;
     input::-webkit-input-placeholder {
-      color: #fff;
+      color: #DADADA;
+    }
+    .logoImg {
+      width: 87px;
+      margin-top: 162px;
+      margin-left: 50%;
+      transform: translateX(-50%);
+    }
+    .logoText {
+      color: #DADADA;
+      text-align: center;
+      font-weight: lighter;
     }
   }
   .login_title{
@@ -135,8 +154,8 @@ export default {
     margin-top: 293px;
   }
   .user_user{
-    // padding-top: vw(492);
-    padding-top: 492px;
+    // padding-top: 492px;
+    padding-top: 198px;
   }
 //  .LOGO{
 //    width: 2.6rem;
@@ -158,7 +177,7 @@ export default {
   //   margin-top: 0.48rem;
   // }
   .land{
-    width: 90%;
+    // width: 90%!important;
     height: 88px;
     color: #FFFFFF;;
     text-align: center;
@@ -190,9 +209,9 @@ export default {
     /*padding: 10px 7px!important;*/
   /*}*/
   .user_login{
-    width: 79%;
+    // width: 79%;
     border-bottom: 1px solid #cecece;
-    margin: 0 auto;
+    // margin: 0 auto;
   }
   .login_Application{
     /*position: fixed;*/
