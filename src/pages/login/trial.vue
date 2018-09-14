@@ -22,7 +22,7 @@
           </wv-flex-item>
           <wv-flex-item>
             <div class="placeholder trial_icon iconfont icon-mianfei"></div>
-            <div class="placeholder trial_text">免费体检</div>
+            <div class="placeholder trial_text">免费体验</div>
           </wv-flex-item>
         </wv-flex>
       </div>
@@ -58,7 +58,7 @@
           <p class="iconfont icon-fanhui icon_right info_icon"></p>
         </div>
         <div class="info_list">
-          <input type="tel" placeholder="请输入联系人电话" class="input_size" v-model="mobile" />
+          <input type="tel" placeholder="请输入联系人电话" class="input_size" v-model="mobile" maxlength="11"/>
           <p class="iconfont icon-fanhui icon_right info_icon"></p>
         </div>
         <div class="info_lists">
@@ -167,7 +167,11 @@ export default {
   methods: {
     onAddressChange (picker, addressValues, slotIndex) {
       if (slotIndex === 0) {
-        const cities = getCities(addressValues[0])
+        let cities = getCities(addressValues[0])
+        console.log(addressValues[0])
+        if (addressValues[0] === '台湾省') {
+          cities = ['市辖区']
+        }
         picker.setColumnValues(1, cities)
       }
     },

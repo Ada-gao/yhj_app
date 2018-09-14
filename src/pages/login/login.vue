@@ -1,6 +1,9 @@
 <template>
   <div class="page" style="background: #858585">
     <div class="login_bgimg"></div>
+    <div style="width: 100%">
+      <img :src="thumbSmall" style="max-width: 100%">
+    </div>
     <div class="login_content">
       <div class="user_login user_user ignore">
         <i class="iconfont icon-zhanghao login_icon"></i>

@@ -39,7 +39,7 @@
         </div>
         <div class="info_lists">
           <p class="info_left" style="margin-top: 10px">备注</p>
-          <textarea rows="5" :placeholder="form.common" class="record_txt" v-model="form.common"></textarea>
+          <textarea rows="5" class="record_txt" v-model="form.common"></textarea>
         </div>
       </div>
       <div class="details_button" @click="submitCall">
@@ -62,8 +62,9 @@
 </template>
 
 <script>
-import { getTaskHistory, getCallStatus, updateOutboundName, getTaskList, getRandom } from '@/api/api'
+import { getTaskHistory, getCallStatus, updateOutboundName, getTaskList, getRandom, getCallMoney } from '@/api/api'
 import { timeDate } from '@/utils'
+import { Toast } from 'we-vue'
 export default {
   data () {
     return {
@@ -96,8 +97,8 @@ export default {
         }
       ],
       history: {
-        result: 'NOT_CALL',
-        status: 'CALL_AGAIN',
+        result: '',
+        status: '',
         actualCallStartDate: '',
         acutalCallEndDate: '',
         outboundTaskId: ''
@@ -118,20 +119,19 @@ export default {
     let phones = this.form.phoneNo.substring(4, 5)
     if (phones === '*') {
       this.callId = this.$route.query.callId
+      console.log(this.callId)
       getCallStatus(this.callId).then((res) => {
         this.callTime = res.data
-        // alert(this.callTime.start)
         this.callTimes = timeDate(this.callTime.duration)
+        this.getCallHistory(this.callTime.duration)
       }).catch(() => {
         alert('call时间获取')
       })
     } else {
       this.callTime = this.$route.query.callTime
-      console.log(this.callTime.start)
       this.callTimes = timeDate(this.callTime.duration)
-      // alert('电话状态：' + this.callTime + '，通话时长：' + this.callTime.duration + '，开始时间：' + this.callTime.start + '，结束时间：' + this.callTime.end)
+      this.getCallHistory(this.callTime.duration)
     }
-    // alert('电话状态：' + this.form + '，通话时长：' + this.form.duration + '，开始时间：' + this.form.startDate + '，结束时间：' + this.form.endDate)
   },
   methods: {
     confirmResults (picker) {
@@ -143,26 +143,33 @@ export default {
       this.history.status = this.action.value
     },
     submitCall () {
-      // let _this = this
-      let params = {
-        contactName: this.form.contactName,
-        gender: this.form.gender,
-        mobileNo: this.form.mobileNo,
-        wechatNo: this.form.wechatNo,
-        age: this.form.age,
-        common: ''
+      if (this.history.result === '' || this.history.status === '') {
+        Toast.text({
+          duration: 2000,
+          message: '标星为必填项'
+        })
+      } else {
+        let params = {
+          contactName: this.form.contactName,
+          gender: this.form.gender,
+          mobileNo: this.form.mobileNo,
+          wechatNo: this.form.wechatNo,
+          age: this.form.age,
+          common: ''
+        }
+        this.history.actualCallStartDate = new Date(this.callTime.start.replace(/-/g, '/') || this.callTime.start)
+        this.history.acutalCallEndDate = new Date(this.callTime.end.replace(/-/g, '/') || this.callTime.end)
+        this.history.outboundTaskId = this.form.taskId
+        // console.log('开始时间' + this.history.actualCallStartDate)
+        // console.log('结束时间' + this.history.acutalCallEndDate)
+        // alert('总时长' + this.callTime.duration)
+        getTaskHistory(this.history).then(res => {
+          this.customerInfor(params)
+        }).catch((error) => {
+          // alert('开始时间' + this.history.actualCallStartDate + '结束时间' + this.history.acutalCallEndDate)
+          alert('外呼结果保存失败' + error)
+        })
       }
-      this.history.actualCallStartDate = new Date(this.callTime.start.replace(/-/g, '/'))
-      this.history.acutalCallEndDate = new Date(this.callTime.end.replace(/-/g, '/'))
-      this.history.outboundTaskId = this.form.taskId
-      // console.log('开始时间' + this.callTime.start)
-      // console.log('结束时间' + this.history.acutalCallEndDate)
-      getTaskHistory(this.history).then(res => {
-        this.customerInfor(params)
-      }).catch((error) => {
-        alert('开始时间' + this.history.actualCallStartDate + '结束时间' + this.history.acutalCallEndDate)
-        alert('外呼结果保存失败' + error)
-      })
     },
     customerInfor (params) {
       updateOutboundName(this.form.outboundNameId, params).then(res => {
@@ -187,6 +194,21 @@ export default {
             alert(error)
           })
         }
+      })
+    },
+    getCallHistory (duration) {
+      let params = {
+        callType: this.form.phoneNo.indexOf('*') > -1 ? 'THIRD_PLATFORM' : 'NATIVE',
+        clientId: this.form.outboundNameId,
+        clientName: this.form.contactName,
+        duration: duration,
+        phoneNum: this.form.phoneNo,
+        saleId: localStorage.getItem('userId')
+      }
+      console.log('callType：' + params.callType + 'clientId：' + params.clientId + 'clientName：' + params.clientName + 'duration：' + params.duration + 'phoneNum：' + params.phoneNum + 'saleId：' + params.saleId)
+      getCallMoney(params).then(res => {
+      }).catch(() => {
+        alert('挂断提交时间')
       })
     }
   }
@@ -314,7 +336,7 @@ export default {
     width: 90%;
     height: 88px;
     line-height: 88px;
-    margin: 70px auto 0;
+    margin: 50px auto 0;
     color: #ffffff;
     font-size: 36px;
     text-align: center;

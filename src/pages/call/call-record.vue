@@ -34,7 +34,7 @@
 </template>
 <script>
 // import Vue from 'vue'
-import { getCallMoney } from '@/api/api'
+// import { getCallMoney } from '@/api/api'
 export default {
   data () {
     return {
@@ -101,27 +101,13 @@ export default {
             // this.history.acutalCallEndDate = info.endDate
           }, this.form.phoneNo)
         } else {
-          this.getCallHistory()
           this.$router.push({path: '/call/call-details', query: {form: this.form, callId: this.callid}})
         }
       }
+      // console.log('状态：' + state)
     })
   },
   methods: {
-    getCallHistory () {
-      let params = {
-        callType: this.form.phoneNo.indexOf('*') > -1 ? 'THIRD_PLATFORM' : 'NATIVE',
-        clientId: this.form.clientId,
-        clientName: this.form.contactName,
-        duration: this.callTime,
-        phoneNum: this.form.phoneNo,
-        saleId: localStorage.getItem('userId')
-      }
-      alert(JSON.parse(params))
-      getCallMoney(params).then(res => {
-        alert(res.data)
-      })
-    }
   }
 }
 </script>

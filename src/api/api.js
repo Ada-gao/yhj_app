@@ -52,7 +52,7 @@ export const getTaskStatistics = () => axios.get('/app/taskStatistics')
 // 获取任务列表
 export const getTaskList = (groupId, params) => axios.get('/app/tasks/' + groupId, { params: params })
 // 开始外呼
-export const getCall = (id) => axios.post('/app/call/' + id)
+export const getCall = (id, taskid) => axios.post('/app/call?nameId=' + id + '&taskId=' + taskid)
 // 获取外呼时间
 export const getCallStatus = (callSid) => axios.get('/app/callStatusResult/' + callSid)
 
