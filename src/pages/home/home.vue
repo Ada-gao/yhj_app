@@ -1,11 +1,11 @@
 <template>
   <div class="page" style="background: #ffffff;position: absolute">
-    <wv-header title="闪电呼" class="x-header-home" background-color="#FFFFFF">
+    <wv-header title="闪电呼" class="x-header" background-color="#FFFFFF">
       <div class="btn-back header_left l40" slot="left">
         <i class="iconfont icon-wode" @click="$router.push('/profile')"></i>
       </div>
     </wv-header>
-    <div class="wv-content x-wrapper-home">
+    <div class="wv-content x-wrapper">
       <div class="home_progress">
         <my-progress :percent="percent" :show-clear="false"></my-progress>
       </div>

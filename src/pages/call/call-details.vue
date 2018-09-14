@@ -63,7 +63,7 @@
 
 <script>
 import { getTaskHistory, getCallStatus, updateOutboundName, getTaskList, getRandom, getCallMoney } from '@/api/api'
-import { timeDate } from '@/utils'
+import { timeDate, timeStr } from '@/utils'
 import { Toast } from 'we-vue'
 export default {
   data () {
@@ -123,6 +123,8 @@ export default {
       getCallStatus(this.callId).then((res) => {
         this.callTime = res.data
         this.callTimes = timeDate(this.callTime.duration)
+        this.callTime.start = timeStr(res.data.start)
+        this.callTime.end = timeStr(res.data.end)
         this.getCallHistory(this.callTime.duration)
       }).catch(() => {
         alert('call时间获取')
@@ -143,12 +145,14 @@ export default {
       this.history.status = this.action.value
     },
     submitCall () {
+      console.log('点击')
       if (this.history.result === '' || this.history.status === '') {
         Toast.text({
           duration: 2000,
           message: '标星为必填项'
         })
       } else {
+        console.log('执行')
         let params = {
           contactName: this.form.contactName,
           gender: this.form.gender,
@@ -157,13 +161,17 @@ export default {
           age: this.form.age,
           common: ''
         }
+        console.log('ceshi' + this.callTime.start)
         this.history.actualCallStartDate = new Date(this.callTime.start.replace(/-/g, '/') || this.callTime.start)
         this.history.acutalCallEndDate = new Date(this.callTime.end.replace(/-/g, '/') || this.callTime.end)
         this.history.outboundTaskId = this.form.taskId
-        // console.log('开始时间' + this.history.actualCallStartDate)
-        // console.log('结束时间' + this.history.acutalCallEndDate)
+        console.log('开始时间测试')
+        console.log('开始时间' + this.callTime.start)
+        console.log('结束时间' + this.callTime.end)
+        // console.log('开始时间测试')
         // alert('总时长' + this.callTime.duration)
         getTaskHistory(this.history).then(res => {
+          console.log('保存成功')
           this.customerInfor(params)
         }).catch((error) => {
           // alert('开始时间' + this.history.actualCallStartDate + '结束时间' + this.history.acutalCallEndDate)
@@ -173,6 +181,7 @@ export default {
     },
     customerInfor (params) {
       updateOutboundName(this.form.outboundNameId, params).then(res => {
+        console.log('保存成功2')
         if (this.groupId === undefined) {
           getRandom().then(res => {
             let randomData = res.data
@@ -184,6 +193,7 @@ export default {
           // TODO
           // listQuery1 参数来源？
           getTaskList(this.groupId, this.listQuery1).then(res => {
+            console.log('保存成功3')
             let data = res.data.content[0]
             if (!res.data.content[0]) {
               this.$router.push({name: 'call', params: {groupId: this.groupId}})
@@ -194,6 +204,8 @@ export default {
             alert(error)
           })
         }
+      }).catch((error) => {
+        console.log(error)
       })
     },
     getCallHistory (duration) {

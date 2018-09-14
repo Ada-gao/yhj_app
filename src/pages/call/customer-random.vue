@@ -156,18 +156,6 @@ export default {
         }
       } else if (state === 2) {
         this.details = false
-      } else if (state === 6) {
-        console.log('原声')
-        CallListener.getCallInfo((info) => {
-          this.$router.push({path: '/call/call-details', query: {form: this.form, callTime: info, groupId: this.groupId}})
-          // alert('电话状态：' + state + '，通话时长：' + info.duration + '，开始时间：' + info.start + '，结束时间：' + info.end)
-          // this.callTime = timeDate(info.duration)
-          // this.history.actualCallStartDate = info.startDate
-          // this.history.acutalCallEndDate = info.endDate
-        }, this.form.phoneNo).catch((error) => {
-          console.log(error)
-          alert(error)
-        })
       }
     })
   },
