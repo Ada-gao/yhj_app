@@ -66,8 +66,8 @@ img {
 .is-iOS .x-header {
   position: fixed;
   top: 0px!important; // iOs 10 or lower
-  // top: constant(safe-area-inset-top)!important; // iOs 11
-  // top: env(safe-area-inset-top)!important; // iOs 11+ (feature)
+  top: constant(safe-area-inset-top)!important; // iOs 11
+  top: env(safe-area-inset-top)!important; // iOs 11+ (feature)
   // padding-top: 32px; vw
 }
 .is-iOS .x-header-home{
@@ -77,9 +77,9 @@ img {
 
 .is-iOS .x-wrapper {
   //position: absolute;
-  top: 0px!important; // iOs 10 or lower 3.15rem
-  // top: constant(safe-area-inset-top); // iOs 11
-  // top: env(safe-area-inset-top)!important; // iOs 11+ (feature)
+  top: 0px; // iOs 10 or lower 3.15rem
+  top: constant(safe-area-inset-top)!important; // iOs 11
+  top: env(safe-area-inset-top)!important; // iOs 11+ (feature)
   padding-top: 96px;
   // padding-top: 128px;
   // padding-top: 50px;

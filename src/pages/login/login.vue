@@ -5,18 +5,21 @@
       <img :src="thumbSmall" style="max-width: 100%">
     </div>
     <div class="login_content">
-      <div class="user_login user_user ignore">
-        <i class="iconfont icon-zhanghao login_icon"></i>
-        <input class="user_input" placeholder="请输入账号" v-model="account" autocapitalize="off" autocorrect="off"/>
-      </div>
-      <div class="user_login" style="margin-top: 4.4%">
-        <i class="iconfont icon-mima login_icon"></i>
-        <input :type="inputType" class="pass_input" placeholder="请输入密码" v-model="password"/>
-        <i v-if="asee==true" class="iconfont icon-yincang login_iconright" @click="iconSee"></i>
-        <i v-if="asee==false" class="iconfont icon-yincang1 login_iconright" @click="iconSee"></i>
-      </div>
-      <div class="land" @click="login">
-      登录
+      <i class="logoImg iconfont icon-qidongyeicon1 login_icon"></i>
+      <!-- <img class="logoImg" src="@/assets/images/login_logo.png" alt=""> -->
+      <p class="logoText">快如闪电，一击即中</p>
+      <div class="user_account">
+        <div class="user_login user_user ignore">
+          <i class="iconfont icon-zhanghao login_icon"></i>
+          <input class="user_input" placeholder="请输入账号" v-model="account" autocapitalize="off" autocorrect="off"/>
+        </div>
+        <div class="user_login" style="margin-top: 4.4%">
+          <i class="iconfont icon-mima login_icon"></i>
+          <input :type="inputType" class="pass_input" placeholder="请输入密码" v-model="password"/>
+          <i v-if="asee==true" class="iconfont icon-yincang login_iconright" @click="iconSee"></i>
+          <i v-if="asee==false" class="iconfont icon-yincang1 login_iconright" @click="iconSee"></i>
+        </div>
+        <wv-button class="land" @click="login" :is-loading="isLoading">登录</wv-button>
       </div>
       <div class="login_Application" @click="$router.push('/login/trial')">申请体验</div>
     </div>
@@ -50,6 +53,7 @@
 <script>
 import { requestLogin, getUsers } from '../../api/api'
 // import thumbSmall from '../../assets/images/background image.jpg'
+import logoSrc from '../../assets/images/login_logo.png'
 import { Toast } from 'we-vue'
 
 export default {
@@ -59,7 +63,10 @@ export default {
       account: '',
       password: '',
       asee: true,
-      inputType: 'password'
+      inputType: 'password',
+      isLoading: false,
+      logoSrc,
+      logoSrc1: 'static/images/login_logo.png'
     }
   },
   methods: {
@@ -72,6 +79,7 @@ export default {
         })
       } else {
         requestLogin(loginParams).then(res => {
+          this.isLoading = true
           localStorage.setItem('token', res.data.token)
           let user = localStorage.getItem('token')
           if (user) {
@@ -84,6 +92,7 @@ export default {
                 })
               } else {
                 this.$router.push({path: '/home'})
+                this.isLoading = false
               }
             })
           }
@@ -124,8 +133,25 @@ export default {
     bottom: 0;
     width: 100%;
     background: #00000066;
+    padding-left: 52px;
+    padding-right: 52px;
+    box-sizing: border-box;
     input::-webkit-input-placeholder {
-      color: #fff;
+      color: #DADADA;
+    }
+    .logoImg {
+      // width: 87px;
+      display: inline-block;
+      font-size: 150px;
+      margin-top: 122px;
+      margin-left: 50%;
+      transform: translateX(-50%);
+    }
+    .logoText {
+      color: #DADADA;
+      text-align: center;
+      font-weight: lighter;
+      font-size: 30px;
     }
   }
   .login_title{
@@ -134,8 +160,8 @@ export default {
     margin-top: 293px;
   }
   .user_user{
-    // padding-top: vw(492);
-    padding-top: 492px;
+    // padding-top: 492px;
+    padding-top: 198px;
   }
 //  .LOGO{
 //    width: 2.6rem;
@@ -157,7 +183,7 @@ export default {
   //   margin-top: 0.48rem;
   // }
   .land{
-    width: 90%;
+    // width: 90%!important;
     height: 88px;
     color: #FFFFFF;;
     text-align: center;
@@ -189,9 +215,9 @@ export default {
     /*padding: 10px 7px!important;*/
   /*}*/
   .user_login{
-    width: 79%;
+    // width: 79%;
     border-bottom: 1px solid #cecece;
-    margin: 0 auto;
+    // margin: 0 auto;
   }
   .login_Application{
     /*position: fixed;*/
@@ -202,8 +228,10 @@ export default {
     text-align: right;
     font-family: PingFangSC-Regular;
   }
-  .user_input{
+  .user_input,
+  .pass_input{
     height: 80px;
+    line-height: 45px;
     font-size: 32px;
     border: 0;
     margin-left: 24px;
@@ -214,15 +242,7 @@ export default {
     color: #fff;
   }
   .pass_input{
-    height: 80px;
-    font-size: 32px;
-    border: 0;
-    margin-left: 24px;
     width: 73%;
-    outline:none;
-    background: rgba(140, 140, 140, 0);
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
-    color: #fff;
   }
   input::-webkit-input-placeholder{
     font-size: 32px;

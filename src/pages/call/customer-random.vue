@@ -116,7 +116,7 @@ export default {
       callSid: '',
       // callStatus: false,
       phoneNumber: '',
-      phoneShow: true,
+      phoneShow: false,
       conversationState: false,
       type: '',
       groupId: ''
@@ -235,7 +235,7 @@ export default {
 <style lang="scss">
   .random_content{
     position: fixed;
-    top:327px;
+    top: 327px;
     width: 100%;
     /*margin: auto;*/
   }
