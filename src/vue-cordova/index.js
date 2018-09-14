@@ -7,7 +7,6 @@ const pluginsList = [
   'cordova-plugin-file-transfer',
   'cordova-plugin-statusbar',
   'cordova-plugin-background-mode',
-  'cordova-plugin-calllistener',
   'jpush-phonegap-plugin'
 ]
 

@@ -2,7 +2,7 @@
   <div class="page" style="background: #858585">
     <div class="login_bgimg"></div>
     <div class="login_content">
-      <img class="logoImg" :src="logoSrc" alt="">
+      <i class="logoImg iconfont icon-qidongyeicon1 login_icon"></i>
       <!-- <img class="logoImg" src="@/assets/images/login_logo.png" alt=""> -->
       <p class="logoText">快如闪电，一击即中</p>
       <div class="user_account">
@@ -137,8 +137,10 @@ export default {
       color: #DADADA;
     }
     .logoImg {
-      width: 87px;
-      margin-top: 162px;
+      // width: 87px;
+      display: inline-block;
+      font-size: 150px;
+      margin-top: 122px;
       margin-left: 50%;
       transform: translateX(-50%);
     }
@@ -146,6 +148,7 @@ export default {
       color: #DADADA;
       text-align: center;
       font-weight: lighter;
+      font-size: 30px;
     }
   }
   .login_title{
@@ -222,8 +225,10 @@ export default {
     text-align: right;
     font-family: PingFangSC-Regular;
   }
-  .user_input{
+  .user_input,
+  .pass_input{
     height: 80px;
+    line-height: 45px;
     font-size: 32px;
     border: 0;
     margin-left: 24px;
@@ -234,15 +239,7 @@ export default {
     color: #fff;
   }
   .pass_input{
-    height: 80px;
-    font-size: 32px;
-    border: 0;
-    margin-left: 24px;
     width: 73%;
-    outline:none;
-    background: rgba(140, 140, 140, 0);
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
-    color: #fff;
   }
   input::-webkit-input-placeholder{
     font-size: 32px;
