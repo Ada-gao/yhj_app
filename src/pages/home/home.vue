@@ -66,14 +66,14 @@
         <small class="iconfont icon-hujiao" style="font-size: 100%;"></small>开始外呼
       </div>
     </div>
-    <div class="home_complete" v-show="complete">
+    <div class="home_complete" v-show="completetoday">
       <div class="complete_content">
         <div class="task_img">
           <img :src="task">
         </div>
         <p class="task_title">今天的任务已完成！</p>
         <p class="task_txt">请继续加油哦</p>
-        <div class="task_buttom" @click="task"> 知道了</div>
+        <div class="task_buttom" @click="completeTask"> 知道了</div>
       </div>
     </div>
   </div>
@@ -103,7 +103,7 @@ export default {
       completeStatus: '',
       userId: '',
       logo_head: '',
-      complete: false,
+      completetoday: false,
       Leftover: 0
     }
   },
@@ -123,7 +123,15 @@ export default {
           this.form = res.data
           this.form.dailyEffectiveDuration = timeDate(res.data.dailyEffectiveDuration)
           // this.percent = 60
-          // this.percent = this.form.dailyTaskCompleteCnt * 100 / this.form.dailyTaskCnt
+          this.percent = this.form.dailyTaskCompleteCnt * 100 / this.form.dailyTaskCnt || 0
+          console.log(this.percent)
+          this.completeshow = sessionStorage.getItem('completetoday')
+          if (!this.completeshow) {
+            if (this.percent === 100) {
+              this.completetoday = true
+              sessionStorage.setItem('completetoday', this.completetoday)
+            }
+          }
         })
       })
       getStatisGroup().then(res => {
@@ -134,9 +142,9 @@ export default {
         })
       })
     },
-    onClick () {
-      this.$root.message('click')
-    },
+    // onClick () {
+    //   this.$root.message('click')
+    // },
     selected (route) {
       return this.$router.currentRoute.path === route
     },
@@ -155,16 +163,16 @@ export default {
     },
     getTaskList (groupId) {
       this.$router.push({name: 'call', params: {groupId}})
+    },
+    completeTask () {
+      this.completetoday = false
     }
-  },
-  computed: {
-    title () {
-      return this.$route.meta.title
-    }
-  },
-  task () {
-    this.complete = false
   }
+  // computed: {
+  //   title () {
+  //     return this.$route.meta.title
+  //   }
+  // },
 }
 </script>
 

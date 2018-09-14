@@ -15,23 +15,49 @@
           <p class="random_list"><small class="random_txt">客户姓名：</small><small>{{form.contactName}}</small></p>
           <p class="random_list"><small class="random_txt">客户电话：</small><small>{{form.phoneNo}}</small></p>
           <hr class="hr">
-          <wv-flex :gutter="10" style="width: 100%;">
-            <wv-flex-item>
-              <div class="placeholder random_nav random_pro">外呼状态</div>
-              <div class="placeholder random_nav iconfont icon-boda1"></div>
-              <div class="placeholder random_nav co">未外呼</div>
-            </wv-flex-item>
-            <wv-flex-item>
-              <div class="placeholder random_nav random_pro">产品名称</div>
-              <div class="placeholder random_nav iconfont icon-chanpin"></div>
-              <div class="placeholder random_nav cr">{{form.productName}}</div>
-            </wv-flex-item>
-            <wv-flex-item>
-              <div class="placeholder random_nav random_pro">线索来源</div>
-              <div class="placeholder random_nav iconfont icon-xiansuo1"></div>
-              <div class="placeholder random_nav cr">{{form.source}}</div>
-            </wv-flex-item>
-          </wv-flex>
+          <div class="random_navs">
+            <wv-flex :gutter="10" class="details_nav">
+              <wv-flex-item>
+                <div class="placeholder random_nav random_pro">外呼状态</div>
+                <div class="placeholder random_nav iconfont icon-boda1" v-if="form.lastCallResult === 'NOT_CALL' || form.lastCallResult === null"></div>
+                <div class="placeholder random_nav iconjujue" v-if="form.lastCallResult === 'NOT_EXIST'"></div>
+                <div class="placeholder random_nav iconfont icon-boda" v-if="form.lastCallResult === 'UNCONNECTED'"></div>
+                <div class="placeholder random_nav iconfont icon-boda2" v-if="form.lastCallResult === 'CONNECTED'"></div>
+                <div class="placeholder random_nav co" v-if="form.lastCallResult === 'NOT_CALL' || form.lastCallResult === null">未外呼</div>
+                <div class="placeholder random_nav co" v-if="form.lastCallResult === 'NOT_EXIST'">空号</div>
+                <div class="placeholder random_nav co" v-if="form.lastCallResult === 'UNCONNECTED'">未接通</div>
+                <div class="placeholder random_nav cr" v-if="form.lastCallResult === 'CONNECTED'">已接通</div>
+              </wv-flex-item>
+              <wv-flex-item>
+                <div class="placeholder random_nav random_pro">产品名称</div>
+                <div class="placeholder random_nav iconfont icon-chanpin"></div>
+                <div class="placeholder random_nav cr">{{form.productName}}</div>
+              </wv-flex-item>
+              <wv-flex-item>
+                <div class="placeholder random_nav random_pro">线索来源</div>
+                <div class="placeholder random_nav iconfont icon-xiansuo1"></div>
+                <div class="placeholder random_nav cr">{{form.source}}</div>
+              </wv-flex-item>
+            </wv-flex>
+          </div>
+          <!--<wv-flex :gutter="10" style="width: 100%;">-->
+            <!--<wv-flex-item>-->
+              <!--<div class="placeholder random_nav random_pro">外呼状态</div>-->
+              <!--<div class="placeholder random_nav iconfont icon-boda1"></div>-->
+              <!--<div class="placeholder random_nav co">未外呼</div>-->
+            <!--</wv-flex-item>-->
+            <!--<wv-flex-item>-->
+              <!--<div class="placeholder random_nav random_pro">产品名称</div>-->
+              <!--<div class="placeholder random_nav iconfont icon-chanpin"></div>-->
+              <!--<div class="placeholder random_nav cr">{{form.productName}}</div>-->
+            <!--</wv-flex-item>-->
+            <!--<wv-flex-item>-->
+              <!--<div class="placeholder random_nav random_pro">线索来源</div>-->
+              <!--<div class="placeholder random_nav iconfont icon-xiansuo1"></div>-->
+              <!--<div class="placeholder random_nav cr">{{form.source}}</div>-->
+            <!--</wv-flex-item>-->
+          <!--</wv-flex>-->
+          <div v-show="type == 0" class="details_state">最近外呼次数：{{form.callCount}}次 &nbsp;&nbsp;最近一次外呼时间：{{form.lastCallDate}}</div>
           <a :href="'tel:' + form.phoneNo" v-show="phoneShow === false" class="random_button bgcolor" @click="phoneTimes">
             <small class="iconfont icon-hujiao" style="font-size: 100%;"></small>立即拨打
           </a>
@@ -70,7 +96,7 @@ import company from '@/assets/images/hand.png'
 import phoneImg from '../../assets/images/phone.gif'
 import cancle from '@/assets/images/cancle.png'
 import { getCall, getCallscancle, getRandom } from '@/api/api'
-// import { transformText, queryObj, timeDate } from '@/utils'
+import { parseTime } from '@/utils'
 import { Toast } from 'we-vue'
 // import CallListener from 'cordova-plugin-calllistener'
 // import Vue from 'vue'
@@ -101,9 +127,9 @@ export default {
     // this.callResult = queryObj.callResult
     this.type = this.$route.params.type
     this.groupId = this.$route.params.groupId
-    console.log('groupId' + this.groupId)
     if (Object.keys(this.$route.query).length) {
       this.form = this.$route.query
+      this.form.lastCallDate = parseTime(this.form.lastCallDate, '{y}-{m}-{d}')
       let phones = this.form.phoneNo.substring(4, 5)
       if (phones === '*') {
         this.phoneShow = true
@@ -121,7 +147,7 @@ export default {
     // document.addEventListener('deviceready', () => {})
     /* global CallListener */
     CallListener.addListener((state) => {
-      console.log('state:' + state)
+      // console.log('state:' + state)
       if (state === 3) {
         if (this.phoneShow === false) {
           this.$router.push({path: '/call/call-record', query: {form: this.form, groupId: this.groupId}})
@@ -140,7 +166,7 @@ export default {
     startCall () {
       this.conversationState = true
       this.details = true
-      getCall(this.form.outboundNameId).then(res => {
+      getCall(this.form.outboundNameId, this.form.taskId).then(res => {
         this.callSid = res.data.callSid
         if (this.callSid === null) {
           Toast.fail({
@@ -214,7 +240,7 @@ export default {
     position: relative;
     width: 95%;
     margin: auto;
-    height: 546px;
+    /*height: 546px;*/
     background-color: white;
     border-radius: 6px;
   }
@@ -234,13 +260,23 @@ export default {
     text-align: center;
     font-size: 24px;
   }
+  .random_navs{
+    width: 100%;
+    height: 170px;
+  }
+  .details_state{
+    width: 86%;
+    margin: 10px auto 39px;
+    font-size: 25px;
+    color: #2F6BE2;
+  }
   .random_pro{
     color:#939393;
   }
-  .icon-boda1,.icon-chanpin,.icon-xiansuo1{
+  .icon-boda1,.icon-chanpin,.icon-xiansuo1, .icon-boda2{
     font-size: 48px;
   }
-  .icon-chanpin,.icon-xiansuo1,.cr{
+  .icon-chanpin,.icon-xiansuo1,.cr, .icon-boda2{
     color:#2f6be2;
   }
   .icon-boda1,.co{
@@ -249,11 +285,11 @@ export default {
   .hr{
     width: 90%;
     margin: 40px auto;
-    border: 1px solid #e9e9e9!important;
+    border: 0.5px solid #e9e9e9!important;
   }
   .random_button{
-    position: absolute;
-    bottom: 0 ;
+    /*position: absolute;*/
+    /*bottom: 0 ;*/
     width: 100%;
     height: 98px;
     background: linear-gradient(to right, #5d90f4 , #2f6be2);
@@ -271,6 +307,22 @@ export default {
     border-radius: 6px;
     padding: 38px 45px;
     box-sizing: border-box;
+  }
+  /*.icon-boda1,.icon-chanpin,.icon-xiansuo1, icon-boda2{*/
+    /*font-size: 48px;*/
+  /*}*/
+  /*.icon-chanpin,.icon-xiansuo1,.cr, icon-boda2{*/
+    /*color:#2f6be2;*/
+  /*}*/
+  /*.icon-boda1,.co{*/
+    /*color:#ff393e;*/
+  /*}*/
+  .iconjujue{
+    background: url('../../assets/images/zhan.png') center center no-repeat;
+    background-size: cover;
+    width: 50px;
+    height: 48px;
+    margin: 14px auto;
   }
   // .l{
   //   width: 6px;
@@ -609,12 +661,12 @@ export default {
   }*/
   .phone_cancle{
     width: 18%;
-    margin: 20% auto;
+    margin: 40% auto;
   }
   .phone_hand{
     width: 30%;
     // margin: 4rem auto 0;
-    margin: 40px auto 0;
+    margin: 180px auto 0;
   }
   .phone>img,.phone_hand>img,.phone_cancle>img{
     max-width: 100%;
@@ -622,7 +674,8 @@ export default {
   .phone_txt{
     text-align: center;
     color: #dee2ed;
-    font-size: 17px;
+    font-size: 36px;
+    font-weight: 150;
   }
   // .head_name{
   //   text-align: center;

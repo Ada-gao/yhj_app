@@ -166,7 +166,7 @@ export default {
     width: 100%;
     height: 500px;
     background-color: #ffffff;
-    margin-top: 100px;
+    /*margin-top: 100px;*/
     box-shadow: 6px 4px 20px rgba(219,219,219,0.3);
     padding: 46px 40px;
     box-sizing: border-box;

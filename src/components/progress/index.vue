@@ -1,6 +1,6 @@
 <template>
   <div class="weui-progress">
-    <i class="iconfont icon-chidouzi" :style="{left: percent - 7 + '%'}"></i>
+    <i class="icon" :style="{left: percent - 7 + '%'}"></i>
     <div class="weui-progress__bar">
       <div class="weui-progress__inner-bar js_progress" :style="{width: 100- percent + '%'}" />
     </div>
@@ -37,12 +37,16 @@ export default {
 <style scoped lang="scss">
 .weui-progress {
   position: relative;
-  .iconfont {
+  .icon {
+    background: url('../../assets/images/chidou.png') center center no-repeat;
+    background-size: cover;
     position: absolute;
     top: 0;
     transform: translateY(-40%);
     font-size: 50px;
-    color: #2F6BE2;
+    width: 50px;
+    height: 50px;
+    /*color: #2F6BE2;*/
   }
   .weui-progress__bar {
     background-color: #ebebeb!important;
