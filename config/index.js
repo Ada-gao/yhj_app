@@ -8,10 +8,10 @@ module.exports = {
   dev: {
     // Paths
     assetsSubDirectory: 'static',
-    assetsPublicPath: '',
+    assetsPublicPath: './',
 
     // Various Dev Server settings
-    host: '10.9.60.32', // can be overwritten by process.env.HOST localhost 10.9.60.32
+    host: '127.0.0.1', // can be overwritten by process.env.HOST localhost 10.9.60.32
     port: 9080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: true,
     errorOverlay: true,
@@ -58,7 +58,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../www'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '',
+    assetsPublicPath: './',
 
     /**
      * Source Maps

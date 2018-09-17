@@ -1,5 +1,5 @@
 /**
- * Created by gaoyuan on 9/13/17.
+ * Created by gaoyuan on 9/13/18.
  */
 // import router from '../../router'
 export const install = function (Vue, options, cb) {

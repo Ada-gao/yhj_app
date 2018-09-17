@@ -7,7 +7,8 @@ const pluginsList = [
   'cordova-plugin-file-transfer',
   'cordova-plugin-statusbar',
   'cordova-plugin-background-mode',
-  'jpush-phonegap-plugin'
+  'jpush-phonegap-plugin',
+  'cordova-plugin-splashscreen'
 ]
 
 exports.install = (Vue, options) => {

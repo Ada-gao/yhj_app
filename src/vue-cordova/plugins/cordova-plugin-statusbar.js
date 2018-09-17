@@ -1,6 +1,7 @@
 /**
  * Created by zhuangyinping on 5/2/17.
  */
+import router from '../../router'
 export const install = function (Vue, options, cb) {
   document.addEventListener('deviceready', () => {
     /* global StatusBar */
@@ -10,7 +11,9 @@ export const install = function (Vue, options, cb) {
     }
     // pass through the StatusBar object
     Vue.cordova.statusBar = StatusBar
-    Vue.cordova.statusBar.hide()
+    if (window.location.hash.indexOf('/login') !== -1) {
+      Vue.cordova.statusBar.hide()
+    }
     // eslint-disable-next-line
     return cb(true)
   }, false)

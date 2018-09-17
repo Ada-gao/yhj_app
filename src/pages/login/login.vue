@@ -78,6 +78,7 @@ export default {
         requestLogin(loginParams).then(res => {
           this.isLoading = true
           localStorage.setItem('token', res.data.token)
+          localStorage.setItem('versionRemark', false)
           let user = localStorage.getItem('token')
           if (user) {
             getUsers().then((res) => {
