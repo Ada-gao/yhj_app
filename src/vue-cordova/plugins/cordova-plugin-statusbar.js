@@ -1,7 +1,6 @@
 /**
  * Created by zhuangyinping on 5/2/17.
  */
-import router from '../../router'
 export const install = function (Vue, options, cb) {
   document.addEventListener('deviceready', () => {
     /* global StatusBar */
