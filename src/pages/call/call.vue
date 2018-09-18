@@ -28,7 +28,7 @@
       <div class="page-infinite-wrapper" v-show="content==='notFinish'">
         <div class="call_list" v-for="(item, index) in hList" :key="index" @click="todetails(item)">
           <p class="call_left">{{item.contactName}}</p>
-          <p class="call_cont">继续拨打</p>
+          <p class="call_cont">{{item.lastCallResult}}</p>
           <p class="iconfont icon-fanhui call_right icon_left" style="color: #e9e9e9;font-size: 19px"></p>
         </div>
          <!--<wv-cell-swipe :title="item.contactName" is-link-->
@@ -108,6 +108,17 @@ export default {
       this.listQuery1.createTime = this.createTime
       getTaskList(this.groupId, this.listQuery1).then(res => {
         let data = res.data.content
+        data.forEach(item => {
+          if (item.lastCallResult === 'NOT_CALL') {
+            item.lastCallResult = '未外呼'
+          } else if (item.lastCallResult === 'NOT_EXIST') {
+            item.lastCallResult = '空号'
+          } else if (item.lastCallResult === 'UNCONNECTED') {
+            item.lastCallResult = '未接通'
+          } else if (item.lastCallResult === 'CONNECTED') {
+            item.lastCallResult = '已接通'
+          }
+        })
         if (flag) {
           // 多次加载
           this.hList = this.hList.concat(data)
@@ -129,6 +140,17 @@ export default {
       this.listQuery2.createTime = this.createTime
       getTaskList(this.groupId, this.listQuery2).then(res => {
         let data = res.data.content
+        data.forEach(item => {
+          if (item.lastCallResult === 'NOT_CALL') {
+            item.lastCallResult = '未外呼'
+          } else if (item.lastCallResult === 'NOT_EXIST') {
+            item.lastCallResult = '空号'
+          } else if (item.lastCallResult === 'UNCONNECTED') {
+            item.lastCallResult = '未接通'
+          } else if (item.lastCallResult === 'CONNECTED') {
+            item.lastCallResult = '已接通'
+          }
+        })
         if (flag) {
           // 多次加载
           this.fList = this.fList.concat(data)
@@ -245,12 +267,12 @@ export default {
     float: left;
   }
   .call_left{
-    width: 70%;
+    width: 67%;
     font-size: 32px;
     overflow: hidden;
   }
   .call_cont{
-    width: 20%;
+    width: 23%;
     font-size: 26px;
   }
   .call_right{

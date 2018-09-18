@@ -1,6 +1,9 @@
 <template>
   <div class="page" style="background: #858585">
     <div class="login_bgimg"></div>
+    <div style="width: 100%">
+      <img :src="thumbSmall" style="max-width: 100%">
+    </div>
     <div class="login_content">
       <i class="logoImg iconfont icon-qidongyeicon1 login_icon"></i>
       <!-- <img class="logoImg" src="@/assets/images/login_logo.png" alt=""> -->
