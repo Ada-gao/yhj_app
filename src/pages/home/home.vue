@@ -132,8 +132,7 @@ export default {
         '添加腾讯 bug 监控（原生）'
       ],
       versionVisible: false,
-      completetoday: false,
-      Leftover: 0
+      completetoday: false
     }
   },
   mounted () {
