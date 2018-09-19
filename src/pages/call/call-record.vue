@@ -94,11 +94,10 @@ export default {
         if (this.phoneShow === false) { // 原生通话
           /* global CallListener */
           CallListener.getCallInfo((info) => {
+            console.log('跳转')
             this.$router.push({path: '/call/call-details', query: {form: this.form, callTime: info, groupId: this.groupId}})
-            // alert('电话状态：' + state + '，通话时长：' + info.duration + '，开始时间：' + info.start + '，结束时间：' + info.end)
+            // console.log('电话状态：' + state + '，通话时长：' + info.duration + '，开始时间：' + info.start + '，结束时间：' + info.end)
             // this.callTime = timeDate(info.duration)
-            // this.history.actualCallStartDate = info.startDate
-            // this.history.acutalCallEndDate = info.endDate
           }, this.form.phoneNo)
         } else {
           this.$router.push({path: '/call/call-details', query: {form: this.form, callId: this.callid}})
@@ -138,7 +137,7 @@ export default {
     margin: 0 auto;
     border: 2px solid #e9e9e9;
     border-radius: 6px;
-    outline: none;
+    outline: none!important;
   }
   .info_lists{
     width: 86%;

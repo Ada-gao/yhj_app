@@ -63,7 +63,7 @@
 
 <script>
 import { getTaskHistory, getCallStatus, updateOutboundName, getTaskList, getRandom, getCallMoney } from '@/api/api'
-import { timeDate, timeStr } from '@/utils'
+import { timeDate } from '@/utils'
 import { Toast } from 'we-vue'
 export default {
   data () {
@@ -101,7 +101,8 @@ export default {
         status: '',
         actualCallStartDate: '',
         acutalCallEndDate: '',
-        outboundTaskId: ''
+        outboundTaskId: '',
+        common: ''
       },
       listQuery1: {
         pageIndex: 0,
@@ -119,12 +120,12 @@ export default {
     let phones = this.form.phoneNo.substring(4, 5)
     if (phones === '*') {
       this.callId = this.$route.query.callId
-      console.log(this.callId)
+      // console.log(this.callId)
       getCallStatus(this.callId).then((res) => {
         this.callTime = res.data
         this.callTimes = timeDate(this.callTime.duration)
-        this.callTime.start = timeStr(res.data.start)
-        this.callTime.end = timeStr(res.data.end)
+        // this.callTime.start = parseTime(res.data.start, '{y}-{m}-{d} {h}:{m}:{s}')
+        // this.callTime.end = parseTime(res.data.end, '{y}-{m}-{d} {h}:{m}:{s}')
         this.getCallHistory(this.callTime.duration)
       }).catch(() => {
         alert('call时间获取')
@@ -132,7 +133,7 @@ export default {
     } else {
       this.callTime = this.$route.query.callTime
       this.callTimes = timeDate(this.callTime.duration)
-      this.getCallHistory(this.callTime.duration)
+      // this.getCallHistory(this.callTime.duration)
     }
   },
   methods: {
@@ -145,30 +146,23 @@ export default {
       this.history.status = this.action.value
     },
     submitCall () {
-      console.log('点击')
       if (this.history.result === '' || this.history.status === '') {
         Toast.text({
           duration: 2000,
           message: '标星为必填项'
         })
       } else {
-        console.log('执行')
         let params = {
           contactName: this.form.contactName,
           gender: this.form.gender,
           mobileNo: this.form.mobileNo,
           wechatNo: this.form.wechatNo,
-          age: this.form.age,
-          common: ''
+          age: this.form.age
         }
-        console.log('ceshi' + this.callTime.start)
         this.history.actualCallStartDate = new Date(this.callTime.start.replace(/-/g, '/') || this.callTime.start)
         this.history.acutalCallEndDate = new Date(this.callTime.end.replace(/-/g, '/') || this.callTime.end)
         this.history.outboundTaskId = this.form.taskId
-        console.log('开始时间测试')
-        console.log('开始时间' + this.callTime.start)
-        console.log('结束时间' + this.callTime.end)
-        // console.log('开始时间测试')
+        this.history.callType = this.form.phoneNo.indexOf('*') > -1 ? 'THIRD_PLATFORM' : 'NATIVE'
         // alert('总时长' + this.callTime.duration)
         getTaskHistory(this.history).then(res => {
           console.log('保存成功')
@@ -193,7 +187,6 @@ export default {
           // TODO
           // listQuery1 参数来源？
           getTaskList(this.groupId, this.listQuery1).then(res => {
-            console.log('保存成功3')
             let data = res.data.content[0]
             if (!res.data.content[0]) {
               this.$router.push({name: 'call', params: {groupId: this.groupId}})
@@ -247,7 +240,7 @@ export default {
     margin: 0 auto;
     border: 2px solid #e9e9e9;
     border-radius: 6px;
-    outline: none;
+    outline: none !important;
   }
   .info_lists{
     width: 86%;
@@ -268,13 +261,13 @@ export default {
   }
   .result_left{
     font-size: 28px;
-    width: 34%;
+    width: 40%;
     color: #323232;
     height: 109px;
     line-height: 109px;
   }
   .details_cont{
-    width: 58%;
+    width: 53%;
     float: left;
     height: 109px;
     text-align: right;

@@ -1,8 +1,8 @@
 <template>
   <div class="page customer_random">
     <wv-header class="x-header" style="background-color: rgba(33, 41, 44, 0)">
-      <div class="btn-back header_left" slot="left">
-        <i class="iconfont icon-fanhui size_c" @click="backHandle">返回</i>
+      <div class="btn-back header_left" slot="left" style="color: #ffffff;">
+        <i class="iconfont icon-fanhui size_c" @click="backHandle"></i>返回
       </div>
     </wv-header>
     <div class="x-wrapper" style="width: 100%">
@@ -21,7 +21,7 @@
                 <div class="placeholder random_nav random_pro">外呼状态</div>
                 <div class="placeholder random_nav iconfont icon-boda1" v-if="form.lastCallResult === 'NOT_CALL' || form.lastCallResult === null"></div>
                 <div class="placeholder random_nav iconjujue" v-if="form.lastCallResult === 'NOT_EXIST'"></div>
-                <div class="placeholder random_nav iconfont icon-boda" v-if="form.lastCallResult === 'UNCONNECTED'"></div>
+                <div class="placeholder random_nav iconjujue" v-if="form.lastCallResult === 'UNCONNECTED'"></div>
                 <div class="placeholder random_nav iconfont icon-boda2" v-if="form.lastCallResult === 'CONNECTED'"></div>
                 <div class="placeholder random_nav co" v-if="form.lastCallResult === 'NOT_CALL' || form.lastCallResult === null">未外呼</div>
                 <div class="placeholder random_nav co" v-if="form.lastCallResult === 'NOT_EXIST'">空号</div>
@@ -40,24 +40,7 @@
               </wv-flex-item>
             </wv-flex>
           </div>
-          <!--<wv-flex :gutter="10" style="width: 100%;">-->
-            <!--<wv-flex-item>-->
-              <!--<div class="placeholder random_nav random_pro">外呼状态</div>-->
-              <!--<div class="placeholder random_nav iconfont icon-boda1"></div>-->
-              <!--<div class="placeholder random_nav co">未外呼</div>-->
-            <!--</wv-flex-item>-->
-            <!--<wv-flex-item>-->
-              <!--<div class="placeholder random_nav random_pro">产品名称</div>-->
-              <!--<div class="placeholder random_nav iconfont icon-chanpin"></div>-->
-              <!--<div class="placeholder random_nav cr">{{form.productName}}</div>-->
-            <!--</wv-flex-item>-->
-            <!--<wv-flex-item>-->
-              <!--<div class="placeholder random_nav random_pro">线索来源</div>-->
-              <!--<div class="placeholder random_nav iconfont icon-xiansuo1"></div>-->
-              <!--<div class="placeholder random_nav cr">{{form.source}}</div>-->
-            <!--</wv-flex-item>-->
-          <!--</wv-flex>-->
-          <div v-show="type == 0" class="details_state">最近外呼次数：{{form.callCount}}次 &nbsp;&nbsp;最近一次外呼时间：{{form.lastCallDate}}</div>
+          <div v-if="type == 0" class="details_state">最近外呼次数：{{form.callCount}}次 &nbsp;&nbsp;最近一次外呼时间：{{form.lastCallDate}}</div>
           <a :href="'tel:' + form.phoneNo" v-show="phoneShow === false" class="random_button bgcolor" @click="phoneTimes">
             <small class="iconfont icon-hujiao" style="font-size: 100%;"></small>立即拨打
           </a>
@@ -65,11 +48,11 @@
             <small class="iconfont icon-hujiao" style="font-size: 100%;"></small>立即拨打
           </div>
         </div>
+        <div class="random_bottom" v-if="type == 0">
+          <h5 class="random_tit">备注</h5>
+          <div style="clear: both" v-html="form.salesTalk">{{form.salesTalk}}</div>
+        </div>
         <div class="random_bottom">
-          <!-- <div class="random_title">
-            <p class="l"></p>
-            <p style="height: 30px;line-height: 30px;margin-left: 8px;">外呼话术</p>
-          </div> -->
           <h5 class="random_tit">外呼话术</h5>
           <div style="clear: both" v-html="form.salesTalk">{{form.salesTalk}}</div>
         </div>
@@ -86,7 +69,6 @@
         <div class="phone_cancle" @click="callsCancle">
           <img :src="cancle">
         </div>
-        <!--<p class="details_content">正在连接 请稍等...</p>-->
       </div>
     </div>
   </div>
@@ -95,7 +77,7 @@
 import company from '@/assets/images/hand.png'
 import phoneImg from '../../assets/images/phone.gif'
 import cancle from '@/assets/images/cancle.png'
-import { getCall, getCallscancle, getRandom } from '@/api/api'
+import { getCall, getCallscancle } from '@/api/api'
 import { parseTime } from '@/utils'
 import { Toast } from 'we-vue'
 // import CallListener from 'cordova-plugin-calllistener'
@@ -129,7 +111,18 @@ export default {
     this.groupId = this.$route.params.groupId
     if (Object.keys(this.$route.query).length) {
       this.form = this.$route.query
-      this.form.lastCallDate = parseTime(this.form.lastCallDate, '{y}-{m}-{d}')
+      console.log(this.form)
+      console.log(this.form.lastCallResult)
+      if (this.form.lastCallResult === '未外呼') {
+        this.form.lastCallResult = 'NOT_CALL'
+      } else if (this.form.lastCallResult === '空号') {
+        this.form.lastCallResult = 'NOT_EXIST'
+      } else if (this.form.lastCallResult === '未接通') {
+        this.form.lastCallResult = 'UNCONNECTED'
+      } else if (this.form.lastCallResult === '已接通') {
+        this.form.lastCallResult = 'CONNECTED'
+      }
+      this.form.lastCallDate = parseTime(this.form.lastCallDate, '{y}.{m}.{d}')
       let phones = this.form.phoneNo.substring(4, 5)
       if (phones === '*') {
         this.phoneShow = true
@@ -145,23 +138,11 @@ export default {
     // if (devicePlatform !== 'Android') {
     //     /* 监听电话状态（1空闲、2响铃、3通话） */
     // document.addEventListener('deviceready', () => {})
-    /* global CallListener */
-    CallListener.addListener((state) => {
-      // console.log('state:' + state)
-      if (state === 3) {
-        if (this.phoneShow === false) {
-          this.$router.push({path: '/call/call-record', query: {form: this.form, groupId: this.groupId}})
-        } else {
-          this.$router.push({path: '/call/call-record', query: {form: this.form, callId: this.callSid, groupId: this.groupId}})
-        }
-      } else if (state === 2) {
-        this.details = false
-      }
-    })
   },
   methods: {
     phoneTimes () {
       this.conversationState = true
+      this.getCalstate()
     },
     startCall () {
       this.conversationState = true
@@ -175,6 +156,12 @@ export default {
           })
           this.details = false
         }
+      }).catch(() => {
+        Toast.fail({
+          duration: 2000,
+          message: '账户余额不足，请联系公司管理员！'
+        })
+        this.details = false
       })
     },
     backHandle () {
@@ -185,28 +172,34 @@ export default {
         // this.$router.push({path: '/call/' + this.groupId})
       }
     },
-    getRandom (groupId = '') { // 随机获取客户
-      let params = {
-        groupId: groupId
-      }
-      getRandom(params).then(res => {
-        this.form = res.data
+    getCalstate () {
+      /* global CallListener */
+      console.log('执行')
+      CallListener.addListener((state) => {
+        // console.log('state:' + state)
+        if (state === 3) {
+          if (this.phoneShow === false) {
+            this.$router.push({path: '/call/call-record', query: {form: this.form, groupId: this.groupId}})
+          } else {
+            this.$router.push({path: '/call/call-record', query: {form: this.form, callId: this.callSid, groupId: this.groupId}})
+          }
+        } else if (state === 2) {
+          this.details = false
+        }
+        // else if (state === 1 || state === 6) {
+        //   if (this.phoneShow === false) { // 原生通话
+        //     /* global CallListener */
+        //     CallListener.getCallInfo((info) => {
+        //       // this.$router.push({path: '/call/call-details', query: {form: this.form, callTime: info, groupId: this.groupId}})
+        //       console.log('电话状态：' + state + '，通话时长：' + info.duration + '，开始时间：' + info.start + '，结束时间：' + info.end)
+        //     }, this.form.phoneNo).catch((error) => {
+        //       console.log(error)
+        //     })
+        //   } else {
+        //     this.$router.push({path: '/call/call-details', query: {form: this.form, callId: this.callid}})
+        //   }
+        // }
       })
-      // let createTime = parseTime(new Date(), '{y}-{m}-{d}')
-      // getRandom().then(res => {
-      //   this.form = res.data
-      //   this.phoneNumber = this.form.phoneNo
-      //   // this.form.lastCallResult = transformText(queryObj.callResult, this.form.lastCallResult)
-      //   // this.form.genderText = transformText(queryObj.gender, this.form.gender)
-      //   let phones = this.form.phoneNo.substring(4, 5)
-      //   if (phones === '*') {
-      //     this.phoneShow = true
-      //   } else {
-      //     this.phoneShow = false
-      //   }
-      // }).catch(() => {
-      //   this.detailsreturn = true
-      // })
     },
     callsCancle () {
       getCallscancle(this.callSid).then(() => {
@@ -273,10 +266,10 @@ export default {
   .random_pro{
     color:#939393;
   }
-  .icon-boda1,.icon-chanpin,.icon-xiansuo1, .icon-boda2{
-    font-size: 48px;
+  .icon-boda1,.icon-chanpin,.icon-xiansuo1,.icon-boda2{
+    font-size: 48px!important;
   }
-  .icon-chanpin,.icon-xiansuo1,.cr, .icon-boda2{
+  .icon-chanpin,.icon-xiansuo1,.cr,.icon-boda2{
     color:#2f6be2;
   }
   .icon-boda1,.co{
@@ -308,15 +301,6 @@ export default {
     padding: 38px 45px;
     box-sizing: border-box;
   }
-  /*.icon-boda1,.icon-chanpin,.icon-xiansuo1, icon-boda2{*/
-    /*font-size: 48px;*/
-  /*}*/
-  /*.icon-chanpin,.icon-xiansuo1,.cr, icon-boda2{*/
-    /*color:#2f6be2;*/
-  /*}*/
-  /*.icon-boda1,.co{*/
-    /*color:#ff393e;*/
-  /*}*/
   .iconjujue{
     background: url('../../assets/images/zhan.png') center center no-repeat;
     background-size: cover;

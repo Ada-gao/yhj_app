@@ -178,7 +178,7 @@ export default {
 
 <style lang="scss">
   .icon-wode{
-    font-size: 48px;
+    font-size: 50px;
   }
   .wv-header .left[data-v-a5b8d5b6],.wv-header .wv-header-title[data-v-a5b8d5b6] {
     font-size: 36px;

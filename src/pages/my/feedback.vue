@@ -2,10 +2,10 @@
   <div class="page">
     <wv-header title="问题反馈" class="x-header bgcolor">
       <div class="btn-back header_left" slot="left">
-        <i class="iconfont icon-fanhui size_i" @click="$router.push('/profile')">返回</i>
+        <i class="iconfont icon-fanhui size_i" @click="$router.push('/profile')"></i>返回
       </div>
     </wv-header>
-    <div class="x-wrapper">
+    <div class="x-wrapper wv-content">
       <div class="feedback_content">
         <textarea class="feedback_tex" rows="5" v-model="content" placeholder="请输入您要反馈的问题...."></textarea>
         <div class="feedback_imglist">
@@ -176,7 +176,7 @@ export default {
     // margin:0 auto;
     // display: inherit;
     border: 0px solid;
-    line-height: 28px;
+    line-height: 40px;
     background-color: #ffffff;
     outline: none;
     font-size: 28px;

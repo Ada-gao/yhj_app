@@ -8,7 +8,7 @@
     <div class="wv-content x-wrapper">
     <div class="profile_content bgcolor">
       <div class="profile_head">
-        <img :src="heads" alt="">
+        <img v-bind:src="imgSrc" alt="">
       </div>
       <p class="profile_name">{{dataInfrom.name}}</p>
       <p class="profile_company">{{company}}</p>
@@ -44,20 +44,6 @@
         </wv-flex-item>
       </wv-flex>
     </div>
-    <!--<div style="background: #FFFFFF;margin-top: 0.4rem;height: 8.16rem">-->
-    <!--</div>-->
-    <!--<div style="margin-top: 0.4rem;background: #FFFFFF">-->
-      <!--<wv-cell title="问题反馈" value="" is-link to="/my/feedback" style="font-size: 0.56rem"></wv-cell>-->
-      <!--<wv-cell title="关于闪电呼" value="" is-link to="/my/relevant" style="font-size: 0.56rem"></wv-cell>-->
-    <!--</div>-->
-      <!--<wv-group>-->
-        <!--<wv-cell title="问题反馈" is-link to="/my/feedback">-->
-          <!--<img :src="wenti" alt="" slot="icon" class="cell-icon">-->
-        <!--</wv-cell>-->
-        <!--<wv-cell title="关于闪电呼" is-link to="/my/relevant">-->
-          <!--<img :src="guanyu" alt="" slot="icon" class="cell-icon">-->
-        <!--</wv-cell>-->
-      <!--</wv-group>-->
       <div class="profile_list">
         <div style="border-bottom: 0.5px solid #E9E9E9">
           <router-link class="clearfix" :to="{path:'/my/feedback'}">
@@ -68,9 +54,9 @@
         </div>
         <div>
           <router-link class="clearfix" :to="{path:'/my/relevant'}">
-            <p class="iconfont icon-guanyu profile_nav profile_guan"></p>
+            <i class="iconfont icon-guanyu profile_nav profile_guan"></i>
             <p class="profile_nav" style="color: rgba(50,50,50,1);">关于闪电呼</p>
-            <p class="iconfont icon-fanhui profile_icon" style="color:#DBDBDB;float: right"></p>
+            <i class="iconfont icon-fanhui profile_icon" style="color:#DBDBDB;float: right"></i>
           </router-link>
         </div>
       </div>
@@ -99,7 +85,7 @@ import { getUser, getCompany, getRank } from '../../api/api'
 import { Dialog } from 'we-vue'
 import wenti from '@/assets/images/profile_wenti.png'
 import guanyu from '@/assets/images/profile_guanyu.png'
-import heads from '@/assets/images/user_login.png'
+import heads from '../../assets/images/user_login.png'
 import { timeDate } from '@/utils'
 
 export default {
@@ -112,7 +98,7 @@ export default {
       rank: {},
       wenti,
       guanyu,
-      heads,
+      imgSrc: heads,
       details: false
     }
   },
@@ -130,12 +116,14 @@ export default {
       }).then(() => {
         this.$router.replace({path: '/login'})
         localStorage.removeItem('token')
+        localStorage.removeItem('completetoday')
       }).catch(() => {
       })
     },
     buttoneturn () {
       this.$router.replace({path: '/login'})
       localStorage.removeItem('token')
+      localStorage.removeItem('completetoday')
     },
     buttoncancel () {
       this.details = false

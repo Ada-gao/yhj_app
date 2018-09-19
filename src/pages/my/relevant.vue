@@ -2,7 +2,7 @@
   <div class="page pagebgcolor">
     <wv-header title="关于闪电呼" class="x-header bgcolor">
       <div class="btn-back header_left" slot="left">
-        <i class="iconfont icon-fanhui icon size_i" @click="$router.push('/profile')">返回</i>
+        <i class="iconfont icon-fanhui icon size_i" @click="$router.push('/profile')"></i>返回
       </div>
     </wv-header>
     <div class="x-wrapper">
