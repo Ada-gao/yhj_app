@@ -76,6 +76,23 @@
         <div class="task_buttom" @click="completeTask"> 知道了</div>
       </div>
     </div>
+    <!-- 版本升级 -->
+    <div class="v_dialog" v-if="!versionVisible">
+      <div class="v_main">
+        <div class="bgImg"></div>
+        <img class="img" src="../../assets/images/version.png" alt=""/>
+        <div class="content">
+          <div class="title">【新版本特性】</div>
+          <ul class="v_list">
+            <li v-for="(item, index) in list" :key="index">
+              {{index + 1}}.{{item}}
+            </li>
+          </ul>
+          <wv-button class="v_btn" @click="updateVersion">立即升级</wv-button>
+        </div>
+        <i class="iconfont icon-guanbi" @click="closeVersion"></i>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -86,6 +103,8 @@ import { getUser, getStatisGroup, getCompleteStatus, getRank, getRandom } from '
 import { timeDate } from '@/utils'
 import MyProgress from '@/components/progress'
 import { Toast } from 'we-vue'
+import Vue from 'vue'
+
 // getTaskStatisticsDaily
 export default {
   components: {
@@ -103,8 +122,17 @@ export default {
       completeStatus: '',
       userId: '',
       logo_head: '',
-      completetoday: false,
-      Leftover: 0
+      complete: false,
+      Leftover: 0,
+      list: [
+        '优化ui界面，提升用户体验',
+        '院内培训调整为培训',
+        '用户信息有条件修改',
+        '扫一扫页面调整',
+        '添加腾讯 bug 监控（原生）'
+      ],
+      versionVisible: false,
+      completetoday: false
     }
   },
   mounted () {
@@ -163,6 +191,19 @@ export default {
     },
     getTaskList (groupId) {
       this.$router.push({name: 'call', params: {groupId}})
+    },
+    closeVersion () {
+      this.versionVisible = true
+      // localStorage.setItem('versionRemark', this.versionVisible)
+    },
+    updateVersion () {
+      this.versionVisible = true
+      const devicePlatform = Vue.cordova.device.platform
+      if (devicePlatform === 'iOS') {
+        console.log('去 AppStore 下载...')
+      } else {
+        console.log('去应用宝下载...')
+      }
     },
     completeTask () {
       this.completetoday = false
@@ -450,5 +491,66 @@ export default {
   }
   .l40 {
     left: 40px;
+  }
+  .v_dialog {
+    width: 100%;
+    height: 100%;
+    background-color: #353535c7;
+    position: relative;
+    z-index: 999;
+    .iconfont {
+      position: absolute;
+      bottom: -20%;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #fff;
+      font-size: 60px;
+    }
+    .v_main {
+      width: 618px;
+      // height: 650px;
+      background-color: #fff;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 20px;
+      padding-bottom: 34px;
+      // padding-left: 67px;
+      // padding-right: 65px;
+      // box-sizing: border-box;
+      // background: url('../../assets/images/version.png') 50% no-repeat;
+      // background-position: 0 0;
+      // background-size: contain;
+      .bgImg {
+        width: 100%;
+        height: 230px;
+        background: url('../../assets/images/version.png') 50% no-repeat;
+        background-size: cover;
+        border-radius: 20px 20px 0 0;
+      }
+      .img {
+        width: 100%;
+        border-radius: 21px 21px 0 0;
+      }
+      .content {
+        width: 477px;
+        margin: 0 auto;
+        .v_title {
+          color: #313131;
+          font-size: 29px;
+        }
+        .v_list {
+          color: #757575;
+          font-size: 26px;
+        }
+        .v_btn {
+          background: linear-gradient(to right, #5D90F4, #2F6BE2);
+          color: #fff;
+          border-radius: 50px;
+          margin-top: 43px;
+        }
+      }
+    }
   }
 </style>

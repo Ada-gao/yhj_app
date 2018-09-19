@@ -63,7 +63,11 @@
 
 <script>
 import { getTaskHistory, getCallStatus, updateOutboundName, getTaskList, getRandom, getCallMoney } from '@/api/api'
+<<<<<<< HEAD
 import { timeDate } from '@/utils'
+=======
+import { timeDate, parseTime } from '@/utils'
+>>>>>>> 59d8bca8165487194c67c33afb4739eac9e6aea6
 import { Toast } from 'we-vue'
 export default {
   data () {
@@ -124,8 +128,13 @@ export default {
       getCallStatus(this.callId).then((res) => {
         this.callTime = res.data
         this.callTimes = timeDate(this.callTime.duration)
+<<<<<<< HEAD
         // this.callTime.start = parseTime(res.data.start, '{y}-{m}-{d} {h}:{m}:{s}')
         // this.callTime.end = parseTime(res.data.end, '{y}-{m}-{d} {h}:{m}:{s}')
+=======
+        this.callTime.start = parseTime(res.data.start)
+        this.callTime.end = parseTime(res.data.end)
+>>>>>>> 59d8bca8165487194c67c33afb4739eac9e6aea6
         this.getCallHistory(this.callTime.duration)
       }).catch(() => {
         alert('call时间获取')

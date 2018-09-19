@@ -11,8 +11,6 @@
 </template>
 
 <script>
-// import { create } from 'we-vue/src/utils'
-
 export default {
   name: 'MyProgress',
   props: {

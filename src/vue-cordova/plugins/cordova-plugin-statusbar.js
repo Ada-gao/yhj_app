@@ -10,7 +10,9 @@ export const install = function (Vue, options, cb) {
     }
     // pass through the StatusBar object
     Vue.cordova.statusBar = StatusBar
-    Vue.cordova.statusBar.hide()
+    if (window.location.hash.indexOf('/login') !== -1) {
+      Vue.cordova.statusBar.hide()
+    }
     // eslint-disable-next-line
     return cb(true)
   }, false)
