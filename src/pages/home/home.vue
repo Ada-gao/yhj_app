@@ -80,7 +80,7 @@
     <div class="v_dialog" v-if="!versionVisible">
       <div class="v_main">
         <div class="bgImg"></div>
-        <img class="img" src="../../assets/images/version.png" alt=""/>
+        <!--<img class="img" src="../../assets/images/version.png" alt=""/>-->
         <div class="content">
           <div class="title">【新版本特性】</div>
           <ul class="v_list">
@@ -99,7 +99,7 @@
 <script>
 import thumbSmall from '../../assets/images/icon_tabbar.png'
 import task from '@/assets/images/task.png'
-import { getUser, getStatisGroup, getCompleteStatus, getRank, getRandom } from '@/api/api'
+import { getUser, getStatisGroup, getCompleteStatus, getRank, getRandom, getLatestVersion } from '@/api/api'
 import { timeDate } from '@/utils'
 import MyProgress from '@/components/progress'
 import { Toast } from 'we-vue'
@@ -136,6 +136,14 @@ export default {
     }
   },
   mounted () {
+    // 获取当前移动设备已经安装的版本
+    /* global cordova */
+    cordova.getAppVersion.getVersionCode(function (version) {
+      alert(version)
+      getLatestVersion(version).then(res => {
+        console.log(res)
+      })
+    })
     this.getList()
   },
   methods: {
@@ -152,7 +160,6 @@ export default {
           this.form.dailyEffectiveDuration = timeDate(res.data.dailyEffectiveDuration)
           // this.percent = 60
           this.percent = this.form.dailyTaskCompleteCnt * 100 / this.form.dailyTaskCnt || 0
-          console.log(this.percent)
           this.completeshow = sessionStorage.getItem('completetoday')
           if (!this.completeshow) {
             if (this.percent === 100) {
