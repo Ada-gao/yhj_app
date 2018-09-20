@@ -54,7 +54,13 @@ export default {
         str = to.path
       }
       if (this.statusBarcolorPath.black.indexOf(str) !== -1) {
+<<<<<<< HEAD
+        // Vue.cordova.statusBar.overlaysWebView(true)
+        // Vue.cordova.statusBar.backgroundColorByHexString('') // 设置状态栏颜色
+        // Vue.cordova.statusBar.hide()
+=======
         Vue.cordova.statusBar.hide()
+>>>>>>> 59d8bca8165487194c67c33afb4739eac9e6aea6
       } else {
         Vue.cordova.statusBar.styleDefault()
         Vue.cordova.statusBar.show()
@@ -179,12 +185,12 @@ export default {
   //   font-size: 0.8rem;
   // }
   .size_i{
-    font-size: 26px!important;
+    font-size: 46px!important;
     margin-left: 34px;
     color:#000000!important;
   }
   .size_c{
-    font-size: 26px!important;
+    font-size: 46px!important;
     margin-left: 34px;
     color:#ffffff!important;
   }
@@ -195,4 +201,8 @@ export default {
     -webkit-transform:rotate(180deg);
     -o-transform:rotate(180deg);
   }
+  .weui-dialog__btn_primary{
+    color: #2F6BE2!important;
+  }
+  input,textarea{-webkit-appearance: none;appearance: none;}
 </style>

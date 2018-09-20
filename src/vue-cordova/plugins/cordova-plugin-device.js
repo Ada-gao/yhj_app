@@ -47,6 +47,7 @@ export const install = function (Vue, options, cb) {
           }).then(() => {
             navigator.app.exitApp()
             localStorage.removeItem('token')
+            localStorage.removeItem('completetoday')
           }).catch(() => {
           })
         } else if (navigator.device) {

@@ -29,7 +29,7 @@
       <div class="trial_info bgcolor">
         <p class="company_title">公司信息</p>
         <div class="info_list">
-          <input placeholder="请输入公司名称" class="input_size" v-model="companyName" />
+          <input placeholder="请输入公司名称" class="input_size" v-model="companyName" maxlength="20" />
         </div>
         <wv-flex-item @click.native="addressPickerShow = true">
           <div class="placeholder info_list">
@@ -54,12 +54,12 @@
       <div class="trial_verification bgcolor">
         <p class="company_title">联系人信息</p>
         <div class="info_list">
-          <input placeholder="请输入联系人姓名" class="input_size" v-model="contact" />
-          <p class="iconfont icon-fanhui icon_right info_icon"></p>
+          <input placeholder="请输入联系人姓名" class="input_size" v-model="contact" maxlength="10" />
+          <!--<p class="iconfont icon-fanhui icon_right info_icon"></p>-->
         </div>
         <div class="info_list">
           <input type="tel" placeholder="请输入联系人电话" class="input_size" v-model="mobile" maxlength="11"/>
-          <p class="iconfont icon-fanhui icon_right info_icon"></p>
+          <!--<p class="iconfont icon-fanhui icon_right info_icon"></p>-->
         </div>
         <div class="info_lists">
           <input type="tel" placeholder="输入验证码" class="input_size" v-model="verification" />
@@ -155,7 +155,7 @@ export default {
           values: provinces
         },
         {
-          values: getCities()
+          values: getCities('北京市')
         }
       ]
     }
@@ -168,7 +168,7 @@ export default {
     onAddressChange (picker, addressValues, slotIndex) {
       if (slotIndex === 0) {
         let cities = getCities(addressValues[0])
-        console.log(addressValues[0])
+        console.log(cities)
         if (addressValues[0] === '台湾省') {
           cities = ['市辖区']
         }
@@ -178,6 +178,7 @@ export default {
     confirmAddress (picker) {
       this.address = picker.getValues()
       this.companyProvince = this.address[0]
+      // console.log(this.companyProvince)
       this.companyCity = this.address[1]
     },
     trialApply () {
@@ -379,8 +380,9 @@ export default {
     display: inline-block;
     float: left;
     width: 88%;
-    height: 101px;
-    line-height: 101px;
+    height: 54px;
+    margin-top: 32px;
+    line-height: 54px;
   }
   .info_list>p{
     float: left;
