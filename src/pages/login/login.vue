@@ -1,12 +1,12 @@
 <template>
   <div class="page" style="background: #858585">
     <div class="login_bgimg"></div>
-    <div style="width: 100%">
+    <!-- <div style="width: 100%">
       <img :src="thumbSmall" style="max-width: 100%">
-    </div>
+    </div> -->
     <div class="login_content">
-      <i class="logoImg iconfont icon-qidongyeicon1 login_icon"></i>
-      <!-- <img class="logoImg" src="@/assets/images/login_logo.png" alt=""> -->
+      <!-- <i class="logoImg iconfont icon-qidongyeicon1 login_icon"></i> -->
+      <img class="logoImg" src="@/assets/images/login_logo.png" alt="">
       <p class="logoText">快如闪电，一击即中</p>
       <div class="user_account">
         <div class="user_login user_user ignore">
@@ -141,9 +141,9 @@ export default {
       color: #DADADA;
     }
     .logoImg {
-      // width: 87px;
+      width: 87px;
       display: inline-block;
-      font-size: 150px;
+      // font-size: 150px;
       margin-top: 122px;
       margin-left: 50%;
       transform: translateX(-50%);

@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.shuyun365.flashcall" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Yunhj</name>
+<widget android-versionCode="10" id="com.shuyun365.flashcall" ios-CFBundleVersion="10" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>闪电呼</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+        雷电系统-闪电呼App
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="zhuangyinping@gmail.com" href="http://shuyun365.com">
+        ShuYun Big Data Team
     </author>
     <preference name="StatusBarStyle" value="styleDefault" />
     <preference name="DisallowOverscroll" value="true" />
@@ -32,14 +32,27 @@
     <allow-intent href="geo:*" />
     <platform name="android">
         <allow-intent href="market:*" />
+        <icon density="mdpi" src="res/icon/android/mipmap-mdpi/icon-48-mdpi.png" />
+        <icon density="hdpi" src="res/icon/android/mipmap-hdpi/icon-72-hdpi.png" />
+        <icon density="xhdpi" src="res/icon/android/mipmap-xhdpi/icon-96-xhdpi.png" />
+        <icon density="xxhdpi" src="res/icon/android/mipmap-xxhdpi/icon-144-xxhdpi.png" />
+        <icon density="xxxhdpi" src="res/icon/android/mipmap-xxxhdpi/icon-192-xxxhdpi.png" />
+        <splash density="port-xxxhdpi" src="res/screen/android/screen-xxxhdpi-portrait.png" />
     </platform>
     <platform name="ios">
-        <splash height="2208" src="res/screen/ios/Default-736h.png" width="1242" />
-        <splash height="1334" src="res/screen/ios/Default-667h.png" width="750" />
-        <splash height="1136" src="res/screen/ios/Default-568h@2x~iphone.png" width="640" />
+        <icon height="57" src="res/icon/ios/icon-57.png" width="57" />
+        <icon height="114" src="res/icon/ios/icon-57-2x.png" width="114" />
+        <icon height="120" src="res/icon/ios/icon-60-2x.png" width="120" />
+        <icon height="180" src="res/icon/ios/icon-60-3x.png" width="180" />
+        <icon height="72" src="res/icon/ios/icon-72.png" width="72" />
+        <icon height="144" src="res/icon/ios/icon-72-2x.png" width="144" />
+        <icon height="20" src="res/icon/ios/icon-20.png" width="20" />
+        <icon height="40" src="res/icon/ios/icon-20-2x.png" width="40" />
+        <icon height="60" src="res/icon/ios/icon-20-3x.png" width="60" />
+        <icon height="1024" src="res/icon/ios/icon-1024.png" width="1024" />
+        <splash src="res/screen/ios/Default@2x~universal~anyany.png" />
     </platform>
     <plugin name="cordova-plugin-camera" spec="^4.0.3" />
-    <plugin name="cordova-plugin-console" spec="^1.1.0" />
     <plugin name="cordova-plugin-contacts" spec="^3.0.1" />
     <plugin name="cordova-plugin-device" spec="^2.0.2" />
     <plugin name="cordova-plugin-file" spec="^6.0.1" />
@@ -60,15 +73,13 @@
         <string>need photo library access to save pictures there</string>
     </edit-config>
     <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
-    <plugin name="cordova-plugin-background-mode" spec="^0.7.2" />
     <plugin name="cordova-plugin-sim" spec="^1.3.3" />
     <plugin name="jpush-phonegap-plugin" spec="^3.4.3">
-        <variable name="APP_KEY" value="0f8d6564c2c9d472e94afee7" />
+        <variable name="APP_KEY" value="e528f69fd304364343a628a0" />
     </plugin>
     <plugin name="cordova-plugin-calllistener" spec="^1.2.4" />
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
-    <plugin name="cordova-plugin-app-version" spec="^0.1.9" />
+    <engine name="android" spec="^7.1.0" />
     <engine name="ios" spec="^4.5.4" />
     <engine name="browser" spec="^5.0.3" />
-    <engine name="android" spec="^7.1.0" />
 </widget>

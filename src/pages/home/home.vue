@@ -1,5 +1,5 @@
 <template>
-  <div class="page" style="background: #ffffff;position: absolute">
+  <div class="page" style="background: #ffffff; position: absolute;">
     <wv-header title="闪电呼" class="x-header" background-color="#FFFFFF">
       <div class="btn-back header_left l40" slot="left">
         <i class="iconfont icon-wode" @click="$router.push('/profile')"></i>
