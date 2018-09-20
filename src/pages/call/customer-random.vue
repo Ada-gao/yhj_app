@@ -101,7 +101,8 @@ export default {
       phoneShow: false,
       conversationState: false,
       type: '',
-      groupId: ''
+      groupId: '',
+      CallListTime: false
     }
   },
   created () {
@@ -173,33 +174,40 @@ export default {
       }
     },
     getCalstate () {
+      this.CallListTime = true
       /* global CallListener */
-      console.log('执行')
-      CallListener.addListener((state) => {
-        // console.log('state:' + state)
-        if (state === 3) {
-          if (this.phoneShow === false) {
-            this.$router.push({path: '/call/call-record', query: {form: this.form, groupId: this.groupId}})
-          } else {
-            this.$router.push({path: '/call/call-record', query: {form: this.form, callId: this.callSid, groupId: this.groupId}})
+      if (this.CallListTime === true) {
+        CallListener.addListener((state) => {
+          // console.log('state:' + state)
+          if (state === 3) {
+            this.CallListTime = false
+            if (this.phoneShow === false) {
+              this.$router.push({name: 'call-record', query: {form: this.form, groupId: this.groupId}})
+            } else {
+              this.$router.push({
+                name: 'call-record',
+                query: {form: this.form, callId: this.callSid, groupId: this.groupId}
+              })
+            }
+          } else if (state === 2) {
+            this.details = false
+            this.CallListTime = false
           }
-        } else if (state === 2) {
-          this.details = false
-        }
-        // else if (state === 1 || state === 6) {
-        //   if (this.phoneShow === false) { // 原生通话
-        //     /* global CallListener */
-        //     CallListener.getCallInfo((info) => {
-        //       // this.$router.push({path: '/call/call-details', query: {form: this.form, callTime: info, groupId: this.groupId}})
-        //       console.log('电话状态：' + state + '，通话时长：' + info.duration + '，开始时间：' + info.start + '，结束时间：' + info.end)
-        //     }, this.form.phoneNo).catch((error) => {
-        //       console.log(error)
-        //     })
-        //   } else {
-        //     this.$router.push({path: '/call/call-details', query: {form: this.form, callId: this.callid}})
-        //   }
-        // }
-      })
+          // else if (state === 1 || state === 6) {
+          //   if (this.phoneShow === false) { // 原生通话
+          //     /* global CallListener */
+          //     CallListener.getCallInfo((info) => {
+          //       // this.$router.push({path: '/call/call-details', query: {form: this.form, callTime: info, groupId: this.groupId}})
+          //       console.log('电话状态：' + state + '，通话时长：' + info.duration + '，开始时间：' + info.start + '，结束时间：' + info.end)
+          //     }, this.form.phoneNo).catch((error) => {
+          //       console.log(error)
+          //     })
+          //   } else {
+          //     this.$router.push({path: '/call/call-details', query: {form: this.form, callId: this.callid}})
+          //   }
+          // }
+        })
+      }
     },
     callsCancle () {
       getCallscancle(this.callSid).then(() => {

@@ -54,13 +54,10 @@ export default {
         str = to.path
       }
       if (this.statusBarcolorPath.black.indexOf(str) !== -1) {
-<<<<<<< HEAD
         // Vue.cordova.statusBar.overlaysWebView(true)
         // Vue.cordova.statusBar.backgroundColorByHexString('') // 设置状态栏颜色
         // Vue.cordova.statusBar.hide()
-=======
         Vue.cordova.statusBar.hide()
->>>>>>> 59d8bca8165487194c67c33afb4739eac9e6aea6
       } else {
         Vue.cordova.statusBar.styleDefault()
         Vue.cordova.statusBar.show()

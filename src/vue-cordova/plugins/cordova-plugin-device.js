@@ -1,4 +1,4 @@
-import { Dialog } from 'we-vue'
+import { Dialog, Toast } from 'we-vue'
 // import { BackgroundMode } from '@ionic-native/background-mode'
 export const install = function (Vue, options, cb) {
   document.addEventListener('deviceready', () => {
@@ -38,6 +38,7 @@ export const install = function (Vue, options, cb) {
     function onBackKeyDown () {
       // console.log(this.$router.currentRoute.path)
       let url = (location.href).split('#')[1]
+      let urls = (location.href).split('#')[1].substring(0, 17)
       if (url === '/home' || url === '/profile' || url === '/login') {
         if (navigator.app) {
           Dialog({
@@ -55,6 +56,12 @@ export const install = function (Vue, options, cb) {
         } else {
           window.close()
         }
+      } else if (urls === '/call/call-record' || urls === '/call/call-detail') {
+        Toast.fail({
+          duration: 2000,
+          message: '退出会导致数据统计问题哦～'
+        })
+        window.close()
       } else {
         history.back(-1)
       }

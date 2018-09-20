@@ -132,11 +132,11 @@ routes.push({
 })
 
 routes.push({
-  path: '/call/call-details',
+  path: '/call/call-detail',
   component: resolve => require(['../pages/call/call-details.vue'], resolve),
-  name: 'call-details',
+  name: 'call-detail',
   meta: {
-    title: 'call-details',
+    title: 'call-detail',
     description: '外呼记录-详情',
     requiresAuth: false,
     tabShow: false

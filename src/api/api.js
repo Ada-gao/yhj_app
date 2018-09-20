@@ -93,3 +93,4 @@ export const getStatisGroup = () => axios.get('/task/statisGroup')
 export const getCompleteStatus = (userId) => axios.get('/task/saleDailyCompleteStatus?userId=' + userId)
 // 外呼扣费
 export const getCallMoney = (params) => axios.post('/call/call/recordCallHistory', params)
+export const getLatestVersion = (Version) => axios.get('/api/app/getLatestVersion/' + Version)
