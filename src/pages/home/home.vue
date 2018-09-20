@@ -77,7 +77,7 @@
       </div>
     </div>
     <!-- 版本升级 -->
-    <div class="v_dialog" v-if="!versionVisible">
+    <div class="v_dialog" v-if="versionVisible">
       <div class="v_main">
         <div class="bgImg"></div>
         <!--<img class="img" src="../../assets/images/version.png" alt=""/>-->
@@ -136,14 +136,19 @@ export default {
     }
   },
   mounted () {
-    // 获取当前移动设备已经安装的版本
-    /* global cordova */
-    cordova.getAppVersion.getVersionCode(function (version) {
-      alert(version)
-      getLatestVersion(version).then(res => {
-        console.log(res)
+    const devicePlatform = Vue.cordova.device.platform
+    console.log(devicePlatform)
+    if (devicePlatform !== 'ios' || devicePlatform !== 'Android') {
+      this.versionVisible = false
+    } else {
+      // 获取当前移动设备已经安装的版本
+      /* global cordova */
+      cordova.getAppVersion.getVersionCode(function (version) {
+        getLatestVersion(version).then(res => {
+          console.log(res)
+        })
       })
-    })
+    }
     this.getList()
   },
   methods: {
@@ -232,9 +237,7 @@ export default {
     font-size: 36px;
     color: rgba(0, 0, 0, 1);
   }
-  /*.weui-flex__item{*/
-    /*margin-bottom: 79px;*/
-  /*}*/
+
   .home_list{
     width:620px;
     height:702px;
@@ -291,38 +294,6 @@ export default {
     text-align: center;
     // margin-bottom: 79px;
   }
-  // .header_homeleft{
-  //   position: absolute;
-  //   top: 60px;
-  //   left: 40px;
-  //   width: 20%;
-  //   color: #000000;
-  //   font-size: 26px;
-  // }
-  // .home_header{
-  //   height: 5.42rem;
-  //   width: 100%;
-  //   /*margin-top: 1.29rem;*/
-  //   margin-bottom: 0.06rem;
-  //   background: #FFFFFF;
-  // }
-  // .home_header>p{
-  // }
-  // .home_time{
-  //   height: 1.6rem;
-  //   font-size: 0.52rem;
-  //   line-height: 1.6rem;
-  //   border-bottom: 1px solid #D8D8D8;
-  // }
-  // .home_head{
-  //   height: 3.76rem;
-  // }
-  // .head_h{
-  //   width: 29%;
-  //   height: 100%;
-  //   text-align: center;
-  //   background-color: #ffffff;
-  // }
   .phone_button{
     width: 82%;
     height: 98px;
@@ -336,14 +307,6 @@ export default {
     box-shadow: 0px 7px 29px 1px rgba(13,67,173,0.5);
     margin: 72px auto 0;
   }
-  /*.home_name{*/
-    /*font-size: 0.52rem;*/
-    /*margin-bottom: 0.44rem;*/
-  /*}*/
-  /*.home_state{*/
-    /*font-size: 0.48rem;*/
-    /*font-weight: 100;*/
-  /*}*/
   .home_nav{
     height: 80px;
     padding-top: 57px;
@@ -397,13 +360,6 @@ export default {
       margin-bottom: 44px;
     }
   }
-  // .progress_list{
-  //   width: 90%;
-  //   margin:0.78rem auto 0;
-  //   /*background:#32CCBC;*/
-  //   height: 0.5rem;
-  //   border-radius: 10px;
-  // }
   .progress_time{
     font-size: 32px;
     color: #222222;
