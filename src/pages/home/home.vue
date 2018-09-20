@@ -69,7 +69,7 @@
     <div class="home_complete" v-show="completetoday">
       <div class="complete_content">
         <div class="task_img">
-          <img :src="task">
+          <!--<img :src="task">-->
         </div>
         <p class="task_title">今天的任务已完成！</p>
         <p class="task_txt">请继续加油哦</p>
@@ -77,7 +77,7 @@
       </div>
     </div>
     <!-- 版本升级 -->
-    <div class="v_dialog" v-if="versionVisible">
+    <div class="v_dialog" v-show="versionVisible">
       <div class="v_main">
         <div class="bgImg"></div>
         <!--<img class="img" src="../../assets/images/version.png" alt=""/>-->
@@ -99,7 +99,7 @@
 <script>
 import thumbSmall from '../../assets/images/icon_tabbar.png'
 import task from '@/assets/images/task.png'
-import { getUser, getStatisGroup, getCompleteStatus, getRank, getRandom, getLatestVersion } from '@/api/api'
+import { getUser, getStatisGroup, getCompleteStatus, getRank, getRandom } from '@/api/api'
 import { timeDate } from '@/utils'
 import MyProgress from '@/components/progress'
 import { Toast } from 'we-vue'
@@ -131,24 +131,35 @@ export default {
         '扫一扫页面调整',
         '添加腾讯 bug 监控（原生）'
       ],
-      versionVisible: false,
+      versionVisible: true,
       completetoday: false
     }
   },
-  mounted () {
+  created () {
     const devicePlatform = Vue.cordova.device.platform
-    console.log(devicePlatform)
+    alert(devicePlatform)
     if (devicePlatform !== 'ios' || devicePlatform !== 'Android') {
       this.versionVisible = false
     } else {
+      this.versionVisibleShow = sessionStorage.getItem('versionVisible')
+      if (!this.versionVisibleShow) {
+        alert('没有' + this.versionVisible)
+        this.versionVisible = true
+        sessionStorage.setItem('versionVisible', this.versionVisible)
+      } else if (this.versionVisibleShow) {
+        alert('有' + this.versionVisible)
+        this.versionVisible = false
+      }
       // 获取当前移动设备已经安装的版本
-      /* global cordova */
-      cordova.getAppVersion.getVersionCode(function (version) {
-        getLatestVersion(version).then(res => {
-          console.log(res)
-        })
-      })
+      // /* global cordova */
+      // cordova.getAppVersion.getVersionCode(function (version) {
+      //   getLatestVersion(version).then(res => {
+      //     console.log(res)
+      //   })
+      // })
     }
+  },
+  mounted () {
     this.getList()
   },
   methods: {
@@ -205,7 +216,7 @@ export default {
       this.$router.push({name: 'call', params: {groupId}})
     },
     closeVersion () {
-      this.versionVisible = true
+      this.versionVisible = false
       // localStorage.setItem('versionRemark', this.versionVisible)
     },
     updateVersion () {
