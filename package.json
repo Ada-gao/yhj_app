@@ -8,6 +8,7 @@
     "android": "npm run build && cordova prepare android && cordova run android --debug --buildConfig build.json",
     "android-release": "npm run build && cordova prepare android && cordova build android --release --buildConfig build.json",
     "ios": "npm run build && cordova prepare ios && cordova run ios --debug",
+    "ios-release": "npm run build && cordova prepare ios && cordova build ios --release",
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "unit": "jest --config test/unit/jest.conf.js --coverage",
