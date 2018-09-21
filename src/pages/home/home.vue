@@ -137,17 +137,18 @@ export default {
   },
   created () {
     const devicePlatform = Vue.cordova.device.platform
-    alert(devicePlatform)
+    // alert(devicePlatform)
     if (devicePlatform !== 'ios' || devicePlatform !== 'Android') {
       this.versionVisible = false
     } else {
       this.versionVisibleShow = sessionStorage.getItem('versionVisible')
+      // alert(this.versionVisibleShow)
       if (!this.versionVisibleShow) {
-        alert('没有' + this.versionVisible)
+        // alert('没有' + this.versionVisible)
         this.versionVisible = true
         sessionStorage.setItem('versionVisible', this.versionVisible)
       } else if (this.versionVisibleShow) {
-        alert('有' + this.versionVisible)
+        // alert('有' + this.versionVisible)
         this.versionVisible = false
       }
       // 获取当前移动设备已经安装的版本

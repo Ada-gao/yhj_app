@@ -63,7 +63,7 @@
 
 <script>
 import { getTaskHistory, getCallStatus, updateOutboundName, getTaskList, getRandom, getCallMoney } from '@/api/api'
-import { timeDate, parseTime } from '@/utils'
+import { timeDate } from '@/utils'
 import { Toast } from 'we-vue'
 export default {
   data () {
@@ -126,8 +126,8 @@ export default {
         this.callTimes = timeDate(this.callTime.duration)
         // this.callTime.start = parseTime(res.data.start, '{y}-{m}-{d} {h}:{m}:{s}')
         // this.callTime.end = parseTime(res.data.end, '{y}-{m}-{d} {h}:{m}:{s}')
-        this.callTime.start = parseTime(res.data.start)
-        this.callTime.end = parseTime(res.data.end)
+        // this.callTime.start = parseTime(res.data.start)
+        // this.callTime.end = parseTime(res.data.end)
         this.getCallHistory(this.callTime.duration)
       }).catch(() => {
         alert('call时间获取')
@@ -135,7 +135,7 @@ export default {
     } else {
       this.callTime = this.$route.query.callTime
       this.callTimes = timeDate(this.callTime.duration)
-      // this.getCallHistory(this.callTime.duration)
+      this.getCallHistory(this.callTime.duration)
     }
   },
   methods: {
@@ -214,8 +214,9 @@ export default {
       }
       console.log('callType：' + params.callType + 'clientId：' + params.clientId + 'clientName：' + params.clientName + 'duration：' + params.duration + 'phoneNum：' + params.phoneNum + 'saleId：' + params.saleId)
       getCallMoney(params).then(res => {
+        console.log('挂断保存成功')
       }).catch(() => {
-        alert('挂断提交时间')
+        console.log('挂断提交时间')
       })
     }
   }
