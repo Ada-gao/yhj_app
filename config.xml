@@ -49,6 +49,13 @@
         <icon height="20" src="res/icon/ios/icon-20.png" width="20" />
         <icon height="40" src="res/icon/ios/icon-20-2x.png" width="40" />
         <icon height="60" src="res/icon/ios/icon-20-3x.png" width="60" />
+        <icon height="29" src="res/icon/ios/icon-29.png" width="29" />
+        <icon height="58" src="res/icon/ios/icon-29-2x.png" width="58" />
+        <icon height="87" src="res/icon/ios/icon-29-3x.png" width="87" />
+        <icon height="40" src="res/icon/ios/icon-40.png" width="40" />
+        <icon height="80" src="res/icon/ios/icon-40-2x.png" width="80" />
+        <icon height="76" src="res/icon/ios/icon-76.png" width="76" />
+        <icon height="152" src="res/icon/ios/icon-76-2x.png" width="152" />
         <icon height="1024" src="res/icon/ios/icon-1024.png" width="1024" />
         <splash src="res/screen/ios/Default@2x~universal~anyany.png" />
     </platform>
