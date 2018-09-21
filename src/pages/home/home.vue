@@ -69,7 +69,7 @@
     <div class="home_complete" v-show="completetoday">
       <div class="complete_content">
         <div class="task_img">
-          <img :src="task">
+          <!--<img :src="task">-->
         </div>
         <p class="task_title">今天的任务已完成！</p>
         <p class="task_txt">请继续加油哦</p>
@@ -77,7 +77,7 @@
       </div>
     </div>
     <!-- 版本升级 -->
-    <div class="v_dialog" v-if="!versionVisible">
+    <div class="v_dialog" v-show="versionVisible">
       <div class="v_main">
         <div class="bgImg"></div>
         <!--<img class="img" src="../../assets/images/version.png" alt=""/>-->
@@ -99,7 +99,7 @@
 <script>
 import thumbSmall from '../../assets/images/icon_tabbar.png'
 import task from '@/assets/images/task.png'
-import { getUser, getStatisGroup, getCompleteStatus, getRank, getRandom, getLatestVersion } from '@/api/api'
+import { getUser, getStatisGroup, getCompleteStatus, getRank, getRandom } from '@/api/api'
 import { timeDate } from '@/utils'
 import MyProgress from '@/components/progress'
 import { Toast } from 'we-vue'
@@ -131,19 +131,36 @@ export default {
         '扫一扫页面调整',
         '添加腾讯 bug 监控（原生）'
       ],
-      versionVisible: false,
+      versionVisible: true,
       completetoday: false
     }
   },
+  created () {
+    const devicePlatform = Vue.cordova.device.platform
+    // alert(devicePlatform)
+    if (devicePlatform !== 'ios' || devicePlatform !== 'Android') {
+      this.versionVisible = false
+    } else {
+      this.versionVisibleShow = sessionStorage.getItem('versionVisible')
+      // alert(this.versionVisibleShow)
+      if (!this.versionVisibleShow) {
+        // alert('没有' + this.versionVisible)
+        this.versionVisible = true
+        sessionStorage.setItem('versionVisible', this.versionVisible)
+      } else if (this.versionVisibleShow) {
+        // alert('有' + this.versionVisible)
+        this.versionVisible = false
+      }
+      // 获取当前移动设备已经安装的版本
+      // /* global cordova */
+      // cordova.getAppVersion.getVersionCode(function (version) {
+      //   getLatestVersion(version).then(res => {
+      //     console.log(res)
+      //   })
+      // })
+    }
+  },
   mounted () {
-    // 获取当前移动设备已经安装的版本
-    /* global cordova */
-    cordova.getAppVersion.getVersionCode(function (version) {
-      alert(version)
-      getLatestVersion(version).then(res => {
-        console.log(res)
-      })
-    })
     this.getList()
   },
   methods: {
@@ -200,7 +217,7 @@ export default {
       this.$router.push({name: 'call', params: {groupId}})
     },
     closeVersion () {
-      this.versionVisible = true
+      this.versionVisible = false
       // localStorage.setItem('versionRemark', this.versionVisible)
     },
     updateVersion () {
@@ -232,9 +249,7 @@ export default {
     font-size: 36px;
     color: rgba(0, 0, 0, 1);
   }
-  /*.weui-flex__item{*/
-    /*margin-bottom: 79px;*/
-  /*}*/
+
   .home_list{
     width:620px;
     height:702px;
@@ -291,38 +306,6 @@ export default {
     text-align: center;
     // margin-bottom: 79px;
   }
-  // .header_homeleft{
-  //   position: absolute;
-  //   top: 60px;
-  //   left: 40px;
-  //   width: 20%;
-  //   color: #000000;
-  //   font-size: 26px;
-  // }
-  // .home_header{
-  //   height: 5.42rem;
-  //   width: 100%;
-  //   /*margin-top: 1.29rem;*/
-  //   margin-bottom: 0.06rem;
-  //   background: #FFFFFF;
-  // }
-  // .home_header>p{
-  // }
-  // .home_time{
-  //   height: 1.6rem;
-  //   font-size: 0.52rem;
-  //   line-height: 1.6rem;
-  //   border-bottom: 1px solid #D8D8D8;
-  // }
-  // .home_head{
-  //   height: 3.76rem;
-  // }
-  // .head_h{
-  //   width: 29%;
-  //   height: 100%;
-  //   text-align: center;
-  //   background-color: #ffffff;
-  // }
   .phone_button{
     width: 82%;
     height: 98px;
@@ -336,14 +319,6 @@ export default {
     box-shadow: 0px 7px 29px 1px rgba(13,67,173,0.5);
     margin: 72px auto 0;
   }
-  /*.home_name{*/
-    /*font-size: 0.52rem;*/
-    /*margin-bottom: 0.44rem;*/
-  /*}*/
-  /*.home_state{*/
-    /*font-size: 0.48rem;*/
-    /*font-weight: 100;*/
-  /*}*/
   .home_nav{
     height: 80px;
     padding-top: 57px;
@@ -397,13 +372,6 @@ export default {
       margin-bottom: 44px;
     }
   }
-  // .progress_list{
-  //   width: 90%;
-  //   margin:0.78rem auto 0;
-  //   /*background:#32CCBC;*/
-  //   height: 0.5rem;
-  //   border-radius: 10px;
-  // }
   .progress_time{
     font-size: 32px;
     color: #222222;

@@ -50,7 +50,7 @@
         </div>
         <div class="random_bottom" v-if="type == 0">
           <h5 class="random_tit">备注</h5>
-          <div style="clear: both" v-html="form.salesTalk">{{form.salesTalk}}</div>
+          <div style="clear: both" v-html="form.common">{{form.common}}</div>
         </div>
         <div class="random_bottom">
           <h5 class="random_tit">外呼话术</h5>
