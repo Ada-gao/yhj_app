@@ -22,7 +22,7 @@
     "china-area-data": "^4.0.0",
     "cordova-android": "^7.1.0",
     "cordova-browser": "^5.0.3",
-    "cordova-ios": "^4.5.4",
+    "cordova-ios": "^4.5.5",
     "cordova-plugin-calllistener": "^1.2.4",
     "cordova-plugin-camera": "^4.0.3",
     "cordova-plugin-contacts": "^3.0.1",
@@ -40,7 +40,7 @@
     "moment": "^2.22.2",
     "postcss-aspect-ratio-mini": "0.0.2",
     "postcss-cssnext": "^3.1.0",
-    "postcss-px-to-viewport": "0.0.3",
+    "postcss-px-to-viewport": "git+https://github.com/Ada-gao/postcss-px-to-viewport.easy",
     "postcss-viewport-units": "^0.1.3",
     "postcss-write-svg": "^3.0.1",
     "style.css": "^1.0.0",
@@ -48,7 +48,9 @@
     "vue": "^2.5.2",
     "vue-clipboard2": "^0.2.0",
     "vue-router": "^3.0.1",
-    "we-vue": "^2.1.2"
+    "we-vue": "^2.1.2",
+    "cordova-plugin-console": "^1.1.0",
+    "cordova-plugin-background-mode": "^0.7.2"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
@@ -135,12 +137,14 @@
       "jpush-phonegap-plugin": {
         "APP_KEY": "e528f69fd304364343a628a0"
       },
-      "cordova-plugin-splashscreen": {}
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-console": {},
+      "cordova-plugin-background-mode": {}
     },
     "platforms": [
       "android",
-      "ios",
-      "browser"
+      "browser",
+      "ios"
     ]
   }
 }
