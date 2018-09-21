@@ -1,8 +1,9 @@
 <template>
   <div class="page">
     <wv-header title="问题反馈" class="x-header bgcolor">
-      <div class="btn-back header_left" slot="left">
-        <i class="iconfont icon-fanhui size_i" @click="$router.push('/profile')"></i>返回
+      <div class="btn-back header_left" slot="left" @click="$router.push('/profile')">
+        <i class="iconfont icon-fanhui size_i"></i>
+        <p class="head_return">返回</p>
       </div>
     </wv-header>
     <div class="x-wrapper wv-content">
@@ -164,7 +165,7 @@ export default {
 <style lang="scss">
   .feedback_content{
     width: 100%;
-    height: 500px;
+    /*height: 500px;*/
     background-color: #ffffff;
     /*margin-top: 100px;*/
     box-shadow: 6px 4px 20px rgba(219,219,219,0.3);
@@ -196,6 +197,9 @@ export default {
   }
   .feedback_img>img{
     max-width: 100%;
+  }
+  .feedback_imglist{
+    height: 300px;
   }
   .feedback_imglist>p{
     float: left;

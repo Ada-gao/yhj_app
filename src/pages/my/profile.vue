@@ -2,7 +2,8 @@
   <div class="page">
     <wv-header title="我的" class="x-header bgcolor">
       <div class="btn-back header_left" slot="left" @click="$router.push('/home')">
-        <i class="iconfont icon-fanhui size_i"></i>返回
+        <i class="iconfont icon-fanhui size_i"></i>
+        <p class="head_return">返回</p>
       </div>
     </wv-header>
     <div class="wv-content x-wrapper">

@@ -21,6 +21,7 @@ Vue.use(VueClipboard)
 
 if ('addEventListener' in document) {
   document.addEventListener('DOMContentLoaded', function () {
+    // alert('13333333')
     FastClick.attach(document.body)
   }, false)
 }

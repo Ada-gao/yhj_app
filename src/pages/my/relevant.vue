@@ -1,8 +1,9 @@
 <template>
   <div class="page pagebgcolor">
     <wv-header title="关于闪电呼" class="x-header bgcolor">
-      <div class="btn-back header_left" slot="left">
-        <i class="iconfont icon-fanhui icon size_i" @click="$router.push('/profile')"></i>返回
+      <div class="btn-back header_left" slot="left" @click="$router.push('/profile')">
+        <i class="iconfont icon-fanhui icon size_i"></i>
+        <p class="head_return">返回</p>
       </div>
     </wv-header>
     <div class="x-wrapper">
@@ -14,14 +15,14 @@
       <div class="company_content">
         <p class="company">版权所有：上海数赟科技有限公司</p>
         <p class="app_txt">Copyright © 2018 shuyun.All Rights Reserved</p>
-        <p class="app_weixin">微信公众号：gh_374030c43f3c<small style="font-size: 100%;color: #306ce2;" v-clipboard:copy="message">一键复制</small></p>
+        <p class="app_weixin">微信公众号：gh_374030c43f3c<small style="font-size: 100%;color: #306ce2;" v-clipboard:copy="message" v-clipboard:success="onCopy">一键复制</small></p>
       </div>
     </div>
   </div>
 </template>
 <script>
 import logoImg from '../../assets/images/lo.png'
-// import { Dialog } from 'we-vue'
+import { Toast } from 'we-vue'
 export default {
   data () {
     return {
@@ -31,13 +32,11 @@ export default {
     }
   },
   methods: {
-    onCopy: function (e) {
-      this.detailsreturn = true
-      // Dialog({
-      //   title: '微信公众号已复制',
-      //   message: '点击微信-通讯录-公众号-添加<br/>在搜索栏中粘贴公众号，搜索关注“数赟科技”',
-      //   showConfirmButton: true
-      // }).then(() => {})
+    onCopy: function () {
+      Toast.text({
+        duration: 1000,
+        message: '复制成功！'
+      })
     },
     buttoneturn () {
       this.detailsreturn = false

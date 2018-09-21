@@ -2,7 +2,8 @@
   <div class="page customer_random">
     <wv-header class="x-header" style="background-color: rgba(33, 41, 44, 0)">
       <div class="btn-back header_left" slot="left" style="color: #ffffff;">
-        <i class="iconfont icon-fanhui size_c" @click="backHandle"></i>返回
+        <i class="iconfont icon-fanhui size_i" @click="backHandle"></i>
+        <p class="head_return">返回</p>
       </div>
     </wv-header>
     <div class="x-wrapper" style="width: 100%">
@@ -192,20 +193,19 @@ export default {
           } else if (state === 2) {
             this.details = false
             this.CallListTime = false
+          } else if (state === 1 || state === 6) {
+            if (this.phoneShow === false) { // 原生通话
+              let info = {
+                duration: 0,
+                start: parseTime(new Date(), '{y}-{m}-{d} {h}:{m}:{s}'),
+                end: parseTime(new Date(), '{y}-{m}-{d} {h}:{m}:{s}')
+              }
+              this.$router.push({path: '/call/call-detail', query: {form: this.form, callTime: info, groupId: this.groupId}})
+              console.log('电话状态：' + state + '，通话时长：' + info.duration + '，开始时间：' + info.start + '，结束时间：' + info.end)
+            } else {
+              this.$router.push({path: '/call/call-detail', query: {form: this.form, callId: this.callid}})
+            }
           }
-          // else if (state === 1 || state === 6) {
-          //   if (this.phoneShow === false) { // 原生通话
-          //     /* global CallListener */
-          //     CallListener.getCallInfo((info) => {
-          //       // this.$router.push({path: '/call/call-details', query: {form: this.form, callTime: info, groupId: this.groupId}})
-          //       console.log('电话状态：' + state + '，通话时长：' + info.duration + '，开始时间：' + info.start + '，结束时间：' + info.end)
-          //     }, this.form.phoneNo).catch((error) => {
-          //       console.log(error)
-          //     })
-          //   } else {
-          //     this.$router.push({path: '/call/call-details', query: {form: this.form, callId: this.callid}})
-          //   }
-          // }
         })
       }
     },

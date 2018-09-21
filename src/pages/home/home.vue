@@ -69,7 +69,7 @@
     <div class="home_complete" v-show="completetoday">
       <div class="complete_content">
         <div class="task_img">
-          <!--<img :src="task">-->
+          <img v-bind:src="task">
         </div>
         <p class="task_title">今天的任务已完成！</p>
         <p class="task_txt">请继续加油哦</p>
@@ -99,7 +99,7 @@
 <script>
 import thumbSmall from '../../assets/images/icon_tabbar.png'
 import task from '@/assets/images/task.png'
-import { getUser, getStatisGroup, getCompleteStatus, getRank, getRandom } from '@/api/api'
+import { getUser, getStatisGroup, getCompleteStatus, getRank, getRandom, getLatestVersion, getPackage } from '@/api/api'
 import { timeDate } from '@/utils'
 import MyProgress from '@/components/progress'
 import { Toast } from 'we-vue'
@@ -131,39 +131,52 @@ export default {
         '扫一扫页面调整',
         '添加腾讯 bug 监控（原生）'
       ],
-      versionVisible: true,
+      versionVisible: false,
       completetoday: false
     }
   },
   created () {
-    const devicePlatform = Vue.cordova.device.platform
-    // alert(devicePlatform)
-    if (devicePlatform !== 'ios' || devicePlatform !== 'Android') {
-      this.versionVisible = false
-    } else {
-      this.versionVisibleShow = sessionStorage.getItem('versionVisible')
-      // alert(this.versionVisibleShow)
-      if (!this.versionVisibleShow) {
-        // alert('没有' + this.versionVisible)
-        this.versionVisible = true
-        sessionStorage.setItem('versionVisible', this.versionVisible)
-      } else if (this.versionVisibleShow) {
-        // alert('有' + this.versionVisible)
-        this.versionVisible = false
-      }
-      // 获取当前移动设备已经安装的版本
-      // /* global cordova */
-      // cordova.getAppVersion.getVersionCode(function (version) {
-      //   getLatestVersion(version).then(res => {
-      //     console.log(res)
-      //   })
-      // })
-    }
+    // 获取当前移动设备已经安装的版本
+    // const devicePlatform = Vue.cordova.device.platform
+    // // alert(devicePlatform)
+    // if (devicePlatform !== 'ios' || devicePlatform !== 'Android') {
+    //   this.versionVisible = false
+    // } else {
+    //   this.versionVisibleShow = sessionStorage.getItem('versionVisible')
+    //   // alert(this.versionVisibleShow)
+    //   if (!this.versionVisibleShow) {
+    //     // alert('没有' + this.versionVisible)
+    //     this.versionVisible = true
+    //     sessionStorage.setItem('versionVisible', this.versionVisible)
+    //   } else if (this.versionVisibleShow) {
+    //     // alert('有' + this.versionVisible)
+    //     this.versionVisible = false
+    //   }
+    // }
   },
   mounted () {
     this.getList()
+    this.version()
   },
   methods: {
+    version () {
+      /* global cordova */
+      const devicePlatform = Vue.cordova.device.platform
+      alert(devicePlatform)
+      cordova.getAppVersion.getVersionCode(function (version) {
+        alert(version)
+        getLatestVersion(version).then(res => {
+          alert(res.promptType)
+          if (res === null || res === '') {
+            this.versionVisible = false
+          } else if (res.promptType === 'Recommend ') {
+            getPackage(res.data.packageUrl).then(res => {
+              alert(res)
+            })
+          }
+        })
+      })
+    },
     getList () {
       getUser().then(res => {
         this.name = res.data.name

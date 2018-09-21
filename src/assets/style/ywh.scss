@@ -70,14 +70,14 @@ img {
 
 .is-iOS .x-header {
   position: fixed;
-  top: 20px!important; // iOs 10 or lower
+  top: 40px!important; // iOs 10 or lower
   top: constant(safe-area-inset-top)!important; // iOs 11
   top: env(safe-area-inset-top)!important; // iOs 11+ (feature)
   // padding-top: 32px; vw
 }
 .is-iOS .x-wrapper {
   //position: absolute;
-  top: 20px; // iOs 10 or lower 3.15rem
+  top: 40px; // iOs 10 or lower 3.15rem
   top: constant(safe-area-inset-top)!important; // iOs 11
   top: env(safe-area-inset-top)!important; // iOs 11+ (feature)
   padding-top: 96px;

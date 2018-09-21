@@ -57,7 +57,6 @@ export default {
         // Vue.cordova.statusBar.overlaysWebView(true)
         // Vue.cordova.statusBar.backgroundColorByHexString('') // 设置状态栏颜色
         // Vue.cordova.statusBar.hide()
-        Vue.cordova.statusBar.hide()
       } else {
         Vue.cordova.statusBar.styleDefault()
         Vue.cordova.statusBar.show()
@@ -84,6 +83,15 @@ export default {
   .weui-tabbar__item.weui-bar__item_on .weui-tabbar__icon, .weui-tabbar__item.weui-bar__item_on .weui-tabbar__icon>i, .weui-tabbar__item.weui-bar__item_on .weui-tabbar__label{
     color: #02B6DC;
   }
+  .weui-toast_text[data-v-4af60de0]{
+    top: 41%;
+  }
+  .weui-picker__action{
+    color: #2F6BE2!important;
+  }
+  .weui-picker__action:first-child{
+    color: #888!important;
+  }
   .wv-content_nav{
     position: absolute;
     top: 49px;
@@ -102,7 +110,7 @@ export default {
     transform: translateY(-50%);
     // width: 20%;
     color: #000000;
-    font-size: 26px;
+    /*font-size: 26px;*/
   }
   .wv-content_profile{
     position: fixed;
@@ -181,6 +189,13 @@ export default {
   //   border-radius: 0.2rem;
   //   font-size: 0.8rem;
   // }
+  .head_return{
+    position: absolute;
+    top: 3px;
+    font-size: 100% !important;
+    display: inline-block;
+    font-weight: 300;
+  }
   .size_i{
     font-size: 46px!important;
     margin-left: 34px;
