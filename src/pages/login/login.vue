@@ -71,15 +71,17 @@ export default {
   },
   methods: {
     login: function () {
+      this.isLoading = true
       let loginParams = {username: this.account, password: this.password}
       if (this.account === '' || this.password === '') {
+        this.isLoading = false
         Toast.text({
           duration: 1000,
           message: '账号或密码不能为空！'
         })
       } else {
         requestLogin(loginParams).then(res => {
-          this.isLoading = true
+          this.isLoading = false
           localStorage.setItem('token', res.data.token)
           localStorage.setItem('versionRemark', false)
           let user = localStorage.getItem('token')
@@ -93,7 +95,6 @@ export default {
                 })
               } else {
                 this.$router.push({path: '/home'})
-                this.isLoading = false
               }
             })
           }
@@ -108,7 +109,7 @@ export default {
     iconSee: function () {
       if (this.asee === true) {
         this.asee = false
-        this.inputType = 'tel'
+        this.inputType = 'text'
       } else if (this.asee === false) {
         this.asee = true
         this.inputType = 'password'

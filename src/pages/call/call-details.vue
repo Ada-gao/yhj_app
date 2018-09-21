@@ -63,7 +63,7 @@
 
 <script>
 import { getTaskHistory, getCallStatus, updateOutboundName, getTaskList, getRandom, getCallMoney } from '@/api/api'
-import { timeDate } from '@/utils'
+import { timeDate, parseTime } from '@/utils'
 import { Toast } from 'we-vue'
 export default {
   data () {
@@ -124,10 +124,9 @@ export default {
       getCallStatus(this.callId).then((res) => {
         this.callTime = res.data
         this.callTimes = timeDate(this.callTime.duration)
-        // this.callTime.start = parseTime(res.data.start, '{y}-{m}-{d} {h}:{m}:{s}')
-        // this.callTime.end = parseTime(res.data.end, '{y}-{m}-{d} {h}:{m}:{s}')
-        // this.callTime.start = parseTime(res.data.start)
-        // this.callTime.end = parseTime(res.data.end)
+        this.callTime.start = parseTime(res.data.start, '{y}-{m}-{d} {h}:{m}:{s}')
+        this.callTime.end = parseTime(res.data.end, '{y}-{m}-{d} {h}:{m}:{s}')
+        // console.log('时间' + this.callTime.start)
         this.getCallHistory(this.callTime.duration)
       }).catch(() => {
         alert('call时间获取')
@@ -162,12 +161,14 @@ export default {
           age: this.form.age
         }
         this.history.actualCallStartDate = new Date(this.callTime.start.replace(/-/g, '/') || this.callTime.start)
+        console.log('时间' + this.history.actualCallStartDate)
         this.history.acutalCallEndDate = new Date(this.callTime.end.replace(/-/g, '/') || this.callTime.end)
         this.history.outboundTaskId = this.form.taskId
         this.history.callType = this.form.phoneNo.indexOf('*') > -1 ? 'THIRD_PLATFORM' : 'NATIVE'
-        // alert('总时长' + this.callTime.duration)
+        this.history.common = this.form.common
+        console.log('总时长' + this.callTime.duration)
         getTaskHistory(this.history).then(res => {
-          console.log('保存成功')
+          console.log('History保存成功')
           this.customerInfor(params)
         }).catch((error) => {
           // alert('开始时间' + this.history.actualCallStartDate + '结束时间' + this.history.acutalCallEndDate)
@@ -177,7 +178,7 @@ export default {
     },
     customerInfor (params) {
       updateOutboundName(this.form.outboundNameId, params).then(res => {
-        console.log('保存成功2')
+        console.log('信息保存成功2')
         if (this.groupId === undefined) {
           getRandom().then(res => {
             let randomData = res.data
@@ -216,7 +217,7 @@ export default {
       getCallMoney(params).then(res => {
         console.log('挂断保存成功')
       }).catch(() => {
-        console.log('挂断提交时间')
+        console.log('挂断提交时间失败')
       })
     }
   }
