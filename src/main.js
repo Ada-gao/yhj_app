@@ -2,12 +2,12 @@ import Vue from 'vue'
 import WeVue from 'we-vue'
 import moment from 'moment'
 import VDistpicker from 'v-distpicker'
+import FastClick from 'fastclick'
 import 'we-vue/lib/style.css'
 import App from './app.vue'
 import './assets/style/ywh.scss'
 import './assets/iconfont/iconfont.css'
 import router from './router'
-import FastClick from 'fastclick'
 import VueCordova from './vue-cordova/index'
 import VueClipboard from 'vue-clipboard2'
 
@@ -21,7 +21,6 @@ Vue.use(VueClipboard)
 
 if ('addEventListener' in document) {
   document.addEventListener('DOMContentLoaded', function () {
-    // alert('13333333')
     FastClick.attach(document.body)
   }, false)
 }

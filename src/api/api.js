@@ -11,6 +11,7 @@ axios.interceptors.request.use(config => {
 })
 
 axios.interceptors.response.use(response => {
+  // console.log(response)
   return response
 }, error => {
   // console.log(error.response.config.url)
@@ -94,6 +95,6 @@ export const getCompleteStatus = (userId) => axios.get('/task/saleDailyCompleteS
 // 外呼扣费
 export const getCallMoney = (params) => axios.post('/call/call/recordCallHistory', params)
 // 对比版本
-export const getLatestVersion = (Version) => axios.get('/api/app/getLatestVersion/' + Version)
+export const getLatestVersion = (versionCode) => axios.get('/app/getLatestVersion/' + versionCode)
 // 下载app地址
-export const getPackage = (fileUuid) => axios.get('/api/version/getPackage?fileUuid=' + fileUuid)
+export const getPackage = (fileUuid) => axios.get('/version/getPackage?fileUuid=' + fileUuid)

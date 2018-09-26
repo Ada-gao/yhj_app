@@ -2,7 +2,7 @@
   <div class="page customer_random">
     <wv-header class="x-header" style="background-color: rgba(33, 41, 44, 0)">
       <div class="btn-back header_left" slot="left" style="color: #ffffff;">
-        <i class="iconfont icon-fanhui size_i" @click="backHandle"></i>
+        <i class="iconfont icon-fanhui size_c" @click="backHandle"></i>
         <p class="head_return">返回</p>
       </div>
     </wv-header>
@@ -42,7 +42,10 @@
             </wv-flex>
           </div>
           <div v-if="type == 0" class="details_state">最近外呼次数：{{form.callCount}}次 &nbsp;&nbsp;最近一次外呼时间：{{form.lastCallDate}}</div>
-          <a :href="'tel:' + form.phoneNo" v-show="phoneShow === false" class="random_button bgcolor" @click="phoneTimes">
+          <div v-show="phoneShow === false && device === 'android'" class="random_button bgcolor" @click="phoneTimesAndroid">
+            <small class="iconfont icon-hujiao" style="font-size: 100%;"></small>立即拨打
+          </div>
+          <a :href="'tel:' + form.phoneNo" v-show="phoneShow === false && device === 'ios'" class="random_button bgcolor" @click="phoneTimesios">
             <small class="iconfont icon-hujiao" style="font-size: 100%;"></small>立即拨打
           </a>
           <div class="random_button" v-show="phoneShow === true" @click="startCall">
@@ -82,7 +85,7 @@ import { getCall, getCallscancle } from '@/api/api'
 import { parseTime } from '@/utils'
 import { Toast } from 'we-vue'
 // import CallListener from 'cordova-plugin-calllistener'
-// import Vue from 'vue'
+import Vue from 'vue'
 // import qs from 'qs'
 
 export default {
@@ -103,7 +106,8 @@ export default {
       conversationState: false,
       type: '',
       groupId: '',
-      CallListTime: false
+      CallListTime: false,
+      device: ''
     }
   },
   created () {
@@ -136,14 +140,24 @@ export default {
     }
   },
   mounted () {
-    // let devicePlatform = Vue.cordova.device.platform
+    let devicePlatform = Vue.cordova.device.platform
+    if (devicePlatform === 'Android') {
+      this.device = 'android'
+    } else {
+      this.device = 'ios'
+    }
     // if (devicePlatform !== 'Android') {
     //     /* 监听电话状态（1空闲、2响铃、3通话） */
     // document.addEventListener('deviceready', () => {})
   },
   methods: {
-    phoneTimes () {
+    phoneTimesios () {
       this.conversationState = true
+      this.getCalstate()
+    },
+    phoneTimesAndroid () {
+      this.conversationState = true
+      CallListener.callMobile(this.form.phoneNo)
       this.getCalstate()
     },
     startCall () {

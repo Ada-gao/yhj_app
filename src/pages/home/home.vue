@@ -65,6 +65,7 @@
       <div class="phone_button bgcolor" @click="callphone">
         <small class="iconfont icon-hujiao" style="font-size: 100%;"></small>开始外呼
       </div>
+      <!--<a :href="packageUrl">ceh</a>-->
     </div>
     <div class="home_complete" v-show="completetoday">
       <div class="complete_content">
@@ -88,9 +89,10 @@
               {{index + 1}}.{{item}}
             </li>
           </ul>
-          <wv-button class="v_btn" @click="updateVersion">立即升级</wv-button>
+          <!--<wv-button class="v_btn" @click="updateVersion">立即升级</wv-button>-->
+          <a :href="packageUrl" class="ves_buttom" @click="updateVersion">立即升级</a>
         </div>
-        <i class="iconfont icon-guanbi" @click="closeVersion"></i>
+        <i class="iconfont icon-guanbi" v-if="versionClose" @click="closeVersion"></i>
       </div>
     </div>
   </div>
@@ -99,8 +101,8 @@
 <script>
 import thumbSmall from '../../assets/images/icon_tabbar.png'
 import task from '@/assets/images/task.png'
-import { getUser, getStatisGroup, getCompleteStatus, getRank, getRandom, getLatestVersion, getPackage } from '@/api/api'
-import { timeDate } from '@/utils'
+import { getUser, getStatisGroup, getRank, getRandom, getLatestVersion } from '@/api/api'
+import { timeDate, parseTime } from '@/utils'
 import MyProgress from '@/components/progress'
 import { Toast } from 'we-vue'
 import Vue from 'vue'
@@ -119,7 +121,6 @@ export default {
       name: '',
       statisGroup: [],
       percent: '',
-      completeStatus: '',
       userId: '',
       logo_head: '',
       complete: false,
@@ -132,10 +133,22 @@ export default {
         '添加腾讯 bug 监控（原生）'
       ],
       versionVisible: false,
-      completetoday: false
+      completetoday: false,
+      devicePlatform: '',
+      packageUrl: '',
+      versionClose: true
     }
   },
   created () {
+    this.devicePlatform = Vue.cordova.device.platform
+    /* global cordova */
+    let _this = this
+    if (this.devicePlatform === 'Android') {
+      cordova.getAppVersion.getVersionCode(function (version) {
+        _this.versions = version
+        _this.versionApp(_this.versions)
+      })
+    }
     // 获取当前移动设备已经安装的版本
     // const devicePlatform = Vue.cordova.device.platform
     // // alert(devicePlatform)
@@ -156,35 +169,14 @@ export default {
   },
   mounted () {
     this.getList()
-    this.version()
+    // this.versionApp(_this.versions)
+    // setTimeout(, 2000)
   },
   methods: {
-    version () {
-      /* global cordova */
-      const devicePlatform = Vue.cordova.device.platform
-      alert(devicePlatform)
-      cordova.getAppVersion.getVersionCode(function (version) {
-        alert(version)
-        getLatestVersion(version).then(res => {
-          alert(res.promptType)
-          if (res === null || res === '') {
-            this.versionVisible = false
-          } else if (res.promptType === 'Recommend ') {
-            getPackage(res.data.packageUrl).then(res => {
-              alert(res)
-            })
-          }
-        })
-      })
-    },
     getList () {
       getUser().then(res => {
         this.name = res.data.name
         localStorage.setItem('userId', res.data.id)
-        getCompleteStatus(res.data.id).then((res) => {
-          this.completeStatus = res.data
-          // console.log(this.completeStatus)
-        })
         getRank(res.data.id).then(res => {
           this.form = res.data
           this.form.dailyEffectiveDuration = timeDate(res.data.dailyEffectiveDuration)
@@ -207,9 +199,6 @@ export default {
         })
       })
     },
-    // onClick () {
-    //   this.$root.message('click')
-    // },
     selected (route) {
       return this.$router.currentRoute.path === route
     },
@@ -234,29 +223,45 @@ export default {
       // localStorage.setItem('versionRemark', this.versionVisible)
     },
     updateVersion () {
-      this.versionVisible = true
-      const devicePlatform = Vue.cordova.device.platform
-      if (devicePlatform === 'iOS') {
-        console.log('去 AppStore 下载...')
-      } else {
-        console.log('去应用宝下载...')
-      }
+      this.versionVisible = false
+      // const devicePlatform = Vue.cordova.device.platform
+      // if (devicePlatform === 'iOS') {
+      //   console.log('去 AppStore 下载...')
+      // } else {
+      //   console.log('去应用宝下载...')
+      // }
     },
     completeTask () {
       this.completetoday = false
+    },
+    versionApp (versions) {
+      getLatestVersion(versions).then(res => {
+        this.packageUrl = res.data.packageUrl
+        if (res.data !== '' || res.data !== null) {
+          // 弹出升级框
+          this.versionVisible = true
+          this.packageUrl = res.data.packageUrl
+          let updateDeadline = parseTime(res.data.updateDeadline, '{y}-{m}-{d}')
+          let timeToday = parseTime(new Date(), '{y}-{m}-{d}')
+          if (res.data.promptType === 'Force') { // 强制升级
+            this.versionClose = false
+          } else if (res.data.promptType === 'Recommend' && updateDeadline !== timeToday) { // 推荐升级
+            this.versionClose = true
+          } else if (updateDeadline === timeToday) { // 推荐升级限制时间已到
+            this.versionClose = false
+          }
+        }
+      }).catch((error) => {
+        alert(error)
+      })
     }
   }
-  // computed: {
-  //   title () {
-  //     return this.$route.meta.title
-  //   }
-  // },
 }
 </script>
 
 <style lang="scss">
   .icon-wode{
-    font-size: 50px;
+    font-size: 60px;
   }
   .wv-header .left[data-v-a5b8d5b6],.wv-header .wv-header-title[data-v-a5b8d5b6] {
     font-size: 36px;
@@ -532,11 +537,15 @@ export default {
           color: #757575;
           font-size: 26px;
         }
-        .v_btn {
+        .ves_buttom {
           background: linear-gradient(to right, #5D90F4, #2F6BE2);
           color: #fff;
           border-radius: 50px;
           margin-top: 43px;
+          display: block;
+          text-align: center;
+          height: 90px;
+          line-height: 90px;
         }
       }
     }

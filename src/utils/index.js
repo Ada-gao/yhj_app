@@ -44,25 +44,25 @@ export function parseTime (time, cFormat) {
   return timeStr
 }
 
-let queryObj = {
-  callResult: [
-    {label: '占线', value: 'BUSYING'},
-    {label: '未外呼', value: 'NOT_CALL'},
-    {label: '无人接听', value: 'NO_ANSWER'},
-    {label: '无意向拒绝', value: 'REFUSE'},
-    {label: '进一步跟进', value: 'FOLLOW'}
-  ],
-  nextStep: [
-    {label: '再次外呼', value: 'CALL_AGAIN'},
-    {label: '放弃外呼', value: 'GIVE_UP'},
-    {label: '继续跟进', value: 'FLLOW'}
-  ],
-  gender: [
-    {label: '男', value: 'GENTLEMAN'},
-    {label: '女', value: 'LADY'}
-  ]
-}
-export { queryObj }
+// let queryObj = { //暂无使用
+//   callResult: [
+//     {label: '占线', value: 'BUSYING'},
+//     {label: '未外呼', value: 'NOT_CALL'},
+//     {label: '无人接听', value: 'NO_ANSWER'},
+//     {label: '无意向拒绝', value: 'REFUSE'},
+//     {label: '进一步跟进', value: 'FOLLOW'}
+//   ],
+//   nextStep: [
+//     {label: '再次外呼', value: 'CALL_AGAIN'},
+//     {label: '放弃外呼', value: 'GIVE_UP'},
+//     {label: '继续跟进', value: 'FLLOW'}
+//   ],
+//   gender: [
+//     {label: '男', value: 'GENTLEMAN'},
+//     {label: '女', value: 'LADY'}
+//   ]
+// }
+// export { queryObj }
 
 export function timeDate (time) {
   let theTime = parseInt(time)

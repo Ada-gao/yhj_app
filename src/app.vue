@@ -108,7 +108,7 @@ export default {
     top: 50%;
     left: 0;
     transform: translateY(-50%);
-    // width: 20%;
+    width: 21%;
     color: #000000;
     /*font-size: 26px;*/
   }
