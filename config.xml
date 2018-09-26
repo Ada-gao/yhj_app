@@ -8,7 +8,6 @@
         ShuYun Big Data Team
     </author>
     <preference name="StatusBarStyle" value="styleDefault" />
-    <preference name="DisallowOverscroll" value="true" />
     <preference name="LogLevel" value="DEBUG" />
     <preference name="target-device" value="handset" />
     <preference name="deployment-target" value="9.0" />
