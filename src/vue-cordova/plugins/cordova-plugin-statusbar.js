@@ -10,6 +10,10 @@ export const install = function (Vue, options, cb) {
     }
     // pass through the StatusBar object
     Vue.cordova.statusBar = StatusBar
+    if (Vue.cordova.device.platform === 'Android') {
+      Vue.cordova.statusBar.styleDefault()
+      Vue.cordova.statusBar.backgroundColorByHexString('#fff')
+    }
     // eslint-disable-next-line
     return cb(true)
   }, false)
