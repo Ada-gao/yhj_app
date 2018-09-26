@@ -84,11 +84,13 @@
         <!--<img class="img" src="../../assets/images/version.png" alt=""/>-->
         <div class="content">
           <div class="title">【新版本特性】</div>
-          <ul class="v_list">
-            <li v-for="(item, index) in list" :key="index">
-              {{index + 1}}.{{item}}
-            </li>
-          </ul>
+          <pre class="v_list" v-html="promptText">
+          </pre>
+          <!--<ul class="v_list">-->
+            <!--<li v-for="(item, index) in list" :key="index">-->
+              <!--{{index + 1}}.{{item}}-->
+            <!--</li>-->
+          <!--</ul>-->
           <!--<wv-button class="v_btn" @click="updateVersion">立即升级</wv-button>-->
           <a :href="packageUrl" class="ves_buttom" @click="updateVersion">立即升级</a>
         </div>
@@ -125,18 +127,12 @@ export default {
       logo_head: '',
       complete: false,
       Leftover: 0,
-      list: [
-        '优化ui界面，提升用户体验',
-        '院内培训调整为培训',
-        '用户信息有条件修改',
-        '扫一扫页面调整',
-        '添加腾讯 bug 监控（原生）'
-      ],
-      versionVisible: false,
+      sionVisible: false,
       completetoday: false,
       devicePlatform: '',
       packageUrl: '',
-      versionClose: true
+      versionClose: true,
+      promptText: ''
     }
   },
   created () {
@@ -146,7 +142,7 @@ export default {
     if (this.devicePlatform === 'Android') {
       cordova.getAppVersion.getVersionCode(function (version) {
         _this.versions = version
-        _this.versionApp(_this.versions)
+        // _this.versionApp(_this.versions)
       })
     }
     // 获取当前移动设备已经安装的版本
@@ -169,7 +165,7 @@ export default {
   },
   mounted () {
     this.getList()
-    // this.versionApp(_this.versions)
+    this.versionApp(10)
     // setTimeout(, 2000)
   },
   methods: {
@@ -241,6 +237,7 @@ export default {
           // 弹出升级框
           this.versionVisible = true
           this.packageUrl = res.data.packageUrl
+          this.promptText = res.data.promptText
           let updateDeadline = parseTime(res.data.updateDeadline, '{y}-{m}-{d}')
           let timeToday = parseTime(new Date(), '{y}-{m}-{d}')
           if (res.data.promptType === 'Force') { // 强制升级
@@ -536,6 +533,11 @@ export default {
         .v_list {
           color: #757575;
           font-size: 26px;
+          white-space: pre-wrap;
+          overflow-wrap: break-word;
+          width: 93%;
+          margin: 0 auto;
+          font-family: -webkit-body;
         }
         .ves_buttom {
           background: linear-gradient(to right, #5D90F4, #2F6BE2);
