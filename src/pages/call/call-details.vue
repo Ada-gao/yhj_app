@@ -178,7 +178,6 @@ export default {
     },
     customerInfor (params) {
       updateOutboundName(this.form.outboundNameId, params).then(res => {
-        console.log('信息保存成功2')
         if (this.groupId === undefined) {
           getRandom().then(res => {
             let randomData = res.data
@@ -304,8 +303,8 @@ export default {
   .infor_title{
     width: 86%;
     margin: 0 auto;
-    height: 93px;
-    line-height: 93px;
+    height: 70px;
+    line-height: 70px;
     font-size: 32px;
   }
   .info_list{
@@ -345,7 +344,7 @@ export default {
     width: 90%;
     height: 88px;
     line-height: 88px;
-    margin: 50px auto 0;
+    margin: 30px auto 0;
     color: #ffffff;
     font-size: 36px;
     text-align: center;

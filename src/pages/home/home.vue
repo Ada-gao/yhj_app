@@ -92,7 +92,7 @@
             <!--</li>-->
           <!--</ul>-->
           <!--<wv-button class="v_btn" @click="updateVersion">立即升级</wv-button>-->
-          <a :href="packageUrl" class="ves_buttom" @click="updateVersion">立即升级</a>
+          <a :href="packageUrl" class="ves_buttom">立即升级</a>
         </div>
         <i class="iconfont icon-guanbi" v-if="versionClose" @click="closeVersion"></i>
       </div>
@@ -132,7 +132,8 @@ export default {
       devicePlatform: '',
       packageUrl: '',
       versionClose: true,
-      promptText: ''
+      promptText: '',
+      versionVisible: false
     }
   },
   created () {
@@ -142,7 +143,7 @@ export default {
     if (this.devicePlatform === 'Android') {
       cordova.getAppVersion.getVersionCode(function (version) {
         _this.versions = version
-        // _this.versionApp(_this.versions)
+        _this.versionApp(_this.versions)
       })
     }
     // 获取当前移动设备已经安装的版本
@@ -165,7 +166,7 @@ export default {
   },
   mounted () {
     this.getList()
-    this.versionApp(10)
+    // this.versionApp(10)
     // setTimeout(, 2000)
   },
   methods: {
@@ -233,7 +234,7 @@ export default {
     versionApp (versions) {
       getLatestVersion(versions).then(res => {
         this.packageUrl = res.data.packageUrl
-        if (res.data !== '' || res.data !== null) {
+        if (res.data) {
           // 弹出升级框
           this.versionVisible = true
           this.packageUrl = res.data.packageUrl
@@ -247,6 +248,8 @@ export default {
           } else if (updateDeadline === timeToday) { // 推荐升级限制时间已到
             this.versionClose = false
           }
+        } else {
+          this.versionVisible = false
         }
       }).catch((error) => {
         alert(error)

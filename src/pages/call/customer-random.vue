@@ -117,8 +117,6 @@ export default {
     this.groupId = this.$route.params.groupId
     if (Object.keys(this.$route.query).length) {
       this.form = this.$route.query
-      console.log(this.form)
-      console.log(this.form.lastCallResult)
       if (this.form.lastCallResult === '未外呼') {
         this.form.lastCallResult = 'NOT_CALL'
       } else if (this.form.lastCallResult === '空号') {
@@ -179,6 +177,7 @@ export default {
         })
         this.details = false
       })
+      this.getCalstate()
     },
     backHandle () {
       if (this.type === '1') {
@@ -193,8 +192,8 @@ export default {
       /* global CallListener */
       if (this.CallListTime === true) {
         CallListener.addListener((state) => {
-          // console.log('state:' + state)
           if (state === 3) {
+            this.details = false
             this.CallListTime = false
             if (this.phoneShow === false) {
               this.$router.push({name: 'call-record', query: {form: this.form, groupId: this.groupId}})
@@ -215,7 +214,7 @@ export default {
                 end: parseTime(new Date(), '{y}-{m}-{d} {h}:{m}:{s}')
               }
               this.$router.push({path: '/call/call-detail', query: {form: this.form, callTime: info, groupId: this.groupId}})
-              console.log('电话状态：' + state + '，通话时长：' + info.duration + '，开始时间：' + info.start + '，结束时间：' + info.end)
+              // console.log('电话状态：' + state + '，通话时长：' + info.duration + '，开始时间：' + info.start + '，结束时间：' + info.end)
             } else {
               this.$router.push({path: '/call/call-detail', query: {form: this.form, callId: this.callid}})
             }
