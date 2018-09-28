@@ -7,6 +7,7 @@
     <author email="zhuangyinping@gmail.com" href="http://shuyun365.com">
         ShuYun Big Data Team
     </author>
+    <preference name="DisallowOverscroll" value="true" />
     <preference name="StatusBarStyle" value="styleDefault" />
     <preference name="LogLevel" value="DEBUG" />
     <preference name="target-device" value="handset" />
@@ -77,20 +78,17 @@
     </edit-config>
     <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
     <plugin name="cordova-plugin-camera" spec="^4.0.3" />
-    <plugin name="cordova-plugin-console" spec="^1.1.0" />
     <plugin name="cordova-plugin-contacts" spec="^3.0.1" />
     <plugin name="cordova-plugin-device" spec="^2.0.2" />
     <plugin name="cordova-plugin-file" spec="^6.0.1" />
     <plugin name="cordova-plugin-file-transfer" spec="^1.7.1" />
     <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
-    <plugin name="cordova-plugin-background-mode" spec="^0.7.2" />
-    <plugin name="cordova-plugin-sim" spec="^1.3.3" />
     <plugin name="jpush-phonegap-plugin" spec="^3.4.3">
         <variable name="APP_KEY" value="0f8d6564c2c9d472e94afee7" />
     </plugin>
-    <plugin name="cordova-plugin-calllistener" spec="^1.2.4" />
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
     <plugin name="cordova-plugin-app-version" spec="^0.1.9" />
+    <plugin name="cordova-plugin-calllistener" spec="^1.2.7" />
     <engine name="android" spec="^7.1.0" />
     <engine name="browser" spec="^5.0.3" />
     <engine name="ios" spec="^4.5.4" />
