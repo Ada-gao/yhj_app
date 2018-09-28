@@ -7,6 +7,7 @@
     <author email="zhuangyinping@gmail.com" href="http://shuyun365.com">
         ShuYun Big Data Team
     </author>
+    <preference name="DisallowOverscroll" value="true" />
     <preference name="StatusBarStyle" value="styleDefault" />
     <preference name="LogLevel" value="DEBUG" />
     <preference name="target-device" value="handset" />
