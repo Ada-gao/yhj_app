@@ -1,7 +1,7 @@
 // @import '../../../node_modules/we-vue/lib/style.css';
 html,
 body {
-  background-color: #f8f8f8;
+  background-color: #F5F5F5;;
   user-select: none;
   margin: 0;
   padding: 0;
@@ -76,7 +76,7 @@ img {
   // padding-top: 32px; vw
 }
 .is-iOS .x-wrapper {
-  //position: absolute;
+  position: fixed;
   top: 40px; // iOs 10 or lower 3.15rem
   top: constant(safe-area-inset-top)!important; // iOs 11
   top: env(safe-area-inset-top)!important; // iOs 11+ (feature)

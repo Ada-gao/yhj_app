@@ -29,7 +29,7 @@
       <div class="page-infinite-wrapper" v-show="content==='notFinish'">
         <div class="call_list" v-for="(item, index) in hList" :key="index" @click="todetails(item)">
           <p class="call_left">{{item.contactName}}</p>
-          <p class="call_cont">{{item.lastCallResult}}</p>
+          <p class="call_cont" style="text-align: right">{{item.lastCallResult}}</p>
           <p class="iconfont icon-fanhui call_right icon_left" style="color: #e9e9e9;font-size: 19px"></p>
         </div>
          <!--<wv-cell-swipe :title="item.contactName" is-link-->
@@ -270,6 +270,7 @@ export default {
   .call_cont{
     width: 23%;
     font-size: 26px;
+    color: #1473ed;
   }
   .call_right{
     width: 10%;
@@ -301,6 +302,7 @@ export default {
     border: 2px solid #e9e9e9;
     border-radius: 4px;
     color: gray;
+    font-size: 0;
   }
   .call_nav>p{
     width: 50%;

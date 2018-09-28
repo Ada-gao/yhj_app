@@ -58,7 +58,7 @@
         </div>
         <div class="random_bottom">
           <h5 class="random_tit">外呼话术</h5>
-          <div style="clear: both" v-html="form.salesTalk">{{form.salesTalk}}</div>
+          <div style="clear: both;word-wrap:break-word" v-html="form.salesTalk">{{form.salesTalk}}</div>
         </div>
       </div>
       <div class="details_loading" v-show="details" style="background-color: #191919">
@@ -160,8 +160,8 @@ export default {
     },
     startCall () {
       this.conversationState = true
-      this.details = true
       getCall(this.form.outboundNameId, this.form.taskId).then(res => {
+        this.details = true
         this.callSid = res.data.callSid
         if (this.callSid === null) {
           Toast.fail({
@@ -170,14 +170,22 @@ export default {
           })
           this.details = false
         }
-      }).catch(() => {
-        Toast.fail({
-          duration: 2000,
-          message: '账户余额不足，请联系公司管理员！'
-        })
+        this.getCalstate()
+      }).catch(error => {
         this.details = false
+        // console.log(error.data)
+        if (error.data.error === '外呼次数超过限制，请联系管理员！') {
+          Toast.fail({
+            duration: 2000,
+            message: '外呼次数超过限制，请联系管理员！'
+          })
+        } else {
+          Toast.fail({
+            duration: 2000,
+            message: '余额预警，请联系管理员'
+          })
+        }
       })
-      this.getCalstate()
     },
     backHandle () {
       if (this.type === '1') {
@@ -266,6 +274,10 @@ export default {
   }
   .random_one{
     padding-top: 35px;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    overflow: hidden;
   }
   .random_txt{
     color:#505050;

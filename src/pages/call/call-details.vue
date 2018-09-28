@@ -24,17 +24,17 @@
         <p class="infor_title">客户信息</p>
         <div class="info_list">
           <p class="info_left">姓名</p>
-          <input class="info_cont" :placeholder="form.contactName" v-model="form.contactName">
+          <input class="info_cont" v-model="form.contactName">
           <p class="iconfont icon-fanhui info_right"></p>
         </div>
         <div class="info_list">
           <p class="info_left">电话</p>
-          <input class="info_cont" :placeholder="form.phoneNo" v-model="form.phoneNo">
+          <input class="info_cont" v-model="form.phoneNo">
           <p class="iconfont icon-fanhui info_right"></p>
         </div>
         <div class="info_list">
           <p class="info_left">微信</p>
-          <input class="info_cont" :placeholder="form.wechatNo" v-model="form.wechatNo">
+          <input class="info_cont" v-model="form.wechatNo">
           <p class="iconfont icon-fanhui info_right"></p>
         </div>
         <div class="info_lists">
@@ -63,13 +63,13 @@
 
 <script>
 import { getTaskHistory, getCallStatus, updateOutboundName, getTaskList, getRandom, getCallMoney } from '@/api/api'
-import { timeDate, parseTime } from '@/utils'
+import { timeDate } from '@/utils'
 import { Toast } from 'we-vue'
 export default {
   data () {
     return {
       groupId: undefined,
-      callTime: '',
+      callTime: {},
       callTimes: '',
       callId: '',
       actionValue: [],
@@ -124,8 +124,8 @@ export default {
       getCallStatus(this.callId).then((res) => {
         this.callTime = res.data
         this.callTimes = timeDate(this.callTime.duration)
-        this.callTime.start = parseTime(res.data.start, '{y}-{m}-{d} {h}:{m}:{s}')
-        this.callTime.end = parseTime(res.data.end, '{y}-{m}-{d} {h}:{m}:{s}')
+        // this.callTime.start = parseTime(res.data.start, '{y}-{m}-{d} {hh}:{mm}:{ss}')
+        // this.callTime.end = parseTime(res.data.end, '{y}-{m}-{d} {hh}:{mm}:{ss}')
         // console.log('时间' + this.callTime.start)
         this.getCallHistory(this.callTime.duration)
       }).catch(() => {
@@ -161,14 +161,13 @@ export default {
           age: this.form.age
         }
         this.history.actualCallStartDate = new Date(this.callTime.start.replace(/-/g, '/') || this.callTime.start)
-        console.log('时间' + this.history.actualCallStartDate)
-        this.history.acutalCallEndDate = new Date(this.callTime.end.replace(/-/g, '/') || this.callTime.end)
+        this.history.acutalCallEndDate = new Date(this.callTime.start.replace(/-/g, '/') || this.callTime.end)
+        // alert(this.history.actualCallStartDate)
         this.history.outboundTaskId = this.form.taskId
         this.history.callType = this.form.phoneNo.indexOf('*') > -1 ? 'THIRD_PLATFORM' : 'NATIVE'
         this.history.common = this.form.common
-        console.log('总时长' + this.callTime.duration)
+        // console.log('总时长' + this.callTime.duration)
         getTaskHistory(this.history).then(res => {
-          console.log('History保存成功')
           this.customerInfor(params)
         }).catch((error) => {
           // alert('开始时间' + this.history.actualCallStartDate + '结束时间' + this.history.acutalCallEndDate)
@@ -212,9 +211,9 @@ export default {
         phoneNum: this.form.phoneNo,
         saleId: localStorage.getItem('userId')
       }
-      console.log('callType：' + params.callType + 'clientId：' + params.clientId + 'clientName：' + params.clientName + 'duration：' + params.duration + 'phoneNum：' + params.phoneNum + 'saleId：' + params.saleId)
+      // console.log('callType：' + params.callType + 'clientId：' + params.clientId + 'clientName：' + params.clientName + 'duration：' + params.duration + 'phoneNum：' + params.phoneNum + 'saleId：' + params.saleId)
       getCallMoney(params).then(res => {
-        console.log('挂断保存成功')
+        // console.log('挂断保存成功')
       }).catch(() => {
         console.log('挂断提交时间失败')
       })
@@ -244,6 +243,7 @@ export default {
     border: 2px solid #e9e9e9;
     border-radius: 6px;
     outline: none !important;
+    padding: 3px;
   }
   .info_lists{
     width: 86%;
@@ -290,9 +290,9 @@ export default {
     -webkit-transform:rotate(180deg);
     -o-transform:rotate(180deg);
   }
-  input::-webkit-input-placeholder{
-    color: #000000;
-  }
+  /*input::-webkit-input-placeholder{*/
+    /*color: #000000;*/
+  /*}*/
   .details_info{
     width: 100%;
     height: 670px;
@@ -327,6 +327,7 @@ export default {
     width: 68%;
     text-align: right;
     color: #000000;
+    font-size: 28px;
     outline: none;
     -webkit-tap-highlight-color: rgba(0,0,0,0)
   }

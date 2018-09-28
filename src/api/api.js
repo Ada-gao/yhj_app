@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { Toast } from 'we-vue'
 
 axios.defaults.baseURL = process.env.BASE_API
 axios.defaults.timeout = 15000
@@ -11,23 +12,25 @@ axios.interceptors.request.use(config => {
 })
 
 axios.interceptors.response.use(response => {
-  // console.log(response)
   return response
 }, error => {
   // console.log(error.response.config.url)
-  console.log(error)
-  if (error.response && error.response.status === 401) {
+  // console.log(error.response.status)
+  if (error.response.status === 401) {
     localStorage.removeItem('token')
-    this.$toast.text('你的身份信息已失效，请重新输入密码登录。')
+    Toast.text({
+      duration: 1000,
+      message: '你的身份信息已失效，请重新输入密码登录。'
+    })
     this.$router.replace({
       path: '/login',
       query: {redirect: this.$router.currentRoute.fullPath}
     })
   } else {
-    this.$toast.fail({
-      duration: 1000,
-      message: error.response
-    })
+    // this.$toast.fail({
+    //   duration: 2000,
+    //   message: error.response
+    // })
   }
   return Promise.reject(error.response)
 })
@@ -95,6 +98,6 @@ export const getCompleteStatus = (userId) => axios.get('/task/saleDailyCompleteS
 // 外呼扣费
 export const getCallMoney = (params) => axios.post('/call/call/recordCallHistory', params)
 // 对比版本
-export const getLatestVersion = (versionCode) => axios.get('/app/getLatestVersion/' + versionCode)
+export const getLatestVersion = (versionCode, platform) => axios.get('/app/getLatestVersion/{versionCode}?versionCode=' + versionCode + '&platform=' + platform)
 // 下载app地址
 export const getPackage = (fileUuid) => axios.get('/version/getPackage?fileUuid=' + fileUuid)

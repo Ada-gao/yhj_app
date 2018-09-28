@@ -59,7 +59,7 @@ export const install = function (Vue, options, cb) {
       } else if (urls === '/call/call-record' || urls === '/call/call-detail') {
         Toast.fail({
           duration: 2000,
-          message: '退出会导致数据统计问题哦～'
+          message: '强制返回会导致您的数据问题哦！'
         })
         window.close()
       } else {

@@ -1,5 +1,5 @@
 <template>
-  <div class="page" style="background: #ffffff; position: absolute;">
+  <div class="page" style="background: #ffffff;position: absolute">
     <wv-header title="闪电呼" class="x-header" background-color="#FFFFFF">
       <div class="btn-back header_left l40" slot="left">
         <i class="iconfont icon-wode" @click="$router.push('/profile')"></i>
@@ -39,7 +39,7 @@
         <div style="width:28090000px;" v-for="item in statisGroup" :key="item.taskGroupId">
           <div class="home_list">
             <div class="progress_title">
-              <p style="width: 90%">{{item.productName}}</p>
+              <p style="width: 90%">{{item.taskName}}</p>
               <p v-if="statisGroup.length > 1" class="iconfont icon-huadong" style=" color:#E9E9E9"></p>
             </div>
             <div class="flex_list">
@@ -80,7 +80,9 @@
     <!-- 版本升级 -->
     <div class="v_dialog" v-show="versionVisible">
       <div class="v_main">
-        <div class="bgImg"></div>
+        <div class="bgImg">
+          <p class="version_number">V{{versionData.versionName}}</p>
+        </div>
         <!--<img class="img" src="../../assets/images/version.png" alt=""/>-->
         <div class="content">
           <div class="title">【新版本特性】</div>
@@ -133,19 +135,19 @@ export default {
       packageUrl: '',
       versionClose: true,
       promptText: '',
-      versionVisible: false
+      versionVisible: false,
+      versionData: ''
     }
   },
   created () {
-    this.devicePlatform = Vue.cordova.device.platform
-    /* global cordova */
     let _this = this
-    if (this.devicePlatform === 'Android') {
-      cordova.getAppVersion.getVersionCode(function (version) {
-        _this.versions = version
-        _this.versionApp(_this.versions)
-      })
-    }
+    _this.devicePlatform = Vue.cordova.device.platform
+    /* global cordova */
+    cordova.getAppVersion.getVersionCode(function (version) {
+      // alert(_this.devicePlatform)
+      _this.versions = version
+      _this.updateVersionApp(_this.versions, _this.devicePlatform)
+    })
     // 获取当前移动设备已经安装的版本
     // const devicePlatform = Vue.cordova.device.platform
     // // alert(devicePlatform)
@@ -203,7 +205,8 @@ export default {
       getRandom().then(res => {
         let randomData = res.data
         this.$router.push({path: '/call/customer-random/1', query: randomData})
-      }).catch(() => {
+      }).catch((error) => {
+        console.log(error)
         Toast({
           duration: 1000,
           message: '当前无任务分配',
@@ -217,43 +220,45 @@ export default {
     },
     closeVersion () {
       this.versionVisible = false
+      sessionStorage.setItem('closeVersion', true)
       // localStorage.setItem('versionRemark', this.versionVisible)
-    },
-    updateVersion () {
-      this.versionVisible = false
-      // const devicePlatform = Vue.cordova.device.platform
-      // if (devicePlatform === 'iOS') {
-      //   console.log('去 AppStore 下载...')
-      // } else {
-      //   console.log('去应用宝下载...')
-      // }
     },
     completeTask () {
       this.completetoday = false
     },
-    versionApp (versions) {
-      getLatestVersion(versions).then(res => {
-        this.packageUrl = res.data.packageUrl
-        if (res.data) {
-          // 弹出升级框
-          this.versionVisible = true
+    updateVersionApp (versions, devicePlatform) {
+      let closeData = sessionStorage.getItem('closeVersion')
+      if (closeData) {
+        this.versionVisible = false
+      } else {
+        getLatestVersion(versions, devicePlatform).then(res => {
+          this.versionData = res.data
           this.packageUrl = res.data.packageUrl
-          this.promptText = res.data.promptText
-          let updateDeadline = parseTime(res.data.updateDeadline, '{y}-{m}-{d}')
-          let timeToday = parseTime(new Date(), '{y}-{m}-{d}')
-          if (res.data.promptType === 'Force') { // 强制升级
-            this.versionClose = false
-          } else if (res.data.promptType === 'Recommend' && updateDeadline !== timeToday) { // 推荐升级
-            this.versionClose = true
-          } else if (updateDeadline === timeToday) { // 推荐升级限制时间已到
-            this.versionClose = false
+          if (res.data) {
+            // 弹出升级框
+            this.versionVisible = true
+            this.packageUrl = res.data.packageUrl
+            this.promptText = res.data.promptText
+            let updateDeadline = parseTime(res.data.updateDeadline, '{y}-{m}-{d}') + ' ' + res.data.updateDeadlineTime
+            updateDeadline = updateDeadline.replace(/-/g, '/')
+            let timeToday = new Date()
+            let updatatime = new Date(Date.parse(updateDeadline))
+            if (res.data.promptType === 'Silence') { // 静默
+              this.versionVisible = false
+            } else if (res.data.promptType === 'Force') { // 强制升级
+              this.versionClose = false
+            } else if (res.data.promptType === 'Recommend' && updatatime >= timeToday) { // 推荐升级
+              this.versionClose = true
+            } else if (res.data.promptType === 'Recommend' && updatatime <= timeToday) { // 推荐升级限制时间已到
+              this.versionClose = false
+            }
+          } else {
+            this.versionVisible = false
           }
-        } else {
-          this.versionVisible = false
-        }
-      }).catch((error) => {
-        alert(error)
-      })
+        }).catch((error) => {
+          alert(error)
+        })
+      }
     }
   }
 }
@@ -521,6 +526,19 @@ export default {
         background: url('../../assets/images/version.png') 50% no-repeat;
         background-size: cover;
         border-radius: 20px 20px 0 0;
+        .version_number {
+          width: 20%;
+          height:42px;
+          border: 1px solid #ffffff;
+          color: #ffffff;
+          line-height: 42px;
+          text-align: center;
+          margin: 0 auto;
+          position: absolute;
+          top: 112px;
+          left: 41%;
+          border-radius: 6px;
+        }
       }
       .img {
         width: 100%;
