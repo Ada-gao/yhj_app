@@ -29,7 +29,7 @@
                 <div class="placeholder random_nav co" v-if="form.lastCallResult === 'UNCONNECTED'">未接通</div>
                 <div class="placeholder random_nav cr" v-if="form.lastCallResult === 'CONNECTED'">已接通</div>
               </wv-flex-item>
-              <wv-flex-item style="white-space: nowrap;text-overflow: ellipsis;-o-text-overflow: ellipsis;overflow: hidden;">
+              <wv-flex-item style="width: 30%">
                 <div class="placeholder random_nav random_pro">产品名称</div>
                 <div class="placeholder random_nav iconfont icon-chanpin"></div>
                 <div class="placeholder random_nav cr">{{form.productName}}</div>
@@ -54,7 +54,7 @@
         </div>
         <div class="random_bottom" v-if="type == 0">
           <h5 class="random_tit">备注</h5>
-          <div style="clear: both" v-html="form.common">{{form.common}}</div>
+          <div style="clear: both;word-wrap:break-word" v-html="form.common">{{form.common}}</div>
         </div>
         <div class="random_bottom">
           <h5 class="random_tit">外呼话术</h5>
@@ -215,6 +215,7 @@ export default {
             this.details = false
             this.CallListTime = false
           } else if (state === 1 || state === 6) {
+            this.CallListTime = false
             if (this.phoneShow === false) { // 原生通话
               let info = {
                 duration: 0,

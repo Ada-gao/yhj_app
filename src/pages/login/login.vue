@@ -1,6 +1,6 @@
 <template>
   <div class="page" style="background: #858585">
-    <div class="login_bgimg"></div>
+    <div class="login_bgimg">
     <!-- <div style="width: 100%">
       <img :src="thumbSmall" style="max-width: 100%">
     </div> -->
@@ -48,6 +48,7 @@
         <!--登录-->
       <!--</div>-->
     <!--<div class="login_Application" @click="$router.push('/login/trial')">申请体验</div>-->
+    </div>
   </div>
 </template>
 <script>
@@ -207,7 +208,7 @@ export default {
   .login_iconright{
     color: #DADADA;
     // float: right;
-    font-size: 30px
+    font-size: 40px
   }
   .login_icon{
     color: #CECECE;

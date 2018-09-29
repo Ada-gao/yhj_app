@@ -25,7 +25,7 @@
     "cordova-ios": "^4.5.4",
     "cordova-plugin-app-version": "^0.1.9",
     "cordova-plugin-background-mode": "^0.7.2",
-    "cordova-plugin-calllistener": "^1.2.7",
+    "cordova-plugin-calllistener": "^1.2.8",
     "cordova-plugin-camera": "^4.0.3",
     "cordova-plugin-console": "^1.1.0",
     "cordova-plugin-contacts": "^3.0.1",
@@ -140,9 +140,9 @@
       "cordova-plugin-calllistener": {}
     },
     "platforms": [
-      "android",
       "browser",
-      "ios"
+      "ios",
+      "android"
     ]
   }
 }
