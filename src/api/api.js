@@ -22,11 +22,10 @@ axios.interceptors.response.use(response => {
       duration: 1000,
       message: '该账户已失效，请联系管理员！'
     })
-    this.$router.push({path: '/login'})
-    // this.$router.replace({
-    //   path: '/login',
-    //   query: {redirect: this.$router.currentRoute.fullPath}
-    // })
+    this.$router.replace({
+      path: '/login',
+      query: {redirect: this.$router.currentRoute.fullPath}
+    })
   } else {
     // this.$toast.fail({
     //   duration: 2000,

@@ -1,6 +1,6 @@
 <template>
   <div class="page" style="background: #858585">
-    <div class="login_bgimg">
+    <div class="login_bgimg x-wrapper">
     <!-- <div style="width: 100%">
       <img :src="thumbSmall" style="max-width: 100%">
     </div> -->

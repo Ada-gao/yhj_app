@@ -1,8 +1,8 @@
 <template>
   <div class="page customer_random">
     <wv-header class="x-header" style="background-color: rgba(33, 41, 44, 0)">
-      <div class="btn-back header_left" slot="left" style="color: #ffffff;">
-        <i class="iconfont icon-fanhui size_c" @click="backHandle"></i>
+      <div class="btn-back header_left" slot="left" style="color: #ffffff;" @click="backHandle">
+        <i class="iconfont icon-fanhui size_c"></i>
         <p class="head_return">返回</p>
       </div>
     </wv-header>

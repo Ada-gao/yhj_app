@@ -255,8 +255,6 @@ export default {
           } else {
             this.versionVisible = false
           }
-        }).catch((error) => {
-          alert(error)
         })
       }
     }
