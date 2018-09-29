@@ -63,7 +63,7 @@
 
 <script>
 import { getTaskHistory, getCallStatus, updateOutboundName, getTaskList, getRandom, getCallMoney } from '@/api/api'
-import { timeDate } from '@/utils'
+import { timeDate, conversionTime } from '@/utils'
 import { Toast } from 'we-vue'
 export default {
   data () {
@@ -134,6 +134,8 @@ export default {
     } else {
       this.callTime = this.$route.query.callTime
       this.callTimes = timeDate(this.callTime.duration)
+      this.callTime.start = conversionTime(this.callTime.start)
+      this.callTime.end = conversionTime(this.callTime.end)
       this.getCallHistory(this.callTime.duration)
     }
   },
@@ -160,8 +162,8 @@ export default {
           wechatNo: this.form.wechatNo,
           age: this.form.age
         }
-        this.history.actualCallStartDate = new Date(this.callTime.start.replace(/-/g, '/') || this.callTime.start)
-        this.history.acutalCallEndDate = new Date(this.callTime.start.replace(/-/g, '/') || this.callTime.end)
+        this.history.actualCallStartDate = new Date(this.callTime.start)
+        this.history.acutalCallEndDate = new Date(this.callTime.end)
         // alert(this.history.actualCallStartDate)
         this.history.outboundTaskId = this.form.taskId
         this.history.callType = this.form.phoneNo.indexOf('*') > -1 ? 'THIRD_PLATFORM' : 'NATIVE'

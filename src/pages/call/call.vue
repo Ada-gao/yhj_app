@@ -265,6 +265,10 @@ export default {
   .call_left{
     width: 67%;
     font-size: 32px;
+    /*overflow: hidden;*/
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
     overflow: hidden;
   }
   .call_cont{

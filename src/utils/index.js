@@ -77,3 +77,10 @@ export function timeDate (time) {
   }
   return result
 }
+
+export function conversionTime (time) {
+  let times = time
+  times = times.replace(/-/g, '/')
+  let timeDate = new Date(Date.parse(times))
+  return timeDate
+}

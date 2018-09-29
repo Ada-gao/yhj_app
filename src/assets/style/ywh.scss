@@ -76,7 +76,7 @@ img {
   // padding-top: 32px; vw
 }
 .is-iOS .x-wrapper {
-  position: fixed;
+  //position: fixed;
   top: 40px; // iOs 10 or lower 3.15rem
   top: constant(safe-area-inset-top)!important; // iOs 11
   top: env(safe-area-inset-top)!important; // iOs 11+ (feature)
@@ -87,6 +87,7 @@ img {
   //padding-bottom: env(safe-area-inset-bottom);
 }
 .is-iOS .customer_random .x-wrapper {
+  position: absolute;
   padding-top: 0;
 }
  //

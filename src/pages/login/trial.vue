@@ -54,7 +54,8 @@
       <div class="trial_verification bgcolor">
         <p class="company_title">联系人信息</p>
         <div class="info_list">
-          <input placeholder="请输入联系人姓名" class="input_size" v-model="contact" maxlength="10" />
+          <wv-input placeholder="请输入内容" v-model="valueText"></wv-input>
+          <!--<input placeholder="请输入联系人姓名" class="input_size" v-model="contact" maxlength="10" />-->
           <!--<p class="iconfont icon-fanhui icon_right info_icon"></p>-->
         </div>
         <div class="info_list">

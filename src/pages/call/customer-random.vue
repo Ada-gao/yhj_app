@@ -6,7 +6,7 @@
         <p class="head_return">返回</p>
       </div>
     </wv-header>
-    <div class="x-wrapper" style="width: 100%">
+    <div class="x-wrapper v-random-content" style="width: 100%">
       <div class="random_bgimg" >
         <!--<img :src="photoImg">-->
       </div>
@@ -29,7 +29,7 @@
                 <div class="placeholder random_nav co" v-if="form.lastCallResult === 'UNCONNECTED'">未接通</div>
                 <div class="placeholder random_nav cr" v-if="form.lastCallResult === 'CONNECTED'">已接通</div>
               </wv-flex-item>
-              <wv-flex-item>
+              <wv-flex-item style="white-space: nowrap;text-overflow: ellipsis;-o-text-overflow: ellipsis;overflow: hidden;">
                 <div class="placeholder random_nav random_pro">产品名称</div>
                 <div class="placeholder random_nav iconfont icon-chanpin"></div>
                 <div class="placeholder random_nav cr">{{form.productName}}</div>
@@ -243,6 +243,14 @@ export default {
 }
 </script>
 <style lang="scss">
+  .v-random-content{
+    position: absolute;
+    top:0;
+    bottom: 0;
+    overflow: hidden;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+  }
   .random_content{
     position: fixed;
     top: 327px;
@@ -271,6 +279,10 @@ export default {
     font-size: 32px;
     margin: auto;
     width: 90%;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    overflow: hidden;
   }
   .random_one{
     padding-top: 35px;
@@ -689,10 +701,22 @@ export default {
     max-width: 100%;
   }
   .phone_txt{
+    width: 53%;
     text-align: center;
     color: #dee2ed;
     font-size: 36px;
     font-weight: 150;
+    margin: 0 auto;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  .cr{
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
   // .head_name{
   //   text-align: center;

@@ -39,7 +39,7 @@
         <div style="width:28090000px;" v-for="item in statisGroup" :key="item.taskGroupId">
           <div class="home_list">
             <div class="progress_title">
-              <p style="width: 90%">{{item.taskName}}</p>
+              <p style="width: 90%" class="task_name">{{item.taskName}}</p>
               <p v-if="statisGroup.length > 1" class="iconfont icon-huadong" style=" color:#E9E9E9"></p>
             </div>
             <div class="flex_list">
@@ -359,6 +359,12 @@ export default {
     text-align: center;
     color: #171717;
     /*margin-bottom: 1.16rem;*/
+  }
+  .task_name{
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    overflow: hidden;
   }
   .home_nav>div{
     float: left;

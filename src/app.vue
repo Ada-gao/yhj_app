@@ -134,7 +134,7 @@ export default {
     font-size: 36px!important;
   }
   .wv-content{
-    position: fixed;
+    position: absolute;
     top: 96px;
     left: 0;
     right: 0;
