@@ -8,7 +8,7 @@
     </wv-header>
     <div class="x-wrapper wv-content">
       <div class="feedback_content">
-        <textarea class="feedback_tex" rows="5" v-model="content" placeholder="请输入您要反馈的问题...."></textarea>
+        <textarea class="feedback_tex" rows="5" v-model="content" maxlength="100" placeholder="请输入您要反馈的问题...."></textarea>
         <div class="feedback_imglist">
           <p class="feedback_img" v-for="item in imgList" :key="item.id">
             <img :src="item">
@@ -197,6 +197,7 @@ export default {
   }
   .feedback_img>img{
     max-width: 100%;
+    max-height: 100%;
   }
   .feedback_imglist{
     height: 300px;

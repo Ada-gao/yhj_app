@@ -20,12 +20,13 @@ axios.interceptors.response.use(response => {
     localStorage.removeItem('token')
     Toast.text({
       duration: 1000,
-      message: '你的身份信息已失效，请重新输入密码登录。'
+      message: '该账户已失效，请联系管理员！'
     })
-    this.$router.replace({
-      path: '/login',
-      query: {redirect: this.$router.currentRoute.fullPath}
-    })
+    this.$router.push({path: '/login'})
+    // this.$router.replace({
+    //   path: '/login',
+    //   query: {redirect: this.$router.currentRoute.fullPath}
+    // })
   } else {
     // this.$toast.fail({
     //   duration: 2000,
