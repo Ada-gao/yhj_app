@@ -362,8 +362,8 @@ export default {
     display: inline-block;
     float: left;
     width: 69%;
-    height: 101px;
-    line-height: 101px;
+    height: 54px;
+    line-height: 54px;
   }
   .input_size{
     font-size: 28px;
