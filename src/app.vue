@@ -21,7 +21,7 @@ export default {
     }
   },
   created () {
-    this.isIphoneX()
+    // this.isIphoneX()
   },
   methods: {
     selected (route) {
