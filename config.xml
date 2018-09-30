@@ -37,7 +37,6 @@
         <icon density="xxhdpi" src="res/icon/android/mipmap-xxhdpi/icon-144-xxhdpi.png" />
         <icon density="xxxhdpi" src="res/icon/android/mipmap-xxxhdpi/icon-192-xxxhdpi.png" />
         <splash density="port-xxxhdpi" src="res/screen/android/screen-xxxhdpi-portrait.png" />
-        <hook src="hooks/android/cp_scanner_dep.sh" type="before_prepare" />
     </platform>
     <platform name="ios">
         <icon height="57" src="res/icon/ios/icon-57.png" width="57" />
@@ -74,6 +73,9 @@
     <edit-config file="*-Info.plist" mode="merge" target="NSPhotoLibraryAddUsageDescription">
         <string>如果不允许，你将无法在闪电呼中保存照片到相册。</string>
     </edit-config>
+    <config-file overwrite="true" parent="CFBundleDevelopmentRegion" platform="ios" target="*-Info.plist">
+        <string>China</string>
+    </config-file>
     <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
     <plugin name="cordova-plugin-camera" spec="^4.0.3" />
     <plugin name="cordova-plugin-contacts" spec="^3.0.1" />
