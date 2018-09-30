@@ -37,6 +37,7 @@
         <icon density="xxhdpi" src="res/icon/android/mipmap-xxhdpi/icon-144-xxhdpi.png" />
         <icon density="xxxhdpi" src="res/icon/android/mipmap-xxxhdpi/icon-192-xxxhdpi.png" />
         <splash density="port-xxxhdpi" src="res/screen/android/screen-xxxhdpi-portrait.png" />
+        <hook src="hooks/android/cp_scanner_dep.sh" type="before_prepare" />
     </platform>
     <platform name="ios">
         <icon height="57" src="res/icon/ios/icon-57.png" width="57" />
