@@ -58,8 +58,10 @@ export default {
         // Vue.cordova.statusBar.backgroundColorByHexString('') // 设置状态栏颜色
         // Vue.cordova.statusBar.hide()
       } else {
-        Vue.cordova.statusBar.styleDefault()
-        Vue.cordova.statusBar.show()
+        if (Vue.cordova.device.platform !== 'browser') {
+          Vue.cordova.statusBar.styleDefault()
+          Vue.cordova.statusBar.show()
+        }
       }
     }
   }
