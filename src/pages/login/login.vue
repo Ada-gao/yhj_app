@@ -95,6 +95,9 @@ export default {
                   message: '该账号没有权限!'
                 })
               } else {
+                // 介于个别页面跳转到其他页面会带有隐含条件，故暂时不能跳转到登录过期前的界面
+                // const redirect = this.$route.query.redirect || '/home'
+                // this.$router.replace(redirect)
                 this.$router.push({path: '/home'})
               }
             })
