@@ -248,9 +248,9 @@ export default {
     position: absolute;
     top:0;
     bottom: 0;
-    overflow: hidden;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
+    /*overflow: hidden;*/
+    /* overflow-y: scroll;*/
+    /*-webkit-overflow-scrolling: touch;*/
   }
   .random_content{
     position: fixed;

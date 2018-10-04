@@ -1,7 +1,9 @@
 <template>
   <div id="app">
-    <transition :name="$root.transitionName">
-      <router-view/>
+    <transition :enter-active-class="enterAnimate" :leave-active-class="leaveAnimate">
+      <keep-alive>
+        <router-view/>
+      </keep-alive>
     </transition>
   </div>
 </template>
@@ -17,7 +19,9 @@ export default {
       tabShow: true,
       statusBarcolorPath: {
         black: ['/call/customer-random', '/login']
-      }
+      },
+      enterAnimate: '', // 页面进入动效
+      leaveAnimate: '' // 页面离开动效
     }
   },
   created () {
@@ -63,6 +67,32 @@ export default {
           Vue.cordova.statusBar.show()
         }
       }
+      // 增加进入淡出动画效果
+      console.log('from ' + from.path + ' to ' + to.path)
+      if (from.path === '/login' || to.path === '/login') {
+        this.enterAnimate = ''
+        this.leaveAnimate = ''
+        return
+      }
+      if (from.path === '/home') {
+        this.enterAnimate = 'animated fadeInRight'
+        this.leaveAnimate = 'animated fadeOutLeft'
+        return
+      } else if (to.path === '/home') {
+        this.enterAnimate = 'animated fadeInLeft'
+        this.leaveAnimate = 'animated fadeOutRight'
+        return
+      }
+      const toDepth = to.path.split('/').length
+      const fromDepth = from.path.split('/').length
+      // 同一级页面无需设置过渡效果
+      if (toDepth === fromDepth) {
+        this.enterAnimate = ''
+        this.leaveAnimate = ''
+        return
+      }
+      this.enterAnimate = toDepth > fromDepth ? 'animated fadeInRight' : 'animated fadeInLeft'
+      this.leaveAnimate = toDepth > fromDepth ? 'animated fadeOutLeft' : 'animated fadeOutRight'
     }
   }
 }
@@ -141,10 +171,10 @@ export default {
     left: 0;
     right: 0;
     bottom: 0;
-    /* height: 18.2rem; */
-    overflow: hidden;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
+    /*!* height: 18.2rem; *!*/
+    /*overflow: hidden;*/
+    /*overflow-y: scroll;*/
+    /*-webkit-overflow-scrolling: touch;*/
   }
   .weui-tabbar__item{
     padding: 0;
@@ -219,4 +249,8 @@ export default {
     color: #2F6BE2!important;
   }
   input,textarea{-webkit-appearance: none;appearance: none;}
+</style>
+
+<style>
+  @import "assets/css/lib/animate.css";
 </style>
