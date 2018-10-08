@@ -2,8 +2,9 @@
   <div id="app">
     <transition :enter-active-class="enterAnimate" :leave-active-class="leaveAnimate">
       <keep-alive>
-        <router-view/>
+        <router-view />
       </keep-alive>
+      <!-- <router-view v-if="!$route.meta.alive"></router-view> -->
     </transition>
   </div>
 </template>
@@ -248,7 +249,66 @@ export default {
   .weui-dialog__btn_primary{
     color: #2F6BE2!important;
   }
-  input,textarea{-webkit-appearance: none;appearance: none;}
+  input,
+  textarea {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .weui-animate-fade-in,
+  .weui-animate-fade-out {
+    animation: none;
+  }
+  @-webkit-keyframes slideInDown {
+    from {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+        visibility: visible;
+    }
+    to {
+        -webkit-transform: translate3d(0, 100%, 0);
+        transform: translate3d(0, 100%, 0);
+    }
+  }
+  @keyframes slideInDown {
+      from {
+          -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+          visibility: visible;
+      }
+      to {
+          -webkit-transform: translate3d(0, 100%, 0);
+          transform: translate3d(0, 100%, 0);
+      }
+  }
+  .weui-animate-slide-down {
+    animation: slideInDown ease .3s;
+  }
+  @-webkit-keyframes slideInUp {
+    from {
+        -webkit-transform: translate3d(0, 100%, 0);
+        transform: translate3d(0, 100%, 0);
+        visibility: visible;
+    }
+    to {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        -webkit-transform: translate3d(0, 100%, 0);
+        transform: translate3d(0, 100%, 0);
+        visibility: visible;
+    }
+    to {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+}
+  .weui-animate-slide-up {
+    animation: slideInUp ease .3s;
+  }
 </style>
 
 <style>
