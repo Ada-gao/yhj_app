@@ -15,7 +15,7 @@
     animation-fill-mode: both;
     /*animation: 0.25s linear;*/
 }
-/* 
+/*
 .animated.infinite {
     -webkit-animation-iteration-count: infinite;
     animation-iteration-count: infinite;
@@ -25,7 +25,7 @@
     -webkit-animation-duration: 2s;
     animation-duration: 2s;
 } */
-/* 
+/*
 .animated.flipOutX,
 .animated.flipOutY,
 .animated.bounceIn,
@@ -465,7 +465,7 @@
 
 
 /* originally authored by Nick Pettit - https://github.com/nickpettit/glide */
-/* 
+/*
 @-webkit-keyframes wobble {
     from {
         -webkit-transform: none;
@@ -1165,7 +1165,7 @@
     -webkit-animation-name: bounceOutUp;
     animation-name: bounceOutUp;
 } */
-/* 
+/*
 @-webkit-keyframes fadeIn {
     from {
         opacity: 0;
@@ -1281,7 +1281,7 @@
     -webkit-animation-name: fadeInLeft;
     animation-name: fadeInLeft;
 }
-/* 
+/*
 @-webkit-keyframes fadeInLeftBig {
     from {
         opacity: 0;
@@ -1343,7 +1343,7 @@
     -webkit-animation-name: fadeInRight;
     animation-name: fadeInRight;
 }
-/* 
+/*
 @-webkit-keyframes fadeInRightBig {
     from {
         opacity: 0;
@@ -1374,7 +1374,7 @@
     -webkit-animation-name: fadeInRightBig;
     animation-name: fadeInRightBig;
 } */
-/* 
+/*
 @-webkit-keyframes fadeInUp {
     from {
         opacity: 0;
@@ -1540,7 +1540,7 @@
     -webkit-animation-name: fadeOutLeft;
     animation-name: fadeOutLeft;
 }
-/* 
+/*
 @-webkit-keyframes fadeOutLeftBig {
     from {
         opacity: 1;
@@ -1594,7 +1594,7 @@
     -webkit-animation-name: fadeOutRight;
     animation-name: fadeOutRight;
 }
-/* 
+/*
 @-webkit-keyframes fadeOutRightBig {
     from {
         opacity: 1;
@@ -1621,7 +1621,7 @@
     -webkit-animation-name: fadeOutRightBig;
     animation-name: fadeOutRightBig;
 } */
-/* 
+/*
 @-webkit-keyframes fadeOutUp {
     from {
         opacity: 1;
@@ -2486,7 +2486,7 @@
 
 
 /* originally authored by Nick Pettit - https://github.com/nickpettit/glide */
-/* 
+/*
 @-webkit-keyframes rollIn {
     from {
         opacity: 0;
@@ -2520,7 +2520,7 @@
 
 
 /* originally authored by Nick Pettit - https://github.com/nickpettit/glide */
-/* 
+/*
 @-webkit-keyframes rollOut {
     from {
         opacity: 1;
@@ -3150,8 +3150,5 @@
 .slideOutUp {
     -webkit-animation-name: slideOutUp;
     animation-name: slideOutUp;
-<<<<<<< HEAD
 }
-=======
-} */
->>>>>>> 02816f2f605ae00a5be1efdcadca500511cbfa7a
+

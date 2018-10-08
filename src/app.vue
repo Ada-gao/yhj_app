@@ -1,17 +1,10 @@
 <template>
   <div id="app">
     <transition :enter-active-class="enterAnimate" :leave-active-class="leaveAnimate">
-<<<<<<< HEAD
       <keep-alive v-if="$route.meta.keepAlive === true">
         <router-view/>
       </keep-alive>
       <router-view v-if="$route.meta.keepAlive === false"/>
-=======
-      <keep-alive>
-        <router-view />
-      </keep-alive>
-      <!-- <router-view v-if="!$route.meta.alive"></router-view> -->
->>>>>>> 02816f2f605ae00a5be1efdcadca500511cbfa7a
     </transition>
   </div>
 </template>
