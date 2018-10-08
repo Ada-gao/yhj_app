@@ -109,7 +109,7 @@ import { getUser, getStatisGroup, getRank, getRandom, getLatestVersion } from '@
 import { timeDate, parseTime } from '@/utils'
 import MyProgress from '@/components/progress'
 import { Toast } from 'we-vue'
-// import Vue from 'vue'
+import Vue from 'vue'
 
 // getTaskStatisticsDaily
 export default {
@@ -140,14 +140,14 @@ export default {
     }
   },
   created () {
-    // let _this = this
-    // _this.devicePlatform = Vue.cordova.device.platform
-    // /* global cordova */
-    // cordova.getAppVersion.getVersionCode(function (version) {
-    //   // alert(_this.devicePlatform)
-    //   _this.versions = version
-    //   _this.updateVersionApp(_this.versions, _this.devicePlatform)
-    // })
+    let _this = this
+    _this.devicePlatform = Vue.cordova.device.platform
+    /* global cordova */
+    cordova.getAppVersion.getVersionCode(function (version) {
+      // alert(_this.devicePlatform)
+      _this.versions = version
+      _this.updateVersionApp(_this.versions, _this.devicePlatform)
+    })
     // 获取当前移动设备已经安装的版本
     // const devicePlatform = Vue.cordova.device.platform
     // // alert(devicePlatform)
@@ -167,9 +167,9 @@ export default {
     // }
   },
   mounted () {
-    getLatestVersion(10, 'android').then(res => {
-      console.log(res)
-    })
+    // getLatestVersion(10, 'android').then(res => {
+    //   console.log(res)
+    // })
     this.getList()
     // this.versionApp(10)
     // setTimeout(, 2000)

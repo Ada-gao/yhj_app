@@ -52,7 +52,7 @@
   </div>
 </template>
 <script>
-import { requestLogin, getUsers, getLatestVersion } from '../../api/api'
+import { requestLogin, getUsers } from '../../api/api'
 // import thumbSmall from '../../assets/images/background image.jpg'
 import logoSrc from '../../assets/images/login_logo.png'
 import { Toast } from 'we-vue'

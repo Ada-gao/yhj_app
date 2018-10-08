@@ -187,6 +187,7 @@ export default {
     todetails (item) {
       sessionStorage.setItem('createTime', this.createTime)
       // this.$router.push({name: 'customer-details', params: item})
+      console.log(item)
       this.$router.push({path: '/call/customer-random/0/' + this.groupId, query: item})
     },
     taskforlist () {
