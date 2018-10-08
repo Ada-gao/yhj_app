@@ -15,7 +15,7 @@
     animation-fill-mode: both;
     /*animation: 0.25s linear;*/
 }
-
+/* 
 .animated.infinite {
     -webkit-animation-iteration-count: infinite;
     animation-iteration-count: infinite;
@@ -24,8 +24,8 @@
 .animated.hinge {
     -webkit-animation-duration: 2s;
     animation-duration: 2s;
-}
-
+} */
+/* 
 .animated.flipOutX,
 .animated.flipOutY,
 .animated.bounceIn,
@@ -133,7 +133,7 @@
 
 /* originally authored by Nick Pettit - https://github.com/nickpettit/glide */
 
-@-webkit-keyframes pulse {
+/* @-webkit-keyframes pulse {
     from {
         -webkit-transform: scale3d(1, 1, 1);
         transform: scale3d(1, 1, 1);
@@ -465,7 +465,7 @@
 
 
 /* originally authored by Nick Pettit - https://github.com/nickpettit/glide */
-
+/* 
 @-webkit-keyframes wobble {
     from {
         -webkit-transform: none;
@@ -1164,8 +1164,8 @@
 .bounceOutUp {
     -webkit-animation-name: bounceOutUp;
     animation-name: bounceOutUp;
-}
-
+} */
+/* 
 @-webkit-keyframes fadeIn {
     from {
         opacity: 0;
@@ -1249,7 +1249,7 @@
 .fadeInDownBig {
     -webkit-animation-name: fadeInDownBig;
     animation-name: fadeInDownBig;
-}
+} */
 
 @-webkit-keyframes fadeInLeft {
     from {
@@ -1281,7 +1281,7 @@
     -webkit-animation-name: fadeInLeft;
     animation-name: fadeInLeft;
 }
-
+/* 
 @-webkit-keyframes fadeInLeftBig {
     from {
         opacity: 0;
@@ -1311,7 +1311,7 @@
 .fadeInLeftBig {
     -webkit-animation-name: fadeInLeftBig;
     animation-name: fadeInLeftBig;
-}
+} */
 
 @-webkit-keyframes fadeInRight {
     from {
@@ -1343,7 +1343,7 @@
     -webkit-animation-name: fadeInRight;
     animation-name: fadeInRight;
 }
-
+/* 
 @-webkit-keyframes fadeInRightBig {
     from {
         opacity: 0;
@@ -1373,8 +1373,8 @@
 .fadeInRightBig {
     -webkit-animation-name: fadeInRightBig;
     animation-name: fadeInRightBig;
-}
-
+} */
+/* 
 @-webkit-keyframes fadeInUp {
     from {
         opacity: 0;
@@ -1512,7 +1512,7 @@
 .fadeOutDownBig {
     -webkit-animation-name: fadeOutDownBig;
     animation-name: fadeOutDownBig;
-}
+} */
 
 @-webkit-keyframes fadeOutLeft {
     from {
@@ -1540,7 +1540,7 @@
     -webkit-animation-name: fadeOutLeft;
     animation-name: fadeOutLeft;
 }
-
+/* 
 @-webkit-keyframes fadeOutLeftBig {
     from {
         opacity: 1;
@@ -1566,7 +1566,7 @@
 .fadeOutLeftBig {
     -webkit-animation-name: fadeOutLeftBig;
     animation-name: fadeOutLeftBig;
-}
+} */
 
 @-webkit-keyframes fadeOutRight {
     from {
@@ -1594,7 +1594,7 @@
     -webkit-animation-name: fadeOutRight;
     animation-name: fadeOutRight;
 }
-
+/* 
 @-webkit-keyframes fadeOutRightBig {
     from {
         opacity: 1;
@@ -1620,8 +1620,8 @@
 .fadeOutRightBig {
     -webkit-animation-name: fadeOutRightBig;
     animation-name: fadeOutRightBig;
-}
-
+} */
+/* 
 @-webkit-keyframes fadeOutUp {
     from {
         opacity: 1;
@@ -2482,11 +2482,11 @@
 .hinge {
     -webkit-animation-name: hinge;
     animation-name: hinge;
-}
+} */
 
 
 /* originally authored by Nick Pettit - https://github.com/nickpettit/glide */
-
+/* 
 @-webkit-keyframes rollIn {
     from {
         opacity: 0;
@@ -2516,11 +2516,11 @@
 .rollIn {
     -webkit-animation-name: rollIn;
     animation-name: rollIn;
-}
+} */
 
 
 /* originally authored by Nick Pettit - https://github.com/nickpettit/glide */
-
+/* 
 @-webkit-keyframes rollOut {
     from {
         opacity: 1;
@@ -3150,4 +3150,8 @@
 .slideOutUp {
     -webkit-animation-name: slideOutUp;
     animation-name: slideOutUp;
+<<<<<<< HEAD
 }
+=======
+} */
+>>>>>>> 02816f2f605ae00a5be1efdcadca500511cbfa7a
