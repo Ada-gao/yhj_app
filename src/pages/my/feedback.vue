@@ -112,7 +112,7 @@ export default {
         }
       }
       function cameraError (message) {
-        alert('error to take picture:' + message)
+        // alert('error to take picture:' + message)
       }
     },
     onImgdata () {

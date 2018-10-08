@@ -1,8 +1,8 @@
 <template>
   <div class="page">
     <wv-header class="x-header" title="申请体验" background-color="white" style="color:#02B6DC;">
-      <div class="btn-back header_left" slot="left">
-        <i class="iconfont icon-fanhui size_i" @click="$router.push('/')" style="color:#959292"></i>
+      <div class="btn-back header_left" slot="left" @click="$router.push('/')">
+        <i class="iconfont icon-fanhui size_i" style="color:#959292"></i>
       </div>
     </wv-header>
     <div class="wv-content x-wrapper">
@@ -70,19 +70,16 @@
     <div class="trial_button" @click="trialApply">申请体验</div>
     <wv-picker
       :visible.sync="industryPickerShow"
-      v-model="industryType"
       :columns="industryColumns"
       @confirm="confirmIndustry"
     />
     <wv-picker
       :visible.sync="scalePickerShow"
-      v-model="scales"
       :columns="scaleColumns"
       @confirm="confirmScale"
     />
       <wv-picker
         :visible.sync="addressPickerShow"
-        v-model="address"
         ref="addressPicker"
         :columns="addressColumns"
         :visible-item-count="5"
@@ -270,6 +267,7 @@ export default {
     },
     confirmScale (picker) {
       this.scales = picker.getValues()
+      console.log(this.scales)
       this.orgSize = this.scales[0]
     },
     // 获取行业
@@ -364,8 +362,8 @@ export default {
     display: inline-block;
     float: left;
     width: 69%;
-    height: 101px;
-    line-height: 101px;
+    height: 54px;
+    line-height: 54px;
   }
   .input_size{
     font-size: 28px;

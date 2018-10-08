@@ -217,7 +217,6 @@ export default {
     }
   },
   created () {
-    console.log(this.$route)
     this.groupId = this.$route.params ? this.$route.params.groupId : undefined
   },
   mounted () {
