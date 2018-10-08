@@ -32,11 +32,6 @@
           <p class="call_cont" style="text-align: right">{{item.lastCallResult}}</p>
           <p class="iconfont icon-fanhui call_right icon_left" style="color: #e9e9e9;font-size: 19px"></p>
         </div>
-         <!--<wv-cell-swipe :title="item.contactName" is-link-->
-                        <!--v-for="(item, index) in hList"-->
-                        <!--:key="index"-->
-                        <!--:to="{name: 'customer-details', params: item}">-->
-         <!--</wv-cell-swipe>-->
          <div v-infinite-scroll="loadMore1" infinite-scroll-disabled="busy" infinite-scroll-distance="50">
          </div>
         <p class="loading-tips" v-show="floading" style="text-align: center">
@@ -50,15 +45,6 @@
           <p class="iconfont icon-fanhui call_right icon_left" style="color: #e9e9e9;font-size: 19px"></p>
         </div>
         <div v-infinite-scroll="loadMore2" infinite-scroll-disabled="busy2" infinite-scroll-distance="50"></div>
-        <!--<wv-group title="">-->
-          <!--<wv-cell-swipe :title="item.contactName" is-link-->
-                         <!--v-for="(item, index) in fList"-->
-                         <!--:key="index"-->
-                         <!--:to="{name: 'customer-details', params: item}">-->
-          <!--</wv-cell-swipe>-->
-          <!--<div v-infinite-scroll="loadMore2" infinite-scroll-disabled="busy2" infinite-scroll-distance="50">-->
-          <!--</div>-->
-        <!--</wv-group>-->
         <p class="loading-tips" v-show="floading" style="text-align: center">
           <wv-spinner type="snake" color="#444" :size="24"></wv-spinner>
         </p>
@@ -139,6 +125,7 @@ export default {
           // 多次加载
           this.fList = this.fList.concat(data)
           if (data.length === 0) {
+            console.log('wei')
             this.busy2 = true
           } else {
             this.busy2 = false

@@ -106,19 +106,6 @@ routes.push({
   }
 })
 
-// 可弃用，已用参数处理
-routes.push({
-  path: '/call/customer-details',
-  component: resolve => require(['../pages/call/customer-details.vue'], resolve),
-  name: 'customer-details',
-  meta: {
-    title: 'customer-details',
-    description: '已呼客户',
-    requiresAuth: false,
-    tabShow: false
-  }
-})
-
 routes.push({
   path: '/call/call-record',
   component: resolve => require(['../pages/call/call-record.vue'], resolve),

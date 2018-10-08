@@ -120,7 +120,7 @@ export default {
     let phones = this.form.phoneNo.substring(4, 5)
     if (phones === '*') {
       this.callId = this.$route.query.callId
-      // console.log(this.callId)
+      // alert(this.callId)
       getCallStatus(this.callId).then((res) => {
         this.callTime = res.data
         this.callTimes = timeDate(this.callTime.duration)
@@ -129,7 +129,7 @@ export default {
         // console.log('时间' + this.callTime.start)
         this.getCallHistory(this.callTime.duration)
       }).catch(() => {
-        alert('call时间获取')
+        // alert('call时间获取')
       })
     } else {
       this.callTime = this.$route.query.callTime
@@ -171,9 +171,9 @@ export default {
         // console.log('总时长' + this.callTime.duration)
         getTaskHistory(this.history).then(res => {
           this.customerInfor(params)
-        }).catch((error) => {
+        }).catch(() => {
           // alert('开始时间' + this.history.actualCallStartDate + '结束时间' + this.history.acutalCallEndDate)
-          alert('外呼结果保存失败' + error)
+          // alert('外呼结果保存失败' + error)
         })
       }
     },
@@ -196,12 +196,12 @@ export default {
             } else {
               this.$router.push({path: '/call/customer-random/0/' + this.groupId, query: data})
             }
-          }).catch((error) => {
-            alert(error)
+          }).catch(() => {
+            // alert(error)
           })
         }
-      }).catch((error) => {
-        console.log(error)
+      }).catch(() => {
+        // console.log(error)
       })
     },
     getCallHistory (duration) {
@@ -272,7 +272,7 @@ export default {
     line-height: 109px;
   }
   .details_cont{
-    width: 53%;
+    width: 50%;
     float: left;
     height: 109px;
     text-align: right;
@@ -285,7 +285,7 @@ export default {
   .result_right{
     color:#e9e9e9;
     font-size: 39px;
-    width: 6%;
+    width: 8%;
     transform:rotate(180deg);
     -ms-transform:rotate(180deg);
     -moz-transform:rotate(180deg);

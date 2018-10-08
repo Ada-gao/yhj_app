@@ -61,18 +61,18 @@
           <div style="clear: both;word-wrap:break-word" v-html="form.salesTalk">{{form.salesTalk}}</div>
         </div>
       </div>
-      <div class="details_loading" v-show="details" style="background-color: #191919">
-        <div class="phone_hand">
-          <img :src="company">
-        </div>
-        <p class="phone_txt">{{form.contactName}}</p>
-        <p class="phone_txt">{{form.phoneNo}}</p>
-        <div class="phone">
-          <img :src="phoneImg">
-        </div>
-        <div class="phone_cancle" @click="callsCancle">
-          <img :src="cancle">
-        </div>
+    </div>
+    <div class="details_loading" v-show="details" style="background-color: #191919">
+      <div class="phone_hand">
+        <img :src="company">
+      </div>
+      <p class="phone_txt">{{form.contactName}}</p>
+      <p class="phone_txt">{{form.phoneNo}}</p>
+      <div class="phone">
+        <img :src="phoneImg">
+      </div>
+      <div class="phone_cancle" @click="callsCancle">
+        <img :src="cancle">
       </div>
     </div>
   </div>
@@ -225,7 +225,7 @@ export default {
               this.$router.push({path: '/call/call-detail', query: {form: this.form, callTime: info, groupId: this.groupId}})
               // console.log('电话状态：' + state + '，通话时长：' + info.duration + '，开始时间：' + info.start + '，结束时间：' + info.end)
             } else {
-              this.$router.push({path: '/call/call-detail', query: {form: this.form, callId: this.callid}})
+              this.$router.push({path: '/call/call-detail', query: {form: this.form, callId: this.callSid}})
             }
           }
         })
@@ -691,7 +691,7 @@ export default {
   }*/
   .phone_cancle{
     width: 18%;
-    margin: 40% auto;
+    margin: 40% auto 0;
   }
   .phone_hand{
     width: 30%;
@@ -705,7 +705,6 @@ export default {
     width: 53%;
     text-align: center;
     color: #dee2ed;
-    font-size: 36px;
     font-weight: 150;
     margin: 0 auto;
     white-space: nowrap;

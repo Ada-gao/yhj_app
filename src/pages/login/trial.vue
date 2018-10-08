@@ -1,10 +1,16 @@
 <template>
   <div class="page">
-    <wv-header class="x-header" title="申请体验" background-color="white" style="color:#02B6DC;">
+    <wv-header title="申请体验" class="x-header" background-color="#FFFFFF">
       <div class="btn-back header_left" slot="left" @click="$router.push('/')">
-        <i class="iconfont icon-fanhui size_i" style="color:#959292"></i>
+        <i class="iconfont icon-fanhui size_i"></i>
+        <!--<p class="head_return">返回</p>-->
       </div>
     </wv-header>
+    <!--<wv-header class="x-header" title="申请体验" background-color="white" style="color:#02B6DC;">-->
+      <!--<div class="btn-back header_left" slot="left" @click="$router.push('/')">-->
+        <!--<i class="iconfont icon-fanhui size_i" style="color:#959292"></i>-->
+      <!--</div>-->
+    <!--</wv-header>-->
     <div class="wv-content x-wrapper">
       <div class="trial_nav bgcolor">
         <div class="trial_title">
