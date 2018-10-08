@@ -1,9 +1,10 @@
 <template>
   <div id="app">
     <transition :enter-active-class="enterAnimate" :leave-active-class="leaveAnimate">
-      <keep-alive>
+      <keep-alive v-if="$route.meta.keepAlive === true">
         <router-view/>
       </keep-alive>
+      <router-view v-if="$route.meta.keepAlive === false"/>
     </transition>
   </div>
 </template>
@@ -25,6 +26,7 @@ export default {
     }
   },
   created () {
+    console.log(this.$route.meta)
     // this.isIphoneX()
   },
   methods: {
@@ -49,6 +51,7 @@ export default {
   },
   watch: {
     $route (to, from) {
+      console.log(this.$route.meta.keepAlive)
       this.tabShow = to.meta.tabShow === undefined ? true : to.meta.tabShow
       let str = ''
       if (/[0-9]/.test(to.path)) {

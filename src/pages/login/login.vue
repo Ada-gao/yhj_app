@@ -105,7 +105,7 @@ export default {
         }).catch(() => {
           this.isLoading = false
           Toast.text({
-            duration: 1000,
+            duration: 100000,
             message: '请检查账号或密码是否有误'
           })
         })
