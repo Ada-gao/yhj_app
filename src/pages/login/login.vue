@@ -19,7 +19,7 @@
           <i v-if="asee==true" class="iconfont icon-yincang login_iconright" @click="iconSee"></i>
           <i v-if="asee==false" class="iconfont icon-yincang1 login_iconright" @click="iconSee"></i>
         </div>
-        <wv-button class="land" @click="ceshi" :is-loading="isLoading">登录</wv-button>
+        <wv-button class="land" @click="login" :is-loading="isLoading">登录</wv-button>
       </div>
       <div class="login_Application" @click="$router.push('/login/trial')">申请体验</div>
     </div>
@@ -119,11 +119,6 @@ export default {
         this.asee = true
         this.inputType = 'password'
       }
-    },
-    ceshi () {
-      getLatestVersion(10, 'android').then(res => {
-        console.log(res)
-      })
     }
   }
 }
