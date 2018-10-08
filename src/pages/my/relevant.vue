@@ -11,10 +11,11 @@
         <img :src="logoImg" style="max-width: 100%">
       </div>
       <p class="app_name">闪电呼</p>
-      <p class="app_edition">客户端版本号：1.0</p>
+      <p class="app_edition">客户端版本号：{{ version }}({{ build }})</p>
+      <p class="app_edition">Build时间：{{ buildDate | moment }}</p>
       <div class="company_content">
         <p class="company">版权所有：上海数赟科技有限公司</p>
-        <p class="app_txt">Copyright © 2018 shuyun.All Rights Reserved</p>
+        <p class="app_txt">Copyright © 2018 Shuyun.All Rights Reserved</p>
         <p class="app_weixin">微信公众号：gh_374030c43f3c<small style="font-size: 100%;color: #306ce2;" v-clipboard:copy="message" v-clipboard:success="onCopy">一键复制</small></p>
       </div>
     </div>
@@ -23,12 +24,16 @@
 <script>
 import logoImg from '../../assets/images/lo.png'
 import { Toast } from 'we-vue'
+import Vue from 'vue'
 export default {
   data () {
     return {
       logoImg,
       detailsreturn: false,
-      message: 'gh_374030c43f3c'
+      message: 'gh_374030c43f3c',
+      version: Vue.cordova.appInfo.version,
+      build: Vue.cordova.appInfo.build,
+      buildDate: Vue.cordova.appInfo.compileDate
     }
   },
   methods: {

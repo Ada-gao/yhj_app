@@ -19,12 +19,7 @@ Vue.use(WeVue)
 Vue.component('v-distpicker', VDistpicker)
 Vue.use(VueClipboard)
 
-if ('addEventListener' in document) {
-  document.addEventListener('DOMContentLoaded', function () {
-    FastClick.attach(document.body)
-  }, false)
-}
-// FastClick.attach(document.body)
+FastClick.attach(document.body)
 
 Vue.use(VueCordova)
 

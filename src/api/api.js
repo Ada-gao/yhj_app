@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { Toast } from 'we-vue'
+import router from '../router'
 
 axios.defaults.baseURL = process.env.BASE_API
 axios.defaults.timeout = 15000
@@ -19,18 +20,13 @@ axios.interceptors.response.use(response => {
   if (error.response.status === 401) {
     localStorage.removeItem('token')
     Toast.text({
-      duration: 1000,
-      message: '该账户已失效，请联系管理员！'
+      duration: 2000,
+      message: '回话已过期，请重新登录！'
     })
-    this.$router.replace({
+    router.replace({
       path: '/login',
-      query: {redirect: this.$router.currentRoute.fullPath}
+      query: {redirect: router.currentRoute.fullPath}
     })
-  } else {
-    // this.$toast.fail({
-    //   duration: 2000,
-    //   message: error.response
-    // })
   }
   return Promise.reject(error.response)
 })

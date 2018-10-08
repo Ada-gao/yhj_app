@@ -6,12 +6,12 @@ const pluginsList = [
   'cordova-plugin-file',
   'cordova-plugin-file-transfer',
   'cordova-plugin-statusbar',
-  'cordova-plugin-background-mode',
   'jpush-phonegap-plugin',
-  'cordova-plugin-splashscreen'
+  'skwas-cordova-plugin-appinfo'
 ]
 
 exports.install = (Vue, options) => {
+  console.log('Install plugins.....')
   // declare global Vue.cordova object
   Vue.cordova = Vue.cordova || {
     deviceready: false,
