@@ -106,7 +106,7 @@
 import thumbSmall from '../../assets/images/icon_tabbar.png'
 import task from '@/assets/images/task.png'
 import { getUser, getStatisGroup, getRank, getRandom, getLatestVersion } from '@/api/api'
-import { timeDate, parseTime } from '@/utils'
+import { timeDate } from '@/utils'
 import MyProgress from '@/components/progress'
 import { Toast } from 'we-vue'
 import Vue from 'vue'
@@ -136,7 +136,8 @@ export default {
       versionClose: true,
       promptText: '',
       versionVisible: false,
-      versionData: ''
+      versionData: '',
+      appPackage: 'com.shuyun365.flashcall'
     }
   },
   created () {
@@ -145,9 +146,12 @@ export default {
     /* global cordova */
     cordova.getAppVersion.getVersionCode(function (version) {
       // alert(_this.devicePlatform)
-      _this.versions = version
-      _this.updateVersionApp(_this.versions, _this.devicePlatform)
+      _this.versionCode = version
+      let versionName = Vue.cordova.appInfo.version
+      _this.updateVersionApp(_this.appPackage, _this.devicePlatform, versionName, _this.versionCode)
     })
+    // console.log('ceshi')
+    // console.log(Vue.cordova.appInfo)
     // 获取当前移动设备已经安装的版本
     // const devicePlatform = Vue.cordova.device.platform
     // // alert(devicePlatform)
@@ -171,6 +175,7 @@ export default {
     //   console.log(res)
     // })
     this.getList()
+    // this.updateVersionApp(this.appPackage, 'Android', '0.0', 10)
     // this.versionApp(10)
     // setTimeout(, 2000)
   },
@@ -223,18 +228,18 @@ export default {
     },
     closeVersion () {
       this.versionVisible = false
-      sessionStorage.setItem('closeVersion', true)
+      sessionStorage.setItem('closeVersions', true)
       // localStorage.setItem('versionRemark', this.versionVisible)
     },
     completeTask () {
       this.completetoday = false
     },
-    updateVersionApp (versions, devicePlatform) {
-      let closeData = sessionStorage.getItem('closeVersion')
+    updateVersionApp (appPackage, platform, versionName, versionCode) {
+      let closeData = sessionStorage.getItem('closeVersions')
       if (closeData) {
         this.versionVisible = false
       } else {
-        getLatestVersion(versions, devicePlatform).then(res => {
+        getLatestVersion(appPackage, platform, versionName, versionCode).then(res => {
           this.versionData = res.data
           this.packageUrl = res.data.packageUrl
           if (res.data) {
@@ -242,18 +247,12 @@ export default {
             this.versionVisible = true
             this.packageUrl = res.data.packageUrl
             this.promptText = res.data.promptText
-            let updateDeadline = parseTime(res.data.updateDeadline, '{y}-{m}-{d}') + ' ' + res.data.updateDeadlineTime
-            updateDeadline = updateDeadline.replace(/-/g, '/')
-            let timeToday = new Date()
-            let updatatime = new Date(Date.parse(updateDeadline))
             if (res.data.promptType === 'Silence') { // 静默
               this.versionVisible = false
             } else if (res.data.promptType === 'Force') { // 强制升级
               this.versionClose = false
-            } else if (res.data.promptType === 'Recommend' && updatatime >= timeToday) { // 推荐升级
+            } else if (res.data.promptType === 'Recommend') { // 推荐升级
               this.versionClose = true
-            } else if (res.data.promptType === 'Recommend' && updatatime <= timeToday) { // 推荐升级限制时间已到
-              this.versionClose = false
             }
           } else {
             this.versionVisible = false

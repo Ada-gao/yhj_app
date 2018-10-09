@@ -218,26 +218,4 @@ export default {
     background: linear-gradient(to right, #5d90f4 , #2f6be2);
     box-shadow: 0px 7px 29px 1px rgba(13,67,173,0.5);
   }
-  /*.feedback_img{*/
-    /*width: 2rem;*/
-    /*height: 2rem;*/
-    /*background-color: #ffffff;*/
-  /*}*/
-  /*.feedback_upload{*/
-    /*width: 3.46rem;*/
-    /*height: 3.16rem;*/
-    /*float: left;*/
-  /*}*/
-  /*.feedback_uploadimg{*/
-    /*float: left;*/
-    /*width: 20%;*/
-    /*height: 3.2rem;*/
-    /*margin-right: 0.5rem;*/
-  /*}*/
-  /*.feedback_upload>img{*/
-    /*max-width: 100%;*/
-  /*}*/
-  /*.weui-toast_text .weui-toast__content[data-v-4af60de0]{*/
-    /*font-size: .6em;*/
-  /*}*/
 </style>

@@ -58,7 +58,8 @@ routes.push({
   meta: {
     title: '登录',
     description: '登录',
-    tabShow: false
+    tabShow: false,
+    keepAlive: false
   }
 })
 

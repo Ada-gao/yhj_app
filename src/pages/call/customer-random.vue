@@ -114,7 +114,10 @@ export default {
     // this.nextStepOptions = queryObj.nextStep
     // this.callResult = queryObj.callResult
     this.type = this.$route.params.type
+    sessionStorage.setItem('type', this.type)
+    // console.log(this.type)
     this.groupId = this.$route.params.groupId
+    sessionStorage.setItem('groupId', this.groupId)
     if (Object.keys(this.$route.query).length) {
       this.form = this.$route.query
       if (this.form.lastCallResult === '未外呼') {
