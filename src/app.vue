@@ -26,7 +26,7 @@ export default {
     }
   },
   created () {
-    console.log(this.$route.meta)
+    console.log(this.$route.meta.keepAlive)
     // this.isIphoneX()
   },
   methods: {
@@ -51,7 +51,6 @@ export default {
   },
   watch: {
     $route (to, from) {
-      console.log(this.$route.meta.keepAlive)
       this.tabShow = to.meta.tabShow === undefined ? true : to.meta.tabShow
       let str = ''
       if (/[0-9]/.test(to.path)) {

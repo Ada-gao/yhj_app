@@ -1,4 +1,6 @@
 import { Dialog, Toast } from 'we-vue'
+import router from '@/router'
+
 // import { BackgroundMode } from '@ionic-native/background-mode'
 export const install = function (Vue, options, cb) {
   document.addEventListener('deviceready', () => {
@@ -39,6 +41,8 @@ export const install = function (Vue, options, cb) {
       // console.log(this.$router.currentRoute.path)
       let url = (location.href).split('#')[1]
       let urls = (location.href).split('#')[1].substring(0, 17)
+      let urlsRandom = (location.href).split('#')[1].substring(0, 21)
+      // alert(urlsRandom)
       if (url === '/home' || url === '/profile' || url === '/login') {
         if (navigator.app) {
           Dialog({
@@ -62,6 +66,15 @@ export const install = function (Vue, options, cb) {
           message: '强制返回会导致您的数据问题哦！'
         })
         window.close()
+      } else if (urlsRandom === '/call/customer-random') {
+        if (sessionStorage.getItem('type') === '1') {
+          alert('1')
+          router.push('/home')
+        } else {
+          router.push({name: 'call', params: {groupId: sessionStorage.getItem('groupId')}})
+        }
+      } else if (urlsRandom === '/call') {
+        router.push({name: 'home'})
       } else {
         history.back(-1)
       }

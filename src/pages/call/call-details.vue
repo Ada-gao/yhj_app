@@ -168,17 +168,14 @@ export default {
         this.history.outboundTaskId = this.form.taskId
         this.history.callType = this.form.phoneNo.indexOf('*') > -1 ? 'THIRD_PLATFORM' : 'NATIVE'
         this.history.common = this.form.common
-        // console.log('总时长' + this.callTime.duration)
         getTaskHistory(this.history).then(res => {
           this.customerInfor(params)
-        }).catch(() => {
-          // alert('开始时间' + this.history.actualCallStartDate + '结束时间' + this.history.acutalCallEndDate)
-          // alert('外呼结果保存失败' + error)
         })
       }
     },
     customerInfor (params) {
       updateOutboundName(this.form.outboundNameId, params).then(res => {
+        Toast.success('提交成功')
         if (this.groupId === undefined) {
           getRandom().then(res => {
             let randomData = res.data
@@ -196,12 +193,8 @@ export default {
             } else {
               this.$router.push({path: '/call/customer-random/0/' + this.groupId, query: data})
             }
-          }).catch(() => {
-            // alert(error)
           })
         }
-      }).catch(() => {
-        // console.log(error)
       })
     },
     getCallHistory (duration) {

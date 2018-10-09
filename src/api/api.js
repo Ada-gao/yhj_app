@@ -94,6 +94,6 @@ export const getCompleteStatus = (userId) => axios.get('/task/saleDailyCompleteS
 // 外呼扣费
 export const getCallMoney = (params) => axios.post('/call/call/recordCallHistory', params)
 // 对比版本
-export const getLatestVersion = (versionCode, platform) => axios.get('/app/getLatestVersion/{versionCode}?versionCode=' + versionCode + '&platform=' + platform)
+export const getLatestVersion = (appPackage, platform, versionName, versionCode) => axios.get('/app/getLatestVersion?appPackage=' + appPackage + '&platform=' + platform + '&versionName=' + versionName + '&versionCode=' + versionCode)
 // 下载app地址
 export const getPackage = (fileUuid) => axios.get('/version/getPackage?fileUuid=' + fileUuid)
