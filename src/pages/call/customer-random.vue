@@ -256,7 +256,7 @@ export default {
     -webkit-overflow-scrolling: touch;
   }
   .random_content{
-    position: fixed;
+    position: absolute;
     top: 327px;
     width: 100%;
     /*margin: auto;*/

@@ -5,9 +5,6 @@
         <router-view/>
       </keep-alive>
     </transition>
-    <!-- <transition :enter-active-class="enterAnimate" :leave-active-class="leaveAnimate">
-      <router-view v-if="!$route.meta.keepAlive"/>
-    </transition> -->
   </div>
 </template>
 
@@ -183,9 +180,9 @@ export default {
     right: 0;
     bottom: 0;
     /*!* height: 18.2rem; *!*/
-    /*overflow: hidden;*/
-    /*overflow-y: scroll;*/
-    /*-webkit-overflow-scrolling: touch;*/
+    overflow: hidden;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
   }
   .weui-tabbar__item{
     padding: 0;
