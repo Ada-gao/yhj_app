@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <transition :enter-active-class="enterAnimate" :leave-active-class="leaveAnimate">
-      <keep-alive v-if="$route.meta.keepAlive === true">
+      <keep-alive v-if="$route.meta.keepAlive">
         <router-view/>
       </keep-alive>
-      <router-view v-if="$route.meta.keepAlive === false"/>
+      <router-view v-if="!$route.meta.keepAlive"/>
     </transition>
   </div>
 </template>
@@ -26,7 +26,7 @@ export default {
     }
   },
   created () {
-    console.log(this.$route.meta.keepAlive)
+    // console.log(this.$route.meta.keepAlive)
     // this.isIphoneX()
   },
   methods: {
@@ -174,9 +174,9 @@ export default {
     right: 0;
     bottom: 0;
     /*!* height: 18.2rem; *!*/
-    /*overflow: hidden;*/
-    /*overflow-y: scroll;*/
-    /*-webkit-overflow-scrolling: touch;*/
+    overflow: hidden;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
   }
   .weui-tabbar__item{
     padding: 0;
