@@ -57,6 +57,7 @@ import { getTaskList } from '@/api/api'
 import { parseTime } from '@/utils'
 
 export default {
+  name: 'call',
   data () {
     return {
       content: 'notFinish',
@@ -95,9 +96,11 @@ export default {
       this.floading = true
       this.listQuery1.createTime = this.createTime
       getTaskList(this.groupId, this.listQuery1).then(res => {
+        console.log('flag ' + flag)
         let data = res.data.content
         this.taskList = data
         this.taskforlist()
+        // if (res.data.numberOfElements < res.data.size) return
         if (flag) {
           // 多次加载
           this.hList = this.hList.concat(data)
@@ -121,11 +124,11 @@ export default {
         let data = res.data.content
         this.taskList = data
         this.taskforlist()
+        // if (res.data.numberOfElements < res.data.size) flag = false
         if (flag) {
           // 多次加载
           this.fList = this.fList.concat(data)
           if (data.length === 0) {
-            console.log('wei')
             this.busy2 = true
           } else {
             this.busy2 = false
@@ -140,6 +143,7 @@ export default {
     loadMore1 () {
       this.busy = false
       this.listQuery1.pageIndex++
+      console.log('pageIndex ' + this.listQuery1.pageIndex)
       this.getList1(true)
     },
     loadMore2 () {
@@ -207,6 +211,7 @@ export default {
   created () {
     this.groupId = this.$route.params ? this.$route.params.groupId : undefined
   },
+  deactivated () {},
   mounted () {
     if (this.groupId) {
       this.getList1()

@@ -23,8 +23,8 @@ routes.push({
   meta: {
     title: '闪电呼',
     description: '闪电呼-首页',
-    requiresAuth: true,
-    keepAlive: false
+    requiresAuth: true
+    // keepAlive: false
   }
 })
 
@@ -34,8 +34,8 @@ routes.push({
   name: 'profile',
   meta: {
     title: '我的',
-    description: '我的',
-    keepAlive: true
+    description: '我的'
+    // keepAlive: false
   }
 })
 
@@ -46,8 +46,8 @@ routes.push({
   meta: {
     title: '数赟',
     description: '数赟 云呼叫',
-    tabShow: true,
-    keepAlive: true
+    tabShow: true
+    // keepAlive: true
   }
 })
 
@@ -58,8 +58,8 @@ routes.push({
   meta: {
     title: '登录',
     description: '登录',
-    tabShow: false,
-    keepAlive: false
+    tabShow: false
+    // keepAlive: false
   }
 })
 
@@ -71,8 +71,8 @@ routes.push({
     title: '申请试用',
     description: '试用',
     requiresAuth: false,
-    tabShow: false,
-    keepAlive: true
+    tabShow: false
+    // keepAlive: true
   }
 })
 // routes.push({
@@ -95,8 +95,8 @@ routes.push({
     title: '关于闪电呼',
     description: '关于',
     requiresAuth: false,
-    tabShow: false,
-    keepAlive: true
+    tabShow: false
+    // keepAlive: false
   }
 })
 
@@ -108,8 +108,8 @@ routes.push({
     title: 'customer-random',
     description: '已呼客户',
     requiresAuth: false,
-    tabShow: false,
-    keepAlive: false // true 表示需要使用缓存 false表示不需要被缓存
+    tabShow: false
+    // keepAlive: false // true 表示需要使用缓存 false表示不需要被缓存
   }
 })
 
@@ -121,8 +121,8 @@ routes.push({
     title: 'call-record',
     description: '外呼记录-拨打',
     requiresAuth: false,
-    tabShow: false,
-    keepAlive: true
+    tabShow: false
+    // keepAlive: true
   }
 })
 
@@ -134,8 +134,8 @@ routes.push({
     title: 'call-detail',
     description: '外呼记录-详情',
     requiresAuth: false,
-    tabShow: false,
-    keepAlive: true
+    tabShow: false
+    // keepAlive: true
   }
 })
 
@@ -147,8 +147,8 @@ routes.push({
     title: 'feedback',
     description: '问题反馈',
     requiresAuth: false,
-    tabShow: false,
-    keepAlive: true
+    tabShow: false
+    // keepAlive: false
   }
 })
 
