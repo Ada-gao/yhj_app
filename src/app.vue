@@ -1,10 +1,9 @@
 <template>
   <div id="app">
     <transition :enter-active-class="enterAnimate" :leave-active-class="leaveAnimate">
-      <keep-alive v-if="$route.meta.keepAlive">
+      <keep-alive :include="includeComponent">
         <router-view/>
       </keep-alive>
-      <router-view v-if="!$route.meta.keepAlive"/>
     </transition>
   </div>
 </template>
@@ -22,7 +21,8 @@ export default {
         black: ['/call/customer-random', '/login']
       },
       enterAnimate: '', // 页面进入动效
-      leaveAnimate: '' // 页面离开动效
+      leaveAnimate: '', // 页面离开动效
+      includeComponent: 'call'
     }
   },
   created () {
@@ -69,8 +69,14 @@ export default {
           Vue.cordova.statusBar.show()
         }
       }
+      // keep-alive include
+      if (to.name === 'home') {
+        this.includeComponent = ''
+      } else {
+        this.includeComponent = 'call'
+      }
       // 增加进入淡出动画效果
-      console.log('from ' + from.path + ' to ' + to.path)
+      // console.log('from ' + from.path + ' to ' + to.path)
       if (from.path === '/login' || to.path === '/login') {
         this.enterAnimate = ''
         this.leaveAnimate = ''
