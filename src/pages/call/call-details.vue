@@ -24,22 +24,22 @@
         <p class="infor_title">客户信息</p>
         <div class="info_list">
           <p class="info_left">姓名</p>
-          <input class="info_cont" v-model="form.contactName">
+          <input class="info_cont" v-model="form.contactName" maxlength="20">
           <p class="iconfont icon-fanhui info_right"></p>
         </div>
         <div class="info_list">
           <p class="info_left">电话</p>
-          <input class="info_cont" v-model="form.phoneNo">
+          <input class="info_cont" v-model="form.phoneNo" maxlength="11">
           <p class="iconfont icon-fanhui info_right"></p>
         </div>
         <div class="info_list">
           <p class="info_left">微信</p>
-          <input class="info_cont" v-model="form.wechatNo">
+          <input class="info_cont" v-model="form.wechatNo" maxlength="20">
           <p class="iconfont icon-fanhui info_right"></p>
         </div>
         <div class="info_lists">
           <p class="info_left" style="margin-top: 10px">备注</p>
-          <textarea rows="5" class="record_txt" v-model="form.common"></textarea>
+          <textarea rows="5" class="record_txt" v-model="form.common" maxlength="100"></textarea>
         </div>
       </div>
       <div class="details_button" @click="submitCall">
