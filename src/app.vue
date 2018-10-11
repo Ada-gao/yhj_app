@@ -317,7 +317,3 @@ export default {
     animation: slideInUp ease .3s;
   }
 </style>
-
-<style>
-  /* @import "assets/css/lib/animate.css"; */
-</style>
