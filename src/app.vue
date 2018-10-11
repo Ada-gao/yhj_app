@@ -26,7 +26,6 @@ export default {
     }
   },
   created () {
-    // console.log(this.$route.meta.keepAlive)
     // this.isIphoneX()
   },
   methods: {
@@ -106,6 +105,7 @@ export default {
 }
 </script>
 <style lang="scss">
+  @import "assets/css/lib/animate.css";
   .bgcolor{  //导航颜色
     background-color: #ffffff!important;
   }
@@ -319,5 +319,5 @@ export default {
 </style>
 
 <style>
-  @import "assets/css/lib/animate.css";
+  /* @import "assets/css/lib/animate.css"; */
 </style>
