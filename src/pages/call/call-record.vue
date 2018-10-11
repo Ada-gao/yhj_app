@@ -175,7 +175,7 @@ export default {
  }
   .info_text{
     width: 100%;
-    height: 558px;
+    /*height: 558px;*/
     box-shadow: 6px 4px 20px rgba(219,219,219,0.3);
     background: #ffffff;
     margin-top: 30px;
@@ -191,5 +191,7 @@ export default {
     margin: 0 auto;
     color: #252525;
     font-size: 28px;
+    clear: both;
+    word-wrap:break-word
   }
 </style>

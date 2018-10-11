@@ -6,7 +6,7 @@
         <p class="head_return">返回</p>
       </div>
     </wv-header>
-    <div class="x-wrapper v-random-content" style="width: 100%">
+    <div class="x-wrapper v-random-content" style="width: 100%" ref="randomPage">
       <div class="random_bgimg" >
         <!--<img :src="photoImg">-->
       </div>
@@ -141,6 +141,7 @@ export default {
     }
   },
   mounted () {
+    window.addEventListener('scroll', this.handleScroll, true)
     let devicePlatform = Vue.cordova.device.platform
     if (devicePlatform === 'Android') {
       this.device = 'android'
@@ -242,6 +243,10 @@ export default {
     buttoneturn () {
       this.detailsreturn = false
       this.$router.replace({path: '/call'})
+    },
+    handleScroll () {
+      let scrollTop = this.$refs.randomPage.scrollTop
+      console.log(scrollTop)
     }
   }
 }
