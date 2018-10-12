@@ -245,8 +245,8 @@ export default {
       this.$router.replace({path: '/call'})
     },
     handleScroll () {
-      let scrollTop = this.$refs.randomPage.scrollTop
-      console.log(scrollTop)
+      // let scrollTop = this.$refs.randomPage.scrollTop
+      // console.log(scrollTop)
     }
   }
 }
@@ -256,9 +256,9 @@ export default {
     position: absolute;
     top:0;
     bottom: 0;
-    overflow: hidden;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
+    /*overflow: hidden;*/
+    /*overflow-y: scroll;*/
+    /*-webkit-overflow-scrolling: touch;*/
   }
   .random_content{
     position: absolute;

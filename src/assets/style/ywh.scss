@@ -2,10 +2,11 @@
 html,
 body {
   background-color: #F5F5F5;;
-  user-select: none;
+  user-select: auto;
   margin: 0;
   padding: 0;
   height: 100%;
+  -webkit-user-select: auto;
 }
 ul, ol {
   list-style: none;

@@ -97,3 +97,5 @@ export const getCallMoney = (params) => axios.post('/call/call/recordCallHistory
 export const getLatestVersion = (appPackage, platform, versionName, versionCode) => axios.get('/app/getLatestVersion?appPackage=' + appPackage + '&platform=' + platform + '&versionName=' + versionName + '&versionCode=' + versionCode)
 // 下载app地址
 export const getPackage = (fileUuid) => axios.get('/version/getPackage?fileUuid=' + fileUuid)
+// 提交表外呼记录成功后执行-给客户发消息
+export const postMessage = (companyId, outboundNameId, userName, contactName, phoneNum) => axios.post('/message/delaySend?companyId=' + companyId + '&outboundNameId=' + outboundNameId + '&userName=' + userName + '&contactName=' + contactName + '&phoneNum=' + phoneNum)

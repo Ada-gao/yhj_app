@@ -69,6 +69,7 @@ router.afterEach((to) => {
 })
 
 router.beforeEach((to, from, next) => {
+  // console.log(to.name)
   // 未显示申明，默认必须登录
   const requiresAuth = to.meta.requiresAuth === undefined ? true : to.meta.requiresAuth
   if (to.path === '/login') {

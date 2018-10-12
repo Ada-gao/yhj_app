@@ -183,7 +183,7 @@ export default {
     getList () {
       getUser().then(res => {
         this.name = res.data.name
-        localStorage.setItem('userId', res.data.id)
+        localStorage.setItem('userInfor', JSON.stringify(res.data))
         getRank(res.data.id).then(res => {
           this.form = res.data
           this.form.dailyEffectiveDuration = timeDate(res.data.dailyEffectiveDuration)

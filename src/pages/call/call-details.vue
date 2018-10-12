@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { getTaskHistory, getCallStatus, updateOutboundName, getTaskList, getRandom, getCallMoney } from '@/api/api'
+import { getTaskHistory, getCallStatus, updateOutboundName, getTaskList, getRandom, getCallMoney, postMessage } from '@/api/api'
 import { timeDate, conversionTime } from '@/utils'
 import { Toast } from 'we-vue'
 export default {
@@ -72,6 +72,7 @@ export default {
       callTime: {},
       callTimes: '',
       callId: '',
+      userInfor: JSON.parse(localStorage.getItem('userInfor')),
       actionValue: [],
       resultsPickerShow: false,
       actionPickerShow: false,
@@ -175,6 +176,7 @@ export default {
     },
     customerInfor (params) {
       updateOutboundName(this.form.outboundNameId, params).then(res => {
+        this.goMessage()
         Toast.success('提交成功')
         if (this.groupId === undefined) {
           getRandom().then(res => {
@@ -204,13 +206,17 @@ export default {
         clientName: this.form.contactName,
         duration: duration,
         phoneNum: this.form.phoneNo,
-        saleId: localStorage.getItem('userId')
+        saleId: this.userInfor.id
       }
       // console.log('callType：' + params.callType + 'clientId：' + params.clientId + 'clientName：' + params.clientName + 'duration：' + params.duration + 'phoneNum：' + params.phoneNum + 'saleId：' + params.saleId)
       getCallMoney(params).then(res => {
         // console.log('挂断保存成功')
       }).catch(() => {
         console.log('挂断提交时间失败')
+      })
+    },
+    goMessage () {
+      postMessage(this.userInfor.companyId, this.form.outboundNameId, this.userInfor.name, this.form.contactName, this.form.phoneNo).then(res => {
       })
     }
   }

@@ -179,6 +179,7 @@ export default {
     border: 0px solid;
     line-height: 40px;
     background-color: #ffffff;
+    -webkit-tap-highlight-color:transparent;
     outline: none;
     font-size: 28px;
   }

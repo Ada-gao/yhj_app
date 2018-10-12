@@ -69,11 +69,11 @@ export default {
         }
       }
       // keep-alive include
-      if (to.name === 'home') {
-        this.includeComponent = ''
-      } else {
-        this.includeComponent = 'call'
-      }
+      // if (to.name === 'home') {
+      //   this.includeComponent = ''
+      // } else {
+      //   this.includeComponent = 'call'
+      // }
       // 增加进入淡出动画效果
       // console.log('from ' + from.path + ' to ' + to.path)
       if (from.path === '/login' || to.path === '/login') {
@@ -180,9 +180,9 @@ export default {
     right: 0;
     bottom: 0;
     /*!* height: 18.2rem; *!*/
-    overflow: hidden;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
+    /*overflow: hidden;*/
+    /*overflow-y: scroll;*/
+    /*-webkit-overflow-scrolling: touch;*/
   }
   .weui-tabbar__item{
     padding: 0;

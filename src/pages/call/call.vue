@@ -191,7 +191,6 @@ export default {
     todetails (item) {
       sessionStorage.setItem('createTime', this.createTime)
       // this.$router.push({name: 'customer-details', params: item})
-      console.log(item)
       this.$router.push({path: '/call/customer-random/0/' + this.groupId, query: item})
     },
     taskforlist () {
@@ -217,16 +216,14 @@ export default {
       this.getList1()
       this.getList2(false)
     }
-  },
-  computed: {
-    /*  filterResult () {
-          var allCustomers = []
-          this.users.map(user => {
-            allCustomers = allCustomers.concat(user.customers)
-          })
-          return allCustomers.filter(value => new RegExp(this.keyword, 'i').test(value.name))
-        } */
   }
+  // beforeRouteLeave (to, from, next) {
+  //   if (to.name === 'home') {
+  //     this.$destroy()
+  //   }
+  //   next()
+  //   console.log(to.name)
+  // }
 }
 </script>
 
