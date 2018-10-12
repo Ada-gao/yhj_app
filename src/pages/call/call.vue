@@ -209,6 +209,7 @@ export default {
   },
   created () {
     this.groupId = this.$route.params ? this.$route.params.groupId : undefined
+    // console.log(this.groupId)
   },
   deactivated () {},
   mounted () {
@@ -216,14 +217,29 @@ export default {
       this.getList1()
       this.getList2(false)
     }
+  },
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      vm.groupId = vm.$route.params ? vm.$route.params.groupId : undefined
+      if (from.path === '/home' && to.path === '/call') {
+        vm.listQuery1.pageIndex = 0
+        vm.createTime = parseTime(new Date(), '{y}-{m}-{d}')
+        if (vm.groupId) {
+          vm.getList1()
+          vm.getList2(false)
+        }
+      } else if ((from.path === '/call/call-detail' && to.path === '/call')) {
+        vm.listQuery1.pageIndex = 0
+        vm.createTime = parseTime(new Date(), '{y}-{m}-{d}')
+        if (vm.groupId) {
+          vm.getList1()
+          vm.getList2(false)
+        }
+      }
+    })
+    console.log(to.path)
+    console.log(from.path)
   }
-  // beforeRouteLeave (to, from, next) {
-  //   if (to.name === 'home') {
-  //     this.$destroy()
-  //   }
-  //   next()
-  //   console.log(to.name)
-  // }
 }
 </script>
 

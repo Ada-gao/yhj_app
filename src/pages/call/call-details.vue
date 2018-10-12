@@ -216,6 +216,7 @@ export default {
       })
     },
     goMessage () {
+      alert(this.userInfor.companyId + ',' + this.form.outboundNameId + ',' + this.userInfor.name + ',' + this.form.contactName + ',' + this.form.phoneNo)
       postMessage(this.userInfor.companyId, this.form.outboundNameId, this.userInfor.name, this.form.contactName, this.form.phoneNo).then(res => {
       })
     }
