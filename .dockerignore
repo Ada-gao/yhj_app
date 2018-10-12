@@ -1,0 +1,10 @@
+platforms/android
+platforms/ios
+platforms/browser
+node_modules
+plugins/*
+!plugins/.gitignre
+!plugins/.gitkeep
+www/*
+!www/.gitignre
+!www/.gitkeep
