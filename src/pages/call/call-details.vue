@@ -38,7 +38,7 @@
           <p class="iconfont icon-fanhui info_right"></p>
         </div>
         <div class="info_lists">
-          <p class="info_left" style="margin-top: 10px">备注</p>
+          <p class="infos_left">备注</p>
           <textarea rows="5" class="record_txt" v-model="form.common" maxlength="100"></textarea>
         </div>
       </div>
@@ -216,8 +216,8 @@ export default {
       })
     },
     goMessage () {
-      alert(this.userInfor.companyId + ',' + this.form.outboundNameId + ',' + this.userInfor.name + ',' + this.form.contactName + ',' + this.form.phoneNo)
-      postMessage(this.userInfor.companyId, this.form.outboundNameId, this.userInfor.name, this.form.contactName, this.form.phoneNo).then(res => {
+      alert(this.userInfor.companyId + ',' + this.form.outboundNameId + ',' + this.userInfor.name + ',' + this.form.contactName)
+      postMessage(this.userInfor.companyId, this.form.outboundNameId, this.userInfor.name, this.form.contactName).then(res => {
       })
     }
   }
@@ -317,10 +317,17 @@ export default {
   }
   .info_list>p,.info_cont{
     float: left;
-    height: 93px;
-    line-height: 93px;
+    height: 109px;
+    /*line-height: 93px;*/
+  }
+  .infos_left{
+    font-size: 28px;
+    width: 20%;
+    color: #323232;
+    margin-top: 10px
   }
   .info_left{
+    line-height: 109px;
     font-size: 28px;
     width: 20%;
     color: #323232;
@@ -335,6 +342,7 @@ export default {
   }
   .info_right{
     color:#e9e9e9;
+    line-height: 109px;
     font-size: 39px;
     width: 10%;
     transform:rotate(180deg);

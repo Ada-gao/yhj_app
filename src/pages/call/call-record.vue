@@ -7,22 +7,22 @@
         <p class="infor_title">客户信息</p>
         <div class="info_list">
           <p class="info_left">姓名</p>
-          <input class="info_cont" :placeholder="form.contactName" v-model="form.contactName">
+          <input class="info_cont" v-model="form.contactName" maxlength="20">
           <p class="iconfont icon-fanhui info_right"></p>
         </div>
         <div class="info_list">
           <p class="info_left">电话</p>
-          <input class="info_cont" :placeholder="form.phoneNo" v-model="form.phoneNo">
+          <input class="info_cont" v-model="form.phoneNo" maxlength="11">
           <p class="iconfont icon-fanhui info_right"></p>
         </div>
         <div class="info_list">
           <p class="info_left">微信</p>
-          <input class="info_cont" :placeholder="form.wechatNo" v-model="form.wechatNo">
+          <input class="info_cont" v-model="form.wechatNo" maxlength="20">
           <p class="iconfont icon-fanhui info_right"></p>
         </div>
         <div class="info_lists">
-          <p class="info_left" style="margin-top: 10px">备注</p>
-          <textarea rows="5" :placeholder="form.common" class="record_txt" v-model="form.common"></textarea>
+          <p class="infos_left">备注</p>
+          <textarea rows="5" class="record_txt" v-model="form.common" maxlength="100"></textarea>
         </div>
       </div>
       <div class="info_text">
@@ -136,6 +136,7 @@ export default {
     border: 2px solid #e9e9e9;
     border-radius: 6px;
     outline: none!important;
+    -webkit-tap-highlight-color:transparent;
   }
   .info_lists{
     width: 86%;
@@ -144,10 +145,16 @@ export default {
   }
 .info_list>p,.info_cont{
   float: left;
-  height: 93px;
-  line-height: 93px;
+  height: 109px;
+}
+.infos_left{
+  margin-top: 10px;
+  font-size: 28px;
+  width: 20%;
+  color: #323232;
 }
   .info_left{
+    line-height: 109px;
     font-size: 28px;
     width: 20%;
     color: #323232;
@@ -161,6 +168,7 @@ export default {
     -webkit-tap-highlight-color: rgba(0,0,0,0)
   }
   .info_right{
+    line-height: 209px;
     color:#e9e9e9;
     font-size: 39px;
     width: 10%;
@@ -170,9 +178,6 @@ export default {
     -webkit-transform:rotate(180deg);
     -o-transform:rotate(180deg);
   }
- input::-webkit-input-placeholder{
-   color: #000000;
- }
   .info_text{
     width: 100%;
     /*height: 558px;*/

@@ -98,4 +98,4 @@ export const getLatestVersion = (appPackage, platform, versionName, versionCode)
 // 下载app地址
 export const getPackage = (fileUuid) => axios.get('/version/getPackage?fileUuid=' + fileUuid)
 // 提交表外呼记录成功后执行-给客户发消息
-export const postMessage = (companyId, outboundNameId, userName, contactName, phoneNum) => axios.post('/message/delaySend?companyId=' + companyId + '&outboundNameId=' + outboundNameId + '&userName=' + userName + '&contactName=' + contactName + '&phoneNum=' + phoneNum)
+export const postMessage = (companyId, outboundNameId, userName, contactName) => axios.post('/message/delaySend?companyId=' + companyId + '&outboundNameId=' + outboundNameId + '&userName=' + userName + '&contactName=' + contactName)

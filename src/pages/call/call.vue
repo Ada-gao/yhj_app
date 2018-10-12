@@ -237,8 +237,6 @@ export default {
         }
       }
     })
-    console.log(to.path)
-    console.log(from.path)
   }
 }
 </script>
