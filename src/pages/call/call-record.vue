@@ -12,7 +12,7 @@
         </div>
         <div class="info_list">
           <p class="info_left">电话</p>
-          <input class="info_cont" v-model="form.phoneNo" maxlength="11">
+          <input class="info_cont" v-model="form.mobileNo" maxlength="11">
           <p class="iconfont icon-fanhui info_right"></p>
         </div>
         <div class="info_list">
