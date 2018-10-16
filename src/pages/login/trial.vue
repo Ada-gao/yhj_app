@@ -194,7 +194,9 @@ export default {
         industry: null,
         industryType: this.industry,
         orgSize: this.orgSize,
-        status: 0
+        status: 0,
+        productType: '闪电呼',
+        source: 'app'
       }
       if (this.mobile === '' || this.mobile.length < 11) {
         Toast({

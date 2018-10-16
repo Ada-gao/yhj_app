@@ -216,8 +216,8 @@ export default {
       })
     },
     goMessage () {
-      // alert(this.userInfor.companyId + ',' + this.form.outboundNameId + ',' + this.userInfor.name + ',' + this.form.contactName)
-      postMessage(this.userInfor.companyId, this.form.outboundNameId, this.userInfor.name, this.form.contactName).then(res => {
+      // alert(this.userInfor.companyId + ',' + this.form.outboundNameId + ',' + this.userInfor.username + ',' + this.form.contactName)
+      postMessage(this.userInfor.companyId, this.form.outboundNameId, this.userInfor.username, this.form.contactName).then(res => {
       })
     }
   }
