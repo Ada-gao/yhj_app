@@ -128,7 +128,7 @@ export default {
     width: 100%;
     background: url('../../assets/images/bgimage.jpg') center center no-repeat;
     background-size: cover;
-    position: absolute;
+    position: fixed;
     top: 0;
     bottom: 0;
   }
