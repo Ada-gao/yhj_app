@@ -103,7 +103,8 @@ export default {
         actualCallStartDate: '',
         acutalCallEndDate: '',
         outboundTaskId: '',
-        common: ''
+        common: '',
+        source: 'app'
       },
       listQuery1: {
         pageIndex: 0,
@@ -206,7 +207,8 @@ export default {
         clientName: this.form.contactName,
         duration: duration,
         phoneNum: this.form.phoneNo,
-        saleId: this.userInfor.id
+        saleId: this.userInfor.id,
+        source: 'app'
       }
       // console.log('callType：' + params.callType + 'clientId：' + params.clientId + 'clientName：' + params.clientName + 'duration：' + params.duration + 'phoneNum：' + params.phoneNum + 'saleId：' + params.saleId)
       getCallMoney(params).then(res => {
