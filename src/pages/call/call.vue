@@ -26,6 +26,7 @@
           </div>
         </div>
       </div>
+      <div v-show="content==='notFinish'">
       <div class="page-infinite-wrapper" v-show="content==='notFinish'">
         <div class="call_list" v-for="(item, index) in hList" :key="index" @click="todetails(item)">
           <p class="call_left">{{item.contactName}}</p>
@@ -38,7 +39,11 @@
           <wv-spinner type="snake" color="#444" :size="24"></wv-spinner>
         </p>
       </div>
-      <div class="page-infinite-wrapper" v-show="content==='finish'">
+        <p class="task_state" v-show="hList == '' && floading === false">— 暂无数据 —</p>
+        <p class="task_state" v-show="hList != '' && floading === true">— 我是有底线的 —</p>
+      </div>
+      <div v-show="content==='finish'">
+      <div class="page-infinite-wrapper">
         <div class="call_list" v-for="(item, index) in fList" :key="index" @click="todetails(item)">
           <p class="call_left">{{item.contactName}}</p>
           <p class="call_cont">{{item.lastCallResult}}</p>
@@ -48,6 +53,9 @@
         <p class="loading-tips" v-show="floading" style="text-align: center">
           <wv-spinner type="snake" color="#444" :size="24"></wv-spinner>
         </p>
+      </div>
+        <p class="task_state" v-show="fList == '' && floading === false">— 暂无数据 —</p>
+        <p class="task_state" v-show="fList != '' && floading === true">— 我是有底线的 —</p>
       </div>
     </div>
   </div>
@@ -245,6 +253,11 @@ export default {
   /*.call_content{*/
    /*padding-top: 80px;*/
   /*}*/
+  .task_state{
+    text-align: center;
+    padding-top: 10px;
+    color: #C0C0C0;
+  }
   .call_time{
     height: 190px;
     width: 100%;
