@@ -68,7 +68,7 @@ export const install = function (Vue, options, cb) {
         window.close()
       } else if (urlsRandom === '/call/customer-random') {
         if (sessionStorage.getItem('type') === '1') {
-          alert('1')
+          // alert('1')
           router.push('/home')
         } else {
           router.push({name: 'call', params: {groupId: sessionStorage.getItem('groupId')}})
