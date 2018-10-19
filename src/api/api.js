@@ -99,3 +99,5 @@ export const getLatestVersion = (appPackage, platform, versionName, versionCode)
 export const getPackage = (fileUuid) => axios.get('/version/getPackage?fileUuid=' + fileUuid)
 // 提交表外呼记录成功后执行-给客户发消息
 export const postMessage = (companyId, outboundNameId, userName, contactName) => axios.post('/message/delaySend?companyId=' + companyId + '&outboundNameId=' + outboundNameId + '&userName=' + userName + '&contactName=' + contactName)
+// 今日任务完成状态
+export const getTaskStatus = (userId) => axios.get('/task/saleDailyCompleteStatus?userId=' + userId)

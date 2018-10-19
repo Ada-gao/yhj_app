@@ -105,7 +105,7 @@
 <script>
 import thumbSmall from '../../assets/images/icon_tabbar.png'
 import task from '@/assets/images/task.png'
-import { getUser, getStatisGroup, getRank, getRandom, getLatestVersion } from '@/api/api'
+import { getUser, getStatisGroup, getRank, getRandom, getLatestVersion, getTaskStatus } from '@/api/api'
 import { timeDate } from '@/utils'
 import MyProgress from '@/components/progress'
 import { Toast } from 'we-vue'
@@ -183,6 +183,7 @@ export default {
     getList () {
       getUser().then(res => {
         this.name = res.data.name
+        let id = res.data.id
         localStorage.setItem('userInfor', JSON.stringify(res.data))
         getRank(res.data.id).then(res => {
           this.form = res.data
@@ -191,10 +192,12 @@ export default {
           this.percent = this.form.dailyTaskCompleteCnt * 100 / this.form.dailyTaskCnt || 0
           this.completeshow = sessionStorage.getItem('completetoday')
           if (!this.completeshow) {
-            if (this.percent === 100) {
-              this.completetoday = true
-              sessionStorage.setItem('completetoday', this.completetoday)
-            }
+            getTaskStatus(id).then((res) => {
+              if (res.data === true) {
+                this.completetoday = true
+                sessionStorage.setItem('completetoday', this.completetoday)
+              }
+            })
           }
         })
       })
