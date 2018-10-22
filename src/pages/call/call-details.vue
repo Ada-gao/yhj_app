@@ -116,16 +116,19 @@ export default {
     }
   },
   created () { // 挂断电话后的行为
+  },
+  mounted () {
     // console.log(this.$route.query)
     this.form = this.$route.query.form
     this.groupId = this.$route.query.groupId
-    let phones = this.form.phoneNo.substring(4, 5)
-    if (phones === '*') {
+    // let phones = this.form.phoneNo.substring(4, 5)
+    if (this.form.phoneNo === '***********') {
       this.callId = this.$route.query.callId
       // alert(this.callId)
       getCallStatus(this.callId).then((res) => {
         this.callTime = res.data
         this.callTimes = timeDate(this.callTime.duration)
+        console.log(this.callTimes)
         // this.callTime.start = parseTime(res.data.start, '{y}-{m}-{d} {hh}:{mm}:{ss}')
         // this.callTime.end = parseTime(res.data.end, '{y}-{m}-{d} {hh}:{mm}:{ss}')
         // console.log('时间' + this.callTime.start)
@@ -201,6 +204,7 @@ export default {
       })
     },
     getCallHistory (duration) {
+      // 扣费
       let params = {
         callType: this.form.phoneNo.indexOf('*') > -1 ? 'THIRD_PLATFORM' : 'NATIVE',
         clientId: this.form.outboundNameId,

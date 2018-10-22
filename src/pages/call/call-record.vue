@@ -49,14 +49,12 @@ export default {
     this.form = this.$route.query.form
     this.callid = this.$route.query.callId
     this.groupId = this.$route.query.groupId
-    let phones = this.form.phoneNo.substring(4, 5)
-    if (phones === '*') {
+    // let phones = this.form.phoneNo.substring(4, 5)
+    if (this.form.phoneNo === '***********') {
       this.phoneShow = true
     } else {
       this.phoneShow = false
     }
-    // this.callid = this.$route.params.callid
-    // alert(this.callid)
   },
   mounted () {
     // let devicePlatform = Vue.cordova.device.platform
@@ -98,7 +96,9 @@ export default {
             // this.callTime = timeDate(info.duration)
           }, this.form.phoneNo)
         } else {
-          this.$router.push({path: '/call/call-detail', query: {form: this.form, callId: this.callid}})
+          setTimeout(() => {
+            this.$router.push({path: '/call/call-detail', query: {form: this.form, callId: this.callid}})
+          }, 2000)
         }
       }
       // console.log('状态：' + state)

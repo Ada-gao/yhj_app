@@ -27,7 +27,7 @@
         </div>
       </div>
       <div v-show="content==='notFinish'">
-      <div class="page-infinite-wrapper" v-show="content==='notFinish'">
+      <div class="page-infinite-wrapper">
         <div class="call_list" v-for="(item, index) in hList" :key="index" @click="todetails(item)">
           <p class="call_left">{{item.contactName}}</p>
           <p class="call_cont" style="text-align: right">{{item.lastCallResult}}</p>
@@ -40,7 +40,7 @@
         </p>
       </div>
         <p class="task_state" v-show="hList == '' && floading === false">— 暂无数据 —</p>
-        <p class="task_state" v-show="hList != '' && floading === true">— 我是有底线的 —</p>
+        <p class="task_state" v-show="hList != '' && busy === true">— 我是有底线的 —</p>
       </div>
       <div v-show="content==='finish'">
       <div class="page-infinite-wrapper">
@@ -55,7 +55,7 @@
         </p>
       </div>
         <p class="task_state" v-show="fList == '' && floading === false">— 暂无数据 —</p>
-        <p class="task_state" v-show="fList != '' && floading === true">— 我是有底线的 —</p>
+        <p class="task_state" v-show="fList != '' && busy === true">— 我是有底线的 —</p>
       </div>
     </div>
   </div>
@@ -114,8 +114,10 @@ export default {
           this.hList = this.hList.concat(data)
           if (data.length === 0) {
             this.busy = true
+            console.log('busy' + this.busy)
           } else {
             this.busy = false
+            console.log('busy' + this.busy)
           }
         } else {
           this.hList = data
@@ -231,6 +233,7 @@ export default {
       vm.groupId = vm.$route.params ? vm.$route.params.groupId : undefined
       if (from.path === '/home' && to.path === '/call') {
         vm.listQuery1.pageIndex = 0
+        vm.listQuery2.pageIndex = 0
         vm.createTime = parseTime(new Date(), '{y}-{m}-{d}')
         if (vm.groupId) {
           vm.getList1()
@@ -238,6 +241,7 @@ export default {
         }
       } else if ((from.path === '/call/call-detail' && to.path === '/call')) {
         vm.listQuery1.pageIndex = 0
+        vm.listQuery2.pageIndex = 0
         vm.createTime = parseTime(new Date(), '{y}-{m}-{d}')
         if (vm.groupId) {
           vm.getList1()
