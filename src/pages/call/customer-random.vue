@@ -260,6 +260,11 @@ export default {
     handleScroll () {
       // let scrollTop = this.$refs.randomPage.scrollTop
       // console.log(scrollTop)
+    },
+    beforeRouteLeave (to, from, next) {
+      // console.log(from.path)
+      this.$destroy()
+      next()
     }
   }
 }
