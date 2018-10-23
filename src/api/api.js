@@ -101,3 +101,5 @@ export const getPackage = (fileUuid) => axios.get('/version/getPackage?fileUuid=
 export const postMessage = (companyId, outboundNameId, userName, contactName) => axios.post('/message/delaySend?companyId=' + companyId + '&outboundNameId=' + outboundNameId + '&userName=' + userName + '&contactName=' + contactName)
 // 今日任务完成状态
 export const getTaskStatus = (userId) => axios.get('/task/saleDailyCompleteStatus?userId=' + userId)
+// 新增/修改备注
+export const putAddCommon = (taskId, common) => axios.put('/app/addCommon/' + taskId + '?common=' + common)

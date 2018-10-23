@@ -30,7 +30,7 @@
       <div class="page-infinite-wrapper">
         <div class="call_list" v-for="(item, index) in hList" :key="index" @click="todetails(item)">
           <p class="call_left">{{item.contactName}}</p>
-          <p class="call_cont" style="text-align: right">{{item.lastCallResult}}</p>
+          <p class="call_cont" style="text-align: right">{{item.status}}</p>
           <p class="iconfont icon-fanhui call_right icon_left" style="color: #e9e9e9;font-size: 19px"></p>
         </div>
          <div v-infinite-scroll="loadMore1" infinite-scroll-disabled="busy" infinite-scroll-distance="50">
@@ -46,7 +46,7 @@
       <div class="page-infinite-wrapper">
         <div class="call_list" v-for="(item, index) in fList" :key="index" @click="todetails(item)">
           <p class="call_left">{{item.contactName}}</p>
-          <p class="call_cont">{{item.lastCallResult}}</p>
+          <p class="call_cont">{{item.status}}</p>
           <p class="iconfont icon-fanhui call_right icon_left" style="color: #e9e9e9;font-size: 19px"></p>
         </div>
         <div v-infinite-scroll="loadMore2" infinite-scroll-disabled="busy2" infinite-scroll-distance="50"></div>
@@ -205,14 +205,12 @@ export default {
     },
     taskforlist () {
       this.taskList.forEach(item => {
-        if (item.lastCallResult === 'NOT_CALL') {
-          item.lastCallResult = '未外呼'
-        } else if (item.lastCallResult === 'NOT_EXIST') {
-          item.lastCallResult = '空号'
-        } else if (item.lastCallResult === 'UNCONNECTED') {
-          item.lastCallResult = '未接通'
-        } else if (item.lastCallResult === 'CONNECTED') {
-          item.lastCallResult = '已接通'
+        if (item.status === 'CALL_AGAIN') {
+          item.status = '再次外呼'
+        } else if (item.status === 'GIVE_UP') {
+          item.status = '放弃外呼'
+        } else if (item.status === 'FOLLOW') {
+          item.status = '继续跟进'
         }
       })
     }

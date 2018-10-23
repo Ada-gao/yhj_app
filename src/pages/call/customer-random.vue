@@ -52,9 +52,14 @@
             <small class="iconfont icon-hujiao" style="font-size: 100%;"></small>立即拨打
           </div>
         </div>
-        <!--<wv-button type="default" class="addCommon" v-if="form.common === ''"><small class="iconfont icon-tianjia" style="font-size: 100%"></small> 添加备注</wv-button>-->
-        <div class="random_bottom" v-if="type == 0">
-          <h5 class="random_tit">备注</h5>
+        <wv-button type="default" class="addCommon" v-if="form.commot === '' || form.common === null" @click="AddCommon">
+          <small class="iconfont icon-tianjia" style="font-size: 100%"></small> 添加备注
+        </wv-button>
+        <div class="random_bottom" v-else @click="AddCommon">
+          <!--<div>-->
+            <!--<p class="iconfont icon-Group-"></p>-->
+          <!--</div>-->
+          <h5 class="random_tit">备注 <small class="iconfont icon-Group- common_modify">修改</small> </h5>
           <div style="clear: both;word-wrap:break-word" v-html="form.common">{{form.common}}</div>
         </div>
         <div class="random_bottom">
@@ -119,8 +124,10 @@ export default {
     // console.log(this.type)
     this.groupId = this.$route.params.groupId
     sessionStorage.setItem('groupId', this.groupId)
+    console.log(this.$route.query)
     if (Object.keys(this.$route.query).length) {
       this.form = this.$route.query
+      console.log(this.form)
       // sessionStorage.setItem('phone', this.form.phoneNo)
       if (this.form.lastCallResult === '未外呼') {
         this.form.lastCallResult = 'NOT_CALL'
@@ -261,11 +268,16 @@ export default {
       // let scrollTop = this.$refs.randomPage.scrollTop
       // console.log(scrollTop)
     },
-    beforeRouteLeave (to, from, next) {
-      // console.log(from.path)
-      this.$destroy()
-      next()
+    AddCommon () {
+      this.$router.push({path: '/addCommon', query: {form: this.form, groupId: this.groupId, type: this.type}})
+      // putAddCommon(this.form.taskId, this.form.common).then((res) => {
+      // })
     }
+  },
+  beforeRouteLeave (to, from, next) {
+    // console.log(from.path)
+    this.$destroy()
+    next()
   }
 }
 </script>
@@ -425,10 +437,11 @@ export default {
   .addCommon{
     margin-top: 30px;
     color: #2F6BE2;
-  }
-  .weui-btn:after{
     border: 1px solid #2F6BE2;
   }
+  /*.weui-btn:after{*/
+    /**/
+  /*}*/
   .wv-header-title{
     font-size: 19px;
   }
@@ -469,6 +482,11 @@ export default {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+  }
+  .common_modify{
+    font-size: 92%;
+    color: #2F6BE2;
+    float: right;
   }
   // .head_name{
   //   text-align: center;

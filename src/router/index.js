@@ -52,6 +52,19 @@ routes.push({
 })
 
 routes.push({
+  path: '/addCommon',
+  component: resolve => require(['../pages/call/add-common.vue'], resolve),
+  name: 'addCommon',
+  meta: {
+    title: '备注',
+    description: '备注',
+    requiresAuth: false,
+    tabShow: false
+    // keepAlive: true
+  }
+})
+
+routes.push({
   path: '/login',
   component: resolve => require(['../pages/login/login.vue'], resolve),
   name: 'login',
