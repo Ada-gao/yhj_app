@@ -137,41 +137,12 @@ export default {
   created () {
     let _this = this
     _this.devicePlatform = Vue.cordova.device.platform
-    /* global cordova */
-    cordova.getAppVersion.getVersionCode(function (version) {
-      // alert(_this.devicePlatform)
-      _this.versionCode = version
-      let versionName = Vue.cordova.appInfo.version
-      _this.updateVersionApp(_this.appPackage, _this.devicePlatform, versionName, _this.versionCode)
-    })
-    // console.log('ceshi')
-    // console.log(Vue.cordova.appInfo)
-    // 获取当前移动设备已经安装的版本
-    // const devicePlatform = Vue.cordova.device.platform
-    // // alert(devicePlatform)
-    // if (devicePlatform !== 'ios' || devicePlatform !== 'Android') {
-    //   this.versionVisible = false
-    // } else {
-    //   this.versionVisibleShow = sessionStorage.getItem('versionVisible')
-    //   // alert(this.versionVisibleShow)
-    //   if (!this.versionVisibleShow) {
-    //     // alert('没有' + this.versionVisible)
-    //     this.versionVisible = truef
-    //     sessionStorage.setItem('versionVisible', this.versionVisible)
-    //   } else if (this.versionVisibleShow) {
-    //     // alert('有' + this.versionVisible)
-    //     this.versionVisible = false
-    //   }
-    // }
+    _this.versionCode = Vue.cordova.appInfo.build
+    let versionName = Vue.cordova.appInfo.version
+    _this.updateVersionApp(_this.appPackage, _this.devicePlatform, versionName, _this.versionCode)
   },
   mounted () {
-    // getLatestVersion(10, 'android').then(res => {
-    //   console.log(res)
-    // })
     this.getList()
-    // this.updateVersionApp(this.appPackage, 'Android', '0.0', 10)
-    // this.versionApp(10)
-    // setTimeout(, 2000)
   },
   methods: {
     getList () {
