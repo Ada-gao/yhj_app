@@ -23,7 +23,6 @@
     "cordova-android": "^7.1.0",
     "cordova-browser": "^5.0.3",
     "cordova-ios": "^4.5.5",
-    "cordova-plugin-app-version": "^0.1.9",
     "cordova-plugin-background-mode": "^0.7.2",
     "cordova-plugin-calllistener": "^1.2.9",
     "cordova-plugin-camera": "^4.0.3",
@@ -135,7 +134,6 @@
       "jpush-phonegap-plugin": {
         "APP_KEY": "e528f69fd304364343a628a0"
       },
-      "cordova-plugin-app-version": {},
       "cordova-plugin-calllistener": {},
       "skwas-cordova-plugin-appinfo": {}
     },
