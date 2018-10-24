@@ -137,9 +137,9 @@ export default {
   created () {
     let _this = this
     _this.devicePlatform = Vue.cordova.device.platform
-    _this.versionCode = Vue.cordova.appInfo.build
+    let versionCode = Vue.cordova.appInfo.build
     let versionName = Vue.cordova.appInfo.version
-    _this.updateVersionApp(_this.appPackage, _this.devicePlatform, versionName, _this.versionCode)
+    _this.updateVersionApp(_this.appPackage, _this.devicePlatform, versionName, versionCode)
   },
   mounted () {
     this.getList()
