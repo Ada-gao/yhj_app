@@ -69,8 +69,8 @@ export const getRandom = (params) => axios.get('/app/nextTask', {params})
 export const getCallscancle = (callSid) => axios.get('/call/' + callSid)
 // 获取外呼记录
 export const getTaskHistory = (params) => axios.post('/app/tasks/history', params)
-// 更新外呼客户信息
-export const updateOutboundName = (id, params) => axios.put('/app/outboundName/' + id, params)
+// 更新外呼客户信息-已弃用
+// export const updateOutboundName = (id, params) => axios.put('/app/outboundName/' + id, params)
 // 获取排名数据
 export const getRank = (userId) => axios.get('/task/statisBySales?userId=' + userId)
 // 获取排名数据
@@ -101,3 +101,5 @@ export const getPackage = (fileUuid) => axios.get('/version/getPackage?fileUuid=
 export const postMessage = (companyId, outboundNameId, userName, contactName) => axios.post('/message/delaySend?companyId=' + companyId + '&outboundNameId=' + outboundNameId + '&userName=' + userName + '&contactName=' + contactName)
 // 今日任务完成状态
 export const getTaskStatus = (userId) => axios.get('/task/saleDailyCompleteStatus?userId=' + userId)
+// 新增/修改备注
+export const putAddCommon = (taskId, common) => axios.put('/app/addCommon/' + taskId + '?common=' + common)

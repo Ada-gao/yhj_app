@@ -88,12 +88,6 @@
           <div class="title">【新版本特性】</div>
           <pre class="v_list" v-html="promptText">
           </pre>
-          <!--<ul class="v_list">-->
-            <!--<li v-for="(item, index) in list" :key="index">-->
-              <!--{{index + 1}}.{{item}}-->
-            <!--</li>-->
-          <!--</ul>-->
-          <!--<wv-button class="v_btn" @click="updateVersion">立即升级</wv-button>-->
           <a :href="packageUrl" class="ves_buttom">立即升级</a>
         </div>
         <i class="iconfont icon-guanbi" v-if="versionClose" @click="closeVersion"></i>

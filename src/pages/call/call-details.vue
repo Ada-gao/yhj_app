@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { getTaskHistory, getCallStatus, updateOutboundName, getTaskList, getRandom, getCallMoney, postMessage } from '@/api/api'
+import { getTaskHistory, getCallStatus, getTaskList, getRandom, getCallMoney, postMessage } from '@/api/api'
 import { timeDate, conversionTime } from '@/utils'
 import { Toast } from 'we-vue'
 export default {
@@ -104,7 +104,12 @@ export default {
         acutalCallEndDate: '',
         outboundTaskId: '',
         common: '',
-        source: 'app'
+        source: 'app',
+        contactName: '',
+        gender: '',
+        mobileNo: '',
+        wechatNo: '',
+        age: ''
       },
       listQuery1: {
         pageIndex: 0,
@@ -116,16 +121,19 @@ export default {
     }
   },
   created () { // 挂断电话后的行为
+  },
+  mounted () {
     // console.log(this.$route.query)
     this.form = this.$route.query.form
     this.groupId = this.$route.query.groupId
-    let phones = this.form.phoneNo.substring(4, 5)
-    if (phones === '*') {
+    // let phones = this.form.phoneNo.substring(4, 5)
+    if (this.form.phoneNo === '***********') {
       this.callId = this.$route.query.callId
       // alert(this.callId)
       getCallStatus(this.callId).then((res) => {
         this.callTime = res.data
         this.callTimes = timeDate(this.callTime.duration)
+        // console.log(this.callTimes)
         // this.callTime.start = parseTime(res.data.start, '{y}-{m}-{d} {hh}:{mm}:{ss}')
         // this.callTime.end = parseTime(res.data.end, '{y}-{m}-{d} {hh}:{mm}:{ss}')
         // console.log('时间' + this.callTime.start)
@@ -157,50 +165,45 @@ export default {
           message: '标星为必填项'
         })
       } else {
-        let params = {
-          contactName: this.form.contactName,
-          gender: this.form.gender,
-          mobileNo: this.form.mobileNo,
-          wechatNo: this.form.wechatNo,
-          age: this.form.age
-        }
+        this.history.contactName = this.form.contactName
+        this.history.gender = this.form.gender
+        this.history.mobileNo = this.form.mobileNo
+        this.history.wechatNo = this.form.wechatNo
+        this.history.age = this.form.age
         this.history.actualCallStartDate = new Date(this.callTime.start)
         this.history.acutalCallEndDate = new Date(this.callTime.end)
-        // alert(this.history.actualCallStartDate)
         this.history.outboundTaskId = this.form.taskId
         this.history.callType = this.form.phoneNo.indexOf('*') > -1 ? 'THIRD_PLATFORM' : 'NATIVE'
         this.history.common = this.form.common
         getTaskHistory(this.history).then(res => {
-          this.customerInfor(params)
+          this.goMessage()
+          Toast.success('提交成功')
+          if (this.groupId === undefined) {
+            getRandom().then(res => {
+              let randomData = res.data
+              this.$router.push({path: '/call/customer-random/1', query: randomData})
+            }).catch(() => {
+              this.$router.push({path: '/home'})
+            })
+          } else {
+            // TODO
+            // listQuery1 参数来源？
+            getTaskList(this.groupId, this.listQuery1).then(res => {
+              let data = res.data.content[0]
+              if (!res.data.content[0]) {
+                this.$router.push({name: 'call', params: {groupId: this.groupId}})
+              } else {
+                this.$router.push({path: '/call/customer-random/0/' + this.groupId, query: data})
+              }
+            })
+          }
+        }).catch(() => {
+          Toast.success('提交失败，请重新提交')
         })
       }
     },
-    customerInfor (params) {
-      updateOutboundName(this.form.outboundNameId, params).then(res => {
-        this.goMessage()
-        Toast.success('提交成功')
-        if (this.groupId === undefined) {
-          getRandom().then(res => {
-            let randomData = res.data
-            this.$router.push({path: '/call/customer-random/1', query: randomData})
-          }).catch(() => {
-            this.$router.push({path: '/home'})
-          })
-        } else {
-          // TODO
-          // listQuery1 参数来源？
-          getTaskList(this.groupId, this.listQuery1).then(res => {
-            let data = res.data.content[0]
-            if (!res.data.content[0]) {
-              this.$router.push({name: 'call', params: {groupId: this.groupId}})
-            } else {
-              this.$router.push({path: '/call/customer-random/0/' + this.groupId, query: data})
-            }
-          })
-        }
-      })
-    },
     getCallHistory (duration) {
+      // 扣费
       let params = {
         callType: this.form.phoneNo.indexOf('*') > -1 ? 'THIRD_PLATFORM' : 'NATIVE',
         clientId: this.form.outboundNameId,

@@ -27,10 +27,10 @@
         </div>
       </div>
       <div v-show="content==='notFinish'">
-      <div class="page-infinite-wrapper" v-show="content==='notFinish'">
+      <div class="page-infinite-wrapper">
         <div class="call_list" v-for="(item, index) in hList" :key="index" @click="todetails(item)">
           <p class="call_left">{{item.contactName}}</p>
-          <p class="call_cont" style="text-align: right">{{item.lastCallResult}}</p>
+          <p class="call_cont" style="text-align: right">{{item.status}}</p>
           <p class="iconfont icon-fanhui call_right icon_left" style="color: #e9e9e9;font-size: 19px"></p>
         </div>
          <div v-infinite-scroll="loadMore1" infinite-scroll-disabled="busy" infinite-scroll-distance="50">
@@ -40,13 +40,13 @@
         </p>
       </div>
         <p class="task_state" v-show="hList == '' && floading === false">— 暂无数据 —</p>
-        <p class="task_state" v-show="hList != '' && floading === true">— 我是有底线的 —</p>
+        <p class="task_state" v-show="hList != '' && busy === true">— 我是有底线的 —</p>
       </div>
       <div v-show="content==='finish'">
       <div class="page-infinite-wrapper">
         <div class="call_list" v-for="(item, index) in fList" :key="index" @click="todetails(item)">
           <p class="call_left">{{item.contactName}}</p>
-          <p class="call_cont">{{item.lastCallResult}}</p>
+          <p class="call_cont">{{item.status}}</p>
           <p class="iconfont icon-fanhui call_right icon_left" style="color: #e9e9e9;font-size: 19px"></p>
         </div>
         <div v-infinite-scroll="loadMore2" infinite-scroll-disabled="busy2" infinite-scroll-distance="50"></div>
@@ -55,7 +55,7 @@
         </p>
       </div>
         <p class="task_state" v-show="fList == '' && floading === false">— 暂无数据 —</p>
-        <p class="task_state" v-show="fList != '' && floading === true">— 我是有底线的 —</p>
+        <p class="task_state" v-show="fList != '' && busy === true">— 我是有底线的 —</p>
       </div>
     </div>
   </div>
@@ -114,8 +114,10 @@ export default {
           this.hList = this.hList.concat(data)
           if (data.length === 0) {
             this.busy = true
+            console.log('busy' + this.busy)
           } else {
             this.busy = false
+            console.log('busy' + this.busy)
           }
         } else {
           this.hList = data
@@ -203,14 +205,12 @@ export default {
     },
     taskforlist () {
       this.taskList.forEach(item => {
-        if (item.lastCallResult === 'NOT_CALL') {
-          item.lastCallResult = '未外呼'
-        } else if (item.lastCallResult === 'NOT_EXIST') {
-          item.lastCallResult = '空号'
-        } else if (item.lastCallResult === 'UNCONNECTED') {
-          item.lastCallResult = '未接通'
-        } else if (item.lastCallResult === 'CONNECTED') {
-          item.lastCallResult = '已接通'
+        if (item.status === 'CALL_AGAIN') {
+          item.status = '再次外呼'
+        } else if (item.status === 'GIVE_UP') {
+          item.status = '放弃外呼'
+        } else if (item.status === 'FOLLOW') {
+          item.status = '继续跟进'
         }
       })
     }
@@ -231,6 +231,7 @@ export default {
       vm.groupId = vm.$route.params ? vm.$route.params.groupId : undefined
       if (from.path === '/home' && to.path === '/call') {
         vm.listQuery1.pageIndex = 0
+        vm.listQuery2.pageIndex = 0
         vm.createTime = parseTime(new Date(), '{y}-{m}-{d}')
         if (vm.groupId) {
           vm.getList1()
@@ -238,6 +239,7 @@ export default {
         }
       } else if ((from.path === '/call/call-detail' && to.path === '/call')) {
         vm.listQuery1.pageIndex = 0
+        vm.listQuery2.pageIndex = 0
         vm.createTime = parseTime(new Date(), '{y}-{m}-{d}')
         if (vm.groupId) {
           vm.getList1()
