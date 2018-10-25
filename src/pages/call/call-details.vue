@@ -39,7 +39,7 @@
         </div>
         <div class="info_lists">
           <p class="infos_left">备注</p>
-          <textarea rows="5" class="record_txt" v-model="form.common" maxlength="200"></textarea>
+          <textarea rows="5" class="record_txt" v-model="form.common" maxlength="100"></textarea>
         </div>
       </div>
       <div class="details_button" @click="submitCall">
