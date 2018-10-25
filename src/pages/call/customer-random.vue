@@ -6,7 +6,7 @@
         <p class="head_return">返回</p>
       </div>
     </wv-header>
-    <div class="x-wrapper v-random-content" style="width: 100%" ref="randomPage">
+    <div class="x-wrapper v-random-content" style="width: 100%">
       <div class="random_bgimg" >
         <!--<img :src="photoImg">-->
       </div>
