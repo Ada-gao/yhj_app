@@ -52,7 +52,7 @@
             <small class="iconfont icon-hujiao" style="font-size: 100%;"></small>立即拨打
           </div>
         </div>
-        <wv-button type="default" class="addCommon" v-if="form.commot === '' || form.common === null" @click="AddCommon">
+        <wv-button type="default" class="addCommon" v-if="form.common === '' || form.common === null" @click="AddCommon">
           <small class="iconfont icon-tianjia" style="font-size: 100%"></small> 添加备注
         </wv-button>
         <div class="random_bottom" v-else @click="AddCommon">
@@ -101,7 +101,6 @@ export default {
       phoneImg,
       cancle,
       details: false,
-      detailsreturn: false,
       form: {},
       // nextStepOptions: [],
       // callResult: [],
@@ -123,8 +122,9 @@ export default {
     sessionStorage.setItem('type', this.type)
     // console.log(this.type)
     this.groupId = this.$route.params.groupId
+    console.log(this.groupId)
     sessionStorage.setItem('groupId', this.groupId)
-    console.log(this.$route.query)
+    // console.log(this.$route.query)
     if (Object.keys(this.$route.query).length) {
       this.form = this.$route.query
       console.log(this.form)
@@ -150,13 +150,50 @@ export default {
     }
   },
   mounted () {
-    window.addEventListener('scroll', this.handleScroll, true)
+    // window.addEventListener('scroll', this.handleScroll, true)
     let devicePlatform = Vue.cordova.device.platform
     if (devicePlatform === 'Android') {
       this.device = 'android'
     } else {
       this.device = 'ios'
     }
+    /* global CallListener */
+    CallListener.addListener((state) => {
+      // 响铃：2 通话：3 挂断：1/6
+      if (this.CallListTime) {
+        if (state === 3) {
+          this.CallListTime = false
+          this.details = false
+          if (this.phoneShow === false) {
+            this.$router.push({name: 'call-record', query: {form: this.form, groupId: this.groupId, CallListTime: this.CallListTime}})
+          } else {
+            this.$router.push({
+              name: 'call-record',
+              query: {form: this.form, callId: this.callSid, groupId: this.groupId, CallListTime: this.CallListTime}
+            })
+          }
+        } else if (state === 2) {
+          this.details = false
+          // this.CallListTime = true
+        } else if (state === 1 || state === 6) {
+          this.CallListTime = false
+          if (this.phoneShow === false) { // 原生通话
+            let info = {
+              duration: 0,
+              start: parseTime(new Date(), '{y}-{m}-{d} {h}:{m}:{s}'),
+              end: parseTime(new Date(), '{y}-{m}-{d} {h}:{m}:{s}')
+            }
+            this.$router.push({path: '/call/call-detail', query: {form: this.form, callTime: info, groupId: this.groupId}})
+            // console.log('电话状态：' + state + '，通话时长：' + info.duration + '，开始时间：' + info.start + '，结束时间：' + info.end)
+          } else {
+            this.$router.push({path: '/call/call-detail', query: {form: this.form, callId: this.callSid}})
+          }
+        }
+      } else {
+        // alert(this.CallListTime)
+        //  alert('false')
+      }
+    })
     // if (devicePlatform !== 'Android') {
     //     /* 监听电话状态（1空闲、2响铃、3通话） */
     // document.addEventListener('deviceready', () => {})
@@ -164,17 +201,16 @@ export default {
   methods: {
     phoneTimesios () {
       this.conversationState = true
-      this.getCalstate()
+      this.CallListTime = true
     },
     phoneTimesAndroid () {
       this.conversationState = true
       CallListener.callMobile(this.form.phoneNo)
-      this.getCalstate()
+      this.CallListTime = true
     },
     startCall () {
       this.conversationState = true
       getCall(this.form.outboundNameId, this.form.taskId).then(res => {
-        this.details = true
         this.callSid = res.data.callSid
         if (this.callSid === null) {
           Toast.fail({
@@ -183,26 +219,14 @@ export default {
           })
           this.details = false
         } else {
-          this.getCalstate()
+          this.details = true
+          this.CallListTime = true
         }
       }).catch(error => {
-        this.details = false
         Toast.fail({
           duration: 2000,
           message: error.data.error
         })
-        // console.log(error.data)
-        // if (error.data.error === '外呼次数超过限制，请联系管理员！') {
-        //   Toast.fail({
-        //     duration: 2000,
-        //     message: error.data.error
-        //   })
-        // } else {
-        //   Toast.fail({
-        //     duration: 2000,
-        //     message: '余额预警，请联系管理员'
-        //   })
-        // }
       })
     },
     backHandle () {
@@ -211,42 +235,6 @@ export default {
       } else {
         this.$router.push({name: 'call', params: {groupId: this.groupId}})
         // this.$router.push({path: '/call/' + this.groupId})
-      }
-    },
-    getCalstate () {
-      this.CallListTime = true
-      /* global CallListener */
-      if (this.CallListTime === true) {
-        CallListener.addListener((state) => {
-          if (state === 3) {
-            this.details = false
-            this.CallListTime = false
-            if (this.phoneShow === false) {
-              this.$router.push({name: 'call-record', query: {form: this.form, groupId: this.groupId}})
-            } else {
-              this.$router.push({
-                name: 'call-record',
-                query: {form: this.form, callId: this.callSid, groupId: this.groupId}
-              })
-            }
-          } else if (state === 2) {
-            this.details = false
-            this.CallListTime = false
-          } else if (state === 1 || state === 6) {
-            this.CallListTime = false
-            if (this.phoneShow === false) { // 原生通话
-              let info = {
-                duration: 0,
-                start: parseTime(new Date(), '{y}-{m}-{d} {h}:{m}:{s}'),
-                end: parseTime(new Date(), '{y}-{m}-{d} {h}:{m}:{s}')
-              }
-              this.$router.push({path: '/call/call-detail', query: {form: this.form, callTime: info, groupId: this.groupId}})
-              // console.log('电话状态：' + state + '，通话时长：' + info.duration + '，开始时间：' + info.start + '，结束时间：' + info.end)
-            } else {
-              this.$router.push({path: '/call/call-detail', query: {form: this.form, callId: this.callSid}})
-            }
-          }
-        })
       }
     },
     callsCancle () {
@@ -260,12 +248,8 @@ export default {
         })
       })
     },
-    buttoneturn () {
-      this.detailsreturn = false
-      this.$router.replace({path: '/call'})
-    },
     handleScroll () {
-      // let scrollTop = this.$refs.randomPage.scrollTop
+      // let scrollTop = this.$refs.randomPage.clientHeight
       // console.log(scrollTop)
     },
     AddCommon () {
@@ -273,11 +257,6 @@ export default {
       // putAddCommon(this.form.taskId, this.form.common).then((res) => {
       // })
     }
-  },
-  beforeRouteLeave (to, from, next) {
-    // console.log(from.path)
-    this.$destroy()
-    next()
   }
 }
 </script>

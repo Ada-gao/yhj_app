@@ -102,4 +102,4 @@ export const postMessage = (companyId, outboundNameId, userName, contactName) =>
 // 今日任务完成状态
 export const getTaskStatus = (userId) => axios.get('/task/saleDailyCompleteStatus?userId=' + userId)
 // 新增/修改备注
-export const putAddCommon = (taskId, common) => axios.put('/app/addCommon/' + taskId + '?common=' + common)
+export const putAddCommon = (taskId, common) => axios.put('/app/addCommon/' + taskId, {params: common})

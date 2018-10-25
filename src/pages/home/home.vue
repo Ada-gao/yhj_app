@@ -55,7 +55,7 @@
             <div style="color: #9C9C9C;" class="task_list" @click="getTaskList(item.taskGroupId)">
               <p class="progress_time">计划完成时间：{{item.taskEndDate | moment('YYYY.MM.DD')}}</p>
               <p class="task_to">
-                <span>点击查看任务列表</span>
+                <span>点击查看客户列表</span>
                 <i class="iconfont icon-gengduo" style="font-size: 18px;"></i>
               </p>
             </div>
@@ -139,7 +139,12 @@ export default {
     _this.devicePlatform = Vue.cordova.device.platform
     let versionCode = Vue.cordova.appInfo.build
     let versionName = Vue.cordova.appInfo.version
-    _this.updateVersionApp(_this.appPackage, _this.devicePlatform, versionName, versionCode)
+    // console.log(_this.devicePlatform)
+    if (_this.devicePlatform === 'browser') {
+      // console.log('browser平台')
+    } else {
+      _this.updateVersionApp(_this.appPackage, _this.devicePlatform, versionName, versionCode)
+    }
   },
   mounted () {
     this.getList()

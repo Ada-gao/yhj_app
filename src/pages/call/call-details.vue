@@ -39,7 +39,7 @@
         </div>
         <div class="info_lists">
           <p class="infos_left">备注</p>
-          <textarea rows="5" class="record_txt" v-model="form.common" maxlength="100"></textarea>
+          <textarea rows="5" class="record_txt" v-model="form.common" maxlength="200"></textarea>
         </div>
       </div>
       <div class="details_button" @click="submitCall">
@@ -99,9 +99,11 @@ export default {
       ],
       history: {
         result: '',
+        callSid: this.callId,
+        requestAgain: false,
         status: '',
-        actualCallStartDate: '',
-        acutalCallEndDate: '',
+        actualCallStartDate: new Date(),
+        acutalCallEndDate: new Date(),
         outboundTaskId: '',
         common: '',
         source: 'app',
@@ -121,24 +123,25 @@ export default {
     }
   },
   created () { // 挂断电话后的行为
-  },
-  mounted () {
-    // console.log(this.$route.query)
     this.form = this.$route.query.form
     this.groupId = this.$route.query.groupId
-    // let phones = this.form.phoneNo.substring(4, 5)
     if (this.form.phoneNo === '***********') {
       this.callId = this.$route.query.callId
       // alert(this.callId)
       getCallStatus(this.callId).then((res) => {
-        this.callTime = res.data
-        this.callTimes = timeDate(this.callTime.duration)
-        // console.log(this.callTimes)
-        // this.callTime.start = parseTime(res.data.start, '{y}-{m}-{d} {hh}:{mm}:{ss}')
-        // this.callTime.end = parseTime(res.data.end, '{y}-{m}-{d} {hh}:{mm}:{ss}')
-        // console.log('时间' + this.callTime.start)
-        this.getCallHistory(this.callTime.duration)
+        if (res.data) {
+          this.callTime = res.data
+          this.callTimes = timeDate(this.callTime.duration)
+          // this.callTime.start = parseTime(res.data.start, '{y}-{m}-{d} {hh}:{mm}:{ss}')
+          // this.callTime.end = parseTime(res.data.end, '{y}-{m}-{d} {hh}:{mm}:{ss}')
+          this.getCallHistory(this.callTime.duration)
+        } else {
+          this.history.requestAgain = true
+          this.getCallHistory(0)
+        }
       }).catch(() => {
+        this.history.requestAgain = true
+        this.getCallHistory(0)
         // alert('call时间获取')
       })
     } else {
@@ -148,6 +151,9 @@ export default {
       this.callTime.end = conversionTime(this.callTime.end)
       this.getCallHistory(this.callTime.duration)
     }
+    this.resultValue()
+  },
+  mounted () {
   },
   methods: {
     confirmResults (picker) {

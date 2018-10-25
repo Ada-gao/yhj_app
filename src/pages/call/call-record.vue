@@ -42,13 +42,15 @@ export default {
       form: {},
       phoneShow: '',
       value: '',
-      groupId: undefined
+      groupId: undefined,
+      CallListTime: true
     }
   },
   created () {
     this.form = this.$route.query.form
     this.callid = this.$route.query.callId
     this.groupId = this.$route.query.groupId
+    this.CallListTime = this.$route.query.CallListTime
     // let phones = this.form.phoneNo.substring(4, 5)
     if (this.form.phoneNo === '***********') {
       this.phoneShow = true
@@ -87,18 +89,22 @@ export default {
     //   }, this.form.phoneNo)
     // })
     CallListener.addListener((state) => {
-      if (state === 1 || state === 6) {
-        if (this.phoneShow === false) { // 原生通话
-          /* global CallListener */
-          CallListener.getCallInfo((info) => {
-            this.$router.push({path: '/call/call-detail', query: {form: this.form, callTime: info, groupId: this.groupId}})
-            // console.log('电话状态：' + state + '，通话时长：' + info.duration + '，开始时间：' + info.start + '，结束时间：' + info.end)
-            // this.callTime = timeDate(info.duration)
-          }, this.form.phoneNo)
-        } else {
-          setTimeout(() => {
-            this.$router.push({path: '/call/call-detail', query: {form: this.form, callId: this.callid}})
-          }, 2000)
+      if (this.CallListTime === false) {
+        if (state === 1 || state === 6) {
+          if (this.phoneShow === false) { // 原生通话
+            /* global CallListener */
+            CallListener.getCallInfo((info) => {
+              this.CallListTime = true
+              this.$router.push({path: '/call/call-detail', query: {form: this.form, callTime: info, groupId: this.groupId}})
+              // console.log('电话状态：' + state + '，通话时长：' + info.duration + '，开始时间：' + info.start + '，结束时间：' + info.end)
+              // this.callTime = timeDate(info.duration)
+            }, this.form.phoneNo)
+          } else {
+            this.CallListTime = true
+            setTimeout(() => {
+              this.$router.push({path: '/call/call-detail', query: {form: this.form, callId: this.callid, groupId: this.groupId}})
+            }, 2000)
+          }
         }
       }
       // console.log('状态：' + state)
