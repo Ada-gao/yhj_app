@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # cd ~/apk
-# nohup python -m http.server &
+# nohup python -m http.server > ../nohup.out &
 
 # Shuyun@123
 
