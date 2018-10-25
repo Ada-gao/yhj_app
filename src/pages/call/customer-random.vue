@@ -186,7 +186,7 @@ export default {
             this.$router.push({path: '/call/call-detail', query: {form: this.form, callTime: info, groupId: this.groupId}})
             // console.log('电话状态：' + state + '，通话时长：' + info.duration + '，开始时间：' + info.start + '，结束时间：' + info.end)
           } else {
-            this.$router.push({path: '/call/call-detail', query: {form: this.form, callId: this.callSid}})
+            this.$router.push({path: '/call/call-detail', query: {form: this.form, callId: this.callSid, groupId: this.groupId}})
           }
         }
       } else {
