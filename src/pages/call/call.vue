@@ -238,9 +238,10 @@ export default {
           vm.getList2(false)
         }
       } else if ((from.path === '/call/call-detail' && to.path === '/call')) {
+        vm.createTime = sessionStorage.getItem('createTime')
         vm.listQuery1.pageIndex = 0
         vm.listQuery2.pageIndex = 0
-        vm.createTime = parseTime(new Date(), '{y}-{m}-{d}')
+        // vm.createTime = parseTime(new Date(), '{y}-{m}-{d}')
         if (vm.groupId) {
           vm.getList1()
           vm.getList2(false)

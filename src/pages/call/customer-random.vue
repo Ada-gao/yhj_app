@@ -122,12 +122,12 @@ export default {
     sessionStorage.setItem('type', this.type)
     // console.log(this.type)
     this.groupId = this.$route.params.groupId
-    console.log(this.groupId)
+    // console.log(this.groupId)
     sessionStorage.setItem('groupId', this.groupId)
     // console.log(this.$route.query)
     if (Object.keys(this.$route.query).length) {
       this.form = this.$route.query
-      console.log(this.form)
+      // console.log(this.form)
       // sessionStorage.setItem('phone', this.form.phoneNo)
       if (this.form.lastCallResult === '未外呼') {
         this.form.lastCallResult = 'NOT_CALL'

@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { getTaskHistory, getCallStatus, getTaskList, getRandom, getCallMoney, postMessage } from '@/api/api'
+import { getTaskHistory, getCallStatus, getRandom, getCallMoney, postMessage } from '@/api/api'
 import { timeDate, conversionTime } from '@/utils'
 import { Toast } from 'we-vue'
 export default {
@@ -185,22 +185,22 @@ export default {
           this.goMessage()
           Toast.success('提交成功')
           if (this.groupId === undefined) {
-            getRandom().then(res => {
+            getRandom('').then(res => {
               let randomData = res.data
               this.$router.push({path: '/call/customer-random/1', query: randomData})
             }).catch(() => {
               this.$router.push({path: '/home'})
             })
           } else {
-            // TODO
-            // listQuery1 参数来源？
-            getTaskList(this.groupId, this.listQuery1).then(res => {
-              let data = res.data.content[0]
-              if (!res.data.content[0]) {
-                this.$router.push({name: 'call', params: {groupId: this.groupId}})
-              } else {
-                this.$router.push({path: '/call/customer-random/0/' + this.groupId, query: data})
-              }
+            getRandom(this.groupId).then(res => {
+              let data = res.data
+              this.$router.push({path: '/call/customer-random/0/' + this.groupId, query: data})
+            }).catch(() => {
+              // Toast.fail({
+              //   duration: 2000,
+              //   message: error.data.error
+              // })
+              this.$router.push({name: 'call', params: {groupId: this.groupId}})
             })
           }
         }).catch(() => {
