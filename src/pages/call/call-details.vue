@@ -99,7 +99,7 @@ export default {
       ],
       history: {
         result: '',
-        callSid: this.callId,
+        callSid: '',
         requestAgain: false,
         status: '',
         actualCallStartDate: new Date(),
@@ -171,6 +171,7 @@ export default {
           message: '标星为必填项'
         })
       } else {
+        this.history.callSid = this.callId
         this.history.contactName = this.form.contactName
         this.history.gender = this.form.gender
         this.history.mobileNo = this.form.mobileNo
@@ -181,6 +182,7 @@ export default {
         this.history.outboundTaskId = this.form.taskId
         this.history.callType = this.form.phoneNo.indexOf('*') > -1 ? 'THIRD_PLATFORM' : 'NATIVE'
         this.history.common = this.form.common
+        // alert('contactName:' + this.history.contactName + 'callSid:' + this.history.callSid + 'gender:' + this.history.gender + 'mobileNo:' + this.history.mobileNo + 'actualCallStartDate:' + this.history.actualCallStartDate + 'acutalCallEndDate:' + this.history.acutalCallEndDate + 'outboundTaskId' + this.history.outboundTaskId)
         getTaskHistory(this.history).then(res => {
           this.goMessage()
           Toast.success('提交成功')
@@ -204,6 +206,7 @@ export default {
             })
           }
         }).catch(() => {
+          // alert(error.data.error)
           Toast.success('提交失败，请重新提交')
         })
       }
