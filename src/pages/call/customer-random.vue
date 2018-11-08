@@ -122,12 +122,12 @@ export default {
     sessionStorage.setItem('type', this.type)
     // console.log(this.type)
     this.groupId = this.$route.params.groupId
-    console.log(this.groupId)
+    // console.log(this.groupId)
     sessionStorage.setItem('groupId', this.groupId)
     // console.log(this.$route.query)
     if (Object.keys(this.$route.query).length) {
       this.form = this.$route.query
-      console.log(this.form)
+      // console.log(this.form)
       // sessionStorage.setItem('phone', this.form.phoneNo)
       if (this.form.lastCallResult === '未外呼') {
         this.form.lastCallResult = 'NOT_CALL'
@@ -223,10 +223,27 @@ export default {
           this.CallListTime = true
         }
       }).catch(error => {
-        Toast.fail({
-          duration: 2000,
-          message: error.data.error
-        })
+        if (error.data.error === '外呼次数超过限制，请联系管理员！') {
+          Toast.fail({
+            duration: 2000,
+            message: error.data.error
+          })
+        } else if (error.data.error === '账户余额不足，请联系公司管理员!') {
+          Toast.fail({
+            duration: 2000,
+            message: '余额预警，请联系管理员'
+          })
+        } else if (error.data.error === '销售手机号不能为空，请联系公司管理员!') {
+          Toast.fail({
+            duration: 2000,
+            message: error.data.error
+          })
+        } else {
+          Toast.fail({
+            duration: 2000,
+            message: '外呼异常，请联系管理员！'
+          })
+        }
       })
     },
     backHandle () {

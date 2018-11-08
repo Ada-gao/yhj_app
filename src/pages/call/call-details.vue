@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { getTaskHistory, getCallStatus, getTaskList, getRandom, getCallMoney, postMessage } from '@/api/api'
+import { getTaskHistory, getCallStatus, getRandom, getCallMoney, postMessage } from '@/api/api'
 import { timeDate, conversionTime } from '@/utils'
 import { Toast } from 'we-vue'
 export default {
@@ -99,7 +99,7 @@ export default {
       ],
       history: {
         result: '',
-        callSid: this.callId,
+        callSid: '',
         requestAgain: false,
         status: '',
         actualCallStartDate: new Date(),
@@ -111,7 +111,8 @@ export default {
         gender: '',
         mobileNo: '',
         wechatNo: '',
-        age: ''
+        age: '',
+        consumptionFail: false
       },
       listQuery1: {
         pageIndex: 0,
@@ -141,6 +142,7 @@ export default {
         }
       }).catch(() => {
         this.history.requestAgain = true
+        this.history.consumptionFail = true
         this.getCallHistory(0)
         // alert('call时间获取')
       })
@@ -170,7 +172,10 @@ export default {
           duration: 2000,
           message: '标星为必填项'
         })
+      } if (!this.callTime.start || !this.callTime.end) {
+        Toast.success('网络延迟，请重新提交')
       } else {
+        this.history.callSid = this.callId
         this.history.contactName = this.form.contactName
         this.history.gender = this.form.gender
         this.history.mobileNo = this.form.mobileNo
@@ -181,29 +186,31 @@ export default {
         this.history.outboundTaskId = this.form.taskId
         this.history.callType = this.form.phoneNo.indexOf('*') > -1 ? 'THIRD_PLATFORM' : 'NATIVE'
         this.history.common = this.form.common
+        // alert('contactName:' + this.history.contactName + 'callSid:' + this.history.callSid + 'gender:' + this.history.gender + 'mobileNo:' + this.history.mobileNo + 'actualCallStartDate:' + this.history.actualCallStartDate + 'acutalCallEndDate:' + this.history.acutalCallEndDate + 'outboundTaskId' + this.history.outboundTaskId)
         getTaskHistory(this.history).then(res => {
           this.goMessage()
           Toast.success('提交成功')
           if (this.groupId === undefined) {
-            getRandom().then(res => {
+            getRandom('').then(res => {
               let randomData = res.data
               this.$router.push({path: '/call/customer-random/1', query: randomData})
             }).catch(() => {
               this.$router.push({path: '/home'})
             })
           } else {
-            // TODO
-            // listQuery1 参数来源？
-            getTaskList(this.groupId, this.listQuery1).then(res => {
-              let data = res.data.content[0]
-              if (!res.data.content[0]) {
-                this.$router.push({name: 'call', params: {groupId: this.groupId}})
-              } else {
-                this.$router.push({path: '/call/customer-random/0/' + this.groupId, query: data})
-              }
+            getRandom(this.groupId).then(res => {
+              let data = res.data
+              this.$router.push({path: '/call/customer-random/0/' + this.groupId, query: data})
+            }).catch(() => {
+              // Toast.fail({
+              //   duration: 2000,
+              //   message: error.data.error
+              // })
+              this.$router.push({name: 'call', params: {groupId: this.groupId}})
             })
           }
         }).catch(() => {
+          // alert(error.data.error)
           Toast.success('提交失败，请重新提交')
         })
       }

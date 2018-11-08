@@ -183,7 +183,7 @@ export default {
       return this.$router.currentRoute.path === route
     },
     callphone () {
-      getRandom().then(res => {
+      getRandom('').then(res => {
         let randomData = res.data
         this.$router.push({path: '/call/customer-random/1', query: randomData})
       }).catch((error) => {
