@@ -223,10 +223,27 @@ export default {
           this.CallListTime = true
         }
       }).catch(error => {
-        Toast.fail({
-          duration: 2000,
-          message: error.data.error
-        })
+        if (error.data.error === '外呼次数超过限制，请联系管理员！') {
+          Toast.fail({
+            duration: 2000,
+            message: error.data.error
+          })
+        } else if (error.data.error === '账户余额不足，请联系公司管理员!') {
+          Toast.fail({
+            duration: 2000,
+            message: '余额预警，请联系管理员'
+          })
+        } else if (error.data.error === '销售手机号不能为空，请联系公司管理员!') {
+          Toast.fail({
+            duration: 2000,
+            message: error.data.error
+          })
+        } else {
+          Toast.fail({
+            duration: 2000,
+            message: '外呼异常，请联系管理员！'
+          })
+        }
       })
     },
     backHandle () {

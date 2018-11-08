@@ -111,7 +111,8 @@ export default {
         gender: '',
         mobileNo: '',
         wechatNo: '',
-        age: ''
+        age: '',
+        consumptionFail: false
       },
       listQuery1: {
         pageIndex: 0,
@@ -141,6 +142,7 @@ export default {
         }
       }).catch(() => {
         this.history.requestAgain = true
+        this.history.consumptionFail = true
         this.getCallHistory(0)
         // alert('call时间获取')
       })
@@ -170,6 +172,8 @@ export default {
           duration: 2000,
           message: '标星为必填项'
         })
+      } if (!this.callTime.start || !this.callTime.end) {
+        Toast.success('网络延迟，请重新提交')
       } else {
         this.history.callSid = this.callId
         this.history.contactName = this.form.contactName
